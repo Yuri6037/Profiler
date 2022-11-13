@@ -27,10 +27,10 @@
     <entity name="SpanNode" representedClassName="SpanNode" syncable="YES" codeGenerationType="class">
         <attribute name="id" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="path" attributeType="String" defaultValueString=""/>
-        <relationship name="events" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SpanEvent" inverseName="node" inverseEntity="SpanEvent"/>
+        <relationship name="events" toMany="YES" deletionRule="Nullify" destinationEntity="SpanEvent" inverseName="node" inverseEntity="SpanEvent"/>
         <relationship name="metadata" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SpanMetadata" inverseName="nodes" inverseEntity="SpanMetadata"/>
         <relationship name="project" maxCount="1" deletionRule="Nullify" destinationEntity="Project" inverseName="nodes" inverseEntity="Project"/>
-        <relationship name="runs" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SpanRun" inverseName="node" inverseEntity="SpanRun"/>
+        <relationship name="runs" toMany="YES" deletionRule="Nullify" destinationEntity="SpanRun" inverseName="node" inverseEntity="SpanRun"/>
     </entity>
     <entity name="SpanRun" representedClassName="SpanRun" syncable="YES" codeGenerationType="class">
         <attribute name="id" attributeType="UUID" defaultValueString="0CF044A3-333C-4B22-8FEB-F68B004B6C96" usesScalarValueType="NO"/>
