@@ -7,15 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DA58FD6F292182F60034E588 /* SpanRunTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58FD6E292182F60034E588 /* SpanRunTable.swift */; };
 		DA6A44902920EB2B00DCEDBB /* ProfilerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6A448F2920EB2B00DCEDBB /* ProfilerApp.swift */; };
 		DA6A44922920EB2B00DCEDBB /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6A44912920EB2B00DCEDBB /* Persistence.swift */; };
-		DA6A44952920EB2B00DCEDBB /* Profiler.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DA6A44932920EB2B00DCEDBB /* Profiler.xcdatamodeld */; };
 		DA6A44972920EB2B00DCEDBB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6A44962920EB2B00DCEDBB /* ContentView.swift */; };
 		DA6A44992920EB2C00DCEDBB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA6A44982920EB2C00DCEDBB /* Assets.xcassets */; };
 		DA6A449D2920EB2C00DCEDBB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA6A449C2920EB2C00DCEDBB /* Preview Assets.xcassets */; };
 		DA6A44A72920EB2C00DCEDBB /* ProfilerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6A44A62920EB2C00DCEDBB /* ProfilerTests.swift */; };
 		DA6A44B12920EB2C00DCEDBB /* ProfilerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6A44B02920EB2C00DCEDBB /* ProfilerUITests.swift */; };
 		DA6A44B32920EB2C00DCEDBB /* ProfilerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6A44B22920EB2C00DCEDBB /* ProfilerUITestsLaunchTests.swift */; };
+		DA6A44C72921431A00DCEDBB /* Profiler.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DA6A44C52921431A00DCEDBB /* Profiler.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,10 +37,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DA58FD6E292182F60034E588 /* SpanRunTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpanRunTable.swift; sourceTree = "<group>"; };
 		DA6A448C2920EB2B00DCEDBB /* Profiler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Profiler.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA6A448F2920EB2B00DCEDBB /* ProfilerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilerApp.swift; sourceTree = "<group>"; };
 		DA6A44912920EB2B00DCEDBB /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
-		DA6A44942920EB2B00DCEDBB /* Profiler.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Profiler.xcdatamodel; sourceTree = "<group>"; };
 		DA6A44962920EB2B00DCEDBB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		DA6A44982920EB2C00DCEDBB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DA6A449A2920EB2C00DCEDBB /* Profiler.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Profiler.entitlements; sourceTree = "<group>"; };
@@ -49,6 +50,7 @@
 		DA6A44AC2920EB2C00DCEDBB /* ProfilerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ProfilerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA6A44B02920EB2C00DCEDBB /* ProfilerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilerUITests.swift; sourceTree = "<group>"; };
 		DA6A44B22920EB2C00DCEDBB /* ProfilerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilerUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		DA6A44C62921431A00DCEDBB /* Profiler.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Profiler.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,12 +101,13 @@
 		DA6A448E2920EB2B00DCEDBB /* Profiler */ = {
 			isa = PBXGroup;
 			children = (
+				DA6A44C52921431A00DCEDBB /* Profiler.xcdatamodeld */,
 				DA6A448F2920EB2B00DCEDBB /* ProfilerApp.swift */,
 				DA6A44912920EB2B00DCEDBB /* Persistence.swift */,
 				DA6A44962920EB2B00DCEDBB /* ContentView.swift */,
+				DA58FD6E292182F60034E588 /* SpanRunTable.swift */,
 				DA6A44982920EB2C00DCEDBB /* Assets.xcassets */,
 				DA6A449A2920EB2C00DCEDBB /* Profiler.entitlements */,
-				DA6A44932920EB2B00DCEDBB /* Profiler.xcdatamodeld */,
 				DA6A449B2920EB2C00DCEDBB /* Preview Content */,
 			);
 			path = Profiler;
@@ -265,10 +268,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA58FD6F292182F60034E588 /* SpanRunTable.swift in Sources */,
+				DA6A44C72921431A00DCEDBB /* Profiler.xcdatamodeld in Sources */,
 				DA6A44902920EB2B00DCEDBB /* ProfilerApp.swift in Sources */,
 				DA6A44922920EB2B00DCEDBB /* Persistence.swift in Sources */,
 				DA6A44972920EB2B00DCEDBB /* ContentView.swift in Sources */,
-				DA6A44952920EB2B00DCEDBB /* Profiler.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -614,12 +618,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		DA6A44932920EB2B00DCEDBB /* Profiler.xcdatamodeld */ = {
+		DA6A44C52921431A00DCEDBB /* Profiler.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				DA6A44942920EB2B00DCEDBB /* Profiler.xcdatamodel */,
+				DA6A44C62921431A00DCEDBB /* Profiler.xcdatamodel */,
 			);
-			currentVersion = DA6A44942920EB2B00DCEDBB /* Profiler.xcdatamodel */;
+			currentVersion = DA6A44C62921431A00DCEDBB /* Profiler.xcdatamodel */;
 			path = Profiler.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

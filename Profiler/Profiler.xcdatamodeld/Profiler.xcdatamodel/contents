@@ -1,9 +1,60 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="false" userDefinedModelVersionIdentifier="">
-    <entity name="Item" representedClassName="Item" syncable="YES" codeGenerationType="class">
-        <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21512" systemVersion="22A400" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Project" representedClassName="Project" syncable="YES" codeGenerationType="class">
+        <attribute name="id" attributeType="UUID" defaultValueString="0CF044A3-333C-4B22-8FEB-F68B004B6C96" usesScalarValueType="NO"/>
+        <attribute name="name" attributeType="String" defaultValueString=""/>
+        <attribute name="timestamp" attributeType="Date" defaultDateTimeInterval="690046200" usesScalarValueType="NO"/>
+        <attribute name="version" optional="YES" attributeType="String"/>
+        <relationship name="nodes" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="SpanNode" inverseName="project" inverseEntity="SpanNode"/>
+        <relationship name="system" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="System" inverseName="projects" inverseEntity="System"/>
     </entity>
-    <elements>
-        <element name="Item" positionX="-63" positionY="-18" width="128" height="44"/>
-    </elements>
+    <entity name="SpanEvent" representedClassName="SpanEvent" syncable="YES" codeGenerationType="class">
+        <attribute name="id" attributeType="UUID" defaultValueString="0CF044A3-333C-4B22-8FEB-F68B004B6C96" usesScalarValueType="NO"/>
+        <attribute name="message" attributeType="String" defaultValueString=""/>
+        <relationship name="node" maxCount="1" deletionRule="Nullify" destinationEntity="SpanNode" inverseName="events" inverseEntity="SpanNode"/>
+        <relationship name="variables" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SpanVariable" inverseName="event" inverseEntity="SpanVariable"/>
+    </entity>
+    <entity name="SpanMetadata" representedClassName="SpanMetadata" syncable="YES" codeGenerationType="class">
+        <attribute name="file" optional="YES" attributeType="String"/>
+        <attribute name="id" attributeType="UUID" defaultValueString="0CF044A3-333C-4B22-8FEB-F68B004B6C96" usesScalarValueType="NO"/>
+        <attribute name="level" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="line" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="modulePath" optional="YES" attributeType="String"/>
+        <attribute name="name" attributeType="String" defaultValueString=""/>
+        <attribute name="target" attributeType="String" defaultValueString=""/>
+        <relationship name="nodes" toMany="YES" deletionRule="Nullify" destinationEntity="SpanNode" inverseName="metadata" inverseEntity="SpanNode"/>
+    </entity>
+    <entity name="SpanNode" representedClassName="SpanNode" syncable="YES" codeGenerationType="class">
+        <attribute name="id" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="path" attributeType="String" defaultValueString=""/>
+        <relationship name="events" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SpanEvent" inverseName="node" inverseEntity="SpanEvent"/>
+        <relationship name="metadata" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SpanMetadata" inverseName="nodes" inverseEntity="SpanMetadata"/>
+        <relationship name="project" maxCount="1" deletionRule="Nullify" destinationEntity="Project" inverseName="nodes" inverseEntity="Project"/>
+        <relationship name="runs" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SpanRun" inverseName="node" inverseEntity="SpanRun"/>
+    </entity>
+    <entity name="SpanRun" representedClassName="SpanRun" syncable="YES" codeGenerationType="class">
+        <attribute name="id" attributeType="UUID" defaultValueString="0CF044A3-333C-4B22-8FEB-F68B004B6C96" usesScalarValueType="NO"/>
+        <attribute name="message" optional="YES" attributeType="String"/>
+        <attribute name="time" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="node" maxCount="1" deletionRule="Nullify" destinationEntity="SpanNode" inverseName="runs" inverseEntity="SpanNode"/>
+        <relationship name="variables" toMany="YES" deletionRule="Nullify" destinationEntity="SpanVariable" inverseName="run" inverseEntity="SpanVariable"/>
+    </entity>
+    <entity name="SpanVariable" representedClassName="SpanVariable" syncable="YES" codeGenerationType="class">
+        <attribute name="data" attributeType="String" defaultValueString=""/>
+        <attribute name="id" attributeType="UUID" defaultValueString="0CF044A3-333C-4B22-8FEB-F68B004B6C96" usesScalarValueType="NO"/>
+        <relationship name="event" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SpanEvent" inverseName="variables" inverseEntity="SpanEvent"/>
+        <relationship name="run" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SpanRun" inverseName="variables" inverseEntity="SpanRun"/>
+    </entity>
+    <entity name="System" representedClassName="System" syncable="YES" codeGenerationType="class">
+        <attribute name="cpuCoreCount" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="cpuName" attributeType="String" defaultValueString=""/>
+        <attribute name="id" attributeType="UUID" defaultValueString="0CF044A3-333C-4B22-8FEB-F68B004B6C96" usesScalarValueType="NO"/>
+        <attribute name="os" attributeType="String" defaultValueString=""/>
+        <relationship name="projects" toMany="YES" deletionRule="Nullify" destinationEntity="Project" inverseName="system" inverseEntity="Project"/>
+        <fetchIndex name="GetExisting">
+            <fetchIndexElement property="cpuCoreCount" type="Binary" order="ascending"/>
+            <fetchIndexElement property="cpuName" type="Binary" order="ascending"/>
+            <fetchIndexElement property="os" type="Binary" order="ascending"/>
+        </fetchIndex>
+    </entity>
 </model>
