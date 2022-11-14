@@ -24,13 +24,59 @@
 import SwiftUI
 
 struct ProjectDetails: View {
+    @ObservedObject var project: Project;
+
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            VStack {
+                Text("General").bold().padding(.bottom)
+                VStack(alignment: .leading) {
+                    HStack {
+                        Text("Name").bold()
+                        Text(project.wName)
+                    }
+                    HStack {
+                        Text("Version").bold()
+                        Text(project.wVersion ?? "None")
+                    }
+                    HStack {
+                        Text("Time").bold()
+                        Text(project.wTimestamp.formatted())
+                    }
+                    if let system = project.wSystem {
+                        Text("System").bold()
+                        VStack(alignment: .leading) {
+                            HStack {
+                                Text("OS").bold()
+                                Text(system.wOs)
+                            }
+                            HStack {
+                                Text("CPU").bold()
+                                Text(system.wCpuName)
+                                Text("(\(system.wCpuCoreCount) core(s))")
+                            }
+                        }.padding(.leading)
+                    } else {
+                        HStack {
+                            Text("System").bold()
+                            Text("None")
+                        }
+                    }
+                }
+            }
+            List(project.wNodes) { item in
+                NavigationLink {
+                    SpanRunTable(runs: item.wRuns)
+                } label: {
+                    Text(item.wPath)
+                }
+            }
+        }
     }
 }
 
 struct ProjectDetails_Previews: PreviewProvider {
     static var previews: some View {
-        ProjectDetails()
+        ProjectDetails(project: PersistenceController.preview.getFirstProject()!)
     }
 }

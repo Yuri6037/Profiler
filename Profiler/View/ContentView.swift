@@ -37,8 +37,7 @@ struct ContentView: View {
             List {
                 ForEach(items) { item in
                     NavigationLink {
-                        Text("Item at \(item.timestamp!, formatter: dateFormatter)")
-                        Text("Test: \(item.name!)")
+                        ProjectDetails(project: item)
                     } label: {
                         VStack(alignment: .leading) {
                             HStack {
@@ -51,6 +50,7 @@ struct ContentView: View {
                 }
                 .onDelete(perform: deleteItems)
             }
+            Text("Select an item")
             Text("Select an item")
         }
     }
