@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		DA58FD6F292182F60034E588 /* SpanRunTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58FD6E292182F60034E588 /* SpanRunTable.swift */; };
 		DA58FD7129218BC60034E588 /* ModelExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58FD7029218BC60034E588 /* ModelExtensions.swift */; };
+		DA58FD732922D61B0034E588 /* ProjectDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58FD722922D61B0034E588 /* ProjectDetails.swift */; };
 		DA6A44902920EB2B00DCEDBB /* ProfilerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6A448F2920EB2B00DCEDBB /* ProfilerApp.swift */; };
 		DA6A44922920EB2B00DCEDBB /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6A44912920EB2B00DCEDBB /* Persistence.swift */; };
 		DA6A44972920EB2B00DCEDBB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6A44962920EB2B00DCEDBB /* ContentView.swift */; };
@@ -40,6 +41,7 @@
 /* Begin PBXFileReference section */
 		DA58FD6E292182F60034E588 /* SpanRunTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpanRunTable.swift; sourceTree = "<group>"; };
 		DA58FD7029218BC60034E588 /* ModelExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelExtensions.swift; sourceTree = "<group>"; };
+		DA58FD722922D61B0034E588 /* ProjectDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDetails.swift; sourceTree = "<group>"; };
 		DA6A448C2920EB2B00DCEDBB /* Profiler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Profiler.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA6A448F2920EB2B00DCEDBB /* ProfilerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilerApp.swift; sourceTree = "<group>"; };
 		DA6A44912920EB2B00DCEDBB /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
@@ -80,6 +82,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DA58FD742922D6250034E588 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				DA6A44962920EB2B00DCEDBB /* ContentView.swift */,
+				DA58FD6E292182F60034E588 /* SpanRunTable.swift */,
+				DA58FD722922D61B0034E588 /* ProjectDetails.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		DA6A44832920EB2B00DCEDBB = {
 			isa = PBXGroup;
 			children = (
@@ -103,12 +115,11 @@
 		DA6A448E2920EB2B00DCEDBB /* Profiler */ = {
 			isa = PBXGroup;
 			children = (
+				DA58FD742922D6250034E588 /* View */,
 				DA6A44C52921431A00DCEDBB /* Profiler.xcdatamodeld */,
 				DA6A448F2920EB2B00DCEDBB /* ProfilerApp.swift */,
 				DA6A44912920EB2B00DCEDBB /* Persistence.swift */,
 				DA58FD7029218BC60034E588 /* ModelExtensions.swift */,
-				DA6A44962920EB2B00DCEDBB /* ContentView.swift */,
-				DA58FD6E292182F60034E588 /* SpanRunTable.swift */,
 				DA6A44982920EB2C00DCEDBB /* Assets.xcassets */,
 				DA6A449A2920EB2C00DCEDBB /* Profiler.entitlements */,
 				DA6A449B2920EB2C00DCEDBB /* Preview Content */,
@@ -273,6 +284,7 @@
 			files = (
 				DA58FD6F292182F60034E588 /* SpanRunTable.swift in Sources */,
 				DA58FD7129218BC60034E588 /* ModelExtensions.swift in Sources */,
+				DA58FD732922D61B0034E588 /* ProjectDetails.swift in Sources */,
 				DA6A44C72921431A00DCEDBB /* Profiler.xcdatamodeld in Sources */,
 				DA6A44902920EB2B00DCEDBB /* ProfilerApp.swift in Sources */,
 				DA6A44922920EB2B00DCEDBB /* Persistence.swift in Sources */,
