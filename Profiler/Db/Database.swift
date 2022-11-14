@@ -23,52 +23,8 @@
 
 import CoreData
 
-struct PersistenceController {
-    static let shared = PersistenceController()
-
-    static var preview: PersistenceController = {
-        let result = PersistenceController(inMemory: true)
-        let viewContext = result.container.viewContext
-        for _ in 0..<10 {
-            let project = Project(context: viewContext);
-            project.id = UUID();
-            project.name = "Test";
-            project.timestamp = Date();
-            project.system = System(context: viewContext);
-            project.system?.id = UUID();
-            project.system?.os = "macOS";
-            project.system?.cpuCoreCount = 10;
-            project.system?.cpuName = "Apple M1 Max";
-            let node = SpanNode(context: viewContext);
-            node.project = project;
-            node.path = "root";
-            node.metadata = SpanMetadata(context: viewContext);
-            node.metadata?.id = UUID();
-            node.metadata?.name = "test";
-            node.metadata?.target = "test target";
-            node.metadata?.level = 0;
-        }
-       do {
-            try viewContext.save()
-        } catch {
-            // Replace this implementation with code to handle the error appropriately.
-            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            let nsError = error as NSError
-            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-        }
-        return result
-    }()
-
-    func getFirstProject() -> Project? {
-        let request = NSFetchRequest<Project>(entityName: "Project");
-        request.fetchLimit = 1;
-        do {
-            let result = try self.container.viewContext.fetch(request);
-            return result.first;
-        } catch _ {
-            return nil;
-        }
-    }
+struct Database {
+    static let shared = Database()
 
     let container: NSPersistentContainer
 

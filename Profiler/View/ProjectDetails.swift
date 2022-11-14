@@ -77,6 +77,6 @@ struct ProjectDetails: View {
 
 struct ProjectDetails_Previews: PreviewProvider {
     static var previews: some View {
-        ProjectDetails(project: PersistenceController.preview.getFirstProject()!)
+        ProjectDetails(project: Database.preview.getFirstProject()!)
     }
 }

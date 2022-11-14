@@ -25,12 +25,12 @@ import SwiftUI
 
 @main
 struct ProfilerApp: App {
-    let persistenceController = PersistenceController.shared
+    let database = Database.shared
 
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                .environment(\.managedObjectContext, database.container.viewContext)
         }
     }
 }

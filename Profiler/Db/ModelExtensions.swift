@@ -22,6 +22,7 @@
 // IN THE SOFTWARE.
 
 import Foundation
+import CoreData
 
 extension Project {
     var wId: UUID { self.id! }
@@ -30,6 +31,12 @@ extension Project {
     var wNodes: [SpanNode] { (self.nodes?.array ?? []) as! [SpanNode] }
     var wVersion: String? { self.version }
     var wSystem: System? { self.system }
+
+    static func new(context: NSManagedObjectContext) -> Project {
+        let obj = Project(context: context);
+        obj.id = UUID();
+        return obj;
+    }
 }
 
 extension System {
@@ -37,6 +44,12 @@ extension System {
     var wCpuName: String { self.cpuName! }
     var wOs: String { self.os! }
     var wCpuCoreCount: Int32 { self.cpuCoreCount }
+
+    static func new(context: NSManagedObjectContext) -> System {
+        let obj = System(context: context);
+        obj.id = UUID();
+        return obj;
+    }
 }
 
 extension SpanMetadata {
@@ -47,6 +60,12 @@ extension SpanMetadata {
     var wFile: String? { self.file }
     var wLevel: Int16 { self.level }
     var wModulePath: String? { self.modulePath }
+
+    static func new(context: NSManagedObjectContext) -> SpanMetadata {
+        let obj = SpanMetadata(context: context);
+        obj.id = UUID();
+        return obj;
+    }
 }
 
 extension SpanNode {
@@ -61,10 +80,22 @@ extension SpanRun {
     var wVariables: [SpanVariable] { (self.variables?.allObjects ?? []) as! [SpanVariable] }
     var wMessage: String? { self.message }
     var wTime: Float64 { self.time }
+
+    static func new(context: NSManagedObjectContext) -> SpanRun {
+        let obj = SpanRun(context: context);
+        obj.id = UUID();
+        return obj;
+    }
 }
 
 extension SpanEvent {
     var wId: UUID { self.id! }
     var wVariables: [SpanVariable] { (self.variables?.allObjects ?? []) as! [SpanVariable] }
     var wMessage: String { self.message! }
+
+    static func new(context: NSManagedObjectContext) -> SpanEvent {
+        let obj = SpanEvent(context: context);
+        obj.id = UUID();
+        return obj;
+    }
 }
