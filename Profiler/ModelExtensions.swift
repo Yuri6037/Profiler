@@ -32,6 +32,13 @@ extension Project {
     var wSystem: System? { self.system }
 }
 
+extension System {
+    var wId: UUID { self.id! }
+    var wCpuName: String { self.cpuName! }
+    var wOs: String { self.os! }
+    var wCpuCoreCount: Int32 { self.cpuCoreCount }
+}
+
 extension SpanMetadata {
     var wId: UUID { self.id! }
     var wLine: Int32? { self.line < 0 ? nil : self.line }
