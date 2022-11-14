@@ -29,6 +29,7 @@ extension Project {
     var wTimestamp: Date { self.timestamp! }
     var wNodes: [SpanNode] { (self.nodes?.array ?? []) as! [SpanNode] }
     var wVersion: String? { self.version }
+    var wSystem: System? { self.system }
 }
 
 extension SpanMetadata {
