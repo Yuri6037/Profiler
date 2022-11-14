@@ -54,6 +54,17 @@ struct PersistenceController {
         return result
     }()
 
+    func getFirstProject() -> Project? {
+        let request = NSFetchRequest<Project>(entityName: "Project");
+        request.fetchLimit = 1;
+        do {
+            let result = try self.container.viewContext.fetch(request);
+            return result.first;
+        } catch _ {
+            return nil;
+        }
+    }
+
     let container: NSPersistentContainer
 
     init(inMemory: Bool = false) {
