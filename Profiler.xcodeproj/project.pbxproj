@@ -92,6 +92,16 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		DA58FD752922E22D0034E588 /* Db */ = {
+			isa = PBXGroup;
+			children = (
+				DA6A44C52921431A00DCEDBB /* Profiler.xcdatamodeld */,
+				DA6A44912920EB2B00DCEDBB /* Persistence.swift */,
+				DA58FD7029218BC60034E588 /* ModelExtensions.swift */,
+			);
+			path = Db;
+			sourceTree = "<group>";
+		};
 		DA6A44832920EB2B00DCEDBB = {
 			isa = PBXGroup;
 			children = (
@@ -115,11 +125,9 @@
 		DA6A448E2920EB2B00DCEDBB /* Profiler */ = {
 			isa = PBXGroup;
 			children = (
+				DA58FD752922E22D0034E588 /* Db */,
 				DA58FD742922D6250034E588 /* View */,
-				DA6A44C52921431A00DCEDBB /* Profiler.xcdatamodeld */,
 				DA6A448F2920EB2B00DCEDBB /* ProfilerApp.swift */,
-				DA6A44912920EB2B00DCEDBB /* Persistence.swift */,
-				DA58FD7029218BC60034E588 /* ModelExtensions.swift */,
 				DA6A44982920EB2C00DCEDBB /* Assets.xcassets */,
 				DA6A449A2920EB2C00DCEDBB /* Profiler.entitlements */,
 				DA6A449B2920EB2C00DCEDBB /* Preview Content */,
