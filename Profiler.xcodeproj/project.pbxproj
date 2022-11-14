@@ -12,6 +12,7 @@
 		DA58FD732922D61B0034E588 /* ProjectDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58FD722922D61B0034E588 /* ProjectDetails.swift */; };
 		DA58FD772922E2A00034E588 /* PreviewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58FD762922E2A00034E588 /* PreviewExtensions.swift */; };
 		DA58FD792922E2B20034E588 /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58FD782922E2B20034E588 /* SampleData.swift */; };
+		DA58FD7B2922E8AB0034E588 /* ProjectInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58FD7A2922E8AB0034E588 /* ProjectInfo.swift */; };
 		DA6A44902920EB2B00DCEDBB /* ProfilerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6A448F2920EB2B00DCEDBB /* ProfilerApp.swift */; };
 		DA6A44922920EB2B00DCEDBB /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6A44912920EB2B00DCEDBB /* Database.swift */; };
 		DA6A44972920EB2B00DCEDBB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6A44962920EB2B00DCEDBB /* ContentView.swift */; };
@@ -46,6 +47,7 @@
 		DA58FD722922D61B0034E588 /* ProjectDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDetails.swift; sourceTree = "<group>"; };
 		DA58FD762922E2A00034E588 /* PreviewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewExtensions.swift; sourceTree = "<group>"; };
 		DA58FD782922E2B20034E588 /* SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
+		DA58FD7A2922E8AB0034E588 /* ProjectInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectInfo.swift; sourceTree = "<group>"; };
 		DA6A448C2920EB2B00DCEDBB /* Profiler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Profiler.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA6A448F2920EB2B00DCEDBB /* ProfilerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilerApp.swift; sourceTree = "<group>"; };
 		DA6A44912920EB2B00DCEDBB /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
@@ -92,6 +94,7 @@
 				DA6A44962920EB2B00DCEDBB /* ContentView.swift */,
 				DA58FD6E292182F60034E588 /* SpanRunTable.swift */,
 				DA58FD722922D61B0034E588 /* ProjectDetails.swift */,
+				DA58FD7A2922E8AB0034E588 /* ProjectInfo.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -305,6 +308,7 @@
 				DA6A44922920EB2B00DCEDBB /* Database.swift in Sources */,
 				DA58FD792922E2B20034E588 /* SampleData.swift in Sources */,
 				DA6A44972920EB2B00DCEDBB /* ContentView.swift in Sources */,
+				DA58FD7B2922E8AB0034E588 /* ProjectInfo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
