@@ -34,6 +34,11 @@ struct PersistenceController {
             project.id = UUID();
             project.name = "Test";
             project.timestamp = Date();
+            project.system = System(context: viewContext);
+            project.system?.id = UUID();
+            project.system?.os = "macOS";
+            project.system?.cpuCoreCount = 10;
+            project.system?.cpuName = "Apple M1 Max";
             let node = SpanNode(context: viewContext);
             node.project = project;
             node.path = "root";
