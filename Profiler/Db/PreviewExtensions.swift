@@ -32,7 +32,7 @@ extension Database {
             sampleProject(context: viewContext);
         }
         do {
-           try viewContext.save();
+            try viewContext.save();
         } catch {
             // Replace this implementation with code to handle the error appropriately.
             // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
@@ -41,9 +41,20 @@ extension Database {
         }
         return result;
     }()
-
+    
     func getFirstProject() -> Project? {
         let request = NSFetchRequest<Project>(entityName: "Project");
+        request.fetchLimit = 1;
+        do {
+            let result = try self.container.viewContext.fetch(request);
+            return result.first;
+        } catch _ {
+            return nil;
+        }
+    }
+
+    func getFirstNode() -> SpanNode? {
+        let request = NSFetchRequest<SpanNode>(entityName: "SpanNode");
         request.fetchLimit = 1;
         do {
             let result = try self.container.viewContext.fetch(request);
