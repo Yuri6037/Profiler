@@ -31,6 +31,8 @@ struct ContentView: View {
         sortDescriptors: [NSSortDescriptor(keyPath: \Project.timestamp, ascending: true)],
         animation: .default)
     private var items: FetchedResults<Project>
+    
+    @State var importTask: DispatchWorkItem?;
 
     var body: some View {
         NavigationView {
@@ -53,6 +55,12 @@ struct ContentView: View {
             Text("Select an item")
             Text("Select an item")
         }
+    }
+
+    private func importProject() {
+        self.importTask = DispatchWorkItem {
+        };
+        DispatchQueue.global().async(execute: self.importTask!);
     }
 
     /*private func addItem() {
