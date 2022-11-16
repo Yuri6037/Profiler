@@ -31,7 +31,7 @@ struct ProjectDetails: View {
             ProjectInfo(project: project)
             List(project.wNodes) { item in
                 NavigationLink {
-                    SpanRunTable(runs: item.wRuns)
+                    SpanNodeDetails(node: item)
                 } label: {
                     Text(item.wPath)
                 }

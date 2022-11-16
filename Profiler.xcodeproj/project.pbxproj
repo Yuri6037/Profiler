@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DA31F6BB2924C04E0077AF03 /* SpanNodeInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA31F6BA2924C04E0077AF03 /* SpanNodeInfo.swift */; };
 		DA58FD6F292182F60034E588 /* SpanRunTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58FD6E292182F60034E588 /* SpanRunTable.swift */; };
 		DA58FD7129218BC60034E588 /* ModelExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58FD7029218BC60034E588 /* ModelExtensions.swift */; };
 		DA58FD732922D61B0034E588 /* ProjectDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58FD722922D61B0034E588 /* ProjectDetails.swift */; };
@@ -44,6 +45,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DA31F6BA2924C04E0077AF03 /* SpanNodeInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpanNodeInfo.swift; sourceTree = "<group>"; };
 		DA58FD6E292182F60034E588 /* SpanRunTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpanRunTable.swift; sourceTree = "<group>"; };
 		DA58FD7029218BC60034E588 /* ModelExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelExtensions.swift; sourceTree = "<group>"; };
 		DA58FD722922D61B0034E588 /* ProjectDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDetails.swift; sourceTree = "<group>"; };
@@ -101,6 +103,7 @@
 				DA58FD7A2922E8AB0034E588 /* ProjectInfo.swift */,
 				DA58FD7C292371D70034E588 /* SpanNodeDetails.swift */,
 				DA58FD7E292373970034E588 /* SpanEventTable.swift */,
+				DA31F6BA2924C04E0077AF03 /* SpanNodeInfo.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -308,6 +311,7 @@
 				DA58FD6F292182F60034E588 /* SpanRunTable.swift in Sources */,
 				DA58FD7129218BC60034E588 /* ModelExtensions.swift in Sources */,
 				DA58FD732922D61B0034E588 /* ProjectDetails.swift in Sources */,
+				DA31F6BB2924C04E0077AF03 /* SpanNodeInfo.swift in Sources */,
 				DA58FD7F292373970034E588 /* SpanEventTable.swift in Sources */,
 				DA6A44C72921431A00DCEDBB /* Profiler.xcdatamodeld in Sources */,
 				DA58FD772922E2A00034E588 /* PreviewExtensions.swift in Sources */,
