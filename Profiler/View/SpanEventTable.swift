@@ -23,19 +23,20 @@
 
 import SwiftUI
 
-struct SpanNodeDetails: View {
-    @ObservedObject var node: SpanNode;
+struct SpanEventTable: View {
+    var events: [SpanEvent];
 
     var body: some View {
-        VStack {
-            SpanRunTable(runs: node.wRuns)
-            SpanEventTable(events: node.wEvents)
+        List {
+            ForEach(events) { item in
+                Text(item.wMessage)
+            }
         }
     }
 }
 
-struct SpanNodeDetails_Previews: PreviewProvider {
+struct SpanEventTable_Previews: PreviewProvider {
     static var previews: some View {
-        SpanNodeDetails(node: Database.preview.getFirstNode()!)
+        SpanEventTable(events: [])
     }
 }
