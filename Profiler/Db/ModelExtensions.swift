@@ -73,6 +73,7 @@ extension SpanNode {
     var wPath: String { self.path! }
     var wEvents: [SpanEvent] { (self.events?.allObjects ?? []) as! [SpanEvent] }
     var wRuns: [SpanRun] { (self.runs?.allObjects ?? []) as! [SpanRun] }
+    var wMetadata: SpanMetadata? { self.metadata }
 }
 
 extension SpanRun {
