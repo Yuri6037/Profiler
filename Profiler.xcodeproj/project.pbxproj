@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		DA31F6BB2924C04E0077AF03 /* SpanNodeInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA31F6BA2924C04E0077AF03 /* SpanNodeInfo.swift */; };
+		DA31F6BF292586680077AF03 /* BufferedTextFile.m in Sources */ = {isa = PBXBuildFile; fileRef = DA31F6BE292586680077AF03 /* BufferedTextFile.m */; };
+		DA31F6C229262E8A0077AF03 /* BufferedTextFileTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DA31F6C129262E8A0077AF03 /* BufferedTextFileTests.m */; };
 		DA58FD6F292182F60034E588 /* SpanRunTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58FD6E292182F60034E588 /* SpanRunTable.swift */; };
 		DA58FD7129218BC60034E588 /* ModelExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58FD7029218BC60034E588 /* ModelExtensions.swift */; };
 		DA58FD732922D61B0034E588 /* ProjectDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58FD722922D61B0034E588 /* ProjectDetails.swift */; };
@@ -46,6 +48,11 @@
 
 /* Begin PBXFileReference section */
 		DA31F6BA2924C04E0077AF03 /* SpanNodeInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpanNodeInfo.swift; sourceTree = "<group>"; };
+		DA31F6BC292586680077AF03 /* Profiler-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Profiler-Bridging-Header.h"; sourceTree = "<group>"; };
+		DA31F6BD292586680077AF03 /* BufferedTextFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BufferedTextFile.h; sourceTree = "<group>"; };
+		DA31F6BE292586680077AF03 /* BufferedTextFile.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BufferedTextFile.m; sourceTree = "<group>"; };
+		DA31F6C029262E8A0077AF03 /* ProfilerTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ProfilerTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		DA31F6C129262E8A0077AF03 /* BufferedTextFileTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BufferedTextFileTests.m; sourceTree = "<group>"; };
 		DA58FD6E292182F60034E588 /* SpanRunTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpanRunTable.swift; sourceTree = "<group>"; };
 		DA58FD7029218BC60034E588 /* ModelExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelExtensions.swift; sourceTree = "<group>"; };
 		DA58FD722922D61B0034E588 /* ProjectDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDetails.swift; sourceTree = "<group>"; };
@@ -149,6 +156,9 @@
 				DA6A44982920EB2C00DCEDBB /* Assets.xcassets */,
 				DA6A449A2920EB2C00DCEDBB /* Profiler.entitlements */,
 				DA6A449B2920EB2C00DCEDBB /* Preview Content */,
+				DA31F6BD292586680077AF03 /* BufferedTextFile.h */,
+				DA31F6BE292586680077AF03 /* BufferedTextFile.m */,
+				DA31F6BC292586680077AF03 /* Profiler-Bridging-Header.h */,
 			);
 			path = Profiler;
 			sourceTree = "<group>";
@@ -165,6 +175,8 @@
 			isa = PBXGroup;
 			children = (
 				DA6A44A62920EB2C00DCEDBB /* ProfilerTests.swift */,
+				DA31F6C129262E8A0077AF03 /* BufferedTextFileTests.m */,
+				DA31F6C029262E8A0077AF03 /* ProfilerTests-Bridging-Header.h */,
 			);
 			path = ProfilerTests;
 			sourceTree = "<group>";
@@ -246,9 +258,11 @@
 				TargetAttributes = {
 					DA6A448B2920EB2B00DCEDBB = {
 						CreatedOnToolsVersion = 14.1;
+						LastSwiftMigration = 1410;
 					};
 					DA6A44A12920EB2C00DCEDBB = {
 						CreatedOnToolsVersion = 14.1;
+						LastSwiftMigration = 1410;
 						TestTargetID = DA6A448B2920EB2B00DCEDBB;
 					};
 					DA6A44AB2920EB2C00DCEDBB = {
@@ -313,6 +327,7 @@
 				DA58FD732922D61B0034E588 /* ProjectDetails.swift in Sources */,
 				DA31F6BB2924C04E0077AF03 /* SpanNodeInfo.swift in Sources */,
 				DA58FD7F292373970034E588 /* SpanEventTable.swift in Sources */,
+				DA31F6BF292586680077AF03 /* BufferedTextFile.m in Sources */,
 				DA6A44C72921431A00DCEDBB /* Profiler.xcdatamodeld in Sources */,
 				DA58FD772922E2A00034E588 /* PreviewExtensions.swift in Sources */,
 				DA6A44902920EB2B00DCEDBB /* ProfilerApp.swift in Sources */,
@@ -329,6 +344,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA6A44A72920EB2C00DCEDBB /* ProfilerTests.swift in Sources */,
+				DA31F6C229262E8A0077AF03 /* BufferedTextFileTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -471,6 +487,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Profiler/Profiler.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -497,6 +514,8 @@
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Profiler/Profiler-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -507,6 +526,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Profiler/Profiler.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -533,6 +553,7 @@
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Profiler/Profiler-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -543,10 +564,16 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.github.BlockProject3D.ProfilerTests;
@@ -554,6 +581,8 @@
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "ProfilerTests/ProfilerTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Profiler.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Profiler";
@@ -565,10 +594,16 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.github.BlockProject3D.ProfilerTests;
@@ -576,6 +611,7 @@
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "ProfilerTests/ProfilerTests-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Profiler.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Profiler";
