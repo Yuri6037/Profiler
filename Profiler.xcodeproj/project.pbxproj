@@ -101,6 +101,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DA31F6C329266C570077AF03 /* Importer */ = {
+			isa = PBXGroup;
+			children = (
+				DA31F6BD292586680077AF03 /* BufferedTextFile.h */,
+				DA31F6BE292586680077AF03 /* BufferedTextFile.m */,
+			);
+			path = Importer;
+			sourceTree = "<group>";
+		};
 		DA58FD742922D6250034E588 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -150,14 +159,13 @@
 		DA6A448E2920EB2B00DCEDBB /* Profiler */ = {
 			isa = PBXGroup;
 			children = (
+				DA31F6C329266C570077AF03 /* Importer */,
 				DA58FD752922E22D0034E588 /* Db */,
 				DA58FD742922D6250034E588 /* View */,
 				DA6A448F2920EB2B00DCEDBB /* ProfilerApp.swift */,
 				DA6A44982920EB2C00DCEDBB /* Assets.xcassets */,
 				DA6A449A2920EB2C00DCEDBB /* Profiler.entitlements */,
 				DA6A449B2920EB2C00DCEDBB /* Preview Content */,
-				DA31F6BD292586680077AF03 /* BufferedTextFile.h */,
-				DA31F6BE292586680077AF03 /* BufferedTextFile.m */,
 				DA31F6BC292586680077AF03 /* Profiler-Bridging-Header.h */,
 			);
 			path = Profiler;

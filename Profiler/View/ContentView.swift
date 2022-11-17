@@ -31,7 +31,7 @@ struct ContentView: View {
         sortDescriptors: [NSSortDescriptor(keyPath: \Project.timestamp, ascending: true)],
         animation: .default)
     private var items: FetchedResults<Project>
-    
+
     @State var importTask: DispatchWorkItem?;
 
     var body: some View {
