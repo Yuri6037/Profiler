@@ -22,18 +22,15 @@
 // IN THE SOFTWARE.
 
 #import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface BufferedTextFile : NSObject
+@interface ProjectImporter : NSObject
 
-- (BufferedTextFile * _Nullable)init:(NSString *)file withError:(NSError **)error;
+- (instancetype)init:(NSString *)dir;
 
-- (NSString * _Nullable)readLine:(NSError **)error;
-
-- (void)close;
-
-- (void)dealloc;
+- (BOOL)load:(NSPersistentContainer *)container withError:(NSError **)error;
 
 @end
 

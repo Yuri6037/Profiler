@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		DA31F6BB2924C04E0077AF03 /* SpanNodeInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA31F6BA2924C04E0077AF03 /* SpanNodeInfo.swift */; };
-		DA31F6BF292586680077AF03 /* BufferedTextFile.m in Sources */ = {isa = PBXBuildFile; fileRef = DA31F6BE292586680077AF03 /* BufferedTextFile.m */; };
-		DA31F6C229262E8A0077AF03 /* BufferedTextFileTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DA31F6C129262E8A0077AF03 /* BufferedTextFileTests.m */; };
 		DA58FD6F292182F60034E588 /* SpanRunTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58FD6E292182F60034E588 /* SpanRunTable.swift */; };
 		DA58FD7129218BC60034E588 /* ModelExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58FD7029218BC60034E588 /* ModelExtensions.swift */; };
 		DA58FD732922D61B0034E588 /* ProjectDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58FD722922D61B0034E588 /* ProjectDetails.swift */; };
@@ -27,6 +25,10 @@
 		DA6A44B12920EB2C00DCEDBB /* ProfilerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6A44B02920EB2C00DCEDBB /* ProfilerUITests.swift */; };
 		DA6A44B32920EB2C00DCEDBB /* ProfilerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6A44B22920EB2C00DCEDBB /* ProfilerUITestsLaunchTests.swift */; };
 		DA6A44C72921431A00DCEDBB /* Profiler.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DA6A44C52921431A00DCEDBB /* Profiler.xcdatamodeld */; };
+		DAB6AA012933614D00B290FC /* ProjectImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = DAB6AA002933614D00B290FC /* ProjectImporter.m */; };
+		DAB6AA1E293364D500B290FC /* TextTools.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAB6AA1A293364C800B290FC /* TextTools.framework */; platformFilters = (macos, ); };
+		DAB6AA1F293364D500B290FC /* TextTools.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DAB6AA1A293364C800B290FC /* TextTools.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		DAB6AA232933ADF100B290FC /* NodeImportTask.m in Sources */ = {isa = PBXBuildFile; fileRef = DAB6AA222933ADF100B290FC /* NodeImportTask.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,15 +46,40 @@
 			remoteGlobalIDString = DA6A448B2920EB2B00DCEDBB;
 			remoteInfo = Profiler;
 		};
+		DAB6AA19293364C800B290FC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DAB6AA14293364C800B290FC /* TextTools.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = DA60F699293003DC0017D656;
+			remoteInfo = TextTools;
+		};
+		DAB6AA1B293364C800B290FC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DAB6AA14293364C800B290FC /* TextTools.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = DA60F6A3293003DC0017D656;
+			remoteInfo = TextToolsTests;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		DAB6AA20293364D500B290FC /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				DAB6AA1F293364D500B290FC /* TextTools.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		DA31F6BA2924C04E0077AF03 /* SpanNodeInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpanNodeInfo.swift; sourceTree = "<group>"; };
 		DA31F6BC292586680077AF03 /* Profiler-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Profiler-Bridging-Header.h"; sourceTree = "<group>"; };
-		DA31F6BD292586680077AF03 /* BufferedTextFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BufferedTextFile.h; sourceTree = "<group>"; };
-		DA31F6BE292586680077AF03 /* BufferedTextFile.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BufferedTextFile.m; sourceTree = "<group>"; };
 		DA31F6C029262E8A0077AF03 /* ProfilerTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ProfilerTests-Bridging-Header.h"; sourceTree = "<group>"; };
-		DA31F6C129262E8A0077AF03 /* BufferedTextFileTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BufferedTextFileTests.m; sourceTree = "<group>"; };
 		DA58FD6E292182F60034E588 /* SpanRunTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpanRunTable.swift; sourceTree = "<group>"; };
 		DA58FD7029218BC60034E588 /* ModelExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelExtensions.swift; sourceTree = "<group>"; };
 		DA58FD722922D61B0034E588 /* ProjectDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDetails.swift; sourceTree = "<group>"; };
@@ -74,6 +101,11 @@
 		DA6A44B02920EB2C00DCEDBB /* ProfilerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilerUITests.swift; sourceTree = "<group>"; };
 		DA6A44B22920EB2C00DCEDBB /* ProfilerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilerUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		DA6A44C62921431A00DCEDBB /* Profiler.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Profiler.xcdatamodel; sourceTree = "<group>"; };
+		DAB6A9FF2933614D00B290FC /* ProjectImporter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProjectImporter.h; sourceTree = "<group>"; };
+		DAB6AA002933614D00B290FC /* ProjectImporter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProjectImporter.m; sourceTree = "<group>"; };
+		DAB6AA14293364C800B290FC /* TextTools.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TextTools.xcodeproj; path = ../TextTools/TextTools.xcodeproj; sourceTree = "<group>"; };
+		DAB6AA212933ADF100B290FC /* NodeImportTask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NodeImportTask.h; sourceTree = "<group>"; };
+		DAB6AA222933ADF100B290FC /* NodeImportTask.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NodeImportTask.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +113,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DAB6AA1E293364D500B290FC /* TextTools.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -104,8 +137,10 @@
 		DA31F6C329266C570077AF03 /* Importer */ = {
 			isa = PBXGroup;
 			children = (
-				DA31F6BD292586680077AF03 /* BufferedTextFile.h */,
-				DA31F6BE292586680077AF03 /* BufferedTextFile.m */,
+				DAB6A9FF2933614D00B290FC /* ProjectImporter.h */,
+				DAB6AA002933614D00B290FC /* ProjectImporter.m */,
+				DAB6AA212933ADF100B290FC /* NodeImportTask.h */,
+				DAB6AA222933ADF100B290FC /* NodeImportTask.m */,
 			);
 			path = Importer;
 			sourceTree = "<group>";
@@ -139,10 +174,12 @@
 		DA6A44832920EB2B00DCEDBB = {
 			isa = PBXGroup;
 			children = (
+				DAB6AA14293364C800B290FC /* TextTools.xcodeproj */,
 				DA6A448E2920EB2B00DCEDBB /* Profiler */,
 				DA6A44A52920EB2C00DCEDBB /* ProfilerTests */,
 				DA6A44AF2920EB2C00DCEDBB /* ProfilerUITests */,
 				DA6A448D2920EB2B00DCEDBB /* Products */,
+				DAB6AA1D293364D500B290FC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -183,7 +220,6 @@
 			isa = PBXGroup;
 			children = (
 				DA6A44A62920EB2C00DCEDBB /* ProfilerTests.swift */,
-				DA31F6C129262E8A0077AF03 /* BufferedTextFileTests.m */,
 				DA31F6C029262E8A0077AF03 /* ProfilerTests-Bridging-Header.h */,
 			);
 			path = ProfilerTests;
@@ -198,6 +234,22 @@
 			path = ProfilerUITests;
 			sourceTree = "<group>";
 		};
+		DAB6AA15293364C800B290FC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DAB6AA1A293364C800B290FC /* TextTools.framework */,
+				DAB6AA1C293364C800B290FC /* TextToolsTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DAB6AA1D293364D500B290FC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -208,6 +260,7 @@
 				DA6A44882920EB2B00DCEDBB /* Sources */,
 				DA6A44892920EB2B00DCEDBB /* Frameworks */,
 				DA6A448A2920EB2B00DCEDBB /* Resources */,
+				DAB6AA20293364D500B290FC /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -290,6 +343,12 @@
 			mainGroup = DA6A44832920EB2B00DCEDBB;
 			productRefGroup = DA6A448D2920EB2B00DCEDBB /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = DAB6AA15293364C800B290FC /* Products */;
+					ProjectRef = DAB6AA14293364C800B290FC /* TextTools.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				DA6A448B2920EB2B00DCEDBB /* Profiler */,
@@ -298,6 +357,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		DAB6AA1A293364C800B290FC /* TextTools.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = TextTools.framework;
+			remoteRef = DAB6AA19293364C800B290FC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		DAB6AA1C293364C800B290FC /* TextToolsTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = TextToolsTests.xctest;
+			remoteRef = DAB6AA1B293364C800B290FC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		DA6A448A2920EB2B00DCEDBB /* Resources */ = {
@@ -335,13 +411,14 @@
 				DA58FD732922D61B0034E588 /* ProjectDetails.swift in Sources */,
 				DA31F6BB2924C04E0077AF03 /* SpanNodeInfo.swift in Sources */,
 				DA58FD7F292373970034E588 /* SpanEventTable.swift in Sources */,
-				DA31F6BF292586680077AF03 /* BufferedTextFile.m in Sources */,
 				DA6A44C72921431A00DCEDBB /* Profiler.xcdatamodeld in Sources */,
 				DA58FD772922E2A00034E588 /* PreviewExtensions.swift in Sources */,
 				DA6A44902920EB2B00DCEDBB /* ProfilerApp.swift in Sources */,
 				DA6A44922920EB2B00DCEDBB /* Database.swift in Sources */,
 				DA58FD792922E2B20034E588 /* SampleData.swift in Sources */,
 				DA6A44972920EB2B00DCEDBB /* ContentView.swift in Sources */,
+				DAB6AA232933ADF100B290FC /* NodeImportTask.m in Sources */,
+				DAB6AA012933614D00B290FC /* ProjectImporter.m in Sources */,
 				DA58FD7B2922E8AB0034E588 /* ProjectInfo.swift in Sources */,
 				DA58FD7D292371D70034E588 /* SpanNodeDetails.swift in Sources */,
 			);
@@ -352,7 +429,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA6A44A72920EB2C00DCEDBB /* ProfilerTests.swift in Sources */,
-				DA31F6C229262E8A0077AF03 /* BufferedTextFileTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

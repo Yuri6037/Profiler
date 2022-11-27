@@ -21,37 +21,15 @@
 // DEALINGS
 // IN THE SOFTWARE.
 
-#import <XCTest/XCTest.h>
-#import "BufferedTextFile.h"
+#import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
 
-@interface BufferedTextFileTests : XCTestCase
+NS_ASSUME_NONNULL_BEGIN
 
-@end
+@interface NodeImportTask : NSOperation
 
-@implementation BufferedTextFileTests
-
-- (void)setUp {
-    // Put setup code here. This method is called before the invocation of each test method in the class.
-}
-
-- (void)tearDown {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-}
-
-- (void)testExample {
-    NSError *err;
-    NSString *line;
-    BufferedTextFile *file = [[BufferedTextFile alloc] init:@"/etc/paths" withError:&err];
-    XCTAssertNotNil(file);
-    NSMutableString *str = [[NSMutableString alloc] init];
-    while ((line = [file readLine:&err])) {
-        XCTAssertGreaterThan([line length], 0);
-        [str appendString:line];
-        [str appendString:@"\n"];
-    }
-    NSString *expected = [NSString stringWithContentsOfFile:@"/etc/paths" encoding:NSUTF8StringEncoding error:&err];
-    XCTAssertNotNil(str);
-    XCTAssertEqualObjects(str, expected);
-}
+- (instancetype)initWithIndex:(NSUInteger)index path:(NSString *)path directory:(NSString *)dir context:(NSManagedObjectContext *)ctx;
 
 @end
+
+NS_ASSUME_NONNULL_END
