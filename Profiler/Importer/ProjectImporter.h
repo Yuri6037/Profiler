@@ -30,7 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)init:(NSString *)dir;
 
-- (BOOL)load:(NSPersistentContainer *)container withError:(NSError **)error;
+- (BOOL)loadInOperationQueue:(NSOperationQueue *)queue withContainer:(NSPersistentContainer *)container error:(NSError **)error;
 
 @end
 

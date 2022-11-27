@@ -23,27 +23,32 @@
 
 #import <TextTools/TextTools.h>
 #import "ProjectImporter.h"
-
-typedef struct tree_node_s {
-    NSUInteger index;
-    NSString *path;
-} tree_node_t;
+#import "TreeNode.h"
+#import "NodeImportTask.h"
 
 @implementation ProjectImporter {
     NSString *_dir;
+    NSString *_treeFile;
 }
 
 - (instancetype)init:(NSString *)dir {
     _dir = dir;
-    /*BufferedTextFile *file = [[BufferedTextFile alloc] init:path bufferSize:8192 withError:error];
-    if (file == nil)
-        return nil;*/
-    
+    _treeFile = [_dir stringByAppendingString:@"/tree.txt"];
     return self;
 }
 
-- (BOOL)load:(NSPersistentContainer *)container withError:(NSError **)error {
-    return NO;
+- (BOOL)loadInOperationQueue:(NSOperationQueue *)queue withContainer:(NSPersistentContainer *)container error:(NSError **)error {
+    BufferedTextFile *file = [[BufferedTextFile alloc] init:_treeFile bufferSize:8192 withError:error];
+    NSString *line;
+    if (file == nil)
+        return NO;
+    *error = nil;
+    while ((line = [file readLine:error])) {
+        TreeNode *node = [[TreeNode alloc] initFromString:line];
+        NodeImportTask *task = [[NodeImportTask alloc] initWithTreeNode:node directory:_dir container:container];
+        [queue addOperation:task];
+    }
+    return error == nil;
 }
 
 @end
