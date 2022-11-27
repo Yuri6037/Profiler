@@ -140,9 +140,9 @@
 		DA31F6C329266C570077AF03 /* Importer */ = {
 			isa = PBXGroup;
 			children = (
-				DAB6A9FF2933614D00B290FC /* ProjectImporter.h */,
 				DAB6AA242933B60700B290FC /* TreeNode.h */,
 				DAB6AA252933B60700B290FC /* TreeNode.m */,
+				DAB6A9FF2933614D00B290FC /* ProjectImporter.h */,
 				DAB6AA002933614D00B290FC /* ProjectImporter.m */,
 				DAB6AA212933ADF100B290FC /* NodeImportTask.h */,
 				DAB6AA222933ADF100B290FC /* NodeImportTask.m */,
