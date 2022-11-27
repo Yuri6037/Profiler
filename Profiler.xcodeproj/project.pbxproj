@@ -29,6 +29,7 @@
 		DAB6AA1E293364D500B290FC /* TextTools.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAB6AA1A293364C800B290FC /* TextTools.framework */; platformFilters = (macos, ); };
 		DAB6AA1F293364D500B290FC /* TextTools.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DAB6AA1A293364C800B290FC /* TextTools.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DAB6AA232933ADF100B290FC /* NodeImportTask.m in Sources */ = {isa = PBXBuildFile; fileRef = DAB6AA222933ADF100B290FC /* NodeImportTask.m */; };
+		DAB6AA262933B60700B290FC /* TreeNode.m in Sources */ = {isa = PBXBuildFile; fileRef = DAB6AA252933B60700B290FC /* TreeNode.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -106,6 +107,8 @@
 		DAB6AA14293364C800B290FC /* TextTools.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TextTools.xcodeproj; path = ../TextTools/TextTools.xcodeproj; sourceTree = "<group>"; };
 		DAB6AA212933ADF100B290FC /* NodeImportTask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NodeImportTask.h; sourceTree = "<group>"; };
 		DAB6AA222933ADF100B290FC /* NodeImportTask.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NodeImportTask.m; sourceTree = "<group>"; };
+		DAB6AA242933B60700B290FC /* TreeNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TreeNode.h; sourceTree = "<group>"; };
+		DAB6AA252933B60700B290FC /* TreeNode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TreeNode.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +141,8 @@
 			isa = PBXGroup;
 			children = (
 				DAB6A9FF2933614D00B290FC /* ProjectImporter.h */,
+				DAB6AA242933B60700B290FC /* TreeNode.h */,
+				DAB6AA252933B60700B290FC /* TreeNode.m */,
 				DAB6AA002933614D00B290FC /* ProjectImporter.m */,
 				DAB6AA212933ADF100B290FC /* NodeImportTask.h */,
 				DAB6AA222933ADF100B290FC /* NodeImportTask.m */,
@@ -417,6 +422,7 @@
 				DA6A44922920EB2B00DCEDBB /* Database.swift in Sources */,
 				DA58FD792922E2B20034E588 /* SampleData.swift in Sources */,
 				DA6A44972920EB2B00DCEDBB /* ContentView.swift in Sources */,
+				DAB6AA262933B60700B290FC /* TreeNode.m in Sources */,
 				DAB6AA232933ADF100B290FC /* NodeImportTask.m in Sources */,
 				DAB6AA012933614D00B290FC /* ProjectImporter.m in Sources */,
 				DA58FD7B2922E8AB0034E588 /* ProjectInfo.swift in Sources */,
