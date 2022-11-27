@@ -23,12 +23,13 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
+#import "TreeNode.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NodeImportTask : NSOperation
 
-- (instancetype)initWithIndex:(NSUInteger)index path:(NSString *)path directory:(NSString *)dir context:(NSManagedObjectContext *)ctx;
+- (instancetype)initWithTreeNode:(TreeNode *)node directory:(NSString *)dir container:(NSPersistentContainer *)container;
 
 @end
 
