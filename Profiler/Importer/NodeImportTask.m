@@ -22,6 +22,7 @@
 // IN THE SOFTWARE.
 
 #import "NodeImportTask.h"
+#import "SpanNode+CoreDataClass.h"
 
 @implementation NodeImportTask {
     NSUInteger _index;
@@ -29,6 +30,7 @@
     NSString *_metadataFile;
     NSString *_eventsFile;
     NSPersistentContainer *_container;
+    TreeNode *_node;
 }
 
 - (instancetype)initWithTreeNode:(TreeNode *)node directory:(NSString *)dir container:(NSPersistentContainer *)container {
@@ -37,11 +39,16 @@
     _metadataFile = [[[dir stringByAppendingString:@"/metadata/"] stringByAppendingFormat:@"%lu", node.index] stringByAppendingString:@".csv"];
     _eventsFile = [[[dir stringByAppendingString:@"/events/"] stringByAppendingFormat:@"%lu", node.index] stringByAppendingString:@".csv"];
     _container = container;
+    _node = node;
     return self;
 }
 
 - (void)main {
     //TODO: Initialize the NSManagedObjectContext in here + implement
+    NSManagedObjectContext *ctx = [_container newBackgroundContext];
+    SpanNode *node = [[SpanNode alloc] initWithContext:ctx];
+    node.path = _node.path;
+    node.id = (int32_t)_index;
 }
 
 @end

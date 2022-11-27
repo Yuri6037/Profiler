@@ -97,6 +97,8 @@ extension Project {
     }
 }
 
+extension Project: Identifiable {}
+
 extension System {
     var wId: UUID { self.id! }
     var wCpuName: String { self.cpuName! }
@@ -109,6 +111,8 @@ extension System {
         return obj;
     }
 }
+
+extension System: Identifiable {}
 
 extension SpanMetadata {
     var wId: UUID { self.id! }
@@ -126,17 +130,21 @@ extension SpanMetadata {
     }
 }
 
+extension SpanMetadata: Identifiable {}
+
 extension SpanNode {
     var wId: Int32 { self.id }
     var wPath: String { self.path! }
-    var wEvents: [SpanEvent] { (self.events?.allObjects ?? []) as! [SpanEvent] }
-    var wRuns: [SpanRun] { (self.runs?.allObjects ?? []) as! [SpanRun] }
+    var wEvents: [SpanEvent] { Array(self.events ?? []) }
+    var wRuns: [SpanRun] { Array(self.runs ?? []) }
     var wMetadata: SpanMetadata? { self.metadata }
 }
 
+extension SpanNode: Identifiable {}
+
 extension SpanRun {
     var wId: UUID { self.id! }
-    var wVariables: [SpanVariable] { (self.variables?.allObjects ?? []) as! [SpanVariable] }
+    var wVariables: [SpanVariable] { Array(self.variables ?? []) }
     var wMessage: String? { self.message }
     var wTime: Float64 { self.time }
 
@@ -147,9 +155,11 @@ extension SpanRun {
     }
 }
 
+extension SpanRun: Identifiable {}
+
 extension SpanEvent {
     var wId: UUID { self.id! }
-    var wVariables: [SpanVariable] { (self.variables?.allObjects ?? []) as! [SpanVariable] }
+    var wVariables: [SpanVariable] { Array(self.variables ?? []) }
     var wMessage: String { self.message! }
 
     static func new(context: NSManagedObjectContext) -> SpanEvent {
@@ -158,3 +168,5 @@ extension SpanEvent {
         return obj;
     }
 }
+
+extension SpanEvent: Identifiable {}
