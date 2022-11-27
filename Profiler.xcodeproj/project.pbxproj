@@ -30,6 +30,7 @@
 		DAB6AA1F293364D500B290FC /* TextTools.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DAB6AA1A293364C800B290FC /* TextTools.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DAB6AA232933ADF100B290FC /* NodeImportTask.m in Sources */ = {isa = PBXBuildFile; fileRef = DAB6AA222933ADF100B290FC /* NodeImportTask.m */; };
 		DAB6AA262933B60700B290FC /* TreeNode.m in Sources */ = {isa = PBXBuildFile; fileRef = DAB6AA252933B60700B290FC /* TreeNode.m */; };
+		DAB6AA282933B99B00B290FC /* TreeNodeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DAB6AA272933B99B00B290FC /* TreeNodeTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -109,6 +110,7 @@
 		DAB6AA222933ADF100B290FC /* NodeImportTask.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NodeImportTask.m; sourceTree = "<group>"; };
 		DAB6AA242933B60700B290FC /* TreeNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TreeNode.h; sourceTree = "<group>"; };
 		DAB6AA252933B60700B290FC /* TreeNode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TreeNode.m; sourceTree = "<group>"; };
+		DAB6AA272933B99B00B290FC /* TreeNodeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TreeNodeTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -226,6 +228,7 @@
 			children = (
 				DA6A44A62920EB2C00DCEDBB /* ProfilerTests.swift */,
 				DA31F6C029262E8A0077AF03 /* ProfilerTests-Bridging-Header.h */,
+				DAB6AA272933B99B00B290FC /* TreeNodeTests.m */,
 			);
 			path = ProfilerTests;
 			sourceTree = "<group>";
@@ -435,6 +438,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA6A44A72920EB2C00DCEDBB /* ProfilerTests.swift in Sources */,
+				DAB6AA282933B99B00B290FC /* TreeNodeTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
