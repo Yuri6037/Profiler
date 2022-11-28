@@ -60,14 +60,14 @@
             proj.name = value;
         else if ([key isEqualToString:@"Version"])
             proj.version = value;
-        else if ([key isEqualToString:@"Os"])
+        else if ([key isEqualToString:@"Os"] && value.length > 0)
             os = value;
-        else if ([key isEqualToString:@"CpuName"])
+        else if ([key isEqualToString:@"CpuName"] && value.length > 0)
             cpuName = value;
         else if ([key isEqualToString:@"CpuCoreCount"])
             cpuCoreCount = (int32_t)[value integerValue];
     }
-    if (cpuName != nil && os != nil) {
+    if (cpuName != nil && os != nil && cpuCoreCount > 0) {
         NSFetchRequest<System *> *request = [NSFetchRequest fetchRequestWithEntityName:@"System"];
         request.predicate = [NSPredicate predicateWithFormat:@"cpuName = %@ AND os = %@ AND cpuCoreCound = %d", cpuName, os, cpuCoreCount];
         System *sys = [[ctx executeFetchRequest:request error:error] firstObject];
