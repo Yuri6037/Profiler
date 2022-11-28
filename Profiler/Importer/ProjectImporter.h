@@ -28,9 +28,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ProjectImporter : NSObject
 
-- (instancetype)init:(NSString *)dir;
+- (instancetype)initWithDirectory:(NSString *)dir container:(NSPersistentContainer *)container;
 
-- (BOOL)loadInOperationQueue:(NSOperationQueue *)queue withContainer:(NSPersistentContainer *)container error:(NSError **)error;
+- (BOOL)loadProject:(NSError **)error;
+
+- (BOOL)importTreeInQueue:(NSOperationQueue *)queue withContainer:(NSPersistentContainer *)container error:(NSError **)error;
 
 @end
 
