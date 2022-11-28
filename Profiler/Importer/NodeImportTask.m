@@ -31,17 +31,17 @@
     NSString *_eventsFile;
     NSPersistentContainer *_container;
     TreeNode *_node;
-    NSUUID *_projectId;
+    NSManagedObjectID *_oid;
 }
 
-- (instancetype)initWithTreeNode:(TreeNode *)node directory:(NSString *)dir container:(NSPersistentContainer *)container projectId:(NSUUID *)uuid {
+- (instancetype)initWithTreeNode:(TreeNode *)node directory:(NSString *)dir container:(NSPersistentContainer *)container projectId:(NSManagedObjectID *)oid {
     _index = node.index;
     _runsFile = [[[dir stringByAppendingString:@"/runs/"] stringByAppendingFormat:@"%lu", node.index] stringByAppendingString:@".csv"];
     _metadataFile = [[[dir stringByAppendingString:@"/metadata/"] stringByAppendingFormat:@"%lu", node.index] stringByAppendingString:@".csv"];
     _eventsFile = [[[dir stringByAppendingString:@"/events/"] stringByAppendingFormat:@"%lu", node.index] stringByAppendingString:@".csv"];
     _container = container;
     _node = node;
-    _projectId = uuid;
+    _oid = oid;
     return self;
 }
 

@@ -29,7 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NodeImportTask : NSOperation
 
-- (instancetype)initWithTreeNode:(TreeNode *)node directory:(NSString *)dir container:(NSPersistentContainer *)container projectId:(NSUUID *)uuid;
+- (instancetype)initWithTreeNode:(TreeNode *)node directory:(NSString *)dir container:(NSPersistentContainer *)container projectId:(NSManagedObjectID *)oid;
 
 @end
 
