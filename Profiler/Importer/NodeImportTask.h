@@ -24,12 +24,17 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 #import "TreeNode.h"
+#import "SpanRun+CoreDataClass.h"
+#import "SpanEvent+CoreDataClass.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NodeImportTask : NSOperation
 
 - (instancetype)initWithTreeNode:(TreeNode *)node directory:(NSString *)dir container:(NSPersistentContainer *)container projectId:(NSManagedObjectID *)oid;
+
++ (SpanRun *)parseRun:(CSVRow)row withContext:(NSManagedObjectContext *)ctx;
++ (SpanEvent *)parseEvent:(CSVRow)row withContext:(NSManagedObjectContext *)ctx;
 
 @end
 
