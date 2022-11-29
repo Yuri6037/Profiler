@@ -109,7 +109,7 @@
     return NO;
 }
 
-- (BOOL)importTreeWithContainer:(NSError **)error {
+- (BOOL)importTree:(NSError **)error {
     BufferedTextFile *file = [[BufferedTextFile alloc] init:_treeFile bufferSize:8192 withError:error];
     NSString *line;
     if (file == nil)

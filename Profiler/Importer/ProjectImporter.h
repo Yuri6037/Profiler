@@ -32,7 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)loadProject:(NSError **)error;
 
-- (BOOL)importTreeWithContainer:(NSError **)error;
+- (BOOL)importTree:(NSError **)error;
 
 @end
 
