@@ -31,6 +31,7 @@
 		DAB6AA232933ADF100B290FC /* NodeImportTask.m in Sources */ = {isa = PBXBuildFile; fileRef = DAB6AA222933ADF100B290FC /* NodeImportTask.m */; };
 		DAB6AA262933B60700B290FC /* TreeNode.m in Sources */ = {isa = PBXBuildFile; fileRef = DAB6AA252933B60700B290FC /* TreeNode.m */; };
 		DAB6AA282933B99B00B290FC /* TreeNodeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DAB6AA272933B99B00B290FC /* TreeNodeTests.m */; };
+		DAB6AA2B2936447000B290FC /* FilePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB6AA2A2936447000B290FC /* FilePicker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -111,6 +112,7 @@
 		DAB6AA242933B60700B290FC /* TreeNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TreeNode.h; sourceTree = "<group>"; };
 		DAB6AA252933B60700B290FC /* TreeNode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TreeNode.m; sourceTree = "<group>"; };
 		DAB6AA272933B99B00B290FC /* TreeNodeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TreeNodeTests.m; sourceTree = "<group>"; };
+		DAB6AA2A2936447000B290FC /* FilePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePicker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -211,6 +213,7 @@
 				DA6A449A2920EB2C00DCEDBB /* Profiler.entitlements */,
 				DA6A449B2920EB2C00DCEDBB /* Preview Content */,
 				DA31F6BC292586680077AF03 /* Profiler-Bridging-Header.h */,
+				DAB6AA2A2936447000B290FC /* FilePicker.swift */,
 			);
 			path = Profiler;
 			sourceTree = "<group>";
@@ -418,6 +421,7 @@
 				DA58FD7129218BC60034E588 /* ModelExtensions.swift in Sources */,
 				DA58FD732922D61B0034E588 /* ProjectDetails.swift in Sources */,
 				DA31F6BB2924C04E0077AF03 /* SpanNodeInfo.swift in Sources */,
+				DAB6AA2B2936447000B290FC /* FilePicker.swift in Sources */,
 				DA58FD7F292373970034E588 /* SpanEventTable.swift in Sources */,
 				DA6A44C72921431A00DCEDBB /* Profiler.xcdatamodeld in Sources */,
 				DA58FD772922E2A00034E588 /* PreviewExtensions.swift in Sources */,
