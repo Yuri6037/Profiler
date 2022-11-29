@@ -40,6 +40,7 @@
     NSString *_projectFile;
     NSPersistentContainer *_container;
     NSManagedObjectID *_oid;
+    NSOperationQueue *_queue;
 }
 
 - (BOOL)loadInfoFile:(NSError **)error into:(Project *)proj withContext:(NSManagedObjectContext *)ctx {
@@ -90,6 +91,8 @@
     _projectFile = [_dir stringByAppendingString:@"/info.csv"];
     _container = container;
     _oid = nil;
+    _queue = [[NSOperationQueue alloc] init];
+    _queue.name = dir;
     return self;
 }
 
@@ -106,7 +109,7 @@
     return NO;
 }
 
-- (BOOL)importTreeInQueue:(NSOperationQueue *)queue withContainer:(NSPersistentContainer *)container error:(NSError **)error {
+- (BOOL)importTreeWithContainer:(NSPersistentContainer *)container error:(NSError **)error {
     BufferedTextFile *file = [[BufferedTextFile alloc] init:_treeFile bufferSize:8192 withError:error];
     NSString *line;
     if (file == nil)
@@ -115,7 +118,7 @@
     while ((line = [file readLine:error]) != nil) {
         TreeNode *node = [[TreeNode alloc] initFromString:line];
         NodeImportTask *task = [[NodeImportTask alloc] initWithTreeNode:node directory:_dir container:container projectId:_oid];
-        [queue addOperation:task];
+        [_queue addOperation:task];
     }
     return error == nil;
 }
