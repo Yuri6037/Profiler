@@ -25,6 +25,7 @@
 #import "NodeImportTask.h"
 #import "SpanNode+CoreDataClass.h"
 #import "SpanMetadata+CoreDataClass.h"
+#import "SpanVariable+CoreDataClass.h"
 
 @interface NodeImportTask()
 
@@ -45,6 +46,53 @@
     NSPersistentContainer *_container;
     TreeNode *_node;
     NSManagedObjectID *_oid;
+}
+
++ (SpanRun *)parseRun:(CSVRow)row withContext:(NSManagedObjectContext *)ctx {
+    if (row.count < 3)
+        return nil;
+    NSScanner *scan = [NSScanner scannerWithString:[row objectAtIndex:2]];
+    Float64 duration;
+    if (![scan scanDouble:&duration]) {
+        return nil;
+    }
+    NSString *msg = [row objectAtIndex:1];
+    SpanRun *run = [[SpanRun alloc] initWithContext:ctx];
+    run.id = [NSUUID UUID];
+    run.message = msg.length > 0 ? msg : nil;
+    run.time = duration;
+    run.variables = [[NSMutableSet alloc] init];
+    for (NSUInteger i = 3; i != row.count; ++i) {
+        NSString *variable = [row objectAtIndex:i];
+        if (variable.length == 0)
+            continue;
+        SpanVariable *var = [[SpanVariable alloc] initWithContext:ctx];
+        var.id = [NSUUID UUID];
+        var.data = variable;
+        [(NSMutableSet *)run.variables addObject:var];
+    }
+    return run;
+}
+
++ (SpanEvent *)parseEvent:(CSVRow)row withContext:(NSManagedObjectContext *)ctx {
+    if (row.count < 2)
+        return nil;
+    NSScanner *scan = [NSScanner scannerWithString:[row objectAtIndex:2]];
+    NSString *msg = [row objectAtIndex:1];
+    SpanEvent *event = [[SpanEvent alloc] initWithContext:ctx];
+    event.id = [NSUUID UUID];
+    event.message = msg.length > 0 ? msg : nil;
+    event.variables = [[NSMutableSet alloc] init];
+    for (NSUInteger i = 2; i != row.count; ++i) {
+        NSString *variable = [row objectAtIndex:i];
+        if (variable.length == 0)
+            continue;
+        SpanVariable *var = [[SpanVariable alloc] initWithContext:ctx];
+        var.id = [NSUUID UUID];
+        var.data = variable;
+        [(NSMutableSet *)event.variables addObject:var];
+    }
+    return event;
 }
 
 - (instancetype)initWithTreeNode:(TreeNode *)node directory:(NSString *)dir container:(NSPersistentContainer *)container projectId:(NSManagedObjectID *)oid {
