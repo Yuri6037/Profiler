@@ -109,7 +109,7 @@
     return NO;
 }
 
-- (BOOL)importTreeWithContainer:(NSPersistentContainer *)container error:(NSError **)error {
+- (BOOL)importTreeWithContainer:(NSError **)error {
     BufferedTextFile *file = [[BufferedTextFile alloc] init:_treeFile bufferSize:8192 withError:error];
     NSString *line;
     if (file == nil)
@@ -117,7 +117,7 @@
     *error = nil;
     while ((line = [file readLine:error]) != nil) {
         TreeNode *node = [[TreeNode alloc] initFromString:line];
-        NodeImportTask *task = [[NodeImportTask alloc] initWithTreeNode:node directory:_dir container:container projectId:_oid];
+        NodeImportTask *task = [[NodeImportTask alloc] initWithTreeNode:node directory:_dir container:_container projectId:_oid];
         [_queue addOperation:task];
     }
     return error == nil;
