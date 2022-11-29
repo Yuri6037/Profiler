@@ -33,8 +33,8 @@
 
 + (int16_t)levelFromString:(NSString *)str;
 
-- (BOOL)loadRunsInto:(NSMutableSet<SpanRun *> *)runs context:(NSManagedObjectContext *)ctx withError:(NSError **)error;
-- (BOOL)loadEventsInto:(NSMutableSet<SpanEvent *> *)events context:(NSManagedObjectContext *)ctx withError:(NSError **)error;
+- (BOOL)loadRunsInto:(SpanNode *)node context:(NSManagedObjectContext *)ctx withError:(NSError **)error;
+- (BOOL)loadEventsInto:(SpanNode *)node context:(NSManagedObjectContext *)ctx withError:(NSError **)error;
 
 @end
 
@@ -67,6 +67,7 @@
         if (variable.length == 0)
             continue;
         SpanVariable *var = [[SpanVariable alloc] initWithContext:ctx];
+        var.run = run;
         var.id = [NSUUID UUID];
         var.data = variable;
         [(NSMutableSet *)run.variables addObject:var];
@@ -77,7 +78,6 @@
 + (SpanEvent *)parseEvent:(CSVRow)row withContext:(NSManagedObjectContext *)ctx {
     if (row.count < 2)
         return nil;
-    NSScanner *scan = [NSScanner scannerWithString:[row objectAtIndex:2]];
     NSString *msg = [row objectAtIndex:1];
     SpanEvent *event = [[SpanEvent alloc] initWithContext:ctx];
     event.id = [NSUUID UUID];
@@ -89,6 +89,7 @@
             continue;
         SpanVariable *var = [[SpanVariable alloc] initWithContext:ctx];
         var.id = [NSUUID UUID];
+        var.event = event;
         var.data = variable;
         [(NSMutableSet *)event.variables addObject:var];
     }
@@ -145,10 +146,11 @@
         else if ([key isEqualToString:@"Level"])
             node.metadata.level = [NodeImportTask levelFromString:value];
     }
-    return error == nil;
+    return *error == nil;
 }
 
-- (BOOL)loadRunsInto:(NSMutableSet<SpanRun *> *)runs context:(NSManagedObjectContext *)ctx withError:(NSError **)error {
+- (BOOL)loadRunsInto:(SpanNode *)node context:(NSManagedObjectContext *)ctx withError:(NSError **)error {
+    NSMutableSet<SpanRun *> *runs = (NSMutableSet *)node.runs;
     BufferedTextFile *file = [[BufferedTextFile alloc] init:_runsFile bufferSize:8192 withError:error];
     CSVParser *parser = [[CSVParser alloc] init:','];
     NSString *line;
@@ -162,12 +164,14 @@
             *error = [NSError errorWithDomain:@"Parse error" code:0 userInfo:nil];
             return NO;
         }
+        run.node = node;
         [runs addObject:run];
     }
-    return error == nil;
+    return *error == nil;
 }
 
-- (BOOL)loadEventsInto:(NSMutableSet<SpanEvent *> *)events context:(NSManagedObjectContext *)ctx withError:(NSError **)error {
+- (BOOL)loadEventsInto:(SpanNode *)node context:(NSManagedObjectContext *)ctx withError:(NSError **)error {
+    NSMutableSet<SpanEvent *> *events = (NSMutableSet *)node.events;
     BufferedTextFile *file = [[BufferedTextFile alloc] init:_eventsFile bufferSize:8192 withError:error];
     CSVParser *parser = [[CSVParser alloc] init:','];
     NSString *line;
@@ -181,13 +185,15 @@
             *error = [NSError errorWithDomain:@"Parse error" code:0 userInfo:nil];
             return NO;
         }
+        event.node = node;
         [events addObject:event];
     }
-    return error == nil;
+    return *error == nil;
 }
 
 - (void)main {
     NSManagedObjectContext *ctx = [_container newBackgroundContext];
+    ctx.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy;
     Project *proj = (Project *)[ctx objectWithID:_oid];
     assert(proj != nil); //If this assertion fails then we have a pretty big problem: ProjectImporter did not save the database with the new project
     SpanNode *node = [[SpanNode alloc] initWithContext:ctx];
@@ -198,10 +204,10 @@
     if (![self loadMetadata:&error into:node withContext:ctx])
         NSLog(@"Warning: failed to load metadata for %@: %@", _node.path, error);
     node.runs = [[NSMutableSet alloc] init];
-    if (![self loadRunsInto:(NSMutableSet *)node.runs context:ctx withError:&error])
+    if (![self loadRunsInto:node context:ctx withError:&error])
         NSLog(@"Warning: failed to load runs for %@: %@", _node.path, error);
     node.events = [[NSMutableSet alloc] init];
-    if (![self loadEventsInto:(NSMutableSet *)node.events context:ctx withError:&error])
+    if (![self loadEventsInto:node context:ctx withError:&error])
         NSLog(@"Warning: failed to load events for %@: %@", _node.path, error);
     if (![ctx save:&error])
         NSLog(@"Warning: failed to save database for %@: %@", _node.path, error);
