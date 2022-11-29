@@ -32,28 +32,34 @@ struct ContentView: View {
         animation: .default)
     private var items: FetchedResults<Project>
 
-    @State var importTask: DispatchWorkItem?;
+    @State var importTask: ProjectImporter?;
+    @State var selection: Project?;
+    @State var columnVisibility = NavigationSplitViewVisibility.all;
+
+    var sidebar: some View {
+        List(items, selection: $selection) { ProjectLink(project: $0) }
+    }
 
     var body: some View {
-        NavigationView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        ProjectDetails(project: item)
-                    } label: {
-                        VStack(alignment: .leading) {
-                            HStack {
-                                Text("\(item.name!)").bold()
-                                Text("(\(item.version ?? "No version"))")
-                            }
-                            Text("\(item.timestamp!, formatter: dateFormatter)")
-                        }
-                    }
+        NavigationSplitView(
+            columnVisibility: $columnVisibility,
+            sidebar: { sidebar },
+            content: {
+                if let project = selection {
+                    ProjectDetails(project: project)
+                } else {
+                    Text("Select an item")
                 }
-                .onDelete(perform: deleteItems)
+            },
+            detail: { Text("Select an item") }
+        )
+        .onDeleteCommand(perform: self.deleteItem)
+        .toolbar {
+            Button("Import") {
+                openFileDialog(onPick: { url in
+                    self.importProject(dir: url.path);
+                })
             }
-            Text("Select an item")
-            Text("Select an item")
         }
         .alert("Database Error", isPresented: .constant(Database.shared.lastErrorExists), actions: {
             Button("OK") {
@@ -62,12 +68,20 @@ struct ContentView: View {
         }, message: {
             Text("\(Database.shared.lastErrorString)")
         })
+        .onAppear {
+            columnVisibility = .all;
+        }
     }
 
-    private func importProject() {
-        self.importTask = DispatchWorkItem {
-        };
-        DispatchQueue.global().async(execute: self.importTask!);
+    private func importProject(dir: String) {
+        self.importTask = ProjectImporter(directory: dir, container: Database.shared.container);
+        do {
+            try self.importTask?.loadProject();
+            try self.importTask?.importTree();
+        } catch {
+            //TODO: Error handling
+            fatalError("\(error)");
+        }
     }
 
     /*private func addItem() {
@@ -86,21 +100,15 @@ struct ContentView: View {
         }
     }*/
 
-    private func deleteItems(offsets: IndexSet) {
+    private func deleteItem() {
         withAnimation {
-            offsets.map { items[$0] }.forEach(viewContext.delete)
-
-            Database.shared.save();
+            if let selection = self.selection {
+                viewContext.delete(selection);
+                Database.shared.save();
+            }
         }
     }
 }
-
-private let dateFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateStyle = .short
-    formatter.timeStyle = .medium
-    return formatter
-}()
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {

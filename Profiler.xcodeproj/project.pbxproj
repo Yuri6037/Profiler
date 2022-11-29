@@ -32,6 +32,7 @@
 		DAB6AA262933B60700B290FC /* TreeNode.m in Sources */ = {isa = PBXBuildFile; fileRef = DAB6AA252933B60700B290FC /* TreeNode.m */; };
 		DAB6AA282933B99B00B290FC /* TreeNodeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DAB6AA272933B99B00B290FC /* TreeNodeTests.m */; };
 		DAB6AA2B2936447000B290FC /* FilePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB6AA2A2936447000B290FC /* FilePicker.swift */; };
+		DAB6AA312936A3F700B290FC /* ProjectLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB6AA302936A3F700B290FC /* ProjectLink.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -113,6 +114,7 @@
 		DAB6AA252933B60700B290FC /* TreeNode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TreeNode.m; sourceTree = "<group>"; };
 		DAB6AA272933B99B00B290FC /* TreeNodeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TreeNodeTests.m; sourceTree = "<group>"; };
 		DAB6AA2A2936447000B290FC /* FilePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePicker.swift; sourceTree = "<group>"; };
+		DAB6AA302936A3F700B290FC /* ProjectLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectLink.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,6 +166,7 @@
 				DA58FD7C292371D70034E588 /* SpanNodeDetails.swift */,
 				DA58FD7E292373970034E588 /* SpanEventTable.swift */,
 				DA31F6BA2924C04E0077AF03 /* SpanNodeInfo.swift */,
+				DAB6AA302936A3F700B290FC /* ProjectLink.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -424,6 +427,7 @@
 				DAB6AA2B2936447000B290FC /* FilePicker.swift in Sources */,
 				DA58FD7F292373970034E588 /* SpanEventTable.swift in Sources */,
 				DA6A44C72921431A00DCEDBB /* Profiler.xcdatamodeld in Sources */,
+				DAB6AA312936A3F700B290FC /* ProjectLink.swift in Sources */,
 				DA58FD772922E2A00034E588 /* PreviewExtensions.swift in Sources */,
 				DA6A44902920EB2B00DCEDBB /* ProfilerApp.swift in Sources */,
 				DA6A44922920EB2B00DCEDBB /* Database.swift in Sources */,

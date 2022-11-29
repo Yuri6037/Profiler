@@ -9,3 +9,4 @@
 #import "SpanVariable+CoreDataClass.h"
 #import "SpanRun+CoreDataClass.h"
 #import "SpanNode+CoreDataClass.h"
+#import "ProjectImporter.h"
