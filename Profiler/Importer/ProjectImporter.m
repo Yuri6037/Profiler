@@ -44,7 +44,7 @@
 }
 
 - (BOOL)loadInfoFile:(NSError **)error into:(Project *)proj withContext:(NSManagedObjectContext *)ctx {
-    BufferedTextFile *file = [[BufferedTextFile alloc] init:_treeFile bufferSize:8192 withError:error];
+    BufferedTextFile *file = [[BufferedTextFile alloc] init:_projectFile bufferSize:8192 withError:error];
     CSVParser *parser = [[CSVParser alloc] init:','];
     NSString *os = nil;
     NSString *cpuName = nil;
@@ -55,6 +55,8 @@
     *error = nil;
     while ((line = [file readLine:error]) != nil) {
         CSVRow row = [parser parseRow:line];
+        if (row.count < 2)
+            continue;
         NSString *key = [row objectAtIndex:0];
         NSString *value = [row objectAtIndex:1];
         if ([key isEqualToString:@"Name"])
@@ -70,7 +72,7 @@
     }
     if (cpuName != nil && os != nil && cpuCoreCount > 0) {
         NSFetchRequest<System *> *request = [NSFetchRequest fetchRequestWithEntityName:@"System"];
-        request.predicate = [NSPredicate predicateWithFormat:@"cpuName = %@ AND os = %@ AND cpuCoreCound = %d", cpuName, os, cpuCoreCount];
+        request.predicate = [NSPredicate predicateWithFormat:@"cpuName = %@ AND os = %@ AND cpuCoreCount = %d", cpuName, os, cpuCoreCount];
         System *sys = [[ctx executeFetchRequest:request error:error] firstObject];
         if (sys != nil)
             proj.system = sys;
@@ -82,7 +84,7 @@
             proj.system.cpuCoreCount = cpuCoreCount;
         }
     }
-    return error == nil;
+    return *error == nil;
 }
 
 - (instancetype)initWithDirectory:(NSString *)dir container:(NSPersistentContainer *)container {
@@ -106,7 +108,7 @@
     if (![ctx save:error])
         return NO;
     _oid = proj.objectID;
-    return NO;
+    return YES;
 }
 
 - (BOOL)importTree:(NSError **)error {
@@ -120,7 +122,7 @@
         NodeImportTask *task = [[NodeImportTask alloc] initWithTreeNode:node directory:_dir container:_container projectId:_oid];
         [_queue addOperation:task];
     }
-    return error == nil;
+    return *error == nil;
 }
 
 @end
