@@ -25,14 +25,25 @@ import SwiftUI
 
 struct ProjectDetails: View {
     @ObservedObject var project: Project;
+    
+    @Binding var selection: SpanNode?;
 
     var body: some View {
         VStack {
-            ProjectInfo(project: project)
-            List(project.wNodes) { item in
-                NavigationLink {
-                    SpanNodeDetails(node: item)
-                } label: {
+            HStack {
+                ProjectInfo(project: project)
+                if let selection = selection {
+                    Spacer()
+                    if let metadata = selection.wMetadata {
+                        SpanNodeInfo(metadata: metadata)
+                    } else {
+                        Text("No information for this node").bold()
+                    }
+                }
+            }
+            .padding()
+            List(project.wNodes, selection: $selection) { item in
+                NavigationLink(value: item) {
                     Text(item.wPath)
                 }
             }
@@ -42,6 +53,6 @@ struct ProjectDetails: View {
 
 struct ProjectDetails_Previews: PreviewProvider {
     static var previews: some View {
-        ProjectDetails(project: Database.preview.getFirstProject()!)
+        ProjectDetails(project: Database.preview.getFirstProject()!, selection: .constant(nil))
     }
 }

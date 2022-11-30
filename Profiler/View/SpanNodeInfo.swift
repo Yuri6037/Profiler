@@ -44,29 +44,32 @@ struct SpanNodeInfo: View {
     @ObservedObject var metadata: SpanMetadata;
 
     var body: some View {
-        VStack(alignment: .leading) {
-            HStack {
-                Text("Name").bold()
-                Text(metadata.wName)
-            }
-            HStack {
-                Text("Target").bold()
-                Text(metadata.wTarget)
-            }
-            HStack {
-                Text("File").bold()
-                Text(metadata.wFile ?? "Unknown")
-                if let line = metadata.wLine {
-                    Text("(\(line.formatted()))")
+        VStack {
+            Text("Node Information").bold()
+            VStack(alignment: .leading) {
+                HStack {
+                    Text("Name").bold()
+                    Text(metadata.wName)
                 }
-            }
-            HStack {
-                Text("Module Path").bold()
-                Text(metadata.wModulePath ?? "Unknown")
-            }
-            HStack {
-                Text("Level").bold()
-                Text(Level(code: metadata.wLevel).name).foregroundColor(Level(code: metadata.wLevel).color).bold()
+                HStack {
+                    Text("Target").bold()
+                    Text(metadata.wTarget)
+                }
+                HStack {
+                    Text("File").bold()
+                    Text(metadata.wFile ?? "Unknown")
+                    if let line = metadata.wLine {
+                        Text("(\(line.formatted()))")
+                    }
+                }
+                HStack {
+                    Text("Module Path").bold()
+                    Text(metadata.wModulePath ?? "Unknown")
+                }
+                HStack {
+                    Text("Level").bold()
+                    Text(Level(code: metadata.wLevel).name).foregroundColor(Level(code: metadata.wLevel).color).bold()
+                }
             }
         }
     }

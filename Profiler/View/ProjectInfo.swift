@@ -28,7 +28,7 @@ struct ProjectInfo: View {
 
     var body: some View {
         VStack {
-            Text("General").bold().padding(.bottom)
+            Text("General").bold()
             VStack(alignment: .leading) {
                 HStack {
                     Text("Name").bold()

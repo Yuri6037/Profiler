@@ -28,12 +28,6 @@ struct SpanNodeDetails: View {
 
     var body: some View {
         VStack {
-            if let metadata = node.wMetadata {
-                Text("General").bold()
-                SpanNodeInfo(metadata: metadata)
-            } else {
-                Text("No information for this node").bold()
-            }
             SpanRunTable(runs: node.wRuns)
             SpanEventTable(events: node.wEvents)
         }

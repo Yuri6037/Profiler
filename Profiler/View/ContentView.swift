@@ -33,11 +33,12 @@ struct ContentView: View {
     private var items: FetchedResults<Project>
 
     @State var importTask: ProjectImporter?;
-    @State var selection: Project?;
+    @State var projectSelection: Project?;
+    @State var nodeSelection: SpanNode?;
     @State var columnVisibility = NavigationSplitViewVisibility.all;
 
     var sidebar: some View {
-        List(items, selection: $selection) { ProjectLink(project: $0) }
+        List(items, selection: $projectSelection) { ProjectLink(project: $0) }
     }
 
     var body: some View {
@@ -45,13 +46,19 @@ struct ContentView: View {
             columnVisibility: $columnVisibility,
             sidebar: { sidebar },
             content: {
-                if let project = selection {
-                    ProjectDetails(project: project)
+                if let project = projectSelection {
+                    ProjectDetails(project: project, selection: $nodeSelection)
                 } else {
                     Text("Select an item")
                 }
             },
-            detail: { Text("Select an item") }
+            detail: {
+                if let node = nodeSelection {
+                    SpanNodeDetails(node: node)
+                } else {
+                    Text("Select an item")
+                }
+            }
         )
         .onDeleteCommand(perform: self.deleteItem)
         .toolbar {
@@ -102,7 +109,7 @@ struct ContentView: View {
 
     private func deleteItem() {
         withAnimation {
-            if let selection = self.selection {
+            if let selection = self.projectSelection {
                 viewContext.delete(selection);
                 Database.shared.save();
             }
