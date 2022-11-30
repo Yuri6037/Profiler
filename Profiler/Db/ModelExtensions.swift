@@ -84,10 +84,10 @@ enum Level {
 
 extension Project {
     var wId: UUID { self.id! }
-    var wName: String { self.name!.trimmingCharacters(in: .newlines) }
+    var wName: String { self.name! }
     var wTimestamp: Date { self.timestamp! }
     var wNodes: [SpanNode] { (self.nodes?.array ?? []) as! [SpanNode] }
-    var wVersion: String? { self.version?.trimmingCharacters(in: .newlines) }
+    var wVersion: String? { self.version }
     var wSystem: System? { self.system }
 
     static func new(context: NSManagedObjectContext) -> Project {
@@ -101,8 +101,8 @@ extension Project: Identifiable {}
 
 extension System {
     var wId: UUID { self.id! }
-    var wCpuName: String { self.cpuName!.trimmingCharacters(in: .newlines) }
-    var wOs: String { self.os!.trimmingCharacters(in: .newlines) }
+    var wCpuName: String { self.cpuName! }
+    var wOs: String { self.os! }
     var wCpuCoreCount: Int32 { self.cpuCoreCount }
 
     static func new(context: NSManagedObjectContext) -> System {
