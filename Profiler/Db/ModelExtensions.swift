@@ -101,8 +101,8 @@ extension Project: Identifiable {}
 
 extension System {
     var wId: UUID { self.id! }
-    var wCpuName: String { self.cpuName! }
-    var wOs: String { self.os! }
+    var wCpuName: String { self.cpuName!.trimmingCharacters(in: .newlines) }
+    var wOs: String { self.os!.trimmingCharacters(in: .newlines) }
     var wCpuCoreCount: Int32 { self.cpuCoreCount }
 
     static func new(context: NSManagedObjectContext) -> System {
