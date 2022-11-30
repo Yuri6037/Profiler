@@ -84,10 +84,10 @@ enum Level {
 
 extension Project {
     var wId: UUID { self.id! }
-    var wName: String { self.name! }
+    var wName: String { self.name!.trimmingCharacters(in: .newlines) }
     var wTimestamp: Date { self.timestamp! }
     var wNodes: [SpanNode] { (self.nodes?.array ?? []) as! [SpanNode] }
-    var wVersion: String? { self.version }
+    var wVersion: String? { self.version?.trimmingCharacters(in: .newlines) }
     var wSystem: System? { self.system }
 
     static func new(context: NSManagedObjectContext) -> Project {
