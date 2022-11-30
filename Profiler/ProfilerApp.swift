@@ -25,12 +25,40 @@ import SwiftUI
 
 @main
 struct ProfilerApp: App {
-    let database = Database.shared
+    @State var importTask: ProjectImporter?;
 
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environment(\.managedObjectContext, database.container.viewContext)
+                .environment(\.managedObjectContext, Database.shared.container.viewContext)
+        }
+        .commands {
+            CommandGroup(replacing: .importExport) {
+                Button("Import") {
+                    openFileDialog(onPick: { url in
+                        self.importProject(dir: url.path);
+                    })
+                    print("Import command")
+                }
+                Button("Open data path") {
+                    print("Open data path")
+                }
+            }
+        }
+    }
+    
+    func importProject(dir: String) {
+        if self.importTask != nil {
+            //TODO: Error handling
+            fatalError("There is already an import in progress");
+        }
+        self.importTask = ProjectImporter(directory: dir, container: Database.shared.container);
+        do {
+            try self.importTask?.loadProject();
+            try self.importTask?.importTree();
+        } catch {
+            //TODO: Error handling
+            fatalError("\(error)");
         }
     }
 }

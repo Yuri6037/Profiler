@@ -32,7 +32,6 @@ struct ContentView: View {
         animation: .default)
     private var items: FetchedResults<Project>
 
-    @State var importTask: ProjectImporter?;
     @State var projectSelection: Project?;
     @State var nodeSelection: SpanNode?;
     @State var columnVisibility = NavigationSplitViewVisibility.all;
@@ -68,13 +67,6 @@ struct ContentView: View {
             }
         )
         .onDeleteCommand(perform: self.deleteItem)
-        .toolbar {
-            Button("Import") {
-                openFileDialog(onPick: { url in
-                    self.importProject(dir: url.path);
-                })
-            }
-        }
         .alert("Database Error", isPresented: .constant(Database.shared.lastErrorExists), actions: {
             Button("OK") {
                 Database.shared.lastError = nil;
@@ -86,33 +78,6 @@ struct ContentView: View {
             columnVisibility = .all;
         }
     }
-
-    private func importProject(dir: String) {
-        self.importTask = ProjectImporter(directory: dir, container: Database.shared.container);
-        do {
-            try self.importTask?.loadProject();
-            try self.importTask?.importTree();
-        } catch {
-            //TODO: Error handling
-            fatalError("\(error)");
-        }
-    }
-
-    /*private func addItem() {
-        withAnimation {
-            let newItem = Item(context: viewContext)
-            newItem.timestamp = Date()
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
-        }
-    }*/
 
     private func deleteItem() {
         if let selection = self.projectSelection {
