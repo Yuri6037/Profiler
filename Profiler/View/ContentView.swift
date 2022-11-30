@@ -36,9 +36,16 @@ struct ContentView: View {
     @State var projectSelection: Project?;
     @State var nodeSelection: SpanNode?;
     @State var columnVisibility = NavigationSplitViewVisibility.all;
+    @State var hack: Bool = false;
 
     var sidebar: some View {
-        List(items, selection: $projectSelection) { ProjectLink(project: $0) }
+        VStack {
+            if hack {
+                Text("Attempting to prevail against CoreData blowing up SwiftUI.")
+            } else {
+                List(items, selection: $projectSelection) { ProjectLink(project: $0) }
+            }
+        }
     }
 
     var body: some View {
@@ -108,10 +115,16 @@ struct ContentView: View {
     }*/
 
     private func deleteItem() {
-        withAnimation {
-            if let selection = self.projectSelection {
-                viewContext.delete(selection);
-                Database.shared.save();
+        if let selection = self.projectSelection {
+            self.projectSelection = nil;
+            self.nodeSelection = nil;
+            self.hack = true;
+            DispatchQueue.main.async {
+                withAnimation {
+                    viewContext.delete(selection);
+                    Database.shared.save();
+                    self.hack = false;
+                }
             }
         }
     }

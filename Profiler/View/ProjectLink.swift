@@ -30,8 +30,8 @@ struct ProjectLink: View {
         NavigationLink(value: project) {
             VStack(alignment: .leading) {
                 HStack {
-                    Text("\(project.name!)").bold()
-                    Text("(\(project.version ?? "No version"))")
+                    Text("\(project.wName)").bold()
+                    Text("(\(project.wVersion ?? "No version"))")
                 }
                 Text("\(project.timestamp!, formatter: dateFormatter)")
             }
