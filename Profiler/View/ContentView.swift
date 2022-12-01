@@ -67,7 +67,9 @@ struct ContentView: View {
                 }
             }
         )
+#if os(macOS)
         .onDeleteCommand(perform: self.deleteItem)
+#endif
         .alert(isPresented: $errorHandler.showError, error: errorHandler.currentError) {
             Button("OK") {
                 errorHandler.popError()
@@ -96,6 +98,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView().environment(\.managedObjectContext, Database.preview.container.viewContext)
+        ContentView().environment(\.managedObjectContext, Database.preview.container.viewContext).environmentObject(ErrorHandler())
     }
 }

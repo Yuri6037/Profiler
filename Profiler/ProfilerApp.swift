@@ -50,11 +50,13 @@ struct ProfilerApp: App {
         }
         .commands {
             CommandGroup(replacing: .importExport) {
+#if os(macOS)
                 Button("Import") {
                     openFileDialog(onPick: { url in
                         self.importProject(dir: url.path);
                     })
                 }
+#endif
 #if os(macOS)
                 Button("Open data path") {
                     NSWorkspace.shared.open(Database.url)
