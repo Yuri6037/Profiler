@@ -27,24 +27,36 @@ struct ProjectDetails: View {
     @ObservedObject var project: Project;
     
     @Binding var selection: SpanNode?;
+    @Binding var renderNode: Bool;
 
     var body: some View {
-        VStack {
-            HStack {
-                ProjectInfo(project: project)
-                if let selection = selection {
-                    Spacer()
-                    if let metadata = selection.wMetadata {
-                        SpanNodeInfo(metadata: metadata)
-                    } else {
-                        Text("No information for this node").bold()
+        GeometryReader { geometry in
+            VStack {
+                HStack {
+                    ProjectInfo(project: project)
+                    if renderNode {
+                        if let selection = selection {
+                            Spacer()
+                            if let metadata = selection.wMetadata {
+                                SpanNodeInfo(metadata: metadata)
+                            } else {
+                                Text("No information for this node").bold()
+                            }
+                        }
+                    }
+                }
+                .padding()
+                List(project.wNodes, selection: $selection) { item in
+                    NavigationLink(value: item) {
+                        Text(item.wPath)
                     }
                 }
             }
-            .padding()
-            List(project.wNodes, selection: $selection) { item in
-                NavigationLink(value: item) {
-                    Text(item.wPath)
+            .onChange(of: geometry.size) { newSize in
+                if newSize.width < 400 {
+                    renderNode = false;
+                } else {
+                    renderNode = true;
                 }
             }
         }
@@ -53,6 +65,6 @@ struct ProjectDetails: View {
 
 struct ProjectDetails_Previews: PreviewProvider {
     static var previews: some View {
-        ProjectDetails(project: Database.preview.getFirstProject()!, selection: .constant(nil))
+        ProjectDetails(project: Database.preview.getFirstProject()!, selection: .constant(nil), renderNode: .constant(true))
     }
 }

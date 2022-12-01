@@ -37,6 +37,7 @@ struct ContentView: View {
     @State private var nodeSelection: SpanNode?;
     @State private var columnVisibility = NavigationSplitViewVisibility.all;
     @State private var hack: Bool = false;
+    @State private var renderNode: Bool = true;
 
     var sidebar: some View {
         VStack {
@@ -54,14 +55,14 @@ struct ContentView: View {
             sidebar: { sidebar },
             content: {
                 if let project = projectSelection {
-                    ProjectDetails(project: project, selection: $nodeSelection)
+                    ProjectDetails(project: project, selection: $nodeSelection, renderNode: $renderNode)
                 } else {
                     Text("Select an item")
                 }
             },
             detail: {
                 if let node = nodeSelection {
-                    SpanNodeDetails(node: node)
+                    SpanNodeDetails(node: node, renderNode: !renderNode)
                 } else {
                     Text("Select an item")
                 }

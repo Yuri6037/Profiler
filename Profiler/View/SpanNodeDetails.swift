@@ -25,9 +25,15 @@ import SwiftUI
 
 struct SpanNodeDetails: View {
     @ObservedObject var node: SpanNode;
+    var renderNode: Bool = false;
 
     var body: some View {
         VStack {
+            if renderNode {
+                if let metadata = node.wMetadata {
+                    SpanNodeInfo(metadata: metadata)
+                }
+            }
             SpanRunTable(runs: node.wRuns)
             SpanEventTable(events: node.wEvents)
         }
