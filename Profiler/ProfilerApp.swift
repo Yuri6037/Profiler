@@ -25,12 +25,28 @@ import SwiftUI
 
 @main
 struct ProfilerApp: App {
+    @StateObject var errorHandler: ErrorHandler = ErrorHandler();
     @State var importTask: ProjectImporter?;
+
+    init() {
+        if let error = Database.shared.lastError { //This automatically loads the database
+            errorHandler.pushError(AppError(fromNSError: error));
+        }
+    }
 
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environment(\.managedObjectContext, Database.shared.container.viewContext)
+                .environmentObject(errorHandler)
+                .onAppear {
+                    if let error = Database.shared.lastError {
+                        errorHandler.pushError(AppError(fromNSError: error));
+                    }
+                    Database.shared.errorEvent = { error in
+                        errorHandler.pushError(AppError(fromNSError: error));
+                    }
+                }
         }
         .commands {
             CommandGroup(replacing: .importExport) {
@@ -38,27 +54,26 @@ struct ProfilerApp: App {
                     openFileDialog(onPick: { url in
                         self.importProject(dir: url.path);
                     })
-                    print("Import command")
                 }
+#if os(macOS)
                 Button("Open data path") {
-                    print("Open data path")
+                    NSWorkspace.shared.open(Database.url)
                 }
+#endif
             }
         }
     }
-    
+
     func importProject(dir: String) {
         if self.importTask != nil {
-            //TODO: Error handling
-            fatalError("There is already an import in progress");
+            errorHandler.pushError(AppError(description: "A project is already being imported, please wait..."));
         }
         self.importTask = ProjectImporter(directory: dir, container: Database.shared.container);
         do {
             try self.importTask?.loadProject();
             try self.importTask?.importTree();
         } catch {
-            //TODO: Error handling
-            fatalError("\(error)");
+            errorHandler.pushError(AppError(fromNSError: error as NSError));
         }
     }
 }

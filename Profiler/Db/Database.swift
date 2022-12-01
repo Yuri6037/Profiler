@@ -25,18 +25,16 @@ import CoreData
 
 class Database {
     static let shared = Database()
+    
+    static var url: URL {
+        NSPersistentContainer.defaultDirectoryURL()
+    }
 
     let container: NSPersistentContainer
 
     var lastError: NSError?;
-    
-    var lastErrorExists: Bool {
-        return lastError != nil;
-    }
-    
-    var lastErrorString: String {
-        return lastError?.localizedDescription ?? "";
-    }
+
+    var errorEvent: ((NSError) -> Void)?;
 
     init(inMemory: Bool = false) {
         container = NSPersistentContainer(name: "Profiler")
@@ -55,8 +53,12 @@ class Database {
         do {
             try container.viewContext.save();
         } catch {
-            let error = error as NSError?;
+            let error = error as NSError;
             self.lastError = error;
+            if let f = self.errorEvent {
+                f(error);
+                self.lastError = nil;
+            }
         }
     }
 }

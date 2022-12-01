@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DA0308FD2937FEEC00072C36 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0308FC2937FEEC00072C36 /* ErrorHandler.swift */; };
 		DA31F6BB2924C04E0077AF03 /* SpanNodeInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA31F6BA2924C04E0077AF03 /* SpanNodeInfo.swift */; };
 		DA58FD6F292182F60034E588 /* SpanRunTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58FD6E292182F60034E588 /* SpanRunTable.swift */; };
 		DA58FD7129218BC60034E588 /* ModelExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58FD7029218BC60034E588 /* ModelExtensions.swift */; };
@@ -81,6 +82,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		DA0308FC2937FEEC00072C36 /* ErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
 		DA31F6BA2924C04E0077AF03 /* SpanNodeInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpanNodeInfo.swift; sourceTree = "<group>"; };
 		DA31F6BC292586680077AF03 /* Profiler-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Profiler-Bridging-Header.h"; sourceTree = "<group>"; };
 		DA31F6C029262E8A0077AF03 /* ProfilerTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ProfilerTests-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -212,11 +214,12 @@
 				DA58FD752922E22D0034E588 /* Db */,
 				DA58FD742922D6250034E588 /* View */,
 				DA6A448F2920EB2B00DCEDBB /* ProfilerApp.swift */,
+				DA31F6BC292586680077AF03 /* Profiler-Bridging-Header.h */,
+				DAB6AA2A2936447000B290FC /* FilePicker.swift */,
+				DA0308FC2937FEEC00072C36 /* ErrorHandler.swift */,
 				DA6A44982920EB2C00DCEDBB /* Assets.xcassets */,
 				DA6A449A2920EB2C00DCEDBB /* Profiler.entitlements */,
 				DA6A449B2920EB2C00DCEDBB /* Preview Content */,
-				DA31F6BC292586680077AF03 /* Profiler-Bridging-Header.h */,
-				DAB6AA2A2936447000B290FC /* FilePicker.swift */,
 			);
 			path = Profiler;
 			sourceTree = "<group>";
@@ -422,6 +425,7 @@
 			files = (
 				DA58FD6F292182F60034E588 /* SpanRunTable.swift in Sources */,
 				DA58FD7129218BC60034E588 /* ModelExtensions.swift in Sources */,
+				DA0308FD2937FEEC00072C36 /* ErrorHandler.swift in Sources */,
 				DA58FD732922D61B0034E588 /* ProjectDetails.swift in Sources */,
 				DA31F6BB2924C04E0077AF03 /* SpanNodeInfo.swift in Sources */,
 				DAB6AA2B2936447000B290FC /* FilePicker.swift in Sources */,

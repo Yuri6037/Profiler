@@ -25,6 +25,7 @@ import SwiftUI
 import CoreData
 
 struct ContentView: View {
+    @EnvironmentObject private var errorHandler: ErrorHandler;
     @Environment(\.managedObjectContext) private var viewContext
 
     @FetchRequest(
@@ -32,10 +33,10 @@ struct ContentView: View {
         animation: .default)
     private var items: FetchedResults<Project>
 
-    @State var projectSelection: Project?;
-    @State var nodeSelection: SpanNode?;
-    @State var columnVisibility = NavigationSplitViewVisibility.all;
-    @State var hack: Bool = false;
+    @State private var projectSelection: Project?;
+    @State private var nodeSelection: SpanNode?;
+    @State private var columnVisibility = NavigationSplitViewVisibility.all;
+    @State private var hack: Bool = false;
 
     var sidebar: some View {
         VStack {
@@ -67,13 +68,11 @@ struct ContentView: View {
             }
         )
         .onDeleteCommand(perform: self.deleteItem)
-        .alert("Database Error", isPresented: .constant(Database.shared.lastErrorExists), actions: {
+        .alert(isPresented: $errorHandler.showError, error: errorHandler.currentError) {
             Button("OK") {
-                Database.shared.lastError = nil;
+                errorHandler.popError()
             }
-        }, message: {
-            Text("\(Database.shared.lastErrorString)")
-        })
+        }
         .onAppear {
             columnVisibility = .all;
         }
