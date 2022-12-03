@@ -46,6 +46,12 @@ struct ProjectInfo: View {
                     Text("Time").bold()
                     Text(project.wTimestamp.formatted())
                 }
+                if let cmdline = project.wCommandLine {
+                    HStack {
+                        Text("Command Line").bold()
+                        Text(cmdline)
+                    }
+                }
                 if let target = project.wTarget {
                     Text("Target").bold()
                     VStack(alignment: .leading) {
