@@ -1,12 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21512" systemVersion="22A400" minimumToolsVersion="Automatic" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
+    <entity name="Cpu" representedClassName="Cpu" syncable="YES" codeGenerationType="class">
+        <attribute name="coreCount" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" attributeType="UUID" defaultValueString="0CF044A3-333C-4B22-8FEB-F68B004B6C96" usesScalarValueType="NO"/>
+        <attribute name="name" attributeType="String" defaultValueString=""/>
+        <relationship name="projects" toMany="YES" deletionRule="Nullify" destinationEntity="Project" inverseName="cpu" inverseEntity="Project"/>
+        <fetchIndex name="GetExisting">
+            <fetchIndexElement property="coreCount" type="Binary" order="ascending"/>
+            <fetchIndexElement property="name" type="Binary" order="ascending"/>
+        </fetchIndex>
+    </entity>
     <entity name="Project" representedClassName="Project" syncable="YES" codeGenerationType="class">
+        <attribute name="commandLine" optional="YES" attributeType="String"/>
         <attribute name="id" attributeType="UUID" defaultValueString="0CF044A3-333C-4B22-8FEB-F68B004B6C96" usesScalarValueType="NO"/>
         <attribute name="name" attributeType="String" defaultValueString=""/>
         <attribute name="timestamp" attributeType="Date" defaultDateTimeInterval="690046200" usesScalarValueType="NO"/>
         <attribute name="version" optional="YES" attributeType="String"/>
+        <relationship name="cpu" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Cpu" inverseName="projects" inverseEntity="Cpu"/>
         <relationship name="nodes" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="SpanNode" inverseName="project" inverseEntity="SpanNode"/>
-        <relationship name="system" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="System" inverseName="projects" inverseEntity="System"/>
+        <relationship name="target" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Target" inverseName="projects" inverseEntity="Target"/>
     </entity>
     <entity name="SpanEvent" representedClassName="SpanEvent" syncable="YES" codeGenerationType="class">
         <attribute name="id" attributeType="UUID" defaultValueString="0CF044A3-333C-4B22-8FEB-F68B004B6C96" usesScalarValueType="NO"/>
@@ -45,16 +57,16 @@
         <relationship name="event" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SpanEvent" inverseName="variables" inverseEntity="SpanEvent"/>
         <relationship name="run" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SpanRun" inverseName="variables" inverseEntity="SpanRun"/>
     </entity>
-    <entity name="System" representedClassName="System" syncable="YES" codeGenerationType="class">
-        <attribute name="cpuCoreCount" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="cpuName" attributeType="String" defaultValueString=""/>
+    <entity name="Target" representedClassName="Target" syncable="YES" codeGenerationType="class">
+        <attribute name="arch" attributeType="String" defaultValueString=""/>
+        <attribute name="family" attributeType="String" defaultValueString=""/>
         <attribute name="id" attributeType="UUID" defaultValueString="0CF044A3-333C-4B22-8FEB-F68B004B6C96" usesScalarValueType="NO"/>
         <attribute name="os" attributeType="String" defaultValueString=""/>
-        <relationship name="projects" toMany="YES" deletionRule="Nullify" destinationEntity="Project" inverseName="system" inverseEntity="Project"/>
+        <relationship name="projects" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Project" inverseName="target" inverseEntity="Project"/>
         <fetchIndex name="GetExisting">
-            <fetchIndexElement property="cpuCoreCount" type="Binary" order="ascending"/>
-            <fetchIndexElement property="cpuName" type="Binary" order="ascending"/>
             <fetchIndexElement property="os" type="Binary" order="ascending"/>
+            <fetchIndexElement property="family" type="Binary" order="ascending"/>
+            <fetchIndexElement property="arch" type="Binary" order="ascending"/>
         </fetchIndex>
     </entity>
 </model>
