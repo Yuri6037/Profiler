@@ -24,12 +24,19 @@
 import Foundation
 import CoreData
 
-func sampleSystem(context: NSManagedObjectContext) -> System {
-    let system = System.new(context: context);
-    system.os = "macOS";
-    system.cpuCoreCount = 10;
-    system.cpuName = "Apple M1 Max";
-    return system;
+func sampleCpu(context: NSManagedObjectContext) -> Cpu {
+    let cpu = Cpu.new(context: context);
+    cpu.coreCount = 10;
+    cpu.name = "Apple M1 Max";
+    return cpu;
+}
+
+func sampleTarget(context: NSManagedObjectContext) -> Target {
+    let target = Target.new(context: context);
+    target.os = "macOS";
+    target.family = "unix";
+    target.arch = "aarch64";
+    return target;
 }
 
 func sampleMetadata(context: NSManagedObjectContext) -> SpanMetadata {
@@ -44,7 +51,8 @@ func sampleProject(context: NSManagedObjectContext) {
     let project = Project.new(context: context);
     project.name = "Test";
     project.timestamp = Date();
-    project.system = sampleSystem(context: context);
+    project.cpu = sampleCpu(context: context);
+    project.target = sampleTarget(context: context);
     let node = SpanNode(context: context);
     node.project = project;
     node.path = "root";
