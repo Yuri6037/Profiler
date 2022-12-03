@@ -31,15 +31,15 @@ struct ProjectInfo: View {
             Text("General").bold()
             VStack(alignment: .leading) {
                 HStack {
-                    Text("Application Name").bold()
+                    Text("Application").bold()
                     Text(project.wAppName)
                 }
                 HStack {
-                    Text("Target Name").bold()
+                    Text("Name").bold()
                     Text(project.wName)
                 }
                 HStack {
-                    Text("Target Version").bold()
+                    Text("Version").bold()
                     Text(project.wVersion ?? "None")
                 }
                 HStack {
