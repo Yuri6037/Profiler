@@ -31,34 +31,43 @@ struct ProjectInfo: View {
             Text("General").bold()
             VStack(alignment: .leading) {
                 HStack {
-                    Text("Name").bold()
+                    Text("Application Name").bold()
+                    Text(project.wAppName)
+                }
+                HStack {
+                    Text("Target Name").bold()
                     Text(project.wName)
                 }
                 HStack {
-                    Text("Version").bold()
+                    Text("Target Version").bold()
                     Text(project.wVersion ?? "None")
                 }
                 HStack {
                     Text("Time").bold()
                     Text(project.wTimestamp.formatted())
                 }
-                if let system = project.wSystem {
-                    Text("System").bold()
+                if let target = project.wTarget {
+                    Text("Target").bold()
                     VStack(alignment: .leading) {
                         HStack {
                             Text("OS").bold()
-                            Text(system.wOs)
+                            Text(target.wOs)
                         }
                         HStack {
-                            Text("CPU").bold()
-                            Text(system.wCpuName)
-                            Text("(\(system.wCpuCoreCount) core(s))")
+                            Text("Family").bold()
+                            Text(target.wFamily)
+                        }
+                        HStack {
+                            Text("Architecture").bold()
+                            Text(target.wArch)
                         }
                     }.padding(.leading)
-                } else {
+                }
+                if let cpu = project.wCpu {
                     HStack {
-                        Text("System").bold()
-                        Text("None")
+                        Text("CPU").bold()
+                        Text(cpu.wName)
+                        Text("(\(cpu.wCoreCount) core(s))")
                     }
                 }
             }
