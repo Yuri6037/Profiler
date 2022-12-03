@@ -85,10 +85,12 @@ enum Level {
 extension Project {
     var wId: UUID { self.id! }
     var wName: String { self.name! }
+    var wCommandLine: String? { self.commandLine }
     var wTimestamp: Date { self.timestamp! }
     var wNodes: [SpanNode] { (self.nodes?.array ?? []) as! [SpanNode] }
     var wVersion: String? { self.version }
-    var wSystem: System? { self.system }
+    var wCpu: Cpu? { self.cpu }
+    var wTarget: Target? { self.target }
 
     static func new(context: NSManagedObjectContext) -> Project {
         let obj = Project(context: context);
@@ -99,20 +101,34 @@ extension Project {
 
 extension Project: Identifiable {}
 
-extension System {
+extension Target {
     var wId: UUID { self.id! }
-    var wCpuName: String { self.cpuName! }
+    var wArch: String { self.arch! }
+    var wFamily: String { self.family! }
     var wOs: String { self.os! }
-    var wCpuCoreCount: Int32 { self.cpuCoreCount }
 
-    static func new(context: NSManagedObjectContext) -> System {
-        let obj = System(context: context);
+    static func new(context: NSManagedObjectContext) -> Target {
+        let obj = Target(context: context);
         obj.id = UUID();
         return obj;
     }
 }
 
-extension System: Identifiable {}
+extension Target: Identifiable {}
+
+extension Cpu {
+    var wId: UUID { self.id! }
+    var wName: String { self.name! }
+    var wCoreCount: Int32 { self.coreCount }
+
+    static func new(context: NSManagedObjectContext) -> Cpu {
+        let obj = Cpu(context: context);
+        obj.id = UUID();
+        return obj;
+    }
+}
+
+extension Cpu: Identifiable {}
 
 extension SpanMetadata {
     var wId: UUID { self.id! }
