@@ -84,6 +84,7 @@ enum Level {
 
 extension Project {
     var wId: UUID { self.id! }
+    var wAppName: String { self.appName! }
     var wName: String { self.name! }
     var wCommandLine: String? { self.commandLine }
     var wTimestamp: Date { self.timestamp! }
