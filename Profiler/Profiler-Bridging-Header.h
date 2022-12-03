@@ -3,7 +3,8 @@
 //
 
 #import "Project+CoreDataClass.h"
-#import "System+CoreDataClass.h"
+#import "Cpu+CoreDataClass.h"
+#import "Target+CoreDataClass.h"
 #import "SpanMetadata+CoreDataClass.h"
 #import "SpanEvent+CoreDataClass.h"
 #import "SpanVariable+CoreDataClass.h"

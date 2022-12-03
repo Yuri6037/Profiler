@@ -26,7 +26,8 @@
 #import "TreeNode.h"
 #import "NodeImportTask.h"
 #import "Project+CoreDataClass.h"
-#import "System+CoreDataClass.h"
+#import "Cpu+CoreDataClass.h"
+#import "Target+CoreDataClass.h"
 
 @interface ProjectImporter()
 
@@ -46,7 +47,9 @@
 - (BOOL)loadInfoFile:(NSError **)error into:(Project *)proj withContext:(NSManagedObjectContext *)ctx {
     BufferedTextFile *file = [[BufferedTextFile alloc] init:_projectFile bufferSize:8192 withError:error];
     CSVParser *parser = [[CSVParser alloc] init:','];
-    NSString *os = nil;
+    NSString *targetOs = nil;
+    NSString *targetFamily = nil;
+    NSString *targetArch = nil;
     NSString *cpuName = nil;
     int32_t cpuCoreCount = 0;
     NSString *line;
@@ -61,27 +64,48 @@
         NSString *value = [row objectAtIndex:1];
         if ([key isEqualToString:@"Name"])
             proj.name = value;
+        else if ([key isEqualToString:@"AppName"])
+            proj.appName = value;
+        else if ([key isEqualToString:@"CommandLine"])
+            proj.commandLine = value;
         else if ([key isEqualToString:@"Version"])
             proj.version = value;
-        else if ([key isEqualToString:@"Os"] && value.length > 0)
-            os = value;
+        else if ([key isEqualToString:@"TargetOs"] && value.length > 0)
+            targetOs = value;
+        else if ([key isEqualToString:@"TargetFamily"] && value.length > 0)
+            targetFamily = value;
+        else if ([key isEqualToString:@"TargetArch"] && value.length > 0)
+            targetArch = value;
         else if ([key isEqualToString:@"CpuName"] && value.length > 0)
             cpuName = value;
         else if ([key isEqualToString:@"CpuCoreCount"])
             cpuCoreCount = (int32_t)[value integerValue];
     }
-    if (cpuName != nil && os != nil && cpuCoreCount > 0) {
-        NSFetchRequest<System *> *request = [NSFetchRequest fetchRequestWithEntityName:@"System"];
-        request.predicate = [NSPredicate predicateWithFormat:@"cpuName = %@ AND os = %@ AND cpuCoreCount = %d", cpuName, os, cpuCoreCount];
-        System *sys = [[ctx executeFetchRequest:request error:error] firstObject];
-        if (sys != nil)
-            proj.system = sys;
+    if (targetOs != nil && targetFamily != nil && targetArch != nil) {
+        NSFetchRequest<Target *> *request = [NSFetchRequest fetchRequestWithEntityName:@"Target"];
+        request.predicate = [NSPredicate predicateWithFormat:@"os = %@ AND family = %@ AND arch = %@", targetOs, targetFamily, targetArch];
+        Target *target = [[ctx executeFetchRequest:request error:error] firstObject];
+        if (target != nil)
+            proj.target = target;
         else {
-            proj.system = [[System alloc] initWithContext:ctx];
-            proj.system.id = [NSUUID UUID];
-            proj.system.os = os;
-            proj.system.cpuName = cpuName;
-            proj.system.cpuCoreCount = cpuCoreCount;
+            proj.target = [[Target alloc] initWithContext:ctx];
+            proj.target.id = [NSUUID UUID];
+            proj.target.os = targetOs;
+            proj.target.family = targetFamily;
+            proj.target.arch = targetArch;
+        }
+    }
+    if (cpuName != nil && cpuCoreCount > 0) {
+        NSFetchRequest<Cpu *> *request = [NSFetchRequest fetchRequestWithEntityName:@"Cpu"];
+        request.predicate = [NSPredicate predicateWithFormat:@"name = %@ AND coreCount = %d", cpuName, cpuCoreCount];
+        Cpu *cpu = [[ctx executeFetchRequest:request error:error] firstObject];
+        if (cpu != nil)
+            proj.cpu = cpu;
+        else {
+            proj.cpu = [[Cpu alloc] initWithContext:ctx];
+            proj.cpu.id = [NSUUID UUID];
+            proj.cpu.name = cpuName;
+            proj.cpu.coreCount = cpuCoreCount;
         }
     }
     return *error == nil;
