@@ -24,7 +24,15 @@
 import SwiftUI
 
 extension SpanRun {
-    var dTime: String { self.wTime.formatted() }
+    var dTime: String {
+        if self.wSeconds > 0 {
+            return self.wTimeSecs.formatted() + "s"
+        } else if self.wMilliSeconds > 0 {
+            return self.wTimeMillis.formatted() + "ms"
+        } else {
+            return self.wTimeMicros.formatted() + "µs"
+        }
+    }
     var dMessage: String { self.wMessage ?? "No message specified" }
 }
 
@@ -32,7 +40,7 @@ struct SpanRunTable: View {
     var runs: [SpanRun];
     var body: some View {
         Table(runs) {
-            TableColumn("Time (s)", value: \.dTime)
+            TableColumn("Time", value: \.dTime)
             TableColumn("Message", value: \.dMessage)
         }
     }
