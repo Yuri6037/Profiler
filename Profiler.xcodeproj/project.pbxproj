@@ -34,6 +34,7 @@
 		DAB6AA282933B99B00B290FC /* TreeNodeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DAB6AA272933B99B00B290FC /* TreeNodeTests.m */; };
 		DAB6AA2B2936447000B290FC /* FilePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB6AA2A2936447000B290FC /* FilePicker.swift */; };
 		DAB6AA312936A3F700B290FC /* ProjectLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB6AA302936A3F700B290FC /* ProjectLink.swift */; };
+		DAED2F89293FCFBB0095A2FC /* NodeDuration.c in Sources */ = {isa = PBXBuildFile; fileRef = DAED2F88293FCFBB0095A2FC /* NodeDuration.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -117,6 +118,8 @@
 		DAB6AA272933B99B00B290FC /* TreeNodeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TreeNodeTests.m; sourceTree = "<group>"; };
 		DAB6AA2A2936447000B290FC /* FilePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePicker.swift; sourceTree = "<group>"; };
 		DAB6AA302936A3F700B290FC /* ProjectLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectLink.swift; sourceTree = "<group>"; };
+		DAED2F87293FCFBB0095A2FC /* NodeDuration.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NodeDuration.h; sourceTree = "<group>"; };
+		DAED2F88293FCFBB0095A2FC /* NodeDuration.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = NodeDuration.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,6 +157,8 @@
 				DAB6AA002933614D00B290FC /* ProjectImporter.m */,
 				DAB6AA212933ADF100B290FC /* NodeImportTask.h */,
 				DAB6AA222933ADF100B290FC /* NodeImportTask.m */,
+				DAED2F87293FCFBB0095A2FC /* NodeDuration.h */,
+				DAED2F88293FCFBB0095A2FC /* NodeDuration.c */,
 			);
 			path = Importer;
 			sourceTree = "<group>";
@@ -434,6 +439,7 @@
 				DAB6AA312936A3F700B290FC /* ProjectLink.swift in Sources */,
 				DA58FD772922E2A00034E588 /* PreviewExtensions.swift in Sources */,
 				DA6A44902920EB2B00DCEDBB /* ProfilerApp.swift in Sources */,
+				DAED2F89293FCFBB0095A2FC /* NodeDuration.c in Sources */,
 				DA6A44922920EB2B00DCEDBB /* Database.swift in Sources */,
 				DA58FD792922E2B20034E588 /* SampleData.swift in Sources */,
 				DA6A44972920EB2B00DCEDBB /* ContentView.swift in Sources */,
@@ -529,6 +535,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				MOMC_NO_INVERSE_RELATIONSHIP_WARNINGS = NO;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -581,6 +588,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				MOMC_NO_INVERSE_RELATIONSHIP_WARNINGS = NO;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;

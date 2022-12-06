@@ -26,12 +26,15 @@
 #import "SpanNode+CoreDataClass.h"
 #import "SpanMetadata+CoreDataClass.h"
 #import "SpanVariable+CoreDataClass.h"
+#include "NodeDuration.h"
 
-typedef struct NodeDuration {
-    uint64_t seconds;
-    uint32_t millis;
-    uint32_t micros;
-} NodeDuration;
+typedef duration_t NodeDuration;
+
+typedef struct NodeDurationInfo {
+    NodeDuration min;
+    NodeDuration max;
+    NodeDuration average;
+} NodeDurationInfo;
 
 @interface NodeImportTask()
 
@@ -44,6 +47,9 @@ typedef struct NodeDuration {
 
 + (BOOL)parseDurationOld:(CSVRow)row into:(NodeDuration *)duration;
 + (BOOL)parseDurationNew:(CSVRow)row into:(NodeDuration *)duration;
+
++ (SpanRun *)parseRun:(CSVRow)row withContext:(NSManagedObjectContext *)ctx info:(NodeDurationInfo *)info;
++ (SpanEvent *)parseEvent:(CSVRow)row withContext:(NSManagedObjectContext *)ctx;
 
 @end
 
@@ -62,15 +68,7 @@ typedef struct NodeDuration {
     Float64 secs;
     if (![scan scanDouble:&secs])
         return NO;
-    uint64_t us = (uint64_t)(secs * 1000000);
-    uint64_t ms = us / 1000;
-    uint64_t s = ms / 1000;
-    ms -= s * 1000; //Remove seconds from millis
-    us -= ms * 1000; //Remove millis from micros
-    us -= s * 1000000; //Remove seconds from micros
-    duration->seconds = s;
-    duration->millis = (uint32_t)ms;
-    duration->micros = (uint32_t)us;
+    duration_from_seconds(duration, secs);
     return YES;
 }
 
@@ -78,19 +76,20 @@ typedef struct NodeDuration {
     NSScanner *s = [NSScanner scannerWithString:[row objectAtIndex:2]];
     NSScanner *ms = [NSScanner scannerWithString:[row objectAtIndex:3]];
     NSScanner *us = [NSScanner scannerWithString:[row objectAtIndex:4]];
-    if (![s scanUnsignedLongLong:&duration->seconds])
-        return NO;
     uint64_t temp;
+    if (![s scanUnsignedLongLong:&temp])
+        return NO;
+    duration->seconds = (uint32_t)temp;
     if (![ms scanUnsignedLongLong:&temp])
         return NO;
-    duration->millis = (uint32_t)temp;
+    duration->millis = (uint16_t)temp;
     if (![us scanUnsignedLongLong:&temp])
         return NO;
-    duration->micros = (uint32_t)temp;
+    duration->micros = (uint16_t)temp;
     return YES;
 }
 
-+ (SpanRun *)parseRun:(CSVRow)row withContext:(NSManagedObjectContext *)ctx {
++ (SpanRun *)parseRun:(CSVRow)row withContext:(NSManagedObjectContext *)ctx info:(NodeDurationInfo *)info {
     if (row.count < 3)
         return nil;
     NodeDuration duration;
@@ -101,6 +100,11 @@ typedef struct NodeDuration {
         if (![NodeImportTask parseDurationOld:row into:&duration])
             return nil;
     }
+    if (duration_is_greater_than(&duration, &info->max))
+        duration_copy(&info->max, &duration);
+    if (duration_is_less_than(&duration, &info->min))
+        duration_copy(&info->min, &duration);
+    duration_add(&info->average, &duration);
     NSString *msg = [row objectAtIndex:1];
     SpanRun *run = [[SpanRun alloc] initWithContext:ctx];
     run.id = [NSUUID UUID];
@@ -200,20 +204,38 @@ typedef struct NodeDuration {
     NSMutableSet<SpanRun *> *runs = (NSMutableSet *)node.runs;
     BufferedTextFile *file = [[BufferedTextFile alloc] init:_runsFile bufferSize:8192 withError:error];
     CSVParser *parser = [[CSVParser alloc] init:','];
+    NodeDurationInfo info;
+    duration_set_zero(&info.max);
+    info.min.seconds = UINT32_MAX;
+    info.min.millis = UINT16_MAX;
+    info.min.micros = UINT16_MAX;
+    int count = 0;
+    duration_set_zero(&info.average);
     NSString *line;
     if (file == nil)
         return NO;
     *error = nil;
     while ((line = [file readLine:error]) != nil) {
         CSVRow row = [parser parseRow:line];
-        SpanRun *run = [NodeImportTask parseRun:row withContext:ctx];
+        SpanRun *run = [NodeImportTask parseRun:row withContext:ctx info:&info];
         if (run == nil) {
             *error = [NSError errorWithDomain:@"Parse error" code:0 userInfo:nil];
             return NO;
         }
         run.node = node;
         [runs addObject:run];
+        count += 1;
     }
+    duration_mul_scalar(&info.average, 1.0f / (float)count);
+    node.averageSeconds = info.average.seconds;
+    node.averageMilliSeconds = info.average.millis;
+    node.averageMicroSeconds = info.average.micros;
+    node.minSeconds = info.min.seconds;
+    node.minMilliSeconds = info.min.millis;
+    node.minMicroSeconds = info.min.micros;
+    node.maxSeconds = info.max.seconds;
+    node.maxMilliSeconds = info.max.millis;
+    node.maxMicroSeconds = info.max.micros;
     return *error == nil;
 }
 

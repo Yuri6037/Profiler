@@ -21,18 +21,55 @@
 // DEALINGS
 // IN THE SOFTWARE.
 
-#import <Foundation/Foundation.h>
-#import <CoreData/CoreData.h>
-#import "TreeNode.h"
-#import "SpanRun+CoreDataClass.h"
-#import "SpanEvent+CoreDataClass.h"
+#ifndef NodeDuration_h
+#define NodeDuration_h
 
-NS_ASSUME_NONNULL_BEGIN
+#include <stdint.h>
 
-@interface NodeImportTask : NSOperation
+typedef struct duration_s {
+    uint32_t seconds;
+    uint16_t millis;
+    uint16_t micros;
+} duration_t;
 
-- (instancetype)initWithTreeNode:(TreeNode *)node directory:(NSString *)dir container:(NSPersistentContainer *)container projectId:(NSManagedObjectID *)oid;
+/**
+ * Returns 1 if a is less than b, 0 otherwise.
+ */
+int duration_is_less_than(const duration_t *a, const duration_t *b);
 
-@end
+/**
+ * Returns 1 if a is greater than b, 0 otherwise.
+ */
+int duration_is_greater_than(const duration_t *a, const duration_t *b);
 
-NS_ASSUME_NONNULL_END
+/**
+ * Adds b into a.
+ */
+void duration_add(duration_t *a, const duration_t *b);
+
+/**
+ * Multiplies a by a scalar and stores the result in a.
+ */
+void duration_mul_scalar(duration_t *a, float scalar);
+
+/**
+ * Converts seconds into this duration representation.
+ */
+void duration_from_seconds(duration_t *a, double seconds);
+
+/**
+ * Converts that duration to microseconds.
+ */
+uint64_t duration_to_micros(const duration_t *a);
+
+/**
+ * Sets the content of this duration to 0.
+ */
+void duration_set_zero(duration_t *a);
+
+/**
+ * Copies b into a.
+ */
+void duration_copy(duration_t *a, const duration_t *b);
+
+#endif /* NodeDuration_h */
