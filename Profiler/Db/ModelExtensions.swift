@@ -163,7 +163,19 @@ extension SpanRun {
     var wId: UUID { self.id! }
     var wVariables: [SpanVariable] { Array(self.variables ?? []) }
     var wMessage: String? { self.message }
-    var wTime: Float64 { self.time }
+    var wSeconds: UInt64 { UInt64(self.seconds) }
+    var wMilliSeconds: UInt32 { UInt32(self.milliSeconds) }
+    var wMicroSeconds: UInt32 { UInt32(self.microSeconds) }
+
+    var wTimeSecs: UInt {
+        UInt(self.wSeconds) + UInt(self.wMilliSeconds) / UInt(1_000) + UInt(self.wMicroSeconds) / UInt(1_000_000)
+    }
+    var wTimeMillis: UInt {
+        UInt(self.wMilliSeconds) + UInt(self.wMicroSeconds) / UInt(1_000)
+    }
+    var wTimeMicros: UInt {
+        UInt(self.wMicroSeconds)
+    }
 
     static func new(context: NSManagedObjectContext) -> SpanRun {
         let obj = SpanRun(context: context);
