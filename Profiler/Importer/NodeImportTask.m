@@ -62,7 +62,7 @@ typedef struct NodeDuration {
     Float64 secs;
     if (![scan scanDouble:&secs])
         return NO;
-    uint64_t us = (uint64_t)secs * 1000000;
+    uint64_t us = (uint64_t)(secs * 1000000);
     uint64_t ms = us / 1000;
     uint64_t s = ms / 1000;
     ms -= s * 1000; //Remove seconds from millis
