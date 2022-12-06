@@ -155,6 +155,46 @@ extension SpanNode {
     var wEvents: [SpanEvent] { Array(self.events ?? []) }
     var wRuns: [SpanRun] { Array(self.runs ?? []) }
     var wMetadata: SpanMetadata? { self.metadata }
+    
+    var wAverageSeconds: UInt64 { UInt64(self.averageSeconds) }
+    var wAverageMilliSeconds: UInt32 { UInt32(self.averageMilliSeconds) }
+    var wAverageMicroSeconds: UInt32 { UInt32(self.averageMicroSeconds) }
+    var wMinSeconds: UInt64 { UInt64(self.minSeconds) }
+    var wMinMilliSeconds: UInt32 { UInt32(self.minMilliSeconds) }
+    var wMinMicroSeconds: UInt32 { UInt32(self.minMicroSeconds) }
+    var wMaxSeconds: UInt64 { UInt64(self.maxSeconds) }
+    var wMaxMilliSeconds: UInt32 { UInt32(self.maxMilliSeconds) }
+    var wMaxMicroSeconds: UInt32 { UInt32(self.maxMicroSeconds) }
+
+    var wAverageSecs: Float64 {
+        Float64(self.wAverageSeconds) + Float64(self.wAverageMilliSeconds) / Float64(1_000) + Float64(self.wAverageMicroSeconds) / Float64(1_000_000)
+    }
+    var wAverageMillis: Float64 {
+        Float64(self.wAverageMilliSeconds) + Float64(self.wAverageMicroSeconds) / Float64(1_000)
+    }
+    var wAverageMicros: Float64 {
+        Float64(self.wAverageMicroSeconds)
+    }
+
+    var wMinSecs: Float64 {
+        Float64(self.wMinSeconds) + Float64(self.wMinMilliSeconds) / Float64(1_000) + Float64(self.wMinMicroSeconds) / Float64(1_000_000)
+    }
+    var wMinMillis: Float64 {
+        Float64(self.wMinMilliSeconds) + Float64(self.wMinMicroSeconds) / Float64(1_000)
+    }
+    var wMinMicros: Float64 {
+        Float64(self.wMinMicroSeconds)
+    }
+
+    var wMaxSecs: Float64 {
+        Float64(self.wMaxSeconds) + Float64(self.wMaxMilliSeconds) / Float64(1_000) + Float64(self.wMaxMicroSeconds) / Float64(1_000_000)
+    }
+    var wMaxMillis: Float64 {
+        Float64(self.wMaxMilliSeconds) + Float64(self.wMaxMicroSeconds) / Float64(1_000)
+    }
+    var wMaxMicros: Float64 {
+        Float64(self.wMaxMicroSeconds)
+    }
 }
 
 extension SpanNode: Identifiable {}
