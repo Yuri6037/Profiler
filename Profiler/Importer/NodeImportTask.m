@@ -27,6 +27,12 @@
 #import "SpanMetadata+CoreDataClass.h"
 #import "SpanVariable+CoreDataClass.h"
 
+typedef struct NodeDuration {
+    uint64_t seconds;
+    uint32_t millis;
+    uint32_t micros;
+} NodeDuration;
+
 @interface NodeImportTask()
 
 - (BOOL)loadMetadata:(NSError **)error into:(SpanNode *)node withContext:(NSManagedObjectContext *)ctx;
@@ -35,6 +41,9 @@
 
 - (BOOL)loadRunsInto:(SpanNode *)node context:(NSManagedObjectContext *)ctx withError:(NSError **)error;
 - (BOOL)loadEventsInto:(SpanNode *)node context:(NSManagedObjectContext *)ctx withError:(NSError **)error;
+
++ (BOOL)parseDurationOld:(CSVRow)row into:(NodeDuration *)duration;
++ (BOOL)parseDurationNew:(CSVRow)row into:(NodeDuration *)duration;
 
 @end
 
@@ -48,19 +57,57 @@
     NSManagedObjectID *_oid;
 }
 
++ (BOOL)parseDurationOld:(CSVRow)row into:(NodeDuration *)duration {
+    NSScanner *scan = [NSScanner scannerWithString:[row objectAtIndex:2]];
+    Float64 secs;
+    if (![scan scanDouble:&secs])
+        return NO;
+    uint64_t us = (uint64_t)secs * 1000000;
+    uint64_t ms = us / 1000;
+    uint64_t s = ms / 1000;
+    ms -= s * 1000; //Remove seconds from millis
+    us -= ms * 1000; //Remove millis from micros
+    us -= s * 1000000; //Remove seconds from micros
+    duration->seconds = s;
+    duration->millis = (uint32_t)ms;
+    duration->micros = (uint32_t)us;
+    return YES;
+}
+
++ (BOOL)parseDurationNew:(CSVRow)row into:(NodeDuration *)duration {
+    NSScanner *s = [NSScanner scannerWithString:[row objectAtIndex:2]];
+    NSScanner *ms = [NSScanner scannerWithString:[row objectAtIndex:3]];
+    NSScanner *us = [NSScanner scannerWithString:[row objectAtIndex:4]];
+    if (![s scanUnsignedLongLong:&duration->seconds])
+        return NO;
+    uint64_t temp;
+    if (![ms scanUnsignedLongLong:&temp])
+        return NO;
+    duration->millis = (uint32_t)temp;
+    if (![us scanUnsignedLongLong:&temp])
+        return NO;
+    duration->micros = (uint32_t)temp;
+    return YES;
+}
+
 + (SpanRun *)parseRun:(CSVRow)row withContext:(NSManagedObjectContext *)ctx {
     if (row.count < 3)
         return nil;
-    NSScanner *scan = [NSScanner scannerWithString:[row objectAtIndex:2]];
-    Float64 duration;
-    if (![scan scanDouble:&duration]) {
-        return nil;
+    NodeDuration duration;
+    if (row.count >= 5 && ![[row objectAtIndex:2] containsString:@"."]) {
+        if (![NodeImportTask parseDurationNew:row into:&duration])
+            return nil;
+    } else {
+        if (![NodeImportTask parseDurationOld:row into:&duration])
+            return nil;
     }
     NSString *msg = [row objectAtIndex:1];
     SpanRun *run = [[SpanRun alloc] initWithContext:ctx];
     run.id = [NSUUID UUID];
     run.message = msg.length > 0 ? msg : nil;
-    run.time = duration;
+    run.seconds = duration.seconds;
+    run.milliSeconds = duration.millis;
+    run.microSeconds = duration.micros;
     run.variables = [[NSMutableSet alloc] init];
     for (NSUInteger i = 3; i != row.count; ++i) {
         NSString *variable = [row objectAtIndex:i];
