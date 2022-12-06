@@ -167,14 +167,14 @@ extension SpanRun {
     var wMilliSeconds: UInt32 { UInt32(self.milliSeconds) }
     var wMicroSeconds: UInt32 { UInt32(self.microSeconds) }
 
-    var wTimeSecs: UInt {
-        UInt(self.wSeconds) + UInt(self.wMilliSeconds) / UInt(1_000) + UInt(self.wMicroSeconds) / UInt(1_000_000)
+    var wTimeSecs: Float64 {
+        Float64(self.wSeconds) + Float64(self.wMilliSeconds) / Float64(1_000) + Float64(self.wMicroSeconds) / Float64(1_000_000)
     }
-    var wTimeMillis: UInt {
-        UInt(self.wMilliSeconds) + UInt(self.wMicroSeconds) / UInt(1_000)
+    var wTimeMillis: Float64 {
+        Float64(self.wMilliSeconds) + Float64(self.wMicroSeconds) / Float64(1_000)
     }
-    var wTimeMicros: UInt {
-        UInt(self.wMicroSeconds)
+    var wTimeMicros: Float64 {
+        Float64(self.wMicroSeconds)
     }
 
     static func new(context: NSManagedObjectContext) -> SpanRun {
