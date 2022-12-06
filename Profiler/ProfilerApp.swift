@@ -69,6 +69,7 @@ struct ProfilerApp: App {
     func importProject(dir: String) {
         if self.importTask != nil {
             errorHandler.pushError(AppError(description: "A project is already being imported, please wait..."));
+            return;
         }
         self.importTask = ProjectImporter(directory: dir, container: Database.shared.container);
         do {
