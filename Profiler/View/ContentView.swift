@@ -88,8 +88,7 @@ struct ContentView: View {
             self.hack = true;
             DispatchQueue.main.async {
                 withAnimation {
-                    viewContext.delete(selection);
-                    Database.shared.save();
+                    Database.shared.removeProject(proj: selection);
                     self.hack = false;
                 }
             }

@@ -4,7 +4,7 @@
         <attribute name="coreCount" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" attributeType="UUID" defaultValueString="0CF044A3-333C-4B22-8FEB-F68B004B6C96" usesScalarValueType="NO"/>
         <attribute name="name" attributeType="String" defaultValueString=""/>
-        <relationship name="projects" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Project" inverseName="cpu" inverseEntity="Project"/>
+        <relationship name="projects" toMany="YES" deletionRule="Nullify" destinationEntity="Project" inverseName="cpu" inverseEntity="Project"/>
         <fetchIndex name="GetExisting">
             <fetchIndexElement property="coreCount" type="Binary" order="ascending"/>
             <fetchIndexElement property="name" type="Binary" order="ascending"/>
@@ -65,7 +65,7 @@
         <attribute name="family" attributeType="String" defaultValueString=""/>
         <attribute name="id" attributeType="UUID" defaultValueString="0CF044A3-333C-4B22-8FEB-F68B004B6C96" usesScalarValueType="NO"/>
         <attribute name="os" attributeType="String" defaultValueString=""/>
-        <relationship name="projects" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Project" inverseName="target" inverseEntity="Project"/>
+        <relationship name="projects" toMany="YES" deletionRule="Nullify" destinationEntity="Project" inverseName="target" inverseEntity="Project"/>
         <fetchIndex name="GetExisting">
             <fetchIndexElement property="os" type="Binary" order="ascending"/>
             <fetchIndexElement property="family" type="Binary" order="ascending"/>

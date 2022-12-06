@@ -49,6 +49,25 @@ class Database {
         container.viewContext.automaticallyMergesChangesFromParent = true
     }
 
+    func removeProject(proj: Project) {
+        let target = proj.target;
+        let cpu = proj.cpu;
+        container.viewContext.delete(proj);
+        save();
+        if let target = target {
+            if target.projects?.isEmpty ?? false {
+                container.viewContext.delete(target);
+                save();
+            }
+        }
+        if let cpu = cpu {
+            if cpu.projects?.isEmpty ?? false {
+                container.viewContext.delete(cpu);
+                save();
+            }
+        }
+    }
+
     func save() {
         do {
             try container.viewContext.save();
