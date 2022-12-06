@@ -44,8 +44,14 @@ struct ProjectDetails: View {
                             }
                         }
                     }
+                }.padding(.horizontal).padding(.top)
+                if let cmdline = project.wCommandLine {
+                    Divider()
+                    VStack {
+                        Text("Command Line").bold()
+                        Text(cmdline)
+                    }
                 }
-                .padding()
                 List(project.wNodes, selection: $selection) { item in
                     NavigationLink(value: item) {
                         Text(item.wPath)
