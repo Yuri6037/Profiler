@@ -30,9 +30,7 @@ struct SpanNodeDetails: View {
     var body: some View {
         VStack {
             if renderNode {
-                if let metadata = node.wMetadata {
-                    SpanNodeInfo(metadata: metadata)
-                }
+                SpanNodeInfo(node: node)
             }
             SpanRunTable(runs: node.wRuns)
             SpanEventTable(events: node.wEvents)

@@ -37,11 +37,7 @@ struct ProjectDetails: View {
                     if renderNode {
                         if let selection = selection {
                             Spacer()
-                            if let metadata = selection.wMetadata {
-                                SpanNodeInfo(metadata: metadata)
-                            } else {
-                                Text("No information for this node").bold()
-                            }
+                            SpanNodeInfo(node: selection)
                         }
                     }
                 }.padding(.horizontal).padding(.top)
