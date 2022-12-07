@@ -34,6 +34,9 @@ extension SpanRun {
         }
     }
     var dMessage: String { self.wMessage ?? "No message specified" }
+    var dVariables: String {
+        self.wVariables.map { item in item.data ?? "" }.joined(separator: ", ")
+    }
 }
 
 let MAX_UI_RUNS = 5000;
@@ -56,6 +59,7 @@ struct SpanRunTable: View {
         Table(items) {
             TableColumn("Time", value: \.dTime)
             TableColumn("Message", value: \.dMessage)
+            TableColumn("Variables", value: \.dVariables)
         }
     }
 }
