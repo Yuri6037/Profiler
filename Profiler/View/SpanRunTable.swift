@@ -36,10 +36,12 @@ extension SpanRun {
     var dMessage: String { self.wMessage ?? "No message specified" }
 }
 
+let MAX_UI_RUNS = 5000;
+
 struct SpanRunTable: View {
     var runs: [SpanRun];
     var body: some View {
-        Table(runs) {
+        Table(runs[...(runs.count > MAX_UI_RUNS ? MAX_UI_RUNS : runs.count - 1)]) {
             TableColumn("Time", value: \.dTime)
             TableColumn("Message", value: \.dMessage)
         }

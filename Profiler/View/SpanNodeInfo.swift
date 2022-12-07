@@ -107,6 +107,10 @@ struct SpanNodeInfo: View {
                     Text("No metadata for this node").bold()
                 }
                 HStack {
+                    Text("Run count").bold()
+                    Text(node.wRuns.count.formatted())
+                }
+                HStack {
                     Text("Min time").bold()
                     Text(node.dMinTime)
                 }
