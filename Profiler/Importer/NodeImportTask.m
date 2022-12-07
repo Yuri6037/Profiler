@@ -39,6 +39,7 @@ typedef struct NodeDurationInfo {
 @interface NodeImportTask()
 
 - (BOOL)loadMetadata:(NSError **)error into:(SpanNode *)node withContext:(NSManagedObjectContext *)ctx;
+- (BOOL)loadTimesInto:(SpanNode *)node;
 
 + (int16_t)levelFromString:(NSString *)str;
 
@@ -58,6 +59,7 @@ typedef struct NodeDurationInfo {
     NSString *_runsFile;
     NSString *_metadataFile;
     NSString *_eventsFile;
+    NSString *_timesFile;
     NSPersistentContainer *_container;
     TreeNode *_node;
     NSManagedObjectID *_oid;
@@ -154,6 +156,7 @@ typedef struct NodeDurationInfo {
     _runsFile = [[[dir stringByAppendingString:@"/runs/"] stringByAppendingFormat:@"%lu", node.index] stringByAppendingString:@".csv"];
     _metadataFile = [[[dir stringByAppendingString:@"/metadata/"] stringByAppendingFormat:@"%lu", node.index] stringByAppendingString:@".csv"];
     _eventsFile = [[[dir stringByAppendingString:@"/events/"] stringByAppendingFormat:@"%lu", node.index] stringByAppendingString:@".csv"];
+    _timesFile = [dir stringByAppendingString:@"/times.csv"];
     _container = container;
     _node = node;
     _oid = oid;
@@ -202,6 +205,31 @@ typedef struct NodeDurationInfo {
     return *error == nil;
 }
 
+- (BOOL)loadTimesInto:(SpanNode *)node {
+    NSError *error;
+    CSVParser *parser = [[CSVParser alloc] init:','];
+    BufferedTextFile *file = [[BufferedTextFile alloc] init:_timesFile bufferSize:8192 withError:&error];
+    if (file == nil)
+        return NO;
+    NSString *line;
+    while ((line = [file readLine:&error]) != nil) {
+        CSVRow row = [parser parseRow:line];
+        if (row.count >= 10 && [row objectAtIndex:0].intValue == _index) {
+            node.minSeconds = [row objectAtIndex:1].longLongValue;
+            node.minMilliSeconds = [row objectAtIndex:2].intValue;
+            node.minMicroSeconds = [row objectAtIndex:3].intValue;
+            node.maxSeconds = [row objectAtIndex:4].longLongValue;
+            node.maxMilliSeconds = [row objectAtIndex:5].intValue;
+            node.maxMicroSeconds = [row objectAtIndex:6].intValue;
+            node.averageSeconds = [row objectAtIndex:7].longLongValue;
+            node.averageMilliSeconds = [row objectAtIndex:8].intValue;
+            node.averageMicroSeconds = [row objectAtIndex:9].intValue;
+            return YES;
+        }
+    }
+    return NO;
+}
+
 - (BOOL)loadRunsInto:(SpanNode *)node context:(NSManagedObjectContext *)ctx withError:(NSError **)error {
     NSMutableSet<SpanRun *> *runs = (NSMutableSet *)node.runs;
     BufferedTextFile *file = [[BufferedTextFile alloc] init:_runsFile bufferSize:8192 withError:error];
@@ -228,16 +256,18 @@ typedef struct NodeDurationInfo {
         [runs addObject:run];
         count += 1;
     }
-    duration_mul_scalar(&info.average, 1.0f / (float)count);
-    node.averageSeconds = info.average.seconds;
-    node.averageMilliSeconds = info.average.millis;
-    node.averageMicroSeconds = info.average.micros;
-    node.minSeconds = info.min.seconds;
-    node.minMilliSeconds = info.min.millis;
-    node.minMicroSeconds = info.min.micros;
-    node.maxSeconds = info.max.seconds;
-    node.maxMilliSeconds = info.max.millis;
-    node.maxMicroSeconds = info.max.micros;
+    if (![self loadTimesInto:node]) {
+        duration_mul_scalar(&info.average, 1.0f / (float)count);
+        node.averageSeconds = info.average.seconds;
+        node.averageMilliSeconds = info.average.millis;
+        node.averageMicroSeconds = info.average.micros;
+        node.minSeconds = info.min.seconds;
+        node.minMilliSeconds = info.min.millis;
+        node.minMicroSeconds = info.min.micros;
+        node.maxSeconds = info.max.seconds;
+        node.maxMilliSeconds = info.max.millis;
+        node.maxMicroSeconds = info.max.micros;
+    }
     return *error == nil;
 }
 
