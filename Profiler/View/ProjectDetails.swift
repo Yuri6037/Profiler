@@ -48,7 +48,7 @@ struct ProjectDetails: View {
                         Text(cmdline)
                     }
                 }
-                List(project.wNodes, selection: $selection) { item in
+                List(project.wNodes.sorted(by: { $1.wId > $0.wId }), selection: $selection) { item in
                     NavigationLink(value: item) {
                         Text(item.wPath)
                     }
