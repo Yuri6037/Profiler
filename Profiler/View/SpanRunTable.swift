@@ -39,9 +39,21 @@ extension SpanRun {
 let MAX_UI_RUNS = 5000;
 
 struct SpanRunTable: View {
-    var runs: [SpanRun];
+    @FetchRequest private var items: FetchedResults<SpanRun>;
+    init(node: SpanNode) {
+        let req: NSFetchRequest<SpanRun> = SpanRun.fetchRequest();
+        req.fetchLimit = MAX_UI_RUNS;
+        req.sortDescriptors = [
+            NSSortDescriptor(keyPath: \SpanRun.seconds, ascending: false),
+            NSSortDescriptor(keyPath: \SpanRun.milliSeconds, ascending: false),
+            NSSortDescriptor(keyPath: \SpanRun.microSeconds, ascending: false)
+        ];
+        req.predicate = NSPredicate(format: "node=%@", node);
+        _items = FetchRequest(fetchRequest: req, animation: .default)
+    }
+
     var body: some View {
-        Table(runs[...(runs.count > MAX_UI_RUNS ? MAX_UI_RUNS : runs.count - 1)]) {
+        Table(items) {
             TableColumn("Time", value: \.dTime)
             TableColumn("Message", value: \.dMessage)
         }
@@ -50,6 +62,6 @@ struct SpanRunTable: View {
 
 struct SpanRunTable_Previews: PreviewProvider {
     static var previews: some View {
-        SpanRunTable(runs: [])
+        SpanRunTable(node: Database.preview.getFirstNode()!)
     }
 }

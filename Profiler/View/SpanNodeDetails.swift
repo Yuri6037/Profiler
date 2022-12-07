@@ -32,7 +32,7 @@ struct SpanNodeDetails: View {
             if renderNode {
                 SpanNodeInfo(node: node)
             }
-            SpanRunTable(runs: node.wRuns)
+            SpanRunTable(node: node)
             SpanEventTable(events: node.wEvents)
         }
     }
