@@ -23,13 +23,23 @@
 
 import SwiftUI
 
+extension SpanEvent {
+    var dVariables: String {
+        self.wVariables.map { item in item.data ?? "" }.joined(separator: ", ")
+    }
+}
+
 struct SpanEventTable: View {
     var events: [SpanEvent];
 
     var body: some View {
         List {
             ForEach(events) { item in
-                Text(item.wMessage)
+                HStack {
+                    Text(item.wMessage)
+                    Spacer()
+                    Text(item.dVariables)
+                }
             }
         }
     }
