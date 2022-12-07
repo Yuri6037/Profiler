@@ -93,7 +93,9 @@ typedef struct NodeDurationInfo {
     if (row.count < 3)
         return nil;
     NodeDuration duration;
+    NSUInteger start = 3;
     if (row.count >= 5 && ![[row objectAtIndex:2] containsString:@"."]) {
+        start = 5;
         if (![NodeImportTask parseDurationNew:row into:&duration])
             return nil;
     } else {
@@ -113,7 +115,7 @@ typedef struct NodeDurationInfo {
     run.milliSeconds = duration.millis;
     run.microSeconds = duration.micros;
     run.variables = [[NSMutableSet alloc] init];
-    for (NSUInteger i = 3; i != row.count; ++i) {
+    for (NSUInteger i = start; i != row.count; ++i) {
         NSString *variable = [row objectAtIndex:i];
         if (variable.length == 0)
             continue;
