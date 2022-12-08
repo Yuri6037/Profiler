@@ -26,6 +26,27 @@ import SwiftUI
 struct SpanNodeDetails: View {
     @ObservedObject var node: SpanNode;
     var renderNode: Bool = false;
+    @State var points: [Double] = [];
+
+    func loadChartPoints(node: SpanNode) {
+        points = []
+        let nodeId = node.objectID;
+        Database.shared.container.performBackgroundTask { ctx in
+            let node = ctx.object(with: nodeId);
+            let req: NSFetchRequest<SpanRun> = SpanRun.fetchRequest();
+            req.fetchLimit = 1024;
+            req.predicate = NSPredicate(format: "node=%@", node);
+            do {
+                let objs = try ctx.fetch(req);
+                let points = objs.map { $0.wTimeMicros };
+                DispatchQueue.main.async {
+                    self.points = points;
+                }
+            } catch {
+                //Ignore the error
+            }
+        }
+    }
 
     var body: some View {
         VStack {
@@ -34,7 +55,15 @@ struct SpanNodeDetails: View {
             }
             SpanRunTable(node: node)
             SpanEventTable(events: node.wEvents)
+            if points.count > 0 {
+                ScrollView(.horizontal) {
+                    LineChart(width: 2048, height: 256, points: points)
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            }
         }
+        .onAppear { loadChartPoints(node: node) }
+        .onChange(of: node) { loadChartPoints(node: $0) }
     }
 }
 

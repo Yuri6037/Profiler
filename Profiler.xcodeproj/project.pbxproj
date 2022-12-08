@@ -35,6 +35,7 @@
 		DAB6AA2B2936447000B290FC /* FilePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB6AA2A2936447000B290FC /* FilePicker.swift */; };
 		DAB6AA312936A3F700B290FC /* ProjectLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB6AA302936A3F700B290FC /* ProjectLink.swift */; };
 		DAED2F89293FCFBB0095A2FC /* NodeDuration.c in Sources */ = {isa = PBXBuildFile; fileRef = DAED2F88293FCFBB0095A2FC /* NodeDuration.c */; };
+		DAF8FAB0294288CB00404F75 /* LineChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF8FAAF294288CB00404F75 /* LineChart.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -120,6 +121,7 @@
 		DAB6AA302936A3F700B290FC /* ProjectLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectLink.swift; sourceTree = "<group>"; };
 		DAED2F87293FCFBB0095A2FC /* NodeDuration.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NodeDuration.h; sourceTree = "<group>"; };
 		DAED2F88293FCFBB0095A2FC /* NodeDuration.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = NodeDuration.c; sourceTree = "<group>"; };
+		DAF8FAAF294288CB00404F75 /* LineChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChart.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,6 +176,7 @@
 				DA58FD7E292373970034E588 /* SpanEventTable.swift */,
 				DA31F6BA2924C04E0077AF03 /* SpanNodeInfo.swift */,
 				DAB6AA302936A3F700B290FC /* ProjectLink.swift */,
+				DAF8FAAF294288CB00404F75 /* LineChart.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -439,6 +442,7 @@
 				DAB6AA312936A3F700B290FC /* ProjectLink.swift in Sources */,
 				DA58FD772922E2A00034E588 /* PreviewExtensions.swift in Sources */,
 				DA6A44902920EB2B00DCEDBB /* ProfilerApp.swift in Sources */,
+				DAF8FAB0294288CB00404F75 /* LineChart.swift in Sources */,
 				DAED2F89293FCFBB0095A2FC /* NodeDuration.c in Sources */,
 				DA6A44922920EB2B00DCEDBB /* Database.swift in Sources */,
 				DA58FD792922E2B20034E588 /* SampleData.swift in Sources */,
