@@ -29,6 +29,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)init;
 
+- (BOOL)close:(NSError **)error;
+
+- (BOOL)open:(NSError **)error;
+
+- (BOOL)sendCommand:(NSString *)command withError:(NSError **)error;
+
+- (NSString *)getResponse:(NSError **)error;
+
+- (BOOL)isAlive:(NSError **)error;
+
 @end
 
 NS_ASSUME_NONNULL_END
