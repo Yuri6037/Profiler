@@ -11,3 +11,7 @@
 #import "SpanRun+CoreDataClass.h"
 #import "SpanNode+CoreDataClass.h"
 #import "ProjectImporter.h"
+
+#ifdef TARGET_OS_MAC
+#import <ProfilerBackend/ProfilerService.h>
+#endif

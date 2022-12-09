@@ -23,6 +23,19 @@
 
 #import "ProfilerService.h"
 
-@implementation ProfilerService
+@implementation ProfilerService {
+    NSString *_serviceExe;
+}
+
+- (instancetype)init {
+    NSBundle *bundle = [NSBundle bundleWithIdentifier:@"com.github.Yuri6037.ProfilerBackend"];
+#ifdef __aarch64__
+    _serviceExe = [bundle pathForResource:@"profiler-aarch64" ofType:@""];
+#else
+    _serviceExe = [bundle pathForResource:@"profiler-amd64" ofType:@""];
+#endif
+    NSLog(@"Path to profiler backend: %@", _serviceExe);
+    return self;
+}
 
 @end

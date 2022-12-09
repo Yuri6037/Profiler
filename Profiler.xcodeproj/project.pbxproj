@@ -34,13 +34,14 @@
 		DAB6AA282933B99B00B290FC /* TreeNodeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DAB6AA272933B99B00B290FC /* TreeNodeTests.m */; };
 		DAB6AA2B2936447000B290FC /* FilePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB6AA2A2936447000B290FC /* FilePicker.swift */; };
 		DAB6AA312936A3F700B290FC /* ProjectLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB6AA302936A3F700B290FC /* ProjectLink.swift */; };
+		DAC1515A294355BE00760299 /* profiler-aarch64 in Resources */ = {isa = PBXBuildFile; fileRef = DAC15158294355BE00760299 /* profiler-aarch64 */; };
+		DAC1515B294355BE00760299 /* profiler-amd64 in Resources */ = {isa = PBXBuildFile; fileRef = DAC15159294355BE00760299 /* profiler-amd64 */; };
 		DAED2F89293FCFBB0095A2FC /* NodeDuration.c in Sources */ = {isa = PBXBuildFile; fileRef = DAED2F88293FCFBB0095A2FC /* NodeDuration.c */; };
 		DAF8FAB0294288CB00404F75 /* LineChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF8FAAF294288CB00404F75 /* LineChart.swift */; };
 		DAF8FABC29431C9500404F75 /* ProfilerBackend.h in Headers */ = {isa = PBXBuildFile; fileRef = DAF8FABB29431C9500404F75 /* ProfilerBackend.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DAF8FABF29431C9500404F75 /* ProfilerBackend.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAF8FAB929431C9500404F75 /* ProfilerBackend.framework */; platformFilters = (macos, ); };
 		DAF8FAC029431C9500404F75 /* ProfilerBackend.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DAF8FAB929431C9500404F75 /* ProfilerBackend.framework */; platformFilters = (macos, ); settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		DAF8FACA29434FD200404F75 /* profiler in Resources */ = {isa = PBXBuildFile; fileRef = DAF8FAC929434FD200404F75 /* profiler */; };
-		DAF8FACF294350D300404F75 /* ProfilerService.h in Headers */ = {isa = PBXBuildFile; fileRef = DAF8FACD294350D300404F75 /* ProfilerService.h */; };
+		DAF8FACF294350D300404F75 /* ProfilerService.h in Headers */ = {isa = PBXBuildFile; fileRef = DAF8FACD294350D300404F75 /* ProfilerService.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DAF8FAD0294350D300404F75 /* ProfilerService.m in Sources */ = {isa = PBXBuildFile; fileRef = DAF8FACE294350D300404F75 /* ProfilerService.m */; };
 /* End PBXBuildFile section */
 
@@ -133,12 +134,13 @@
 		DAB6AA272933B99B00B290FC /* TreeNodeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TreeNodeTests.m; sourceTree = "<group>"; };
 		DAB6AA2A2936447000B290FC /* FilePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePicker.swift; sourceTree = "<group>"; };
 		DAB6AA302936A3F700B290FC /* ProjectLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectLink.swift; sourceTree = "<group>"; };
+		DAC15158294355BE00760299 /* profiler-aarch64 */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "profiler-aarch64"; sourceTree = "<group>"; };
+		DAC15159294355BE00760299 /* profiler-amd64 */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "profiler-amd64"; sourceTree = "<group>"; };
 		DAED2F87293FCFBB0095A2FC /* NodeDuration.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NodeDuration.h; sourceTree = "<group>"; };
 		DAED2F88293FCFBB0095A2FC /* NodeDuration.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = NodeDuration.c; sourceTree = "<group>"; };
 		DAF8FAAF294288CB00404F75 /* LineChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChart.swift; sourceTree = "<group>"; };
 		DAF8FAB929431C9500404F75 /* ProfilerBackend.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ProfilerBackend.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAF8FABB29431C9500404F75 /* ProfilerBackend.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProfilerBackend.h; sourceTree = "<group>"; };
-		DAF8FAC929434FD200404F75 /* profiler */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = profiler; path = ProfilerBackend/profiler; sourceTree = "<group>"; };
 		DAF8FACD294350D300404F75 /* ProfilerService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProfilerService.h; sourceTree = "<group>"; };
 		DAF8FACE294350D300404F75 /* ProfilerService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProfilerService.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -223,7 +225,6 @@
 		DA6A44832920EB2B00DCEDBB = {
 			isa = PBXGroup;
 			children = (
-				DAF8FAC929434FD200404F75 /* profiler */,
 				DAB6AA14293364C800B290FC /* TextTools.xcodeproj */,
 				DA6A448E2920EB2B00DCEDBB /* Profiler */,
 				DA6A44A52920EB2C00DCEDBB /* ProfilerTests */,
@@ -300,6 +301,8 @@
 		DAF8FABA29431C9500404F75 /* ProfilerBackend */ = {
 			isa = PBXGroup;
 			children = (
+				DAC15158294355BE00760299 /* profiler-aarch64 */,
+				DAC15159294355BE00760299 /* profiler-amd64 */,
 				DAF8FABB29431C9500404F75 /* ProfilerBackend.h */,
 				DAF8FACD294350D300404F75 /* ProfilerService.h */,
 				DAF8FACE294350D300404F75 /* ProfilerService.m */,
@@ -495,7 +498,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DAF8FACA29434FD200404F75 /* profiler in Resources */,
+				DAC1515A294355BE00760299 /* profiler-aarch64 in Resources */,
+				DAC1515B294355BE00760299 /* profiler-amd64 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

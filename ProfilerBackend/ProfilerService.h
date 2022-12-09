@@ -25,7 +25,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ProfilerService : NSObject
+@interface ProfilerService : NSObject 
+
+- (instancetype)init;
 
 @end
 
