@@ -111,7 +111,6 @@ typedef struct NodeDurationInfo {
     duration_add(&info->average, &duration);
     NSString *msg = [row objectAtIndex:1];
     SpanRun *run = [[SpanRun alloc] initWithContext:ctx];
-    run.id = [NSUUID UUID];
     run.message = msg.length > 0 ? msg : nil;
     run.seconds = duration.seconds;
     run.milliSeconds = duration.millis;
@@ -123,7 +122,6 @@ typedef struct NodeDurationInfo {
             continue;
         SpanVariable *var = [[SpanVariable alloc] initWithContext:ctx];
         var.run = run;
-        var.id = [NSUUID UUID];
         var.data = variable;
         [(NSMutableSet *)run.variables addObject:var];
     }
@@ -135,7 +133,6 @@ typedef struct NodeDurationInfo {
         return nil;
     NSString *msg = [row objectAtIndex:1];
     SpanEvent *event = [[SpanEvent alloc] initWithContext:ctx];
-    event.id = [NSUUID UUID];
     event.message = msg.length > 0 ? msg : nil;
     event.variables = [[NSMutableSet alloc] init];
     for (NSUInteger i = 2; i != row.count; ++i) {
@@ -143,7 +140,6 @@ typedef struct NodeDurationInfo {
         if (variable.length == 0)
             continue;
         SpanVariable *var = [[SpanVariable alloc] initWithContext:ctx];
-        var.id = [NSUUID UUID];
         var.event = event;
         var.data = variable;
         [(NSMutableSet *)event.variables addObject:var];
@@ -184,7 +180,6 @@ typedef struct NodeDurationInfo {
         return NO;
     *error = nil;
     node.metadata = [[SpanMetadata alloc] initWithContext:ctx];
-    node.metadata.id = [NSUUID UUID];
     while ((line = [file readLine:error]) != nil) {
         CSVRow row = [parser parseRow:line];
         NSString *key = [row objectAtIndex:0];
@@ -239,7 +234,7 @@ typedef struct NodeDurationInfo {
     info.min.seconds = UINT32_MAX;
     info.min.millis = UINT16_MAX;
     info.min.micros = UINT16_MAX;
-    int count = 0;
+    int64_t count = 0;
     duration_set_zero(&info.average);
     NSString *line;
     if (file == nil)
@@ -252,6 +247,7 @@ typedef struct NodeDurationInfo {
             *error = [NSError errorWithDomain:@"Parse error" code:0 userInfo:nil];
             return NO;
         }
+        run.order = count;
         run.node = node;
         [runs addObject:run];
         count += 1;
@@ -279,6 +275,7 @@ typedef struct NodeDurationInfo {
     if (file == nil)
         return NO;
     *error = nil;
+    int64_t count = 0;
     while ((line = [file readLine:error]) != nil) {
         CSVRow row = [parser parseRow:line];
         SpanEvent *event = [NodeImportTask parseEvent:row withContext:ctx];
@@ -286,8 +283,10 @@ typedef struct NodeDurationInfo {
             *error = [NSError errorWithDomain:@"Parse error" code:0 userInfo:nil];
             return NO;
         }
+        event.order = count;
         event.node = node;
         [events addObject:event];
+        count += 1;
     }
     return *error == nil;
 }

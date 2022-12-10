@@ -89,7 +89,6 @@
             proj.target = target;
         else {
             proj.target = [[Target alloc] initWithContext:ctx];
-            proj.target.id = [NSUUID UUID];
             proj.target.os = targetOs;
             proj.target.family = targetFamily;
             proj.target.arch = targetArch;
@@ -103,7 +102,6 @@
             proj.cpu = cpu;
         else {
             proj.cpu = [[Cpu alloc] initWithContext:ctx];
-            proj.cpu.id = [NSUUID UUID];
             proj.cpu.name = cpuName;
             proj.cpu.coreCount = cpuCoreCount;
         }
@@ -125,7 +123,6 @@
 - (BOOL)loadProject:(NSError **)error {
     NSManagedObjectContext *ctx = _container.viewContext;
     Project *proj = [[Project alloc] initWithContext:ctx];
-    proj.id = [NSUUID UUID];
     proj.timestamp = [NSDate now];
     if (![self loadInfoFile:error into:proj withContext:ctx])
         return NO;

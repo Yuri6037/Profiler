@@ -2,7 +2,6 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21512" systemVersion="22A400" minimumToolsVersion="Automatic" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
     <entity name="Cpu" representedClassName="Cpu" syncable="YES" codeGenerationType="class">
         <attribute name="coreCount" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="id" attributeType="UUID" defaultValueString="0CF044A3-333C-4B22-8FEB-F68B004B6C96" usesScalarValueType="NO"/>
         <attribute name="name" attributeType="String" defaultValueString=""/>
         <relationship name="projects" toMany="YES" deletionRule="Nullify" destinationEntity="Project" inverseName="cpu" inverseEntity="Project"/>
         <fetchIndex name="GetExisting">
@@ -13,7 +12,6 @@
     <entity name="Project" representedClassName="Project" syncable="YES" codeGenerationType="class">
         <attribute name="appName" attributeType="String" defaultValueString="Unknown"/>
         <attribute name="commandLine" optional="YES" attributeType="String"/>
-        <attribute name="id" attributeType="UUID" defaultValueString="0CF044A3-333C-4B22-8FEB-F68B004B6C96" usesScalarValueType="NO"/>
         <attribute name="name" attributeType="String" defaultValueString=""/>
         <attribute name="timestamp" attributeType="Date" defaultDateTimeInterval="690046200" usesScalarValueType="NO"/>
         <attribute name="version" optional="YES" attributeType="String"/>
@@ -22,14 +20,13 @@
         <relationship name="target" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Target" inverseName="projects" inverseEntity="Target"/>
     </entity>
     <entity name="SpanEvent" representedClassName="SpanEvent" syncable="YES" codeGenerationType="class">
-        <attribute name="id" attributeType="UUID" defaultValueString="0CF044A3-333C-4B22-8FEB-F68B004B6C96" usesScalarValueType="NO"/>
         <attribute name="message" attributeType="String" defaultValueString=""/>
+        <attribute name="order" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="node" maxCount="1" deletionRule="Nullify" destinationEntity="SpanNode" inverseName="events" inverseEntity="SpanNode"/>
         <relationship name="variables" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="SpanVariable" inverseName="event" inverseEntity="SpanVariable"/>
     </entity>
     <entity name="SpanMetadata" representedClassName="SpanMetadata" syncable="YES" codeGenerationType="class">
         <attribute name="file" optional="YES" attributeType="String"/>
-        <attribute name="id" attributeType="UUID" defaultValueString="0CF044A3-333C-4B22-8FEB-F68B004B6C96" usesScalarValueType="NO"/>
         <attribute name="level" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="line" attributeType="Integer 32" defaultValueString="-1" usesScalarValueType="YES"/>
         <attribute name="modulePath" optional="YES" attributeType="String"/>
@@ -55,24 +52,22 @@
         <relationship name="runs" toMany="YES" deletionRule="Cascade" destinationEntity="SpanRun" inverseName="node" inverseEntity="SpanRun"/>
     </entity>
     <entity name="SpanRun" representedClassName="SpanRun" syncable="YES" codeGenerationType="class">
-        <attribute name="id" attributeType="UUID" defaultValueString="0CF044A3-333C-4B22-8FEB-F68B004B6C96" usesScalarValueType="NO"/>
         <attribute name="message" optional="YES" attributeType="String"/>
         <attribute name="microSeconds" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="milliSeconds" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="order" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="seconds" attributeType="Integer 64" defaultValueString="0.0" usesScalarValueType="YES"/>
         <relationship name="node" maxCount="1" deletionRule="Nullify" destinationEntity="SpanNode" inverseName="runs" inverseEntity="SpanNode"/>
         <relationship name="variables" toMany="YES" deletionRule="Cascade" destinationEntity="SpanVariable" inverseName="run" inverseEntity="SpanVariable"/>
     </entity>
     <entity name="SpanVariable" representedClassName="SpanVariable" syncable="YES" codeGenerationType="class">
         <attribute name="data" attributeType="String" defaultValueString=""/>
-        <attribute name="id" attributeType="UUID" defaultValueString="0CF044A3-333C-4B22-8FEB-F68B004B6C96" usesScalarValueType="NO"/>
         <relationship name="event" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SpanEvent" inverseName="variables" inverseEntity="SpanEvent"/>
         <relationship name="run" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SpanRun" inverseName="variables" inverseEntity="SpanRun"/>
     </entity>
     <entity name="Target" representedClassName="Target" syncable="YES" codeGenerationType="class">
         <attribute name="arch" attributeType="String" defaultValueString=""/>
         <attribute name="family" attributeType="String" defaultValueString=""/>
-        <attribute name="id" attributeType="UUID" defaultValueString="0CF044A3-333C-4B22-8FEB-F68B004B6C96" usesScalarValueType="NO"/>
         <attribute name="os" attributeType="String" defaultValueString=""/>
         <relationship name="projects" toMany="YES" deletionRule="Nullify" destinationEntity="Project" inverseName="target" inverseEntity="Project"/>
         <fetchIndex name="GetExisting">

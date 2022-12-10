@@ -83,7 +83,6 @@ enum Level {
 }
 
 extension Project {
-    var wId: UUID { self.id! }
     var wAppName: String { self.appName! }
     var wName: String { self.name! }
     var wCommandLine: String? { self.commandLine }
@@ -92,59 +91,32 @@ extension Project {
     var wVersion: String? { self.version }
     var wCpu: Cpu? { self.cpu }
     var wTarget: Target? { self.target }
-
-    static func new(context: NSManagedObjectContext) -> Project {
-        let obj = Project(context: context);
-        obj.id = UUID();
-        return obj;
-    }
 }
 
 extension Project: Identifiable {}
 
 extension Target {
-    var wId: UUID { self.id! }
     var wArch: String { self.arch! }
     var wFamily: String { self.family! }
     var wOs: String { self.os! }
-
-    static func new(context: NSManagedObjectContext) -> Target {
-        let obj = Target(context: context);
-        obj.id = UUID();
-        return obj;
-    }
 }
 
 extension Target: Identifiable {}
 
 extension Cpu {
-    var wId: UUID { self.id! }
     var wName: String { self.name! }
     var wCoreCount: Int32 { self.coreCount }
-
-    static func new(context: NSManagedObjectContext) -> Cpu {
-        let obj = Cpu(context: context);
-        obj.id = UUID();
-        return obj;
-    }
 }
 
 extension Cpu: Identifiable {}
 
 extension SpanMetadata {
-    var wId: UUID { self.id! }
     var wLine: Int32? { self.line < 0 ? nil : self.line }
     var wName: String { self.name! }
     var wTarget: String { self.target! }
     var wFile: String? { self.file }
     var wLevel: Int16 { self.level }
     var wModulePath: String? { self.modulePath }
-
-    static func new(context: NSManagedObjectContext) -> SpanMetadata {
-        let obj = SpanMetadata(context: context);
-        obj.id = UUID();
-        return obj;
-    }
 }
 
 extension SpanMetadata: Identifiable {}
@@ -200,7 +172,7 @@ extension SpanNode {
 extension SpanNode: Identifiable {}
 
 extension SpanRun {
-    var wId: UUID { self.id! }
+    var wOrder: UInt { UInt(self.order) }
     var wVariables: [SpanVariable] { Array(self.variables ?? []) }
     var wMessage: String? { self.message }
     var wSeconds: UInt64 { UInt64(self.seconds) }
@@ -216,26 +188,14 @@ extension SpanRun {
     var wTimeMicros: Float64 {
         Float64(self.wMicroSeconds)
     }
-
-    static func new(context: NSManagedObjectContext) -> SpanRun {
-        let obj = SpanRun(context: context);
-        obj.id = UUID();
-        return obj;
-    }
 }
 
 extension SpanRun: Identifiable {}
 
 extension SpanEvent {
-    var wId: UUID { self.id! }
+    var wOrder: UInt { UInt(self.order) }
     var wVariables: [SpanVariable] { Array(self.variables ?? []) }
     var wMessage: String { self.message! }
-
-    static func new(context: NSManagedObjectContext) -> SpanEvent {
-        let obj = SpanEvent(context: context);
-        obj.id = UUID();
-        return obj;
-    }
 }
 
 extension SpanEvent: Identifiable {}
