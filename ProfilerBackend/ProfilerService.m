@@ -37,6 +37,7 @@
     NSFileHandle *_stdin;
     NSFileHandle *_stderr;
     BufferedTextFile *_stdout;
+    uint32_t _refCount;
 }
 
 - (instancetype)init {
@@ -70,7 +71,8 @@
 }
 
 - (BOOL)close:(NSError **)error {
-    if (_task != nil) {
+    --_refCount;
+    if (_task != nil && _refCount == 0) {
         [self sendCommand:@"exit" withError:error];
         [_task waitUntilExit];
         if (_task.terminationStatus != 0) {
@@ -86,6 +88,7 @@
 }
 
 - (BOOL)open:(NSError **)error {
+    ++_refCount;
     if (_task != nil)
         return YES;
     if (![[NSFileManager defaultManager] createDirectoryAtPath:_workDir.path withIntermediateDirectories:YES attributes:nil error:error])
