@@ -23,24 +23,43 @@
 
 import SwiftUI
 
+let MAX_UI_ROWS = 5000;
+
+private struct Data {
+    var points: [Double];
+    var runs: [DisplaySpanRun];
+    var events: [DisplaySpanEvent];
+}
+
 struct SpanNodeDetails: View {
     @ObservedObject var node: SpanNode;
     var renderNode: Bool = false;
-    @State var points: [Double] = [];
+    @State private var data: Data?;
 
-    func loadChartPoints(node: SpanNode) {
-        points = []
+    func loadData(node: SpanNode) {
+        data = nil;
         let nodeId = node.objectID;
         Database.shared.container.performBackgroundTask { ctx in
             let node = ctx.object(with: nodeId);
-            let req: NSFetchRequest<SpanRun> = SpanRun.fetchRequest();
-            req.fetchLimit = 1024;
-            req.predicate = NSPredicate(format: "node=%@", node);
+            let runs: NSFetchRequest<SpanRun> = SpanRun.fetchRequest();
+            runs.fetchLimit = MAX_UI_ROWS;
+            runs.sortDescriptors = [
+                NSSortDescriptor(keyPath: \SpanRun.seconds, ascending: false),
+                NSSortDescriptor(keyPath: \SpanRun.milliSeconds, ascending: false),
+                NSSortDescriptor(keyPath: \SpanRun.microSeconds, ascending: false)
+            ];
+            runs.predicate = NSPredicate(format: "node=%@", node);
+            let events: NSFetchRequest<SpanEvent> = SpanEvent.fetchRequest();
+            events.fetchLimit = MAX_UI_ROWS;
+            events.predicate = NSPredicate(format: "node=%@", node);
             do {
-                let objs = try ctx.fetch(req);
-                let points = objs.map { $0.wTimeMicros };
+                let runs = try ctx.fetch(runs);
+                let events = try ctx.fetch(events);
+                let points = runs.shuffled().prefix(1024).map { $0.wTimeMicros };
+                let runs1 = runs.map { DisplaySpanRun(fromModel: $0) };
+                let events1 = events.map { DisplaySpanEvent(fromModel: $0) };
                 DispatchQueue.main.async {
-                    self.points = points;
+                    self.data = Data(points: points, runs: runs1, events: events1);
                 }
             } catch {
                 //Ignore the error
@@ -53,17 +72,21 @@ struct SpanNodeDetails: View {
             if renderNode {
                 SpanNodeInfo(node: node)
             }
-            SpanRunTable(node: node)
-            SpanEventTable(events: node.wEvents)
-            if points.count > 0 {
-                ScrollView(.horizontal) {
-                    LineChart(width: 2048, height: 256, points: points)
+            if let data = data {
+                SpanRunTable(runs: data.runs)
+                SpanEventTable(events: data.events)
+                if data.points.count > 0 {
+                    ScrollView(.horizontal) {
+                        LineChart(width: 2048, height: 256, points: data.points)
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            } else {
+                ProgressView()
             }
         }
-        .onAppear { loadChartPoints(node: node) }
-        .onChange(of: node) { loadChartPoints(node: $0) }
+        .onAppear { loadData(node: node) }
+        .onChange(of: node) { loadData(node: $0) }
     }
 }
 

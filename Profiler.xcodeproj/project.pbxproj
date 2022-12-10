@@ -36,6 +36,7 @@
 		DAB6AA312936A3F700B290FC /* ProjectLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB6AA302936A3F700B290FC /* ProjectLink.swift */; };
 		DAC1515A294355BE00760299 /* profiler-aarch64 in Resources */ = {isa = PBXBuildFile; fileRef = DAC15158294355BE00760299 /* profiler-aarch64 */; };
 		DAC1515B294355BE00760299 /* profiler-amd64 in Resources */ = {isa = PBXBuildFile; fileRef = DAC15159294355BE00760299 /* profiler-amd64 */; };
+		DAC1515D29448B2D00760299 /* DisplayModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC1515C29448B2D00760299 /* DisplayModels.swift */; };
 		DAED2F89293FCFBB0095A2FC /* NodeDuration.c in Sources */ = {isa = PBXBuildFile; fileRef = DAED2F88293FCFBB0095A2FC /* NodeDuration.c */; };
 		DAF8FAB0294288CB00404F75 /* LineChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF8FAAF294288CB00404F75 /* LineChart.swift */; };
 		DAF8FABC29431C9500404F75 /* ProfilerBackend.h in Headers */ = {isa = PBXBuildFile; fileRef = DAF8FABB29431C9500404F75 /* ProfilerBackend.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -136,6 +137,7 @@
 		DAB6AA302936A3F700B290FC /* ProjectLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectLink.swift; sourceTree = "<group>"; };
 		DAC15158294355BE00760299 /* profiler-aarch64 */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "profiler-aarch64"; sourceTree = "<group>"; };
 		DAC15159294355BE00760299 /* profiler-amd64 */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "profiler-amd64"; sourceTree = "<group>"; };
+		DAC1515C29448B2D00760299 /* DisplayModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayModels.swift; sourceTree = "<group>"; };
 		DAED2F87293FCFBB0095A2FC /* NodeDuration.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NodeDuration.h; sourceTree = "<group>"; };
 		DAED2F88293FCFBB0095A2FC /* NodeDuration.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = NodeDuration.c; sourceTree = "<group>"; };
 		DAF8FAAF294288CB00404F75 /* LineChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChart.swift; sourceTree = "<group>"; };
@@ -206,6 +208,7 @@
 				DA31F6BA2924C04E0077AF03 /* SpanNodeInfo.swift */,
 				DAB6AA302936A3F700B290FC /* ProjectLink.swift */,
 				DAF8FAAF294288CB00404F75 /* LineChart.swift */,
+				DAC1515C29448B2D00760299 /* DisplayModels.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -522,6 +525,7 @@
 				DA58FD772922E2A00034E588 /* PreviewExtensions.swift in Sources */,
 				DA6A44902920EB2B00DCEDBB /* ProfilerApp.swift in Sources */,
 				DAF8FAB0294288CB00404F75 /* LineChart.swift in Sources */,
+				DAC1515D29448B2D00760299 /* DisplayModels.swift in Sources */,
 				DAED2F89293FCFBB0095A2FC /* NodeDuration.c in Sources */,
 				DA6A44922920EB2B00DCEDBB /* Database.swift in Sources */,
 				DA58FD792922E2B20034E588 /* SampleData.swift in Sources */,

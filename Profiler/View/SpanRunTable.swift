@@ -23,49 +23,20 @@
 
 import SwiftUI
 
-extension SpanRun {
-    var dTime: String {
-        if self.wSeconds > 0 {
-            return self.wTimeSecs.formatted() + "s"
-        } else if self.wMilliSeconds > 0 {
-            return self.wTimeMillis.formatted() + "ms"
-        } else {
-            return self.wTimeMicros.formatted() + "µs"
-        }
-    }
-    var dMessage: String { self.wMessage ?? "No message specified" }
-    var dVariables: String {
-        self.wVariables.map { item in item.data ?? "" }.joined(separator: ", ")
-    }
-}
-
-let MAX_UI_RUNS = 5000;
-
 struct SpanRunTable: View {
-    @FetchRequest private var items: FetchedResults<SpanRun>;
-    init(node: SpanNode) {
-        let req: NSFetchRequest<SpanRun> = SpanRun.fetchRequest();
-        req.fetchLimit = MAX_UI_RUNS;
-        req.sortDescriptors = [
-            NSSortDescriptor(keyPath: \SpanRun.seconds, ascending: false),
-            NSSortDescriptor(keyPath: \SpanRun.milliSeconds, ascending: false),
-            NSSortDescriptor(keyPath: \SpanRun.microSeconds, ascending: false)
-        ];
-        req.predicate = NSPredicate(format: "node=%@", node);
-        _items = FetchRequest(fetchRequest: req, animation: .default)
-    }
+    var runs: [DisplaySpanRun];
 
     var body: some View {
-        Table(items) {
-            TableColumn("Time", value: \.dTime)
-            TableColumn("Message", value: \.dMessage)
-            TableColumn("Variables", value: \.dVariables)
+        Table(runs) {
+            TableColumn("Time", value: \.time)
+            TableColumn("Message", value: \.message)
+            TableColumn("Variables", value: \.variables)
         }
     }
 }
 
 struct SpanRunTable_Previews: PreviewProvider {
     static var previews: some View {
-        SpanRunTable(node: Database.preview.getFirstNode()!)
+        SpanRunTable(runs: [])
     }
 }

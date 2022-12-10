@@ -21,26 +21,36 @@
 // DEALINGS
 // IN THE SOFTWARE.
 
-import SwiftUI
+import Foundation
 
-struct SpanEventTable: View {
-    var events: [DisplaySpanEvent];
+struct DisplaySpanRun: Identifiable {
+    var id: UUID;
+    var time: String;
+    var message: String;
+    var variables: String;
 
-    var body: some View {
-        List {
-            ForEach(events) { item in
-                HStack {
-                    Text(item.message)
-                    Spacer()
-                    Text(item.variables)
-                }
-            }
+    init(fromModel model: SpanRun) {
+        if model.wSeconds > 0 {
+            self.time = model.wTimeSecs.formatted() + "s";
+        } else if model.wMilliSeconds > 0 {
+            self.time = model.wTimeMillis.formatted() + "ms";
+        } else {
+            self.time = model.wTimeMicros.formatted() + "µs";
         }
+        self.message = model.wMessage ?? "No message specified";
+        self.variables = model.wVariables.map { item in item.data ?? "" }.joined(separator: ", ");
+        self.id = UUID();
     }
 }
 
-struct SpanEventTable_Previews: PreviewProvider {
-    static var previews: some View {
-        SpanEventTable(events: [])
+struct DisplaySpanEvent: Identifiable {
+    var id: UUID;
+    var variables: String;
+    var message: String;
+
+    init(fromModel model: SpanEvent) {
+        self.variables = model.wVariables.map { item in item.data ?? "" }.joined(separator: ", ")
+        self.message = model.wMessage;
+        self.id = UUID();
     }
 }
