@@ -23,7 +23,7 @@
 
 import SwiftUI
 
-let MAX_UI_ROWS = 5000;
+let MAX_UI_ROWS = 20000;
 
 private struct Data {
     var points: [Double];
@@ -33,36 +33,47 @@ private struct Data {
 
 struct SpanNodeDetails: View {
     @ObservedObject var node: SpanNode;
+    @EnvironmentObject var errorHandler: ErrorHandler;
     var renderNode: Bool = false;
     @State private var data: Data?;
 
     func loadData(node: SpanNode) {
         data = nil;
         let nodeId = node.objectID;
+        let size = node.wRuns.count;
         Database.shared.container.performBackgroundTask { ctx in
             let node = ctx.object(with: nodeId);
             let runs: NSFetchRequest<SpanRun> = SpanRun.fetchRequest();
             runs.fetchLimit = MAX_UI_ROWS;
             runs.sortDescriptors = [
-                NSSortDescriptor(keyPath: \SpanRun.seconds, ascending: false),
-                NSSortDescriptor(keyPath: \SpanRun.milliSeconds, ascending: false),
-                NSSortDescriptor(keyPath: \SpanRun.microSeconds, ascending: false)
+                NSSortDescriptor(keyPath: \SpanRun.order, ascending: true)
             ];
-            runs.predicate = NSPredicate(format: "node=%@", node);
+            //Compute how many times to halve the rows in order to be under 20K
+            if size > MAX_UI_ROWS {
+                var halves = 2;
+                while size / halves > MAX_UI_ROWS {
+                    halves += 1;
+                }
+                runs.predicate = NSPredicate(format: "node=%@ AND modulus:by:(order, %d) == 0", node, halves);
+            } else {
+                runs.predicate = NSPredicate(format: "node=%@", node);
+            }
             let events: NSFetchRequest<SpanEvent> = SpanEvent.fetchRequest();
             events.fetchLimit = MAX_UI_ROWS;
             events.predicate = NSPredicate(format: "node=%@", node);
             do {
                 let runs = try ctx.fetch(runs);
                 let events = try ctx.fetch(events);
-                let points = runs.shuffled().prefix(1024).map { $0.wTimeMicros };
+                let points = runs.prefix(1024).map { $0.wTimeMicros };
                 let runs1 = runs.map { DisplaySpanRun(fromModel: $0) };
                 let events1 = events.map { DisplaySpanEvent(fromModel: $0) };
                 DispatchQueue.main.async {
                     self.data = Data(points: points, runs: runs1, events: events1);
                 }
             } catch {
-                //Ignore the error
+                DispatchQueue.main.async {
+                    errorHandler.pushError(AppError(fromNSError: error as NSError));
+                }
             }
         }
     }
