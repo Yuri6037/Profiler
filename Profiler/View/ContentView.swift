@@ -23,6 +23,7 @@
 
 import SwiftUI
 import CoreData
+import ErrorHandler
 
 struct ContentView: View {
     @EnvironmentObject private var errorHandler: ErrorHandler;
