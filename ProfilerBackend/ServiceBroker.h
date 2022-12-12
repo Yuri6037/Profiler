@@ -25,19 +25,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ProfilerService : NSObject 
+@interface ServiceBroker : NSThread
 
-- (instancetype)init;
-
-- (BOOL)close:(NSError **)error;
-
-- (BOOL)open:(NSError **)error;
-
-- (BOOL)sendCommand:(NSString *)command withError:(NSError **)error;
+- (instancetype)initWithPipe:(NSFileHandle *)read error:(NSError **)error;
 
 - (NSString * _Nullable)pollEvent;
 
-- (BOOL)isAlive:(NSError **)error;
+- (BOOL)checkAlive:(NSError **)error;
 
 @end
 

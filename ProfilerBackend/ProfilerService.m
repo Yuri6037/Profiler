@@ -22,6 +22,7 @@
 // IN THE SOFTWARE.
 
 #import "ProfilerService.h"
+#import "ServiceBroker.h"
 #import <TextTools/BufferedTextFile.h>
 
 @interface ProfilerService()
@@ -38,6 +39,7 @@
     NSFileHandle *_stderr;
     BufferedTextFile *_stdout;
     uint32_t _refCount;
+    ServiceBroker *_broker;
 }
 
 - (instancetype)init {
@@ -52,6 +54,7 @@
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
     NSString *dir = [paths firstObject];
     _workDir = [NSURL fileURLWithPath:[dir stringByAppendingString:@"/ProfilerBackend"]];
+    _broker = nil;
     return self;
 }
 
@@ -79,6 +82,7 @@
             *error = [self dumpBackendError];
             return NO;
         }
+        _broker = nil;
         _stdout = nil;
         _stdin = nil;
         _stderr = nil;
@@ -98,13 +102,18 @@
     task.currentDirectoryURL = _workDir;
     NSPipe *sin = [NSPipe pipe];
     NSPipe *serr = [NSPipe pipe];
+    NSPipe *sout = [NSPipe pipe];
     _stdin = sin.fileHandleForWriting;
     _stderr = serr.fileHandleForReading;
+    _broker = [[ServiceBroker alloc] initWithPipe:sout.fileHandleForReading error:error];
+    if (_broker == nil)
+        return NO;
     [task setStandardInput:sin];
-    [task setStandardOutput:[NSPipe pipe]];
+    [task setStandardOutput:sout];
     [task setStandardError:serr];
     if (![task launchAndReturnError:error])
         return NO;
+    [_broker start];
     _task = task;
     return YES;
 }
@@ -126,11 +135,10 @@
     return YES;
 }
 
-- (NSString *)getResponse:(NSError **)error {
+- (NSString * _Nullable)pollEvent {
     if (_task == nil)
         return nil;
-    //TODO: Implement BufferedTextFile with support for NSTask.
-    return nil;
+    return [_broker pollEvent];
 }
 
 - (BOOL)isAlive:(NSError **)error {
@@ -140,6 +148,8 @@
         *error = [self dumpBackendError];
         return NO;
     }
+    if (![_broker checkAlive:error])
+        return NO;
     return YES;
 }
 

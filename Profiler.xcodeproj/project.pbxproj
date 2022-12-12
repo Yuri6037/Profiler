@@ -26,6 +26,8 @@
 		DA6A44B12920EB2C00DCEDBB /* ProfilerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6A44B02920EB2C00DCEDBB /* ProfilerUITests.swift */; };
 		DA6A44B32920EB2C00DCEDBB /* ProfilerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6A44B22920EB2C00DCEDBB /* ProfilerUITestsLaunchTests.swift */; };
 		DA6A44C72921431A00DCEDBB /* Profiler.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DA6A44C52921431A00DCEDBB /* Profiler.xcdatamodeld */; };
+		DA6D168129472E4000CAB4D7 /* ServiceBroker.h in Headers */ = {isa = PBXBuildFile; fileRef = DA6D167F29472E4000CAB4D7 /* ServiceBroker.h */; };
+		DA6D168229472E4000CAB4D7 /* ServiceBroker.m in Sources */ = {isa = PBXBuildFile; fileRef = DA6D168029472E4000CAB4D7 /* ServiceBroker.m */; };
 		DAB6AA012933614D00B290FC /* ProjectImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = DAB6AA002933614D00B290FC /* ProjectImporter.m */; };
 		DAB6AA1E293364D500B290FC /* TextTools.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAB6AA1A293364C800B290FC /* TextTools.framework */; };
 		DAB6AA1F293364D500B290FC /* TextTools.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DAB6AA1A293364C800B290FC /* TextTools.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -125,6 +127,9 @@
 		DA6A44B02920EB2C00DCEDBB /* ProfilerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilerUITests.swift; sourceTree = "<group>"; };
 		DA6A44B22920EB2C00DCEDBB /* ProfilerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilerUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		DA6A44C62921431A00DCEDBB /* Profiler.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Profiler.xcdatamodel; sourceTree = "<group>"; };
+		DA6D16742945C15A00CAB4D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		DA6D167F29472E4000CAB4D7 /* ServiceBroker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ServiceBroker.h; sourceTree = "<group>"; };
+		DA6D168029472E4000CAB4D7 /* ServiceBroker.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ServiceBroker.m; sourceTree = "<group>"; };
 		DAB6A9FF2933614D00B290FC /* ProjectImporter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProjectImporter.h; sourceTree = "<group>"; };
 		DAB6AA002933614D00B290FC /* ProjectImporter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProjectImporter.m; sourceTree = "<group>"; };
 		DAB6AA14293364C800B290FC /* TextTools.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TextTools.xcodeproj; path = ../TextTools/TextTools.xcodeproj; sourceTree = "<group>"; };
@@ -251,6 +256,7 @@
 		DA6A448E2920EB2B00DCEDBB /* Profiler */ = {
 			isa = PBXGroup;
 			children = (
+				DA6D16742945C15A00CAB4D7 /* Info.plist */,
 				DA31F6C329266C570077AF03 /* Importer */,
 				DA58FD752922E22D0034E588 /* Db */,
 				DA58FD742922D6250034E588 /* View */,
@@ -309,6 +315,8 @@
 				DAF8FABB29431C9500404F75 /* ProfilerBackend.h */,
 				DAF8FACD294350D300404F75 /* ProfilerService.h */,
 				DAF8FACE294350D300404F75 /* ProfilerService.m */,
+				DA6D167F29472E4000CAB4D7 /* ServiceBroker.h */,
+				DA6D168029472E4000CAB4D7 /* ServiceBroker.m */,
 			);
 			path = ProfilerBackend;
 			sourceTree = "<group>";
@@ -322,6 +330,7 @@
 			files = (
 				DAF8FABC29431C9500404F75 /* ProfilerBackend.h in Headers */,
 				DAF8FACF294350D300404F75 /* ProfilerService.h in Headers */,
+				DA6D168129472E4000CAB4D7 /* ServiceBroker.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -561,6 +570,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DAF8FAD0294350D300404F75 /* ProfilerService.m in Sources */,
+				DA6D168229472E4000CAB4D7 /* ServiceBroker.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -711,6 +721,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Profiler/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Profiler/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -750,6 +761,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Profiler/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Profiler/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
