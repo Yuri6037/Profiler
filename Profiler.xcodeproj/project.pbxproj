@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		DA0308FD2937FEEC00072C36 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0308FC2937FEEC00072C36 /* ErrorHandler.swift */; };
 		DA31F6BB2924C04E0077AF03 /* SpanNodeInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA31F6BA2924C04E0077AF03 /* SpanNodeInfo.swift */; };
 		DA58FD6F292182F60034E588 /* SpanRunTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58FD6E292182F60034E588 /* SpanRunTable.swift */; };
 		DA58FD7129218BC60034E588 /* ModelExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58FD7029218BC60034E588 /* ModelExtensions.swift */; };
@@ -28,6 +27,16 @@
 		DA6A44C72921431A00DCEDBB /* Profiler.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DA6A44C52921431A00DCEDBB /* Profiler.xcdatamodeld */; };
 		DA6D168129472E4000CAB4D7 /* ServiceBroker.h in Headers */ = {isa = PBXBuildFile; fileRef = DA6D167F29472E4000CAB4D7 /* ServiceBroker.h */; };
 		DA6D168229472E4000CAB4D7 /* ServiceBroker.m in Sources */ = {isa = PBXBuildFile; fileRef = DA6D168029472E4000CAB4D7 /* ServiceBroker.m */; };
+		DA6D169229473A0400CAB4D7 /* ProfilerServiceView.h in Headers */ = {isa = PBXBuildFile; fileRef = DA6D169129473A0400CAB4D7 /* ProfilerServiceView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DA6D169529473A0400CAB4D7 /* ProfilerServiceView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6D168F29473A0400CAB4D7 /* ProfilerServiceView.framework */; platformFilters = (macos, ); };
+		DA6D169629473A0400CAB4D7 /* ProfilerServiceView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA6D168F29473A0400CAB4D7 /* ProfilerServiceView.framework */; platformFilters = (macos, ); settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		DA6D169B29473A8100CAB4D7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6D169A29473A8100CAB4D7 /* ContentView.swift */; };
+		DA6D16A429473DA300CAB4D7 /* ErrorHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = DA6D16A329473DA300CAB4D7 /* ErrorHandler.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DA6D16A729473DA300CAB4D7 /* ErrorHandler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6D16A129473DA300CAB4D7 /* ErrorHandler.framework */; };
+		DA6D16A829473DA300CAB4D7 /* ErrorHandler.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA6D16A129473DA300CAB4D7 /* ErrorHandler.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		DA6D16AC29473DB900CAB4D7 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0308FC2937FEEC00072C36 /* ErrorHandler.swift */; };
+		DA6D16AE29473E2100CAB4D7 /* ErrorHandler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6D16A129473DA300CAB4D7 /* ErrorHandler.framework */; };
+		DA6D16AF29473E2100CAB4D7 /* ErrorHandler.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA6D16A129473DA300CAB4D7 /* ErrorHandler.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DAB6AA012933614D00B290FC /* ProjectImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = DAB6AA002933614D00B290FC /* ProjectImporter.m */; };
 		DAB6AA1E293364D500B290FC /* TextTools.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAB6AA1A293364C800B290FC /* TextTools.framework */; };
 		DAB6AA1F293364D500B290FC /* TextTools.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DAB6AA1A293364C800B290FC /* TextTools.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -63,6 +72,27 @@
 			remoteGlobalIDString = DA6A448B2920EB2B00DCEDBB;
 			remoteInfo = Profiler;
 		};
+		DA6D169329473A0400CAB4D7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DA6A44842920EB2B00DCEDBB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DA6D168E29473A0400CAB4D7;
+			remoteInfo = ProfilerServiceView;
+		};
+		DA6D16A529473DA300CAB4D7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DA6A44842920EB2B00DCEDBB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DA6D16A029473DA300CAB4D7;
+			remoteInfo = ErrorHandler;
+		};
+		DA6D16B029473E2100CAB4D7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DA6A44842920EB2B00DCEDBB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DA6D16A029473DA300CAB4D7;
+			remoteInfo = ErrorHandler;
+		};
 		DAB6AA19293364C800B290FC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = DAB6AA14293364C800B290FC /* TextTools.xcodeproj */;
@@ -87,6 +117,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		DA6D16B229473E2100CAB4D7 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				DA6D16AF29473E2100CAB4D7 /* ErrorHandler.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DAB6AA20293364D500B290FC /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -95,6 +136,8 @@
 			files = (
 				DAF8FAC029431C9500404F75 /* ProfilerBackend.framework in Embed Frameworks */,
 				DAB6AA1F293364D500B290FC /* TextTools.framework in Embed Frameworks */,
+				DA6D16A829473DA300CAB4D7 /* ErrorHandler.framework in Embed Frameworks */,
+				DA6D169629473A0400CAB4D7 /* ProfilerServiceView.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -130,6 +173,11 @@
 		DA6D16742945C15A00CAB4D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		DA6D167F29472E4000CAB4D7 /* ServiceBroker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ServiceBroker.h; sourceTree = "<group>"; };
 		DA6D168029472E4000CAB4D7 /* ServiceBroker.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ServiceBroker.m; sourceTree = "<group>"; };
+		DA6D168F29473A0400CAB4D7 /* ProfilerServiceView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ProfilerServiceView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA6D169129473A0400CAB4D7 /* ProfilerServiceView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProfilerServiceView.h; sourceTree = "<group>"; };
+		DA6D169A29473A8100CAB4D7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		DA6D16A129473DA300CAB4D7 /* ErrorHandler.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ErrorHandler.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA6D16A329473DA300CAB4D7 /* ErrorHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ErrorHandler.h; sourceTree = "<group>"; };
 		DAB6A9FF2933614D00B290FC /* ProjectImporter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProjectImporter.h; sourceTree = "<group>"; };
 		DAB6AA002933614D00B290FC /* ProjectImporter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProjectImporter.m; sourceTree = "<group>"; };
 		DAB6AA14293364C800B290FC /* TextTools.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TextTools.xcodeproj; path = ../TextTools/TextTools.xcodeproj; sourceTree = "<group>"; };
@@ -159,6 +207,8 @@
 			files = (
 				DAF8FABF29431C9500404F75 /* ProfilerBackend.framework in Frameworks */,
 				DAB6AA1E293364D500B290FC /* TextTools.framework in Frameworks */,
+				DA6D16A729473DA300CAB4D7 /* ErrorHandler.framework in Frameworks */,
+				DA6D169529473A0400CAB4D7 /* ProfilerServiceView.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -170,6 +220,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		DA6A44A92920EB2C00DCEDBB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DA6D168C29473A0400CAB4D7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DA6D16AE29473E2100CAB4D7 /* ErrorHandler.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DA6D169E29473DA300CAB4D7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -238,7 +303,10 @@
 				DA6A44A52920EB2C00DCEDBB /* ProfilerTests */,
 				DA6A44AF2920EB2C00DCEDBB /* ProfilerUITests */,
 				DAF8FABA29431C9500404F75 /* ProfilerBackend */,
+				DA6D169029473A0400CAB4D7 /* ProfilerServiceView */,
+				DA6D16A229473DA300CAB4D7 /* ErrorHandler */,
 				DA6A448D2920EB2B00DCEDBB /* Products */,
+				DA6D16AD29473E2100CAB4D7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -249,6 +317,8 @@
 				DA6A44A22920EB2C00DCEDBB /* ProfilerTests.xctest */,
 				DA6A44AC2920EB2C00DCEDBB /* ProfilerUITests.xctest */,
 				DAF8FAB929431C9500404F75 /* ProfilerBackend.framework */,
+				DA6D168F29473A0400CAB4D7 /* ProfilerServiceView.framework */,
+				DA6D16A129473DA300CAB4D7 /* ErrorHandler.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -263,7 +333,6 @@
 				DA6A448F2920EB2B00DCEDBB /* ProfilerApp.swift */,
 				DA31F6BC292586680077AF03 /* Profiler-Bridging-Header.h */,
 				DAB6AA2A2936447000B290FC /* FilePicker.swift */,
-				DA0308FC2937FEEC00072C36 /* ErrorHandler.swift */,
 				DA6A44982920EB2C00DCEDBB /* Assets.xcassets */,
 				DA6A449A2920EB2C00DCEDBB /* Profiler.entitlements */,
 				DA6A449B2920EB2C00DCEDBB /* Preview Content */,
@@ -298,6 +367,31 @@
 			path = ProfilerUITests;
 			sourceTree = "<group>";
 		};
+		DA6D169029473A0400CAB4D7 /* ProfilerServiceView */ = {
+			isa = PBXGroup;
+			children = (
+				DA6D169129473A0400CAB4D7 /* ProfilerServiceView.h */,
+				DA6D169A29473A8100CAB4D7 /* ContentView.swift */,
+			);
+			path = ProfilerServiceView;
+			sourceTree = "<group>";
+		};
+		DA6D16A229473DA300CAB4D7 /* ErrorHandler */ = {
+			isa = PBXGroup;
+			children = (
+				DA6D16A329473DA300CAB4D7 /* ErrorHandler.h */,
+				DA0308FC2937FEEC00072C36 /* ErrorHandler.swift */,
+			);
+			path = ErrorHandler;
+			sourceTree = "<group>";
+		};
+		DA6D16AD29473E2100CAB4D7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		DAB6AA15293364C800B290FC /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -324,6 +418,22 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		DA6D168A29473A0400CAB4D7 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DA6D169229473A0400CAB4D7 /* ProfilerServiceView.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DA6D169C29473DA300CAB4D7 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DA6D16A429473DA300CAB4D7 /* ErrorHandler.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DAF8FAB429431C9500404F75 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -350,6 +460,8 @@
 			);
 			dependencies = (
 				DAF8FABE29431C9500404F75 /* PBXTargetDependency */,
+				DA6D169429473A0400CAB4D7 /* PBXTargetDependency */,
+				DA6D16A629473DA300CAB4D7 /* PBXTargetDependency */,
 			);
 			name = Profiler;
 			productName = Profiler;
@@ -392,6 +504,44 @@
 			productReference = DA6A44AC2920EB2C00DCEDBB /* ProfilerUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		DA6D168E29473A0400CAB4D7 /* ProfilerServiceView */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DA6D169729473A0400CAB4D7 /* Build configuration list for PBXNativeTarget "ProfilerServiceView" */;
+			buildPhases = (
+				DA6D168A29473A0400CAB4D7 /* Headers */,
+				DA6D168B29473A0400CAB4D7 /* Sources */,
+				DA6D168C29473A0400CAB4D7 /* Frameworks */,
+				DA6D168D29473A0400CAB4D7 /* Resources */,
+				DA6D16B229473E2100CAB4D7 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DA6D16B129473E2100CAB4D7 /* PBXTargetDependency */,
+			);
+			name = ProfilerServiceView;
+			productName = ProfilerServiceView;
+			productReference = DA6D168F29473A0400CAB4D7 /* ProfilerServiceView.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		DA6D16A029473DA300CAB4D7 /* ErrorHandler */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DA6D16A929473DA300CAB4D7 /* Build configuration list for PBXNativeTarget "ErrorHandler" */;
+			buildPhases = (
+				DA6D169C29473DA300CAB4D7 /* Headers */,
+				DA6D169D29473DA300CAB4D7 /* Sources */,
+				DA6D169E29473DA300CAB4D7 /* Frameworks */,
+				DA6D169F29473DA300CAB4D7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ErrorHandler;
+			productName = ErrorHandler;
+			productReference = DA6D16A129473DA300CAB4D7 /* ErrorHandler.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		DAF8FAB829431C9500404F75 /* ProfilerBackend */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = DAF8FAC529431C9500404F75 /* Build configuration list for PBXNativeTarget "ProfilerBackend" */;
@@ -433,6 +583,13 @@
 						CreatedOnToolsVersion = 14.1;
 						TestTargetID = DA6A448B2920EB2B00DCEDBB;
 					};
+					DA6D168E29473A0400CAB4D7 = {
+						CreatedOnToolsVersion = 14.1;
+						LastSwiftMigration = 1410;
+					};
+					DA6D16A029473DA300CAB4D7 = {
+						CreatedOnToolsVersion = 14.1;
+					};
 					DAF8FAB829431C9500404F75 = {
 						CreatedOnToolsVersion = 14.1;
 					};
@@ -461,6 +618,8 @@
 				DA6A44A12920EB2C00DCEDBB /* ProfilerTests */,
 				DA6A44AB2920EB2C00DCEDBB /* ProfilerUITests */,
 				DAF8FAB829431C9500404F75 /* ProfilerBackend */,
+				DA6D168E29473A0400CAB4D7 /* ProfilerServiceView */,
+				DA6D16A029473DA300CAB4D7 /* ErrorHandler */,
 			);
 		};
 /* End PBXProject section */
@@ -506,6 +665,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DA6D168D29473A0400CAB4D7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DA6D169F29473DA300CAB4D7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DAF8FAB729431C9500404F75 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -524,7 +697,6 @@
 			files = (
 				DA58FD6F292182F60034E588 /* SpanRunTable.swift in Sources */,
 				DA58FD7129218BC60034E588 /* ModelExtensions.swift in Sources */,
-				DA0308FD2937FEEC00072C36 /* ErrorHandler.swift in Sources */,
 				DA58FD732922D61B0034E588 /* ProjectDetails.swift in Sources */,
 				DA31F6BB2924C04E0077AF03 /* SpanNodeInfo.swift in Sources */,
 				DAB6AA2B2936447000B290FC /* FilePicker.swift in Sources */,
@@ -565,6 +737,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DA6D168B29473A0400CAB4D7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DA6D169B29473A8100CAB4D7 /* ContentView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DA6D169D29473DA300CAB4D7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DA6D16AC29473DB900CAB4D7 /* ErrorHandler.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DAF8FAB529431C9500404F75 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -586,6 +774,24 @@
 			isa = PBXTargetDependency;
 			target = DA6A448B2920EB2B00DCEDBB /* Profiler */;
 			targetProxy = DA6A44AD2920EB2C00DCEDBB /* PBXContainerItemProxy */;
+		};
+		DA6D169429473A0400CAB4D7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			platformFilters = (
+				macos,
+			);
+			target = DA6D168E29473A0400CAB4D7 /* ProfilerServiceView */;
+			targetProxy = DA6D169329473A0400CAB4D7 /* PBXContainerItemProxy */;
+		};
+		DA6D16A629473DA300CAB4D7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DA6D16A029473DA300CAB4D7 /* ErrorHandler */;
+			targetProxy = DA6D16A529473DA300CAB4D7 /* PBXContainerItemProxy */;
+		};
+		DA6D16B129473E2100CAB4D7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DA6D16A029473DA300CAB4D7 /* ErrorHandler */;
+			targetProxy = DA6D16B029473E2100CAB4D7 /* PBXContainerItemProxy */;
 		};
 		DAF8FABE29431C9500404F75 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -712,6 +918,7 @@
 		DA6A44B72920EB2C00DCEDBB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
@@ -752,6 +959,7 @@
 		DA6A44B82920EB2C00DCEDBB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
@@ -889,6 +1097,143 @@
 			};
 			name = Release;
 		};
+		DA6D169829473A0400CAB4D7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.github.Yuri6037.ProfilerServiceView;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		DA6D169929473A0400CAB4D7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.github.Yuri6037.ProfilerServiceView;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		DA6D16AA29473DA300CAB4D7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = (
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.github.Yuri6037.ErrorHandler;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = auto;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		DA6D16AB29473DA300CAB4D7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = (
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.github.Yuri6037.ErrorHandler;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = auto;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 		DAF8FAC129431C9500404F75 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -984,6 +1329,24 @@
 			buildConfigurations = (
 				DA6A44BD2920EB2C00DCEDBB /* Debug */,
 				DA6A44BE2920EB2C00DCEDBB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DA6D169729473A0400CAB4D7 /* Build configuration list for PBXNativeTarget "ProfilerServiceView" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DA6D169829473A0400CAB4D7 /* Debug */,
+				DA6D169929473A0400CAB4D7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DA6D16A929473DA300CAB4D7 /* Build configuration list for PBXNativeTarget "ErrorHandler" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DA6D16AA29473DA300CAB4D7 /* Debug */,
+				DA6D16AB29473DA300CAB4D7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

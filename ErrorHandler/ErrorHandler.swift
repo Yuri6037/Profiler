@@ -23,27 +23,27 @@
 
 import Foundation
 
-struct AppError {
-    let description: String;
-    let reason: String?;
-    let suggestion: String?;
-    let help: String?;
+public struct AppError {
+    public let description: String;
+    public let reason: String?;
+    public let suggestion: String?;
+    public let help: String?;
 
-    init(description: String, reason: String? = nil, suggestion: String? = nil, help: String? = nil) {
+    public init(description: String, reason: String? = nil, suggestion: String? = nil, help: String? = nil) {
         self.description = description
         self.reason = reason
         self.suggestion = suggestion
         self.help = help
     }
 
-    init(fromNSError error: NSError) {
+    public init(fromNSError error: NSError) {
         self.description = error.localizedDescription;
         self.reason = error.localizedFailureReason;
         self.suggestion = error.localizedRecoverySuggestion;
         self.help = error.helpAnchor;
     }
 
-    init(fromError error: Error) {
+    public init(fromError error: Error) {
         self.description = error.localizedDescription;
         self.reason = nil;
         self.suggestion = nil;
@@ -52,23 +52,25 @@ struct AppError {
 }
 
 extension AppError: LocalizedError {
-    var errorDescription: String? { description }
-    var failureReason: String? { reason }
-    var recoverySuggestion: String? { suggestion }
-    var helpAnchor: String? { help }
+    public var errorDescription: String? { description }
+    public var failureReason: String? { reason }
+    public var recoverySuggestion: String? { suggestion }
+    public var helpAnchor: String? { help }
 }
 
-class ErrorHandler: ObservableObject {
-    @Published var showError: Bool = false;
+public class ErrorHandler: ObservableObject {
+    @Published public var showError: Bool = false;
 
-    var currentError: AppError {
+    public var currentError: AppError {
         topError ?? AppError(description: "")
     }
 
     private var topError: AppError?;
     private var errorStack: [AppError] = [];
 
-    func popError() {
+    public init() {} //Thanks garbagely broken Swift language unable to see that the class is public and not internal!!
+
+    public func popError() {
         topError = nil;
         showError = false;
         if let error = errorStack.popLast() {
@@ -77,7 +79,7 @@ class ErrorHandler: ObservableObject {
         }
     }
 
-    func pushError(_ error: AppError) {
+    public func pushError(_ error: AppError) {
         if topError == nil {
             topError = error;
             showError = true;
