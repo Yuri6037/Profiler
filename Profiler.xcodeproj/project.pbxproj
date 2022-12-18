@@ -251,6 +251,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DA2A2C07294FA07300588FEA /* Broker */ = {
+			isa = PBXGroup;
+			children = (
+				DA6D167F29472E4000CAB4D7 /* ServiceBroker.h */,
+				DA6D168029472E4000CAB4D7 /* ServiceBroker.m */,
+			);
+			path = Broker;
+			sourceTree = "<group>";
+		};
 		DA31F6C329266C570077AF03 /* Importer */ = {
 			isa = PBXGroup;
 			children = (
@@ -404,13 +413,12 @@
 		DAF8FABA29431C9500404F75 /* ProfilerBackend */ = {
 			isa = PBXGroup;
 			children = (
+				DA2A2C07294FA07300588FEA /* Broker */,
 				DAC15158294355BE00760299 /* profiler-aarch64 */,
 				DAC15159294355BE00760299 /* profiler-amd64 */,
 				DAF8FABB29431C9500404F75 /* ProfilerBackend.h */,
 				DAF8FACD294350D300404F75 /* ProfilerService.h */,
 				DAF8FACE294350D300404F75 /* ProfilerService.m */,
-				DA6D167F29472E4000CAB4D7 /* ServiceBroker.h */,
-				DA6D168029472E4000CAB4D7 /* ServiceBroker.m */,
 			);
 			path = ProfilerBackend;
 			sourceTree = "<group>";
