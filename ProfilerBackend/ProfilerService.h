@@ -26,9 +26,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ProfilerService : NSObject 
+@interface ProfilerService : NSObject
 
 - (instancetype)init;
+
+- (void)setEventBlocks:(void (^)(BrokerLine *broker))block withErrorBlock:(void (^)(NSError *error))errorBlock;
+
+- (void)start;
 
 - (BOOL)close:(NSError **)error;
 

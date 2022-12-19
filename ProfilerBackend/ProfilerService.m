@@ -29,6 +29,8 @@
 
 - (NSError *)dumpBackendError;
 
+- (void)timerFireMethod:(NSTimer *)timer;
+
 @end
 
 @implementation ProfilerService {
@@ -40,6 +42,8 @@
     BufferedTextFile *_stdout;
     uint32_t _refCount;
     ServiceBroker *_broker;
+    void (^_block)(BrokerLine *broker);
+    void (^_errorBlock)(NSError *error);
 }
 
 - (instancetype)init {
@@ -55,7 +59,33 @@
     NSString *dir = [paths firstObject];
     _workDir = [NSURL fileURLWithPath:[dir stringByAppendingString:@"/ProfilerBackend"]];
     _broker = nil;
+    _block = nil;
+    _errorBlock = nil;
     return self;
+}
+
+- (void)start {
+    SEL sel = @selector(timerFireMethod:);
+    NSTimer *timer = [NSTimer timerWithTimeInterval:0 target:self selector:sel userInfo:nil repeats:YES];
+    [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
+}
+
+- (void)setEventBlocks:(void (^)(BrokerLine *broker))block withErrorBlock:(void (^)(NSError *error))errorBlock {
+    _block = block;
+    _errorBlock = errorBlock;
+}
+
+- (void)timerFireMethod:(NSTimer *)timer {
+    NSError *error;
+    if (![self isAlive:&error]) {
+        NSLog(@"Profiler backend has died: %@", error);
+        if (_errorBlock != nil)
+            (_errorBlock)(error);
+    }
+    BrokerLine *broker = [self pollEvent];
+    if (_block != nil && broker != nil) {
+        (_block)(broker);
+    }
 }
 
 - (NSError *)dumpBackendError {
