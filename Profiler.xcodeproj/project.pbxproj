@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DA2A2C0C294FA0A900588FEA /* BrokerLine.h in Headers */ = {isa = PBXBuildFile; fileRef = DA2A2C0A294FA0A900588FEA /* BrokerLine.h */; };
+		DA2A2C10294FA27A00588FEA /* BrokerLineLog.h in Headers */ = {isa = PBXBuildFile; fileRef = DA2A2C0E294FA27A00588FEA /* BrokerLineLog.h */; };
+		DA2A2C11294FA27A00588FEA /* BrokerLineLog.m in Sources */ = {isa = PBXBuildFile; fileRef = DA2A2C0F294FA27A00588FEA /* BrokerLineLog.m */; };
+		DA2A2C1429505C7B00588FEA /* BrokerLine.m in Sources */ = {isa = PBXBuildFile; fileRef = DA2A2C1329505C7B00588FEA /* BrokerLine.m */; };
 		DA31F6BB2924C04E0077AF03 /* SpanNodeInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA31F6BA2924C04E0077AF03 /* SpanNodeInfo.swift */; };
 		DA58FD6F292182F60034E588 /* SpanRunTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58FD6E292182F60034E588 /* SpanRunTable.swift */; };
 		DA58FD7129218BC60034E588 /* ModelExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58FD7029218BC60034E588 /* ModelExtensions.swift */; };
@@ -146,6 +150,10 @@
 
 /* Begin PBXFileReference section */
 		DA0308FC2937FEEC00072C36 /* ErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
+		DA2A2C0A294FA0A900588FEA /* BrokerLine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BrokerLine.h; sourceTree = "<group>"; };
+		DA2A2C0E294FA27A00588FEA /* BrokerLineLog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BrokerLineLog.h; sourceTree = "<group>"; };
+		DA2A2C0F294FA27A00588FEA /* BrokerLineLog.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BrokerLineLog.m; sourceTree = "<group>"; };
+		DA2A2C1329505C7B00588FEA /* BrokerLine.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BrokerLine.m; sourceTree = "<group>"; };
 		DA31F6BA2924C04E0077AF03 /* SpanNodeInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpanNodeInfo.swift; sourceTree = "<group>"; };
 		DA31F6BC292586680077AF03 /* Profiler-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Profiler-Bridging-Header.h"; sourceTree = "<group>"; };
 		DA31F6C029262E8A0077AF03 /* ProfilerTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ProfilerTests-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -256,6 +264,10 @@
 			children = (
 				DA6D167F29472E4000CAB4D7 /* ServiceBroker.h */,
 				DA6D168029472E4000CAB4D7 /* ServiceBroker.m */,
+				DA2A2C0A294FA0A900588FEA /* BrokerLine.h */,
+				DA2A2C1329505C7B00588FEA /* BrokerLine.m */,
+				DA2A2C0E294FA27A00588FEA /* BrokerLineLog.h */,
+				DA2A2C0F294FA27A00588FEA /* BrokerLineLog.m */,
 			);
 			path = Broker;
 			sourceTree = "<group>";
@@ -449,6 +461,8 @@
 				DAF8FABC29431C9500404F75 /* ProfilerBackend.h in Headers */,
 				DAF8FACF294350D300404F75 /* ProfilerService.h in Headers */,
 				DA6D168129472E4000CAB4D7 /* ServiceBroker.h in Headers */,
+				DA2A2C0C294FA0A900588FEA /* BrokerLine.h in Headers */,
+				DA2A2C10294FA27A00588FEA /* BrokerLineLog.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -765,6 +779,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA2A2C1429505C7B00588FEA /* BrokerLine.m in Sources */,
+				DA2A2C11294FA27A00588FEA /* BrokerLineLog.m in Sources */,
 				DAF8FAD0294350D300404F75 /* ProfilerService.m in Sources */,
 				DA6D168229472E4000CAB4D7 /* ServiceBroker.m in Sources */,
 			);
