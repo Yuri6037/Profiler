@@ -135,7 +135,7 @@
     return YES;
 }
 
-- (NSString * _Nullable)pollEvent {
+- (BrokerLine * _Nullable)pollEvent {
     if (_task == nil)
         return nil;
     return [_broker pollEvent];

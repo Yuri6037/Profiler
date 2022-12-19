@@ -22,6 +22,7 @@
 // IN THE SOFTWARE.
 
 #import <Foundation/Foundation.h>
+#import "BrokerLine.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -29,7 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithPipe:(NSFileHandle *)read error:(NSError **)error;
 
-- (NSString * _Nullable)pollEvent;
+- (BrokerLine * _Nullable)pollEvent;
 
 - (BOOL)checkAlive:(NSError **)error;
 

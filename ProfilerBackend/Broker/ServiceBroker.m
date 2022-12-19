@@ -23,12 +23,41 @@
 
 #import "ServiceBroker.h"
 #import <TextTools/BufferedReader.h>
+#import "BrokerLineConnection.h"
+#import "BrokerLineLog.h"
+#import "BrokerLineSpanData.h"
+#import "BrokerLineSpanAlloc.h"
+#import "BrokerLineSpanEvent.h"
+
+@interface ServiceBroker()
+
++ (BrokerLine *)getBrokerLineFromType:(char)type;
+
+@end
 
 @implementation ServiceBroker {
     BufferedReader *_reader;
-    NSMutableArray<NSString *> *_messageQueue;
+    NSMutableArray<BrokerLine *> *_messageQueue;
     NSLock *_lock;
     NSError *_lastError;
+}
+
++ (BrokerLine *)getBrokerLineFromType:(char)type {
+    switch (type) {
+        case 'I':
+        case 'E':
+            return [[BrokerLineLog alloc] init];
+        case 'D':
+            return [[BrokerLineSpanData alloc] init];
+        case 'A':
+            return [[BrokerLineSpanAlloc alloc] init];
+        case 'S':
+            return [[BrokerLineSpanEvent alloc] init];
+        case 'C':
+            return [[BrokerLineConnection alloc] init];
+        default:
+            return nil;
+    }
 }
 
 - (instancetype)initWithPipe:(NSFileHandle *)read error:(NSError **)error {
@@ -41,11 +70,11 @@
     return [super init];
 }
 
-- (NSString * _Nullable)pollEvent {
+- (BrokerLine * _Nullable)pollEvent {
     if (_messageQueue.count == 0) //Properties are atomic by default
         return nil;
     [_lock lock];
-    NSString *msg = [_messageQueue firstObject];
+    BrokerLine *msg = [_messageQueue firstObject];
     [_messageQueue removeObjectAtIndex:0];
     [_lock unlock];
     return msg;
@@ -68,9 +97,17 @@
                 _lastError = _reader.readLineError;
             break;
         }
-        [_lock lock];
-        [_messageQueue addObject:line];
-        [_lock unlock];
+        BrokerLine *broker = [ServiceBroker getBrokerLineFromType:[line characterAtIndex:0]];
+        if (broker != nil) {
+            NSError *err = nil;
+            if (![broker parse:line withError:&err]) {
+                _lastError = err;
+                break;
+            }
+            [_lock lock];
+            [_messageQueue addObject:broker];
+            [_lock unlock];
+        }
     }
 }
 
