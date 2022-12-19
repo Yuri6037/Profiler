@@ -13,6 +13,8 @@
 		DA2A2C1429505C7B00588FEA /* BrokerLine.m in Sources */ = {isa = PBXBuildFile; fileRef = DA2A2C1329505C7B00588FEA /* BrokerLine.m */; };
 		DA2A2C192950717200588FEA /* BrokerLineCsv.h in Headers */ = {isa = PBXBuildFile; fileRef = DA2A2C172950717200588FEA /* BrokerLineCsv.h */; };
 		DA2A2C1A2950717200588FEA /* BrokerLineCsv.m in Sources */ = {isa = PBXBuildFile; fileRef = DA2A2C182950717200588FEA /* BrokerLineCsv.m */; };
+		DA2A2C1E2950730800588FEA /* BrokerLineSpanData.h in Headers */ = {isa = PBXBuildFile; fileRef = DA2A2C1C2950730800588FEA /* BrokerLineSpanData.h */; };
+		DA2A2C1F2950730800588FEA /* BrokerLineSpanData.m in Sources */ = {isa = PBXBuildFile; fileRef = DA2A2C1D2950730800588FEA /* BrokerLineSpanData.m */; };
 		DA31F6BB2924C04E0077AF03 /* SpanNodeInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA31F6BA2924C04E0077AF03 /* SpanNodeInfo.swift */; };
 		DA58FD6F292182F60034E588 /* SpanRunTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58FD6E292182F60034E588 /* SpanRunTable.swift */; };
 		DA58FD7129218BC60034E588 /* ModelExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58FD7029218BC60034E588 /* ModelExtensions.swift */; };
@@ -158,6 +160,8 @@
 		DA2A2C1329505C7B00588FEA /* BrokerLine.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BrokerLine.m; sourceTree = "<group>"; };
 		DA2A2C172950717200588FEA /* BrokerLineCsv.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BrokerLineCsv.h; sourceTree = "<group>"; };
 		DA2A2C182950717200588FEA /* BrokerLineCsv.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BrokerLineCsv.m; sourceTree = "<group>"; };
+		DA2A2C1C2950730800588FEA /* BrokerLineSpanData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BrokerLineSpanData.h; sourceTree = "<group>"; };
+		DA2A2C1D2950730800588FEA /* BrokerLineSpanData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BrokerLineSpanData.m; sourceTree = "<group>"; };
 		DA31F6BA2924C04E0077AF03 /* SpanNodeInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpanNodeInfo.swift; sourceTree = "<group>"; };
 		DA31F6BC292586680077AF03 /* Profiler-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Profiler-Bridging-Header.h"; sourceTree = "<group>"; };
 		DA31F6C029262E8A0077AF03 /* ProfilerTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ProfilerTests-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -274,6 +278,8 @@
 				DA2A2C0F294FA27A00588FEA /* BrokerLineLog.m */,
 				DA2A2C172950717200588FEA /* BrokerLineCsv.h */,
 				DA2A2C182950717200588FEA /* BrokerLineCsv.m */,
+				DA2A2C1C2950730800588FEA /* BrokerLineSpanData.h */,
+				DA2A2C1D2950730800588FEA /* BrokerLineSpanData.m */,
 			);
 			path = Broker;
 			sourceTree = "<group>";
@@ -470,6 +476,7 @@
 				DA6D168129472E4000CAB4D7 /* ServiceBroker.h in Headers */,
 				DA2A2C0C294FA0A900588FEA /* BrokerLine.h in Headers */,
 				DA2A2C10294FA27A00588FEA /* BrokerLineLog.h in Headers */,
+				DA2A2C1E2950730800588FEA /* BrokerLineSpanData.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -790,6 +797,7 @@
 				DA2A2C1A2950717200588FEA /* BrokerLineCsv.m in Sources */,
 				DA2A2C11294FA27A00588FEA /* BrokerLineLog.m in Sources */,
 				DAF8FAD0294350D300404F75 /* ProfilerService.m in Sources */,
+				DA2A2C1F2950730800588FEA /* BrokerLineSpanData.m in Sources */,
 				DA6D168229472E4000CAB4D7 /* ServiceBroker.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

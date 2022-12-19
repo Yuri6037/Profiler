@@ -66,13 +66,21 @@
             _type = BLT_CONNECTION_EVENT;
             break;
     }
-    NSScanner *scanner = [NSScanner scannerWithString:clientIdStr];
-    unsigned long long clientId;
-    if (![scanner scanUnsignedLongLong:&clientId]) {
+    NSUInteger clientId;
+    if (![self parseUnsigned:clientIdStr into:&clientId withError:error])
+        return NO;
+    _clientId = clientId;
+    return YES;
+}
+
+- (BOOL)parseUnsigned:(NSString *)str into:(NSUInteger *)output withError:(NSError **)error {
+    unsigned long long u;
+    NSScanner *scanner = [NSScanner scannerWithString:str];
+    if (![scanner scanUnsignedLongLong:&u]) {
         *error = [NSError errorWithDomain:@"BrokerLine" code:1 userInfo:nil];
         return NO;
     }
-    _clientId = clientId;
+    *output = u;
     return YES;
 }
 

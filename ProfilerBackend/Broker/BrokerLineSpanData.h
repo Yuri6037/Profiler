@@ -21,31 +21,21 @@
 // DEALINGS
 // IN THE SOFTWARE.
 
-#import <Foundation/Foundation.h>
+#import "BrokerLineCsv.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef enum : NSUInteger {
-    BLT_UNKNOWN,
-    BLT_LOG_INFO,
-    BLT_LOG_ERROR,
-    BLT_SPAN_DATA,
-    BLT_SPAN_EVENT,
-    BLT_SPAN_ALLOC,
-    BLT_CONNECTION_EVENT,
-} BrokerLineType;
+@interface BrokerLineSpanData : BrokerLineCsv
 
-@interface BrokerLine : NSObject
-
-@property(readonly) BrokerLineType type;
-@property(readonly) size_t clientIndex;
-@property(readonly, nullable) NSString *data;
+@property(readonly) NSUInteger index;
+@property(readonly) bool active;
+@property(readonly) bool dropped;
+@property(readonly) NSUInteger runCount;
+@property(readonly) NSString *min;
+@property(readonly) NSString *max;
+@property(readonly) NSString *average;
 
 - (instancetype)init;
-
-- (BOOL)parse:(NSString *)str withError:(NSError **)error;
-
-- (BOOL)parseUnsigned:(NSString *)str into:(NSUInteger *)output withError:(NSError **)error;
 
 @end
 

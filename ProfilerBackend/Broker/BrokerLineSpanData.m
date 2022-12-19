@@ -21,32 +21,31 @@
 // DEALINGS
 // IN THE SOFTWARE.
 
-#import <Foundation/Foundation.h>
+#import "BrokerLineSpanData.h"
 
-NS_ASSUME_NONNULL_BEGIN
+@implementation BrokerLineSpanData
 
-typedef enum : NSUInteger {
-    BLT_UNKNOWN,
-    BLT_LOG_INFO,
-    BLT_LOG_ERROR,
-    BLT_SPAN_DATA,
-    BLT_SPAN_EVENT,
-    BLT_SPAN_ALLOC,
-    BLT_CONNECTION_EVENT,
-} BrokerLineType;
+- (instancetype)init {
+    return [super initWithSeparator:' '];
+}
 
-@interface BrokerLine : NSObject
-
-@property(readonly) BrokerLineType type;
-@property(readonly) size_t clientIndex;
-@property(readonly, nullable) NSString *data;
-
-- (instancetype)init;
-
-- (BOOL)parse:(NSString *)str withError:(NSError **)error;
-
-- (BOOL)parseUnsigned:(NSString *)str into:(NSUInteger *)output withError:(NSError **)error;
+- (BOOL)parse:(NSString *)str withError:(NSError **)error {
+    if (![super parse:str withError:error])
+        return NO;
+    if (super.csvData.count != 7) {
+        *error = [NSError errorWithDomain:@"BrokerLineSpanData" code:super.csvData.count userInfo:nil];
+        return NO;
+    }
+    if (![super parseUnsigned:[super.csvData objectAtIndex:0] into:&_index withError:error])
+        return NO;
+    if (![super parseUnsigned:[super.csvData objectAtIndex:6] into:&_runCount withError:error])
+        return NO;
+    _min = [super.csvData objectAtIndex:3];
+    _max = [super.csvData objectAtIndex:4];
+    _average = [super.csvData objectAtIndex:5];
+    _active = [[super.csvData objectAtIndex:2] characterAtIndex:0] == 'A';
+    _dropped = [[super.csvData objectAtIndex:1] characterAtIndex:0] == 'D';
+    return YES;
+}
 
 @end
-
-NS_ASSUME_NONNULL_END
