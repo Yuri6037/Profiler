@@ -25,14 +25,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface BrokerLineSpanData : BrokerLineSpan
+@interface BrokerLineSpanEvent : BrokerLineSpan
 
-@property(readonly) bool active;
-@property(readonly) bool dropped;
-@property(readonly) NSUInteger runCount;
-@property(readonly) NSString *min;
-@property(readonly) NSString *max;
-@property(readonly) NSString *average;
+@property(readonly) NSString *msg;
+@property(readonly) NSString *valueSet;
 
 @end
 

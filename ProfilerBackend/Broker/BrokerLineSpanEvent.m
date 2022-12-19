@@ -21,19 +21,16 @@
 // DEALINGS
 // IN THE SOFTWARE.
 
-#import "BrokerLineSpan.h"
+#import "BrokerLineSpanEvent.h"
 
-NS_ASSUME_NONNULL_BEGIN
+@implementation BrokerLineSpanEvent
 
-@interface BrokerLineSpanData : BrokerLineSpan
-
-@property(readonly) bool active;
-@property(readonly) bool dropped;
-@property(readonly) NSUInteger runCount;
-@property(readonly) NSString *min;
-@property(readonly) NSString *max;
-@property(readonly) NSString *average;
+- (BOOL)parse:(NSString *)str withError:(NSError **)error {
+    if (![super parse:str withError:error])
+        return NO;
+    _msg = [super.csvData objectAtIndex:1];
+    _valueSet = [super.csvData objectAtIndex:2];
+    return YES;
+}
 
 @end
-
-NS_ASSUME_NONNULL_END

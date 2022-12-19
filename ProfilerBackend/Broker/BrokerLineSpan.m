@@ -23,17 +23,22 @@
 
 #import "BrokerLineSpan.h"
 
-NS_ASSUME_NONNULL_BEGIN
+@implementation BrokerLineSpan
 
-@interface BrokerLineSpanData : BrokerLineSpan
+- (instancetype)init {
+    return [super initWithSeparator:' '];
+}
 
-@property(readonly) bool active;
-@property(readonly) bool dropped;
-@property(readonly) NSUInteger runCount;
-@property(readonly) NSString *min;
-@property(readonly) NSString *max;
-@property(readonly) NSString *average;
+- (BOOL)parse:(NSString *)str withError:(NSError **)error {
+    if (![super parse:str withError:error])
+        return NO;
+    if (super.csvData.count < 1) {
+        *error = [NSError errorWithDomain:@"BrokerLineSpan" code:super.csvData.count userInfo:nil];
+        return NO;
+    }
+    if (![super parseUnsigned:[super.csvData objectAtIndex:0] into:&_index withError:error])
+        return NO;
+    return YES;
+}
 
 @end
-
-NS_ASSUME_NONNULL_END

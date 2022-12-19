@@ -25,10 +25,6 @@
 
 @implementation BrokerLineSpanAlloc
 
-- (instancetype)init {
-    return [super initWithSeparator:' '];
-}
-
 - (BOOL)parse:(NSString *)str withError:(NSError **)error {
     if (![super parse:str withError:error])
         return NO;
@@ -36,8 +32,6 @@
         *error = [NSError errorWithDomain:@"BrokerLineSpanAlloc" code:super.csvData.count userInfo:nil];
         return NO;
     }
-    if (![super parseUnsigned:[super.csvData objectAtIndex:0] into:&_index withError:error])
-        return NO;
     _name = [super.csvData objectAtIndex:1];
     _level = [super.csvData objectAtIndex:2];
     _target = [super.csvData objectAtIndex:3];

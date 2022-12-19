@@ -21,21 +21,18 @@
 // DEALINGS
 // IN THE SOFTWARE.
 
-#import "BrokerLineCsv.h"
+#import "BrokerLineSpan.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface BrokerLineSpanAlloc : BrokerLineCsv
+@interface BrokerLineSpanAlloc : BrokerLineSpan
 
-@property(readonly) NSUInteger index;
 @property(readonly) NSString *target;
 @property(readonly) NSString *name;
 @property(readonly) NSString *module;
 @property(readonly) NSString *file;
 @property(readonly) NSString *line;
 @property(readonly) NSString *level;
-
-- (instancetype)init;
 
 @end
 

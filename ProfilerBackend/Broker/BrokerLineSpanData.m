@@ -25,10 +25,6 @@
 
 @implementation BrokerLineSpanData
 
-- (instancetype)init {
-    return [super initWithSeparator:' '];
-}
-
 - (BOOL)parse:(NSString *)str withError:(NSError **)error {
     if (![super parse:str withError:error])
         return NO;
@@ -36,8 +32,6 @@
         *error = [NSError errorWithDomain:@"BrokerLineSpanData" code:super.csvData.count userInfo:nil];
         return NO;
     }
-    if (![super parseUnsigned:[super.csvData objectAtIndex:0] into:&_index withError:error])
-        return NO;
     if (![super parseUnsigned:[super.csvData objectAtIndex:6] into:&_runCount withError:error])
         return NO;
     _min = [super.csvData objectAtIndex:3];
