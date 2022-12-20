@@ -30,3 +30,8 @@ FOUNDATION_EXPORT double ProfilerBackendVersionNumber;
 FOUNDATION_EXPORT const unsigned char ProfilerBackendVersionString[];
 
 #import <ProfilerBackend/ProfilerService.h>
+#import <ProfilerBackend/BrokerLineLog.h>
+#import <ProfilerBackend/BrokerLineSpanData.h>
+#import <ProfilerBackend/BrokerLineSpanAlloc.h>
+#import <ProfilerBackend/BrokerLineSpanEvent.h>
+#import <ProfilerBackend/BrokerLineConnection.h>

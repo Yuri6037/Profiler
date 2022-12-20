@@ -11,7 +11,7 @@
 		DA2A2C10294FA27A00588FEA /* BrokerLineLog.h in Headers */ = {isa = PBXBuildFile; fileRef = DA2A2C0E294FA27A00588FEA /* BrokerLineLog.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA2A2C11294FA27A00588FEA /* BrokerLineLog.m in Sources */ = {isa = PBXBuildFile; fileRef = DA2A2C0F294FA27A00588FEA /* BrokerLineLog.m */; };
 		DA2A2C1429505C7B00588FEA /* BrokerLine.m in Sources */ = {isa = PBXBuildFile; fileRef = DA2A2C1329505C7B00588FEA /* BrokerLine.m */; };
-		DA2A2C192950717200588FEA /* BrokerLineCsv.h in Headers */ = {isa = PBXBuildFile; fileRef = DA2A2C172950717200588FEA /* BrokerLineCsv.h */; };
+		DA2A2C192950717200588FEA /* BrokerLineCsv.h in Headers */ = {isa = PBXBuildFile; fileRef = DA2A2C172950717200588FEA /* BrokerLineCsv.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA2A2C1A2950717200588FEA /* BrokerLineCsv.m in Sources */ = {isa = PBXBuildFile; fileRef = DA2A2C182950717200588FEA /* BrokerLineCsv.m */; };
 		DA2A2C1E2950730800588FEA /* BrokerLineSpanData.h in Headers */ = {isa = PBXBuildFile; fileRef = DA2A2C1C2950730800588FEA /* BrokerLineSpanData.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA2A2C1F2950730800588FEA /* BrokerLineSpanData.m in Sources */ = {isa = PBXBuildFile; fileRef = DA2A2C1D2950730800588FEA /* BrokerLineSpanData.m */; };
@@ -23,6 +23,7 @@
 		DA2A2C332950AD7700588FEA /* BrokerLineSpan.m in Sources */ = {isa = PBXBuildFile; fileRef = DA2A2C312950AD7700588FEA /* BrokerLineSpan.m */; };
 		DA2A2C372950AF5800588FEA /* BrokerLineConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = DA2A2C352950AF5800588FEA /* BrokerLineConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA2A2C382950AF5800588FEA /* BrokerLineConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = DA2A2C362950AF5800588FEA /* BrokerLineConnection.m */; };
+		DA2A2C3F2950DF7F00588FEA /* ProfilerServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2A2C3E2950DF7F00588FEA /* ProfilerServiceManager.swift */; };
 		DA31F6BB2924C04E0077AF03 /* SpanNodeInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA31F6BA2924C04E0077AF03 /* SpanNodeInfo.swift */; };
 		DA58FD6F292182F60034E588 /* SpanRunTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58FD6E292182F60034E588 /* SpanRunTable.swift */; };
 		DA58FD7129218BC60034E588 /* ModelExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58FD7029218BC60034E588 /* ModelExtensions.swift */; };
@@ -178,6 +179,7 @@
 		DA2A2C312950AD7700588FEA /* BrokerLineSpan.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BrokerLineSpan.m; sourceTree = "<group>"; };
 		DA2A2C352950AF5800588FEA /* BrokerLineConnection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BrokerLineConnection.h; sourceTree = "<group>"; };
 		DA2A2C362950AF5800588FEA /* BrokerLineConnection.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BrokerLineConnection.m; sourceTree = "<group>"; };
+		DA2A2C3E2950DF7F00588FEA /* ProfilerServiceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilerServiceManager.swift; sourceTree = "<group>"; };
 		DA31F6BA2924C04E0077AF03 /* SpanNodeInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpanNodeInfo.swift; sourceTree = "<group>"; };
 		DA31F6BC292586680077AF03 /* Profiler-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Profiler-Bridging-Header.h"; sourceTree = "<group>"; };
 		DA31F6C029262E8A0077AF03 /* ProfilerTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ProfilerTests-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -429,6 +431,7 @@
 			children = (
 				DA6D169129473A0400CAB4D7 /* ProfilerServiceView.h */,
 				DA6D169A29473A8100CAB4D7 /* ContentView.swift */,
+				DA2A2C3E2950DF7F00588FEA /* ProfilerServiceManager.swift */,
 			);
 			path = ProfilerServiceView;
 			sourceTree = "<group>";
@@ -805,6 +808,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA2A2C3F2950DF7F00588FEA /* ProfilerServiceManager.swift in Sources */,
 				DA6D169B29473A8100CAB4D7 /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
