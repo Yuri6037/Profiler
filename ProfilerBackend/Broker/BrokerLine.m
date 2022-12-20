@@ -63,6 +63,11 @@
             break;
     }
     NSUInteger clientId;
+    if ([clientIdStr characterAtIndex:0] == 'N') {
+        //There is no client, set it to an impossible number
+        clientId = (NSUInteger)-1;
+        return YES;
+    }
     if (![self parseUnsigned:clientIdStr into:&clientId withError:error])
         return NO;
     _clientId = clientId;
