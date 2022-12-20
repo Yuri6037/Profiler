@@ -49,6 +49,12 @@ public struct ContentView: View {
                 errorHandler.pushError(AppError(fromError: error));
             }
         }
+        .onAppear {
+            ProfilerServiceManager.getInstance().bindErrorHandler(errorHandler);
+        }
+        .onDisappear {
+            ProfilerServiceManager.getInstance().unbindErrorHandler(errorHandler);
+        }
     }
 }
 

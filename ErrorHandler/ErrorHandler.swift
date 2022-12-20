@@ -58,7 +58,7 @@ extension AppError: LocalizedError {
     public var helpAnchor: String? { help }
 }
 
-public class ErrorHandler: ObservableObject {
+public class ErrorHandler: ObservableObject, Hashable, Equatable {
     @Published public var showError: Bool = false;
 
     public var currentError: AppError {
@@ -86,5 +86,13 @@ public class ErrorHandler: ObservableObject {
         } else {
             self.errorStack.append(error);
         }
+    }
+
+    public static func == (lhs: ErrorHandler, rhs: ErrorHandler) -> Bool {
+        return ObjectIdentifier(lhs) == ObjectIdentifier(rhs);
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(ObjectIdentifier(self))
     }
 }

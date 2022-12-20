@@ -23,6 +23,7 @@
 
 import Foundation
 import ProfilerBackend
+import ErrorHandler
 
 enum SpanLevel {
     case trace;
@@ -141,6 +142,7 @@ class ProfilerServiceManager {
 
     private var _waitingSubscriptions: [(ProfilerSubscribtion) -> Void] = [];
     private var _subscribtions: [Int: ProfilerSubscribtion] = [:];
+    private var _errorHandlers: Set<ErrorHandler> = Set();
 
     private func handleEvent(broker: BrokerLine) {
         switch (broker.type) {
@@ -163,6 +165,7 @@ class ProfilerServiceManager {
                 || log.msg().contains("Client has disconnected") {
                 //Ok the client is gone get rid of it!
                 self._subscribtions.removeValue(forKey: broker.clientIndex);
+                //TODO: Start project import.
             }
             break;
         case BLT_SPAN_ALLOC:
@@ -204,6 +207,14 @@ class ProfilerServiceManager {
         }
     }
 
+    func bindErrorHandler(_ errorHandler: ErrorHandler) {
+        _errorHandlers.insert(errorHandler);
+    }
+
+    func unbindErrorHandler(_ errorHandler: ErrorHandler) {
+        _errorHandlers.remove(errorHandler);
+    }
+
     func connect(address: String, callback: @escaping (ProfilerSubscribtion) -> Void) throws {
         _waitingSubscriptions.append(callback);
         try _service.open();
@@ -213,7 +224,9 @@ class ProfilerServiceManager {
     init() {
         _service = ProfilerService();
         _service.setEventBlocks({ self.handleEvent(broker: $0) }, withErrorBlock: { error in
-            
+            for v in self._errorHandlers {
+                v.pushError(AppError(fromNSError: error as NSError));
+            }
         });
         _service.start();
     }
