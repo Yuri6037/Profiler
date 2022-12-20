@@ -78,7 +78,7 @@ struct SpanMetadata {
     let file: String;
 }
 
-class SpanNode: Identifiable {
+class SpanNode: Identifiable, Hashable, Equatable {
     @Published var metadata: SpanMetadata;
     @Published var index: UInt;
     @Published var dropped: Bool = false;
@@ -91,6 +91,14 @@ class SpanNode: Identifiable {
     init(metadata: SpanMetadata, index: UInt) {
         self.metadata = metadata;
         self.index = index;
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(index)
+    }
+
+    static func == (lhs: SpanNode, rhs: SpanNode) -> Bool {
+        lhs.index == rhs.index
     }
 }
 
@@ -160,7 +168,7 @@ class ProfilerServiceManager {
                 ),
                 index: span.index
             ));
-            subscribtion?.spanIdMap[span.index] = subscribtion?.spans.count ?? 1 - 1;
+            subscribtion?.spanIdMap[span.index] = (subscribtion?.spans.count ?? 1) - 1;
             break;
         case BLT_SPAN_DATA:
             let span = broker as! BrokerLineSpanData;
@@ -176,7 +184,8 @@ class ProfilerServiceManager {
         case BLT_SPAN_EVENT:
             let span = broker as! BrokerLineSpanEvent;
             let subscribtion = _subscribtions[broker.clientIndex];
-            if let node = subscribtion?.spans[subscribtion?.spanIdMap[span.index] ?? 0] {
+            let id = subscribtion?.spanIdMap[span.index] ?? 0;
+            if let node = (id > 0 && id < subscribtion?.spans.count ?? 0) ? subscribtion?.spans[id] : nil {
                 node.events.append(span.msg + "  " + span.valueSet);
             }
             break;

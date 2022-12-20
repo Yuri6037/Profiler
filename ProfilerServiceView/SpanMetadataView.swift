@@ -23,30 +23,37 @@
 
 import SwiftUI
 
-struct ProfilerView: View {
-    @ObservedObject var subscribtion: ProfilerSubscribtion;
-    @State var node: SpanNode?;
+struct SpanMetadataView: View {
+    let metadata: SpanMetadata;
 
     var body: some View {
-        NavigationSplitView(sidebar: {
-            List(subscribtion.spans, selection: $node) { node in
-                NavigationLink(value: node) {
-                    SpanMetadataView(metadata: node.metadata)
-                }
-            }
-        }, detail: {
-            Spacer()
+        VStack {
             HStack {
-                Text("Status: ").padding(.trailing)
-                Text(subscribtion.lastLog?.msg() ?? "")
+                Text("Name").bold()
+                Text(metadata.name)
             }
-            .padding()
-        })
+            HStack {
+                Text("Module").bold()
+                Text(metadata.module)
+            }
+            HStack {
+                Text("Target").bold()
+                Text(metadata.target)
+            }
+            HStack {
+                Text("File").bold()
+                Text(metadata.file)
+            }
+            HStack {
+                Text("Level").bold()
+                Text(metadata.level.name)
+            }
+        }
     }
 }
 
-struct ProfilerView_Previews: PreviewProvider {
+struct SpanMetadataView_Previews: PreviewProvider {
     static var previews: some View {
-        ProfilerView(subscribtion: ProfilerSubscribtion.preview())
+        SpanMetadataView(metadata: SpanMetadata(name: "", level: .error, target: "", module: "", file: ""))
     }
 }

@@ -29,6 +29,7 @@
 		DA2A2C432951FF2700588FEA /* TextTools.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DAB6AA1A293364C800B290FC /* TextTools.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DA2A2C452951FF4D00588FEA /* ProfilerBackend.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAF8FAB929431C9500404F75 /* ProfilerBackend.framework */; };
 		DA2A2C462951FF4D00588FEA /* ProfilerBackend.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DAF8FAB929431C9500404F75 /* ProfilerBackend.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		DA2A2C4A29520DA100588FEA /* SpanMetadataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2A2C4929520DA100588FEA /* SpanMetadataView.swift */; };
 		DA31F6BB2924C04E0077AF03 /* SpanNodeInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA31F6BA2924C04E0077AF03 /* SpanNodeInfo.swift */; };
 		DA58FD6F292182F60034E588 /* SpanRunTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58FD6E292182F60034E588 /* SpanRunTable.swift */; };
 		DA58FD7129218BC60034E588 /* ModelExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58FD7029218BC60034E588 /* ModelExtensions.swift */; };
@@ -205,6 +206,7 @@
 		DA2A2C362950AF5800588FEA /* BrokerLineConnection.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BrokerLineConnection.m; sourceTree = "<group>"; };
 		DA2A2C3E2950DF7F00588FEA /* ProfilerServiceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilerServiceManager.swift; sourceTree = "<group>"; };
 		DA2A2C402951FB9300588FEA /* ProfilerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilerView.swift; sourceTree = "<group>"; };
+		DA2A2C4929520DA100588FEA /* SpanMetadataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpanMetadataView.swift; sourceTree = "<group>"; };
 		DA31F6BA2924C04E0077AF03 /* SpanNodeInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpanNodeInfo.swift; sourceTree = "<group>"; };
 		DA31F6BC292586680077AF03 /* Profiler-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Profiler-Bridging-Header.h"; sourceTree = "<group>"; };
 		DA31F6C029262E8A0077AF03 /* ProfilerTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ProfilerTests-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -460,6 +462,7 @@
 				DA6D169A29473A8100CAB4D7 /* ContentView.swift */,
 				DA2A2C3E2950DF7F00588FEA /* ProfilerServiceManager.swift */,
 				DA2A2C402951FB9300588FEA /* ProfilerView.swift */,
+				DA2A2C4929520DA100588FEA /* SpanMetadataView.swift */,
 			);
 			path = ProfilerServiceView;
 			sourceTree = "<group>";
@@ -841,6 +844,7 @@
 				DA2A2C412951FB9300588FEA /* ProfilerView.swift in Sources */,
 				DA2A2C3F2950DF7F00588FEA /* ProfilerServiceManager.swift in Sources */,
 				DA6D169B29473A8100CAB4D7 /* ContentView.swift in Sources */,
+				DA2A2C4A29520DA100588FEA /* SpanMetadataView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
