@@ -24,6 +24,11 @@
 		DA2A2C372950AF5800588FEA /* BrokerLineConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = DA2A2C352950AF5800588FEA /* BrokerLineConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA2A2C382950AF5800588FEA /* BrokerLineConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = DA2A2C362950AF5800588FEA /* BrokerLineConnection.m */; };
 		DA2A2C3F2950DF7F00588FEA /* ProfilerServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2A2C3E2950DF7F00588FEA /* ProfilerServiceManager.swift */; };
+		DA2A2C412951FB9300588FEA /* ProfilerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2A2C402951FB9300588FEA /* ProfilerView.swift */; };
+		DA2A2C422951FF2700588FEA /* TextTools.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAB6AA1A293364C800B290FC /* TextTools.framework */; };
+		DA2A2C432951FF2700588FEA /* TextTools.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DAB6AA1A293364C800B290FC /* TextTools.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		DA2A2C452951FF4D00588FEA /* ProfilerBackend.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAF8FAB929431C9500404F75 /* ProfilerBackend.framework */; };
+		DA2A2C462951FF4D00588FEA /* ProfilerBackend.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DAF8FAB929431C9500404F75 /* ProfilerBackend.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DA31F6BB2924C04E0077AF03 /* SpanNodeInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA31F6BA2924C04E0077AF03 /* SpanNodeInfo.swift */; };
 		DA58FD6F292182F60034E588 /* SpanRunTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58FD6E292182F60034E588 /* SpanRunTable.swift */; };
 		DA58FD7129218BC60034E588 /* ModelExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58FD7029218BC60034E588 /* ModelExtensions.swift */; };
@@ -75,6 +80,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		DA2A2C472951FF4D00588FEA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DA6A44842920EB2B00DCEDBB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DAF8FAB829431C9500404F75;
+			remoteInfo = ProfilerBackend;
+		};
 		DA6A44A32920EB2C00DCEDBB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = DA6A44842920EB2B00DCEDBB /* Project object */;
@@ -134,12 +146,24 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		DA2A2C442951FF2700588FEA /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				DA2A2C432951FF2700588FEA /* TextTools.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DA6D16B229473E2100CAB4D7 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				DA2A2C462951FF4D00588FEA /* ProfilerBackend.framework in Embed Frameworks */,
 				DA6D16AF29473E2100CAB4D7 /* ErrorHandler.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -180,6 +204,7 @@
 		DA2A2C352950AF5800588FEA /* BrokerLineConnection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BrokerLineConnection.h; sourceTree = "<group>"; };
 		DA2A2C362950AF5800588FEA /* BrokerLineConnection.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BrokerLineConnection.m; sourceTree = "<group>"; };
 		DA2A2C3E2950DF7F00588FEA /* ProfilerServiceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilerServiceManager.swift; sourceTree = "<group>"; };
+		DA2A2C402951FB9300588FEA /* ProfilerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilerView.swift; sourceTree = "<group>"; };
 		DA31F6BA2924C04E0077AF03 /* SpanNodeInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpanNodeInfo.swift; sourceTree = "<group>"; };
 		DA31F6BC292586680077AF03 /* Profiler-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Profiler-Bridging-Header.h"; sourceTree = "<group>"; };
 		DA31F6C029262E8A0077AF03 /* ProfilerTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ProfilerTests-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -264,6 +289,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA2A2C452951FF4D00588FEA /* ProfilerBackend.framework in Frameworks */,
 				DA6D16AE29473E2100CAB4D7 /* ErrorHandler.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -279,6 +305,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA2A2C422951FF2700588FEA /* TextTools.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -432,6 +459,7 @@
 				DA6D169129473A0400CAB4D7 /* ProfilerServiceView.h */,
 				DA6D169A29473A8100CAB4D7 /* ContentView.swift */,
 				DA2A2C3E2950DF7F00588FEA /* ProfilerServiceManager.swift */,
+				DA2A2C402951FB9300588FEA /* ProfilerView.swift */,
 			);
 			path = ProfilerServiceView;
 			sourceTree = "<group>";
@@ -585,6 +613,7 @@
 			);
 			dependencies = (
 				DA6D16B129473E2100CAB4D7 /* PBXTargetDependency */,
+				DA2A2C482951FF4D00588FEA /* PBXTargetDependency */,
 			);
 			name = ProfilerServiceView;
 			productName = ProfilerServiceView;
@@ -617,6 +646,7 @@
 				DAF8FAB529431C9500404F75 /* Sources */,
 				DAF8FAB629431C9500404F75 /* Frameworks */,
 				DAF8FAB729431C9500404F75 /* Resources */,
+				DA2A2C442951FF2700588FEA /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -808,6 +838,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA2A2C412951FB9300588FEA /* ProfilerView.swift in Sources */,
 				DA2A2C3F2950DF7F00588FEA /* ProfilerServiceManager.swift in Sources */,
 				DA6D169B29473A8100CAB4D7 /* ContentView.swift in Sources */,
 			);
@@ -841,6 +872,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		DA2A2C482951FF4D00588FEA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DAF8FAB829431C9500404F75 /* ProfilerBackend */;
+			targetProxy = DA2A2C472951FF4D00588FEA /* PBXContainerItemProxy */;
+		};
 		DA6A44A42920EB2C00DCEDBB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = DA6A448B2920EB2B00DCEDBB /* Profiler */;

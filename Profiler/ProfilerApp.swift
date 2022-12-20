@@ -22,17 +22,18 @@
 // IN THE SOFTWARE.
 
 import SwiftUI
+import ProfilerServiceView
+import ErrorHandler
+
+//TODO: support responding to url types
+//TODO: Support import progress
+
+let service = ProfilerService();
 
 @main
 struct ProfilerApp: App {
     @StateObject var errorHandler: ErrorHandler = ErrorHandler();
     @State var importTask: ProjectImporter?;
-
-    init() {
-        if let error = Database.shared.lastError { //This automatically loads the database
-            errorHandler.pushError(AppError(fromNSError: error));
-        }
-    }
 
     var body: some Scene {
         WindowGroup {
@@ -64,6 +65,12 @@ struct ProfilerApp: App {
 #endif
             }
         }
+#if os(macOS)
+        WindowGroup {
+            ProfilerServiceView.ContentView()
+        }
+        .handlesExternalEvents(matching: ["."])
+#endif
     }
 
     func importProject(dir: String) {
