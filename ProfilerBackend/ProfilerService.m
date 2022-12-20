@@ -106,17 +106,19 @@
 - (BOOL)close:(NSError **)error {
     --_refCount;
     if (_task != nil && _refCount == 0) {
-        [self sendCommand:@"exit" withError:error];
+        [self sendCommand:@"stop" withError:error];
         [_task waitUntilExit];
+        BOOL flag = YES;
         if (_task.terminationStatus != 0) {
             *error = [self dumpBackendError];
-            return NO;
+            flag = NO;
         }
         _broker = nil;
         _stdout = nil;
         _stdin = nil;
         _stderr = nil;
         _task = nil;
+        return flag;
     }
     return YES;
 }
