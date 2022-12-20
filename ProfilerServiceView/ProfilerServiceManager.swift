@@ -118,6 +118,10 @@ class ProfilerSubscribtion: ObservableObject {
         try _service.sendCommand("kick " + String(clientIndex));
     }
 
+    func close() throws {
+        try _service.close();
+    }
+
     static func preview() -> ProfilerSubscribtion {
         ProfilerSubscribtion(service: ProfilerService(), client: 0);
     }
@@ -154,6 +158,12 @@ class ProfilerServiceManager {
             let log = broker as! BrokerLineLog;
             let subscribtion = _subscribtions[broker.clientIndex];
             subscribtion?.lastLog = log;
+            if log.msg().contains("Client has errored")
+                || log.msg().contains("Client has panicked")
+                || log.msg().contains("Client has disconnected") {
+                //Ok the client is gone get rid of it!
+                self._subscribtions.removeValue(forKey: broker.clientIndex);
+            }
             break;
         case BLT_SPAN_ALLOC:
             let span = broker as! BrokerLineSpanAlloc;

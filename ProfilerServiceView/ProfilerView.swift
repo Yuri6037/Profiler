@@ -22,8 +22,10 @@
 // IN THE SOFTWARE.
 
 import SwiftUI
+import ErrorHandler
 
 struct ProfilerView: View {
+    @EnvironmentObject private var errorHandler: ErrorHandler;
     @ObservedObject var subscribtion: ProfilerSubscribtion;
     @State var node: SpanNode?;
 
@@ -39,14 +41,29 @@ struct ProfilerView: View {
             HStack {
                 Text("Status: ").padding(.trailing)
                 Text(subscribtion.lastLog?.msg() ?? "")
+                Button("Abort") {
+                    do {
+                        try subscribtion.cancel();
+                    } catch {
+                        errorHandler.pushError(AppError(fromError: error));
+                    }
+                }
             }
             .padding()
         })
+        .onDisappear {
+            do {
+                try subscribtion.close();
+            } catch {
+                errorHandler.pushError(AppError(fromError: error));
+            }
+        }
     }
 }
 
 struct ProfilerView_Previews: PreviewProvider {
     static var previews: some View {
         ProfilerView(subscribtion: ProfilerSubscribtion.preview())
+            .environmentObject(ErrorHandler())
     }
 }

@@ -26,14 +26,19 @@ import ErrorHandler
 
 public struct ContentView: View {
     @State var subscribtion: ProfilerSubscribtion?;
-    @EnvironmentObject private var errorHandler: ErrorHandler;
+    @StateObject private var errorHandler: ErrorHandler = ErrorHandler();
 
     public init() {} //Thanks garbagely broken Swift language unable to see that the struct is public and not internal!!
 
     public var body: some View {
         VStack {
             if let subscribtion = subscribtion {
-                ProfilerView(subscribtion: subscribtion)
+                ProfilerView(subscribtion: subscribtion).environmentObject(errorHandler)
+            }
+        }
+        .alert(isPresented: $errorHandler.showError, error: errorHandler.currentError) {
+            Button("OK") {
+                errorHandler.popError()
             }
         }
         .onOpenURL { url in
