@@ -25,14 +25,10 @@
 #import "BrokerLine.h"
 
 @implementation BrokerLine {
-    BrokerLineType _type;
     size_t _clientId;
-    NSString *_data;
 }
 
-@synthesize type = _type;
 @synthesize clientIndex = _clientId;
-@synthesize data = _data;
 
 - (instancetype)init {
     _type = BLT_UNKNOWN;

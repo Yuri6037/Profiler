@@ -28,7 +28,10 @@
 }
 
 @synthesize level = _level;
-@synthesize msg = data;
+
+- (NSString *)msg {
+    return super.data;
+}
 
 - (BOOL)parse:(nonnull NSString *)str withError:(NSError **)error {
     if (![super parse:str withError:error])

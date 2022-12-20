@@ -37,8 +37,9 @@ public struct ContentView: View {
             }
         }
         .onOpenURL { url in
+            print(url)
             do {
-                try ProfilerServiceManager.getInstance().connect(address: url.path, callback: { subscribtion = $0 });
+                try ProfilerServiceManager.getInstance().connect(address: url.host!, callback: { subscribtion = $0 });
             } catch {
                 errorHandler.pushError(AppError(fromError: error));
             }

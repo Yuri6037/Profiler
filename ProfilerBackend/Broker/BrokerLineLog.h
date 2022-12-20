@@ -34,7 +34,7 @@ typedef enum : NSUInteger {
 @interface BrokerLineLog : BrokerLine
 
 @property(readonly) LogLevel level;
-@property(readonly) NSString *msg;
+- (NSString *)msg;
 
 @end
 

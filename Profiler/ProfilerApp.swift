@@ -69,7 +69,7 @@ struct ProfilerApp: App {
         WindowGroup {
             ProfilerServiceView.ContentView()
         }
-        .handlesExternalEvents(matching: ["."])
+        .handlesExternalEvents(matching: ["*"])
 #endif
     }
 

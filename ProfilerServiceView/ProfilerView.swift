@@ -59,7 +59,7 @@ struct ProfilerView: View {
             Spacer()
             HStack {
                 Text("Status: ").padding(.trailing)
-                Text(subscribtion.lastLog?.msg ?? "")
+                Text(subscribtion.lastLog?.msg() ?? "")
             }
         }
     }

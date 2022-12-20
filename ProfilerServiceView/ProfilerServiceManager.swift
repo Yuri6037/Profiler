@@ -106,12 +106,12 @@ class ProfilerSubscribtion: ObservableObject {
         clientIndex = client;
     }
 
-    func cancel() {
-        
+    func cancel() throws {
+        try _service.sendCommand("kick " + String(clientIndex));
     }
 
     static func preview() -> ProfilerSubscribtion {
-        ProfilerSubscribtion(service: ProfilerService(), client: 0)
+        ProfilerSubscribtion(service: ProfilerService(), client: 0);
     }
 }
 
@@ -127,15 +127,16 @@ class ProfilerServiceManager {
 
     private var _service: ProfilerService;
 
-    private var _waitingSubscriptions: [String: (ProfilerSubscribtion) -> Void] = [:];
+    private var _waitingSubscriptions: [(ProfilerSubscribtion) -> Void] = [];
     private var _subscribtions: [Int: ProfilerSubscribtion] = [:];
 
     private func handleEvent(broker: BrokerLine) {
         switch (broker.type) {
         case BLT_CONNECTION_EVENT:
             let connection = broker as! BrokerLineConnection;
-            print("Received new connection from {}", connection.address);
-            if let handler = self._waitingSubscriptions[connection.address] {
+            print("Received new connection from \(connection.address)");
+            if let handler = self._waitingSubscriptions.first {
+                self._waitingSubscriptions.remove(at: 0);
                 let obj = ProfilerSubscribtion(service: self._service, client: broker.clientIndex)
                 handler(obj)
                 self._subscribtions[broker.clientIndex] = obj;
@@ -182,10 +183,11 @@ class ProfilerServiceManager {
         default:
             break;
         }
-        
     }
 
-    func connect(address: String, callback: (ProfilerSubscribtion) -> Void) throws {
+    func connect(address: String, callback: @escaping (ProfilerSubscribtion) -> Void) throws {
+        _waitingSubscriptions.append(callback);
+        try _service.open();
         try _service.sendCommand("connect " + address);
     }
 
@@ -194,5 +196,6 @@ class ProfilerServiceManager {
         _service.setEventBlocks({ self.handleEvent(broker: $0) }, withErrorBlock: { error in
             
         });
+        _service.start();
     }
 }
