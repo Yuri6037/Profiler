@@ -33,10 +33,16 @@ struct ProfilerView: View {
         NavigationSplitView(sidebar: {
             List(subscribtion.spans, selection: $node) { node in
                 NavigationLink(value: node) {
-                    SpanMetadataView(metadata: node.metadata)
+                    Text(node.path)
                 }
             }
         }, detail: {
+            if let node = node {
+                HStack {
+                    SpanMetadataView(metadata: node.metadata)
+                    SpanStatsView(node: node)
+                }
+            }
             Spacer()
             HStack {
                 Text("Status: ").padding(.trailing)

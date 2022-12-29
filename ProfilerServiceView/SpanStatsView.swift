@@ -23,38 +23,46 @@
 
 import SwiftUI
 
-struct SpanMetadataView: View {
-    let metadata: SpanMetadata;
-
+struct SpanStatsView: View {
+    @ObservedObject var node: SpanNode;
+    
     var body: some View {
         VStack {
-            Text("Metadata").bold().padding(.bottom)
+            Text("Stats").bold().padding(.bottom)
             HStack {
-                Text("Name").bold()
-                Text(metadata.name)
+                Text("Path").bold()
+                Text(node.path)
             }
             HStack {
-                Text("Module").bold()
-                Text(metadata.module)
+                Text("Active").bold()
+                Text(node.active ? "Yes" : "No")
             }
             HStack {
-                Text("Target").bold()
-                Text(metadata.target)
+                Text("Dropped").bold()
+                Text(node.dropped ? "Yes" : "No")
             }
             HStack {
-                Text("File").bold()
-                Text(metadata.file)
+                Text("Min time").bold()
+                Text(node.min)
             }
             HStack {
-                Text("Level").bold()
-                Text(metadata.level.name)
+                Text("Max time").bold()
+                Text(node.max)
+            }
+            HStack {
+                Text("Average time").bold()
+                Text(node.average)
+            }
+            HStack {
+                Text("Run count").bold()
+                Text(node.runCount.formatted())
             }
         }
     }
 }
 
-struct SpanMetadataView_Previews: PreviewProvider {
+struct SpanStatsView_Previews: PreviewProvider {
     static var previews: some View {
-        SpanMetadataView(metadata: SpanMetadata(name: "", level: .error, target: "", module: "", file: ""))
+        SpanStatsView(node: SpanNode(metadata: SpanMetadata(name: "", level: .error, target: "", module: "", file: ""), index: 0))
     }
 }

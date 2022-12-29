@@ -79,7 +79,7 @@ struct SpanMetadata {
     let file: String;
 }
 
-class SpanNode: Identifiable, Hashable, Equatable {
+class SpanNode: ObservableObject, Identifiable, Hashable, Equatable {
     @Published var metadata: SpanMetadata;
     @Published var index: UInt;
     @Published var dropped: Bool = false;
@@ -88,6 +88,8 @@ class SpanNode: Identifiable, Hashable, Equatable {
     @Published var min: String = "";
     @Published var max: String = "";
     @Published var events: [String] = [];
+    @Published var path: String = "";
+    @Published var runCount: UInt = 0;
 
     init(metadata: SpanMetadata, index: UInt) {
         self.metadata = metadata;
@@ -192,6 +194,7 @@ class ProfilerServiceManager {
                 node.min = span.min;
                 node.max = span.max;
                 node.average = span.average;
+                node.runCount = span.runCount;
             }
             break;
         case BLT_SPAN_EVENT:
@@ -200,6 +203,14 @@ class ProfilerServiceManager {
             let id = subscribtion?.spanIdMap[span.index] ?? 0;
             if let node = (id > 0 && id < subscribtion?.spans.count ?? 0) ? subscribtion?.spans[id] : nil {
                 node.events.append(span.msg + "  " + span.valueSet);
+            }
+            break;
+        case BLT_SPAN_PATH:
+            let span = broker as! BrokerLineSpanPath;
+            let subscribtion = _subscribtions[broker.clientIndex];
+            let id = subscribtion?.spanIdMap[span.index] ?? 0;
+            if let node = (id > 0 && id < subscribtion?.spans.count ?? 0) ? subscribtion?.spans[id] : nil {
+                node.path = span.path;
             }
             break;
         default:
