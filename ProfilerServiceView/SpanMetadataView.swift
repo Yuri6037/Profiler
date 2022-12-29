@@ -28,7 +28,7 @@ struct SpanMetadataView: View {
 
     var body: some View {
         VStack {
-            Text("Metadata").bold().padding(.bottom)
+            Text("Metadata").bold()
             HStack {
                 Text("Name").bold()
                 Text(metadata.name)

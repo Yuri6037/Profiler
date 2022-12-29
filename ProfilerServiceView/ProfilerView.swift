@@ -41,7 +41,7 @@ struct ProfilerView: View {
                 HStack {
                     SpanMetadataView(metadata: node.metadata)
                     SpanStatsView(node: node)
-                }.padding(.top)
+                }.padding()
             }
             Spacer()
             HStack {

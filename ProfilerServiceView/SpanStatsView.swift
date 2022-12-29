@@ -28,7 +28,7 @@ struct SpanStatsView: View {
     
     var body: some View {
         VStack {
-            Text("Stats").bold().padding(.bottom)
+            Text("Stats").bold()
             HStack {
                 Text("Path").bold()
                 Text(node.path)
