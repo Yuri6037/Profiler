@@ -28,6 +28,7 @@
 #import "BrokerLineSpanData.h"
 #import "BrokerLineSpanAlloc.h"
 #import "BrokerLineSpanEvent.h"
+#import "BrokerLineSpanPath.h"
 
 @interface ServiceBroker()
 
@@ -55,6 +56,8 @@
             return [[BrokerLineSpanEvent alloc] init];
         case 'C':
             return [[BrokerLineConnection alloc] init];
+        case 'P':
+            return [[BrokerLineSpanPath alloc] init];
         default:
             return nil;
     }

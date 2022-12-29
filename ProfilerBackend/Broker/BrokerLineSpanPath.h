@@ -21,18 +21,15 @@
 // DEALINGS
 // IN THE SOFTWARE.
 
-#import <Foundation/Foundation.h>
+#import "BrokerLine.h"
 
-//! Project version number for ProfilerBackend.
-FOUNDATION_EXPORT double ProfilerBackendVersionNumber;
+NS_ASSUME_NONNULL_BEGIN
 
-//! Project version string for ProfilerBackend.
-FOUNDATION_EXPORT const unsigned char ProfilerBackendVersionString[];
+@interface BrokerLineSpanPath : BrokerLine
 
-#import <ProfilerBackend/ProfilerService.h>
-#import <ProfilerBackend/BrokerLineLog.h>
-#import <ProfilerBackend/BrokerLineSpanData.h>
-#import <ProfilerBackend/BrokerLineSpanAlloc.h>
-#import <ProfilerBackend/BrokerLineSpanEvent.h>
-#import <ProfilerBackend/BrokerLineConnection.h>
-#import <ProfilerBackend/BrokerLineSpanPath.h>
+@property(readonly) NSUInteger index;
+@property(readonly) NSString *path;
+
+@end
+
+NS_ASSUME_NONNULL_END

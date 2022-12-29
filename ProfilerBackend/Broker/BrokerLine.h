@@ -33,6 +33,7 @@ typedef enum : NSUInteger {
     BLT_SPAN_EVENT,
     BLT_SPAN_ALLOC,
     BLT_CONNECTION_EVENT,
+    BLT_SPAN_PATH
 } BrokerLineType;
 
 @interface BrokerLine : NSObject

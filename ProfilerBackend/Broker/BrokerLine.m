@@ -61,6 +61,9 @@
         case 'C':
             _type = BLT_CONNECTION_EVENT;
             break;
+        case 'P':
+            _type = BLT_SPAN_PATH;
+            break;
     }
     NSUInteger clientId;
     if ([clientIdStr characterAtIndex:0] == 'N') {

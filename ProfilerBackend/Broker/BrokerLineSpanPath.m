@@ -21,18 +21,23 @@
 // DEALINGS
 // IN THE SOFTWARE.
 
-#import <Foundation/Foundation.h>
+#import "BrokerLineSpanPath.h"
 
-//! Project version number for ProfilerBackend.
-FOUNDATION_EXPORT double ProfilerBackendVersionNumber;
+@implementation BrokerLineSpanPath
 
-//! Project version string for ProfilerBackend.
-FOUNDATION_EXPORT const unsigned char ProfilerBackendVersionString[];
+- (BOOL)parse:(NSString *)str withError:(NSError **)error {
+    if (![super parse:str withError:error])
+        return NO;
+    NSRange range = [super.data rangeOfString:@" "];
+    if (range.location == -1) {
+        *error = [NSError errorWithDomain:@"BrokerLineSpanPath" code:1 userInfo:nil];
+        return NO;
+    }
+    NSString *index = [super.data substringToIndex:range.location];
+    if (![super parseUnsigned:index into:&_index withError:error])
+        return NO;
+    _path = [super.data substringFromIndex:range.location + 1];
+    return YES;
+}
 
-#import <ProfilerBackend/ProfilerService.h>
-#import <ProfilerBackend/BrokerLineLog.h>
-#import <ProfilerBackend/BrokerLineSpanData.h>
-#import <ProfilerBackend/BrokerLineSpanAlloc.h>
-#import <ProfilerBackend/BrokerLineSpanEvent.h>
-#import <ProfilerBackend/BrokerLineConnection.h>
-#import <ProfilerBackend/BrokerLineSpanPath.h>
+@end
