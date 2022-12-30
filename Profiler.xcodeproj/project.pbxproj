@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		DA1C6375295E590A00D3A1F5 /* SpanStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1C6374295E590A00D3A1F5 /* SpanStatsView.swift */; };
+		DA1C6377295F17B100D3A1F5 /* WindowReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1C6376295F17B100D3A1F5 /* WindowReader.swift */; };
 		DA2A2C0C294FA0A900588FEA /* BrokerLine.h in Headers */ = {isa = PBXBuildFile; fileRef = DA2A2C0A294FA0A900588FEA /* BrokerLine.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA2A2C10294FA27A00588FEA /* BrokerLineLog.h in Headers */ = {isa = PBXBuildFile; fileRef = DA2A2C0E294FA27A00588FEA /* BrokerLineLog.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA2A2C11294FA27A00588FEA /* BrokerLineLog.m in Sources */ = {isa = PBXBuildFile; fileRef = DA2A2C0F294FA27A00588FEA /* BrokerLineLog.m */; };
@@ -192,6 +193,7 @@
 /* Begin PBXFileReference section */
 		DA0308FC2937FEEC00072C36 /* ErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
 		DA1C6374295E590A00D3A1F5 /* SpanStatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpanStatsView.swift; sourceTree = "<group>"; };
+		DA1C6376295F17B100D3A1F5 /* WindowReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowReader.swift; sourceTree = "<group>"; };
 		DA2A2C0A294FA0A900588FEA /* BrokerLine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BrokerLine.h; sourceTree = "<group>"; };
 		DA2A2C0E294FA27A00588FEA /* BrokerLineLog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BrokerLineLog.h; sourceTree = "<group>"; };
 		DA2A2C0F294FA27A00588FEA /* BrokerLineLog.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BrokerLineLog.m; sourceTree = "<group>"; };
@@ -472,6 +474,7 @@
 				DA2A2C402951FB9300588FEA /* ProfilerView.swift */,
 				DA2A2C4929520DA100588FEA /* SpanMetadataView.swift */,
 				DA1C6374295E590A00D3A1F5 /* SpanStatsView.swift */,
+				DA1C6376295F17B100D3A1F5 /* WindowReader.swift */,
 			);
 			path = ProfilerServiceView;
 			sourceTree = "<group>";
@@ -853,6 +856,7 @@
 			files = (
 				DA2A2C412951FB9300588FEA /* ProfilerView.swift in Sources */,
 				DA1C6375295E590A00D3A1F5 /* SpanStatsView.swift in Sources */,
+				DA1C6377295F17B100D3A1F5 /* WindowReader.swift in Sources */,
 				DA2A2C3F2950DF7F00588FEA /* ProfilerServiceManager.swift in Sources */,
 				DA6D169B29473A8100CAB4D7 /* ContentView.swift in Sources */,
 				DA2A2C4A29520DA100588FEA /* SpanMetadataView.swift in Sources */,

@@ -64,6 +64,11 @@
     return self;
 }
 
+- (NSURL *)getClientPath:(NSInteger)index {
+    NSString *dirname = [NSString stringWithFormat:@"%ld", index];
+    return [_workDir URLByAppendingPathComponent:dirname];
+}
+
 - (void)start {
     SEL sel = @selector(timerFireMethod:);
     NSTimer *timer = [NSTimer timerWithTimeInterval:0 target:self selector:sel userInfo:nil repeats:YES];

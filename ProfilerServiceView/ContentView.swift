@@ -24,7 +24,26 @@
 import SwiftUI
 import ErrorHandler
 
+class CloseConfirmDelegate: NSObject, ObservableObject, NSWindowDelegate {
+    @Published var showCloseDialog = false;
+    var closeRequested = false;
+    private var _window: NSWindow?;
+
+    func close() {
+        _window?.delegate = nil;
+        _window?.close();
+    }
+
+    func windowShouldClose(_ sender: NSWindow) -> Bool {
+        _window = sender;
+        closeRequested = true;
+        showCloseDialog = true;
+        return false;
+    }
+}
+
 public struct ContentView: View {
+    @StateObject var delegate: CloseConfirmDelegate = CloseConfirmDelegate();
     @State var subscribtion: ProfilerSubscribtion?;
     @StateObject private var errorHandler: ErrorHandler = ErrorHandler();
 
@@ -36,9 +55,30 @@ public struct ContentView: View {
                 ProfilerView(subscribtion: subscribtion).environmentObject(errorHandler)
             }
         }
+        .background(WindowReader { window in
+            window?.delegate = delegate;
+        })
+        .alert("Closing...", isPresented: $delegate.showCloseDialog, actions: {
+            Button("Import") {
+                
+            }.keyboardShortcut(.defaultAction)
+            Button("Delete", role: .destructive) {
+                do {
+                    try subscribtion?.delete();
+                    delegate.close();
+                } catch {
+                    errorHandler.pushError(AppError(fromError: error));
+                }
+            }
+        }, message: {
+            Text("What would you like to do with this dataset?")
+        })
         .alert(isPresented: $errorHandler.showError, error: errorHandler.currentError) {
             Button("OK") {
                 errorHandler.popError()
+                if delegate.closeRequested {
+                    delegate.close();
+                }
             }
         }
         .onOpenURL { url in

@@ -21,31 +21,18 @@
 // DEALINGS
 // IN THE SOFTWARE.
 
-#import <Foundation/Foundation.h>
-#import "BrokerLine.h"
+import SwiftUI
 
-NS_ASSUME_NONNULL_BEGIN
+struct WindowReader: NSViewRepresentable {
+    let action: (NSWindow?) -> Void;
 
-@interface ProfilerService : NSObject
+    func makeNSView(context: Context) -> some NSView {
+        let view = NSView()
+        DispatchQueue.main.async {
+            self.action(view.window)
+        }
+        return view;
+    }
 
-- (instancetype)init;
-
-- (void)setEventBlocks:(void (^)(BrokerLine *broker))block withErrorBlock:(void (^)(NSError *error))errorBlock;
-
-- (void)start;
-
-- (BOOL)close:(NSError **)error;
-
-- (BOOL)open:(NSError **)error;
-
-- (BOOL)sendCommand:(NSString *)command withError:(NSError **)error;
-
-- (BrokerLine * _Nullable)pollEvent;
-
-- (BOOL)isAlive:(NSError **)error;
-
-- (NSURL *)getClientPath:(NSInteger)index;
-
-@end
-
-NS_ASSUME_NONNULL_END
+    func updateNSView(_ nsView: NSViewType, context: Context) {}
+}

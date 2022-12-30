@@ -125,6 +125,11 @@ class ProfilerSubscribtion: ObservableObject {
         try _service.close();
     }
 
+    func delete() throws {
+        let path = _service.getClientPath(clientIndex);
+        try FileManager.default.removeItem(at: path);
+    }
+
     static func preview() -> ProfilerSubscribtion {
         ProfilerSubscribtion(service: ProfilerService(), client: 0);
     }
