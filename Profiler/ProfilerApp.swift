@@ -22,13 +22,14 @@
 // IN THE SOFTWARE.
 
 import SwiftUI
-import ProfilerServiceView
 import ErrorHandler
+
+#if os(macOS)
+import ProfilerServiceView
+#endif
 
 //TODO: support responding to url types
 //TODO: Support import progress
-
-let service = ProfilerService();
 
 @main
 struct ProfilerApp: App {
@@ -49,22 +50,21 @@ struct ProfilerApp: App {
                     }
                 }
         }
+#if os(macOS)
         .commands {
             CommandGroup(replacing: .importExport) {
-#if os(macOS)
                 Button("Import") {
                     openFileDialog(onPick: { url in
                         self.importProject(dir: url.path);
                     })
                 }
-#endif
-#if os(macOS)
                 Button("Open data path") {
                     NSWorkspace.shared.open(Database.url)
                 }
-#endif
             }
         }
+#endif // Garbagely broken stupid Swift language has broken preprocessor directives
+        // not even able to handle a single #if block unlike C, C++ or Objective-C!!
 #if os(macOS)
         WindowGroup {
             ProfilerServiceView.ContentView()

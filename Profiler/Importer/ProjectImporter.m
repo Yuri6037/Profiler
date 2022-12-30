@@ -138,12 +138,23 @@
     if (file == nil)
         return NO;
     *error = nil;
+    //Set the totalUnitCount to high enough number so that we can get the current number of operations in the queue.
+    _queue.progress.totalUnitCount = INT64_MAX;
     while ((line = [file readLine:error]) != nil) {
         TreeNode *node = [[TreeNode alloc] initFromString:line];
         NodeImportTask *task = [[NodeImportTask alloc] initWithTreeNode:node directory:_dir container:_container projectId:_oid];
         [_queue addOperation:task];
+        _totalNodes += 1;
     }
     return *error == nil;
+}
+
+- (NSUInteger)importedNodes {
+    return _queue.progress.completedUnitCount;
+}
+
+- (void)wait {
+    [_queue waitUntilAllOperationsAreFinished];
 }
 
 @end

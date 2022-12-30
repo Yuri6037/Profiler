@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		DA1C6375295E590A00D3A1F5 /* SpanStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1C6374295E590A00D3A1F5 /* SpanStatsView.swift */; };
 		DA1C6377295F17B100D3A1F5 /* WindowReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1C6376295F17B100D3A1F5 /* WindowReader.swift */; };
+		DA1C637A295F627A00D3A1F5 /* ImporterManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = DA1C6379295F627A00D3A1F5 /* ImporterManager.mm */; };
 		DA2A2C0C294FA0A900588FEA /* BrokerLine.h in Headers */ = {isa = PBXBuildFile; fileRef = DA2A2C0A294FA0A900588FEA /* BrokerLine.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA2A2C10294FA27A00588FEA /* BrokerLineLog.h in Headers */ = {isa = PBXBuildFile; fileRef = DA2A2C0E294FA27A00588FEA /* BrokerLineLog.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA2A2C11294FA27A00588FEA /* BrokerLineLog.m in Sources */ = {isa = PBXBuildFile; fileRef = DA2A2C0F294FA27A00588FEA /* BrokerLineLog.m */; };
@@ -194,6 +195,8 @@
 		DA0308FC2937FEEC00072C36 /* ErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
 		DA1C6374295E590A00D3A1F5 /* SpanStatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpanStatsView.swift; sourceTree = "<group>"; };
 		DA1C6376295F17B100D3A1F5 /* WindowReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowReader.swift; sourceTree = "<group>"; };
+		DA1C6378295F627A00D3A1F5 /* ImporterManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImporterManager.h; sourceTree = "<group>"; };
+		DA1C6379295F627A00D3A1F5 /* ImporterManager.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ImporterManager.mm; sourceTree = "<group>"; };
 		DA2A2C0A294FA0A900588FEA /* BrokerLine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BrokerLine.h; sourceTree = "<group>"; };
 		DA2A2C0E294FA27A00588FEA /* BrokerLineLog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BrokerLineLog.h; sourceTree = "<group>"; };
 		DA2A2C0F294FA27A00588FEA /* BrokerLineLog.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BrokerLineLog.m; sourceTree = "<group>"; };
@@ -360,6 +363,8 @@
 				DAB6AA222933ADF100B290FC /* NodeImportTask.m */,
 				DAED2F87293FCFBB0095A2FC /* NodeDuration.h */,
 				DAED2F88293FCFBB0095A2FC /* NodeDuration.c */,
+				DA1C6378295F627A00D3A1F5 /* ImporterManager.h */,
+				DA1C6379295F627A00D3A1F5 /* ImporterManager.mm */,
 			);
 			path = Importer;
 			sourceTree = "<group>";
@@ -827,6 +832,7 @@
 				DAB6AA262933B60700B290FC /* TreeNode.m in Sources */,
 				DAB6AA232933ADF100B290FC /* NodeImportTask.m in Sources */,
 				DAB6AA012933614D00B290FC /* ProjectImporter.m in Sources */,
+				DA1C637A295F627A00D3A1F5 /* ImporterManager.mm in Sources */,
 				DA58FD7B2922E8AB0034E588 /* ProjectInfo.swift in Sources */,
 				DA58FD7D292371D70034E588 /* SpanNodeDetails.swift in Sources */,
 			);

@@ -22,23 +22,18 @@
 // IN THE SOFTWARE.
 
 #import <Foundation/Foundation.h>
-#import <CoreData/CoreData.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ProjectImporter : NSObject
+@interface ImporterManager : NSObject
 
-@property (readonly) NSUInteger totalNodes;
+- (instancetype)initWithContainer:(NSPersistentContainer *)container;
 
-- (instancetype)initWithDirectory:(NSString *)dir container:(NSPersistentContainer *)container;
+- (void)importDirectory:(NSString *)dir deleteAfterImport:(BOOL)flag;
 
-- (BOOL)loadProject:(NSError **)error;
+- (void)setEventBlocks:(void (^)(NSUInteger current, NSUInteger total))block withErrorBlock:(void (^)(NSError *error))errorBlock;
 
-- (BOOL)importTree:(NSError **)error;
-
-- (NSUInteger)importedNodes;
-
-- (void)wait;
+- (void)start;
 
 @end
 
