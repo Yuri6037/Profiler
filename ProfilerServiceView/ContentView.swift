@@ -46,8 +46,13 @@ public struct ContentView: View {
     @StateObject var delegate: CloseConfirmDelegate = CloseConfirmDelegate();
     @State var subscribtion: ProfilerSubscribtion?;
     @StateObject private var errorHandler: ErrorHandler = ErrorHandler();
+    let importAction: (URL) -> Void;
 
-    public init() {} //Thanks garbagely broken Swift language unable to see that the struct is public and not internal!!
+    //Thanks garbagely broken Swift language unable to see that the
+    // struct is public and not internal!!
+    public init(importAction: @escaping (URL) -> Void) {
+        self.importAction = importAction;
+    }
 
     public var body: some View {
         VStack {
@@ -60,7 +65,8 @@ public struct ContentView: View {
         })
         .alert("Closing...", isPresented: $delegate.showCloseDialog, actions: {
             Button("Import") {
-                
+                importAction(subscribtion!.path());
+                delegate.close();
             }.keyboardShortcut(.defaultAction)
             Button("Delete", role: .destructive) {
                 do {
@@ -100,6 +106,6 @@ public struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(importAction: { _ in })
     }
 }

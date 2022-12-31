@@ -66,7 +66,7 @@
 
 - (NSURL *)getClientPath:(NSInteger)index {
     NSString *dirname = [NSString stringWithFormat:@"%ld", index];
-    return [_workDir URLByAppendingPathComponent:dirname];
+    return [[_workDir URLByAppendingPathComponent:@"data"] URLByAppendingPathComponent:dirname];
 }
 
 - (void)start {

@@ -28,9 +28,6 @@ import ErrorHandler
 import ProfilerServiceView
 #endif
 
-//TODO: support responding to url types
-//TODO: Support import progress
-
 @main
 struct ProfilerApp: App {
     @StateObject var errorHandler: ErrorHandler = ErrorHandler();
@@ -79,7 +76,9 @@ struct ProfilerApp: App {
         // not even able to handle a single #if block unlike C, C++ or Objective-C!!
 #if os(macOS)
         WindowGroup {
-            ProfilerServiceView.ContentView()
+            ProfilerServiceView.ContentView(importAction: { url in
+                importManager.importDirectory(url.path, deleteAfterImport: true);
+            })
         }
         .handlesExternalEvents(matching: ["*"])
 #endif
