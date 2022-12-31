@@ -10,7 +10,6 @@
 #import "SpanVariable+CoreDataClass.h"
 #import "SpanRun+CoreDataClass.h"
 #import "SpanNode+CoreDataClass.h"
-#import "ProjectImporter.h"
 #import "ImporterManager.h"
 
 #ifdef TARGET_OS_MAC
