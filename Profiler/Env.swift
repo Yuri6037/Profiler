@@ -24,15 +24,11 @@
 import SwiftUI
 
 struct DatabaseEnvironmentKey: EnvironmentKey {
-   static let defaultValue: Database = {
-       return Database(inMemory: true);
-   }()
+    static let defaultValue: Database = NullDatabase();
 }
 
 struct ImporterManagerEnvironmentKey: EnvironmentKey {
-   static let defaultValue: ImporterManager = {
-       return ImporterManager(container: Database(inMemory: true).container);
-   }()
+    static let defaultValue: ImporterManager = ImporterManager();
 }
 
 extension EnvironmentValues {

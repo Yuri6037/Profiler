@@ -77,6 +77,6 @@ struct ProjectInfo: View {
 
 struct ProjectInfo_Previews: PreviewProvider {
     static var previews: some View {
-        ProjectInfo(project: Database.preview.getFirstProject()!)
+        ProjectInfo(project: InMemoryDatabase.shared.getFirstProject()!)
     }
 }

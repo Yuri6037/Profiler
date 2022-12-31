@@ -129,6 +129,6 @@ struct SpanNodeInfo: View {
 
 struct SpanNodeInfo_Previews: PreviewProvider {
     static var previews: some View {
-        SpanNodeInfo(node: Database.preview.getFirstNode()!)
+        SpanNodeInfo(node: InMemoryDatabase.shared.getFirstNode()!)
     }
 }

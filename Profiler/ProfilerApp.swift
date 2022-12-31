@@ -38,7 +38,7 @@ struct ProfilerApp: App {
     @State var importManager: ImporterManager;
 
     init() {
-        _database = .init(initialValue: Database());
+        _database = .init(initialValue: FileDatabase());
         _importManager = .init(initialValue: ImporterManager(container: _database.wrappedValue.container));
     }
 
@@ -50,10 +50,10 @@ struct ProfilerApp: App {
                 .environment(\.importerManager, importManager)
                 .environmentObject(errorHandler)
                 .onAppear {
-                    importManager.setErrorBlock { error in
+                    /*importManager.setErrorBlock { error in
                         errorHandler.pushError(AppError(fromNSError: error as NSError));
                     }
-                    importManager.start();
+                    importManager.start();*/
                     if let error = database.lastError {
                         errorHandler.pushError(AppError(fromNSError: error));
                     }
@@ -71,7 +71,7 @@ struct ProfilerApp: App {
                     })
                 }
                 Button("Open data path") {
-                    NSWorkspace.shared.open(Database.url)
+                    NSWorkspace.shared.open(FileDatabase.url)
                 }
             }
         }
@@ -86,6 +86,6 @@ struct ProfilerApp: App {
     }
 
     func importProject(dir: String) {
-        importManager.importDirectory(dir, deleteAfterImport: false);
+        //importManager.importDirectory(dir, deleteAfterImport: false);
     }
 }

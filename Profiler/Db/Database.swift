@@ -23,28 +23,33 @@
 
 import CoreData
 
-class Database {
-    static var url: URL {
-        NSPersistentContainer.defaultDirectoryURL()
-    }
+protocol Database {
+    var container: NSPersistentContainer { get };
 
-    let container: NSPersistentContainer
+    var lastError: NSError? { get };
+
+    var errorEvent: ((NSError) -> Void)? { get set };
+
+    func removeProject(proj: Project);
+
+    func save();
+}
+
+class BaseDatabase: Database {
+    let container: NSPersistentContainer;
 
     var lastError: NSError?;
 
     var errorEvent: ((NSError) -> Void)?;
 
-    init(inMemory: Bool = false) {
-        container = NSPersistentContainer(name: "Profiler")
-        if inMemory {
-            container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
-        }
-        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+    init(container: NSPersistentContainer) {
+        self.container = container;
+        self.container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
                 self.lastError = error;
             }
-        })
-        container.viewContext.automaticallyMergesChangesFromParent = true
+        });
+        self.container.viewContext.automaticallyMergesChangesFromParent = true;
     }
 
     func removeProject(proj: Project) {
@@ -77,5 +82,34 @@ class Database {
                 self.lastError = nil;
             }
         }
+    }
+}
+
+class FileDatabase: BaseDatabase {
+    static var url: URL {
+        NSPersistentContainer.defaultDirectoryURL()
+    }
+
+    init() {
+        let container = NSPersistentContainer(name: "Profiler")
+        super.init(container: container)
+    }
+}
+
+class NullDatabase: Database {
+    var container: NSPersistentContainer {
+        fatalError("Attempt to use a NullDatabase");
+    }
+
+    var lastError: NSError?;
+
+    var errorEvent: ((NSError) -> Void)?;
+
+    func removeProject(proj: Project) {
+        fatalError("Attempt to use a NullDatabase");
+    }
+
+    func save() {
+        fatalError("Attempt to use a NullDatabase");
     }
 }

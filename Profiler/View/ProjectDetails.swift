@@ -67,6 +67,6 @@ struct ProjectDetails: View {
 
 struct ProjectDetails_Previews: PreviewProvider {
     static var previews: some View {
-        ProjectDetails(project: Database.preview.getFirstProject()!, selection: .constant(nil), renderNode: .constant(true))
+        ProjectDetails(project: InMemoryDatabase.shared.getFirstProject()!, selection: .constant(nil), renderNode: .constant(true))
     }
 }

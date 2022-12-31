@@ -105,6 +105,7 @@ struct SpanNodeDetails: View {
 
 struct SpanNodeDetails_Previews: PreviewProvider {
     static var previews: some View {
-        SpanNodeDetails(node: Database.preview.getFirstNode()!).environment(\.database, Database.preview)
+        SpanNodeDetails(node: InMemoryDatabase.shared.getFirstNode()!)
+            .environment(\.database, InMemoryDatabase.shared)
     }
 }

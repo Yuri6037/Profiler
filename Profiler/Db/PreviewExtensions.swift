@@ -24,9 +24,9 @@
 import Foundation
 import CoreData
 
-extension Database {
-    static var preview: Database = {
-        let result = Database(inMemory: true);
+class InMemoryDatabase: BaseDatabase {
+    static var shared: InMemoryDatabase = {
+        let result = InMemoryDatabase();
         let viewContext = result.container.viewContext;
         for _ in 0..<10 {
             sampleProject(context: viewContext);
@@ -34,6 +34,12 @@ extension Database {
         result.save();
         return result;
     }()
+
+    init() {
+        let container = NSPersistentContainer(name: "Profiler")
+        container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
+        super.init(container: container);
+    }
 
     func getFirstProject() -> Project? {
         let request = NSFetchRequest<Project>(entityName: "Project");

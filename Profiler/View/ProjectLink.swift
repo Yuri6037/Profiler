@@ -48,6 +48,6 @@ private let dateFormatter: DateFormatter = {
 
 struct ProjectLink_Previews: PreviewProvider {
     static var previews: some View {
-        ProjectLink(project: Database.preview.getFirstProject()!)
+        ProjectLink(project: InMemoryDatabase.shared.getFirstProject()!)
     }
 }

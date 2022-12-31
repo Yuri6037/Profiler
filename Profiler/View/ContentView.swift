@@ -100,6 +100,10 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView().environment(\.database, Database.preview).environment(\.managedObjectContext, Database.preview.container.viewContext).environmentObject(ErrorHandler())
+        ContentView()
+            .environment(\.importerManager, ImporterManager(container: InMemoryDatabase.shared.container))
+            .environment(\.database, InMemoryDatabase.shared)
+            .environment(\.managedObjectContext, InMemoryDatabase.shared.container.viewContext)
+            .environmentObject(ErrorHandler())
     }
 }
