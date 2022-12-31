@@ -50,10 +50,10 @@ struct ProfilerApp: App {
                 .environment(\.importerManager, importManager)
                 .environmentObject(errorHandler)
                 .onAppear {
-                    /*importManager.setErrorBlock { error in
+                    importManager.setErrorBlock { error in
                         errorHandler.pushError(AppError(fromNSError: error as NSError));
                     }
-                    importManager.start();*/
+                    importManager.start();
                     if let error = database.lastError {
                         errorHandler.pushError(AppError(fromNSError: error));
                     }

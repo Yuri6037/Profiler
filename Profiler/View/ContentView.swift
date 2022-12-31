@@ -29,6 +29,7 @@ struct ContentView: View {
     @EnvironmentObject private var errorHandler: ErrorHandler;
     @Environment(\.managedObjectContext) private var viewContext;
     @Environment(\.database) private var database;
+    @Environment(\.importerManager) private var importManager;
 
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \Project.timestamp, ascending: true)],
@@ -40,6 +41,8 @@ struct ContentView: View {
     @State private var columnVisibility = NavigationSplitViewVisibility.all;
     @State private var hack: Bool = false;
     @State private var renderNode: Bool = true;
+    @State private var showImportProgress: Bool = false;
+    @State private var progress: CGFloat = 0.0;
 
     var sidebar: some View {
         VStack {
@@ -47,6 +50,15 @@ struct ContentView: View {
                 Text("Attempting to prevail against CoreData blowing up SwiftUI.")
             } else {
                 List(items, selection: $projectSelection) { ProjectLink(project: $0) }
+                if showImportProgress {
+                    Divider()
+                    VStack {
+                        Text("Importing nodes...")
+                        ProgressView(value: progress)
+                            .padding(.leading)
+                            .padding(.trailing)
+                    }.padding(.bottom, 5)
+                }
             }
         }
     }
@@ -80,6 +92,14 @@ struct ContentView: View {
         }
         .onAppear {
             columnVisibility = .all;
+            importManager.setEventBlock { current, total in
+                if current < total {
+                    showImportProgress = true;
+                    progress = CGFloat(current) / CGFloat(total);
+                } else {
+                    showImportProgress = false;
+                }
+            }
         }
     }
 
