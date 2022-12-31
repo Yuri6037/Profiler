@@ -86,6 +86,6 @@ struct ProfilerApp: App {
     }
 
     func importProject(dir: String) {
-        //importManager.importDirectory(dir, deleteAfterImport: false);
+        importManager.importDirectory(dir, deleteAfterImport: false);
     }
 }
