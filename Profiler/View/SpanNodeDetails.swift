@@ -35,6 +35,7 @@ private struct Data {
 struct SpanNodeDetails: View {
     @ObservedObject var node: SpanNode;
     @EnvironmentObject var errorHandler: ErrorHandler;
+    @Environment(\.database) var database: Database;
     var renderNode: Bool = false;
     @State private var data: Data?;
 
@@ -42,7 +43,7 @@ struct SpanNodeDetails: View {
         data = nil;
         let nodeId = node.objectID;
         let size = node.wRuns.count;
-        Database.shared.container.performBackgroundTask { ctx in
+        database.container.performBackgroundTask { ctx in
             let node = ctx.object(with: nodeId);
             let runs: NSFetchRequest<SpanRun> = SpanRun.fetchRequest();
             runs.fetchLimit = MAX_UI_ROWS;
@@ -104,6 +105,6 @@ struct SpanNodeDetails: View {
 
 struct SpanNodeDetails_Previews: PreviewProvider {
     static var previews: some View {
-        SpanNodeDetails(node: Database.preview.getFirstNode()!)
+        SpanNodeDetails(node: Database.preview.getFirstNode()!).environment(\.database, Database.preview)
     }
 }

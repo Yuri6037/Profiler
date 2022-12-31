@@ -24,8 +24,6 @@
 import CoreData
 
 class Database {
-    static let shared = Database()
-    
     static var url: URL {
         NSPersistentContainer.defaultDirectoryURL()
     }

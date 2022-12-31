@@ -35,17 +35,20 @@ import ProfilerServiceView
 struct ProfilerApp: App {
     @StateObject var errorHandler: ErrorHandler = ErrorHandler();
     @State var importTask: ProjectImporter?;
+    @State var database: Database = Database();
+    //@State var importManager: ImporterManager = ImporterManager(container: database.container);
 
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environment(\.managedObjectContext, Database.shared.container.viewContext)
+                .environment(\.managedObjectContext, database.container.viewContext)
+                .environment(\.database, database)
                 .environmentObject(errorHandler)
                 .onAppear {
-                    if let error = Database.shared.lastError {
+                    if let error = database.lastError {
                         errorHandler.pushError(AppError(fromNSError: error));
                     }
-                    Database.shared.errorEvent = { error in
+                    database.errorEvent = { error in
                         errorHandler.pushError(AppError(fromNSError: error));
                     }
                 }
@@ -78,7 +81,7 @@ struct ProfilerApp: App {
             errorHandler.pushError(AppError(description: "A project is already being imported, please wait..."));
             return;
         }
-        self.importTask = ProjectImporter(directory: dir, container: Database.shared.container);
+        self.importTask = ProjectImporter(directory: dir, container: database.container);
         do {
             try self.importTask?.loadProject();
             try self.importTask?.importTree();

@@ -27,12 +27,13 @@ import ErrorHandler
 
 struct ContentView: View {
     @EnvironmentObject private var errorHandler: ErrorHandler;
-    @Environment(\.managedObjectContext) private var viewContext
+    @Environment(\.managedObjectContext) private var viewContext;
+    @Environment(\.database) private var database;
 
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \Project.timestamp, ascending: true)],
         animation: .default)
-    private var items: FetchedResults<Project>
+    private var items: FetchedResults<Project>;
 
     @State private var projectSelection: Project?;
     @State private var nodeSelection: SpanNode?;
@@ -89,7 +90,7 @@ struct ContentView: View {
             self.hack = true;
             DispatchQueue.main.async {
                 withAnimation {
-                    Database.shared.removeProject(proj: selection);
+                    database.removeProject(proj: selection);
                     self.hack = false;
                 }
             }
@@ -99,6 +100,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView().environment(\.managedObjectContext, Database.preview.container.viewContext).environmentObject(ErrorHandler())
+        ContentView().environment(\.database, Database.preview).environment(\.managedObjectContext, Database.preview.container.viewContext).environmentObject(ErrorHandler())
     }
 }
