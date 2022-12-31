@@ -118,9 +118,18 @@ struct Item {
     }
 }
 
-- (void)setEventBlocks:(void (^)(NSUInteger current, NSUInteger total))block withErrorBlock:(void (^)(NSError *error))errorBlock {
+- (void)setEventBlock:(void (^)(NSUInteger current, NSUInteger total))block {
     _block = block;
+    if (_current != nil && _block != nil)
+        (_block)([_current importedNodes], _current.totalNodes);
+}
+
+- (void)setErrorBlock:(void (^)(NSError *error))errorBlock {
     _errorBlock = errorBlock;
+}
+
+- (void)clearEventBlock {
+    _block = nil;
 }
 
 - (void)start {

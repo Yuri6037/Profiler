@@ -29,9 +29,20 @@ struct DatabaseEnvironmentKey: EnvironmentKey {
    }()
 }
 
+struct ImporterManagerEnvironmentKey: EnvironmentKey {
+   static let defaultValue: ImporterManager = {
+       return ImporterManager(container: Database(inMemory: true).container);
+   }()
+}
+
 extension EnvironmentValues {
     var database: Database {
         get { self[DatabaseEnvironmentKey.self] }
         set { self[DatabaseEnvironmentKey.self] = newValue }
+    }
+
+    var importerManager: ImporterManager {
+        get { self[ImporterManagerEnvironmentKey.self] }
+        set { self[ImporterManagerEnvironmentKey.self] = newValue }
     }
 }

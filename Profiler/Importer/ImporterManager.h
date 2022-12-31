@@ -31,7 +31,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)importDirectory:(NSString *)dir deleteAfterImport:(BOOL)flag;
 
-- (void)setEventBlocks:(void (^)(NSUInteger current, NSUInteger total))block withErrorBlock:(void (^)(NSError *error))errorBlock;
+- (void)setEventBlock:(void (^)(NSUInteger current, NSUInteger total))block;
+
+- (void)setErrorBlock:(void (^)(NSError *error))errorBlock;
+
+- (void)clearEventBlock;
 
 - (void)start;
 

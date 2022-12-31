@@ -34,17 +34,26 @@ import ProfilerServiceView
 @main
 struct ProfilerApp: App {
     @StateObject var errorHandler: ErrorHandler = ErrorHandler();
-    @State var importTask: ProjectImporter?;
-    @State var database: Database = Database();
-    //@State var importManager: ImporterManager = ImporterManager(container: database.container);
+    @State var database: Database;
+    @State var importManager: ImporterManager;
+
+    init() {
+        _database = .init(initialValue: Database());
+        _importManager = .init(initialValue: ImporterManager(container: _database.wrappedValue.container));
+    }
 
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environment(\.managedObjectContext, database.container.viewContext)
                 .environment(\.database, database)
+                .environment(\.importerManager, importManager)
                 .environmentObject(errorHandler)
                 .onAppear {
+                    importManager.setErrorBlock { error in
+                        errorHandler.pushError(AppError(fromNSError: error as NSError));
+                    }
+                    importManager.start();
                     if let error = database.lastError {
                         errorHandler.pushError(AppError(fromNSError: error));
                     }
@@ -77,16 +86,6 @@ struct ProfilerApp: App {
     }
 
     func importProject(dir: String) {
-        if self.importTask != nil {
-            errorHandler.pushError(AppError(description: "A project is already being imported, please wait..."));
-            return;
-        }
-        self.importTask = ProjectImporter(directory: dir, container: database.container);
-        do {
-            try self.importTask?.loadProject();
-            try self.importTask?.importTree();
-        } catch {
-            errorHandler.pushError(AppError(fromNSError: error as NSError));
-        }
+        importManager.importDirectory(dir, deleteAfterImport: false);
     }
 }
