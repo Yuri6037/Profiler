@@ -26,52 +26,76 @@ import ErrorHandler
 
 let MAX_UI_ROWS = 20000;
 
-private struct Data {
-    var points: [Double];
-    var runs: [DisplaySpanRun];
-    var events: [DisplaySpanEvent];
-}
-
 struct SpanNodeDetails: View {
     @ObservedObject var node: SpanNode;
     @EnvironmentObject var errorHandler: ErrorHandler;
+    @EnvironmentObject var filters: NodeFilters;
     @Environment(\.database) var database: Database;
     var renderNode: Bool = false;
-    @State private var data: Data?;
+    @State private var points: [Double]?;
+    @State private var runs: [DisplaySpanRun]?;
+    @State private var events: [DisplaySpanEvent]?;
 
-    func loadData(node: SpanNode) {
-        data = nil;
-        let nodeId = node.objectID;
+    private func loadRuns(node: SpanNode) {
+        runs = nil;
         let size = node.wRuns.count;
-        database.container.performBackgroundTask { ctx in
-            let node = ctx.object(with: nodeId);
+        dbFunc(node: node, fetch: { node in
             let runs: NSFetchRequest<SpanRun> = SpanRun.fetchRequest();
             runs.fetchLimit = MAX_UI_ROWS;
-            runs.sortDescriptors = [
-                NSSortDescriptor(keyPath: \SpanRun.order, ascending: true)
-            ];
-            //Compute how many times to halve the rows in order to be under 20K
-            if size > MAX_UI_ROWS {
-                var halves = 2;
-                while size / halves > MAX_UI_ROWS {
-                    halves += 1;
-                }
-                runs.predicate = NSPredicate(format: "node=%@ AND modulus:by:(order, %d) == 0", node, halves);
-            } else {
-                runs.predicate = NSPredicate(format: "node=%@", node);
+            runs.sortDescriptors = filters.getSortDescriptors();
+            runs.predicate = filters.getPredicate(size: size, maxSize: MAX_UI_ROWS, node: node);
+            return runs;
+        }, handle: { runs in
+            let runs1 = runs.map { DisplaySpanRun(fromModel: $0) };
+            DispatchQueue.main.async {
+                self.runs = runs1;
             }
+        });
+    }
+
+    private func loadEvents(node: SpanNode) {
+        events = nil;
+        dbFunc(node: node, fetch: { node in
             let events: NSFetchRequest<SpanEvent> = SpanEvent.fetchRequest();
             events.fetchLimit = MAX_UI_ROWS;
             events.predicate = NSPredicate(format: "node=%@", node);
+            return events;
+        }, handle: { events in
+            let events1 = events.map { DisplaySpanEvent(fromModel: $0) };
+            DispatchQueue.main.async {
+                self.events = events1;
+            }
+        });
+    }
+
+    private func loadPoints(node: SpanNode) {
+        points = nil;
+        let size = node.wRuns.count;
+        dbFunc(node: node, fetch: { node in
+            let filters = NodeFilters();
+            let runs: NSFetchRequest<SpanRun> = SpanRun.fetchRequest();
+            runs.fetchLimit = 1500;
+            runs.sortDescriptors = filters.getSortDescriptors();
+            runs.predicate = filters.getPredicate(size: size, maxSize: 1500, node: node);
+            return runs;
+        }, handle: { runs in
+            //Swift requires useless values because its type inference system is garbagely broken
+            let useless = runs.map { DisplaySpanRun(fromModel: $0) };
+            let points = runs.map { $0.wTimeMicros }
+            DispatchQueue.main.async {
+                self.points = points;
+            }
+        });
+    }
+
+    private func dbFunc<T>(node: SpanNode, fetch: @escaping (NSManagedObject) -> NSFetchRequest<T>, handle: @escaping ([T]) -> Void) {
+        let nodeId = node.objectID;
+        database.container.performBackgroundTask { ctx in
+            let node = ctx.object(with: nodeId);
+            let req = fetch(node);
             do {
-                let runs = try ctx.fetch(runs);
-                let events = try ctx.fetch(events);
-                let points = runs.prefix(1024).map { $0.wTimeMicros };
-                let runs1 = runs.map { DisplaySpanRun(fromModel: $0) };
-                let events1 = events.map { DisplaySpanEvent(fromModel: $0) };
-                DispatchQueue.main.async {
-                    self.data = Data(points: points, runs: runs1, events: events1);
-                }
+                let data = try ctx.fetch(req);
+                handle(data);
             } catch {
                 DispatchQueue.main.async {
                     errorHandler.pushError(AppError(fromNSError: error as NSError));
@@ -79,18 +103,32 @@ struct SpanNodeDetails: View {
             }
         }
     }
+    
+    private func loadData(node: SpanNode) {
+        loadRuns(node: node);
+        loadEvents(node: node);
+        loadPoints(node: node);
+    }
 
     var body: some View {
         VStack {
             if renderNode {
                 SpanNodeInfo(node: node)
             }
-            if let data = data {
-                SpanRunTable(runs: data.runs)
-                SpanEventTable(events: data.events)
-                if data.points.count > 0 {
+            if let runs = runs {
+                SpanRunTable(runs: runs)
+            } else {
+                ProgressView()
+            }
+            if let events = events {
+                SpanEventTable(events: events)
+            } else {
+                ProgressView()
+            }
+            if let points = points {
+                if points.count > 0 {
                     ScrollView(.horizontal) {
-                        LineChart(width: 2048, height: 256, points: data.points)
+                        LineChart(width: 2048, height: 256, points: points)
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
@@ -100,6 +138,8 @@ struct SpanNodeDetails: View {
         }
         .onAppear { loadData(node: node) }
         .onChange(of: node) { loadData(node: $0) }
+        .onChange(of: filters.distribution) { _ in loadRuns(node: node) }
+        .onChange(of: filters.order) { _ in loadRuns(node: node) }
     }
 }
 
@@ -107,5 +147,8 @@ struct SpanNodeDetails_Previews: PreviewProvider {
     static var previews: some View {
         SpanNodeDetails(node: InMemoryDatabase.shared.getFirstNode()!)
             .environment(\.database, InMemoryDatabase.shared)
+            .environmentObject(ErrorHandler())
+            .environmentObject(NodeFilters())
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }

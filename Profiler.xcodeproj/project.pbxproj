@@ -11,6 +11,7 @@
 		DA1C6377295F17B100D3A1F5 /* WindowReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1C6376295F17B100D3A1F5 /* WindowReader.swift */; };
 		DA1C637A295F627A00D3A1F5 /* ImporterManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = DA1C6379295F627A00D3A1F5 /* ImporterManager.mm */; };
 		DA1C637C29608E4300D3A1F5 /* Env.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1C637B29608E4300D3A1F5 /* Env.swift */; };
+		DA1C637E2960ECF300D3A1F5 /* ToolButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1C637D2960ECF300D3A1F5 /* ToolButton.swift */; };
 		DA2A2C0C294FA0A900588FEA /* BrokerLine.h in Headers */ = {isa = PBXBuildFile; fileRef = DA2A2C0A294FA0A900588FEA /* BrokerLine.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA2A2C10294FA27A00588FEA /* BrokerLineLog.h in Headers */ = {isa = PBXBuildFile; fileRef = DA2A2C0E294FA27A00588FEA /* BrokerLineLog.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA2A2C11294FA27A00588FEA /* BrokerLineLog.m in Sources */ = {isa = PBXBuildFile; fileRef = DA2A2C0F294FA27A00588FEA /* BrokerLineLog.m */; };
@@ -64,6 +65,7 @@
 		DA6D16AC29473DB900CAB4D7 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0308FC2937FEEC00072C36 /* ErrorHandler.swift */; };
 		DA6D16AE29473E2100CAB4D7 /* ErrorHandler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6D16A129473DA300CAB4D7 /* ErrorHandler.framework */; };
 		DA6D16AF29473E2100CAB4D7 /* ErrorHandler.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA6D16A129473DA300CAB4D7 /* ErrorHandler.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		DA6D9AF92961D12A00E7F75C /* NodeFilters.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6D9AF82961D12A00E7F75C /* NodeFilters.swift */; };
 		DAB6AA012933614D00B290FC /* ProjectImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = DAB6AA002933614D00B290FC /* ProjectImporter.m */; };
 		DAB6AA1E293364D500B290FC /* TextTools.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAB6AA1A293364C800B290FC /* TextTools.framework */; };
 		DAB6AA1F293364D500B290FC /* TextTools.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DAB6AA1A293364C800B290FC /* TextTools.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -199,6 +201,7 @@
 		DA1C6378295F627A00D3A1F5 /* ImporterManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImporterManager.h; sourceTree = "<group>"; };
 		DA1C6379295F627A00D3A1F5 /* ImporterManager.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ImporterManager.mm; sourceTree = "<group>"; };
 		DA1C637B29608E4300D3A1F5 /* Env.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Env.swift; sourceTree = "<group>"; };
+		DA1C637D2960ECF300D3A1F5 /* ToolButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolButton.swift; sourceTree = "<group>"; };
 		DA2A2C0A294FA0A900588FEA /* BrokerLine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BrokerLine.h; sourceTree = "<group>"; };
 		DA2A2C0E294FA27A00588FEA /* BrokerLineLog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BrokerLineLog.h; sourceTree = "<group>"; };
 		DA2A2C0F294FA27A00588FEA /* BrokerLineLog.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BrokerLineLog.m; sourceTree = "<group>"; };
@@ -250,6 +253,7 @@
 		DA6D169A29473A8100CAB4D7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		DA6D16A129473DA300CAB4D7 /* ErrorHandler.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ErrorHandler.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA6D16A329473DA300CAB4D7 /* ErrorHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ErrorHandler.h; sourceTree = "<group>"; };
+		DA6D9AF82961D12A00E7F75C /* NodeFilters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeFilters.swift; sourceTree = "<group>"; };
 		DAB6A9FF2933614D00B290FC /* ProjectImporter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProjectImporter.h; sourceTree = "<group>"; };
 		DAB6AA002933614D00B290FC /* ProjectImporter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProjectImporter.m; sourceTree = "<group>"; };
 		DAB6AA14293364C800B290FC /* TextTools.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TextTools.xcodeproj; path = ../TextTools/TextTools.xcodeproj; sourceTree = "<group>"; };
@@ -384,6 +388,8 @@
 				DAB6AA302936A3F700B290FC /* ProjectLink.swift */,
 				DAF8FAAF294288CB00404F75 /* LineChart.swift */,
 				DAC1515C29448B2D00760299 /* DisplayModels.swift */,
+				DA1C637D2960ECF300D3A1F5 /* ToolButton.swift */,
+				DA6D9AF82961D12A00E7F75C /* NodeFilters.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -821,8 +827,10 @@
 				DA58FD732922D61B0034E588 /* ProjectDetails.swift in Sources */,
 				DA31F6BB2924C04E0077AF03 /* SpanNodeInfo.swift in Sources */,
 				DAB6AA2B2936447000B290FC /* FilePicker.swift in Sources */,
+				DA1C637E2960ECF300D3A1F5 /* ToolButton.swift in Sources */,
 				DA58FD7F292373970034E588 /* SpanEventTable.swift in Sources */,
 				DA6A44C72921431A00DCEDBB /* Profiler.xcdatamodeld in Sources */,
+				DA6D9AF92961D12A00E7F75C /* NodeFilters.swift in Sources */,
 				DAB6AA312936A3F700B290FC /* ProjectLink.swift in Sources */,
 				DA58FD772922E2A00034E588 /* PreviewExtensions.swift in Sources */,
 				DA6A44902920EB2B00DCEDBB /* ProfilerApp.swift in Sources */,
