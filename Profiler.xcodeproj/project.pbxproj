@@ -66,6 +66,8 @@
 		DA6D16AE29473E2100CAB4D7 /* ErrorHandler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6D16A129473DA300CAB4D7 /* ErrorHandler.framework */; };
 		DA6D16AF29473E2100CAB4D7 /* ErrorHandler.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA6D16A129473DA300CAB4D7 /* ErrorHandler.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DA6D9AF92961D12A00E7F75C /* NodeFilters.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6D9AF82961D12A00E7F75C /* NodeFilters.swift */; };
+		DA6D9AFD2962DCEA00E7F75C /* Hacks.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6D9AFC2962DCEA00E7F75C /* Hacks.swift */; };
+		DA6D9B002962DE5500E7F75C /* NodeTextFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = DA6D9AFF2962DE5500E7F75C /* NodeTextFilter.m */; };
 		DAB6AA012933614D00B290FC /* ProjectImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = DAB6AA002933614D00B290FC /* ProjectImporter.m */; };
 		DAB6AA1E293364D500B290FC /* TextTools.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAB6AA1A293364C800B290FC /* TextTools.framework */; };
 		DAB6AA1F293364D500B290FC /* TextTools.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DAB6AA1A293364C800B290FC /* TextTools.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -254,6 +256,9 @@
 		DA6D16A129473DA300CAB4D7 /* ErrorHandler.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ErrorHandler.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA6D16A329473DA300CAB4D7 /* ErrorHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ErrorHandler.h; sourceTree = "<group>"; };
 		DA6D9AF82961D12A00E7F75C /* NodeFilters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeFilters.swift; sourceTree = "<group>"; };
+		DA6D9AFC2962DCEA00E7F75C /* Hacks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hacks.swift; sourceTree = "<group>"; };
+		DA6D9AFE2962DE5500E7F75C /* NodeTextFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NodeTextFilter.h; sourceTree = "<group>"; };
+		DA6D9AFF2962DE5500E7F75C /* NodeTextFilter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NodeTextFilter.m; sourceTree = "<group>"; };
 		DAB6A9FF2933614D00B290FC /* ProjectImporter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProjectImporter.h; sourceTree = "<group>"; };
 		DAB6AA002933614D00B290FC /* ProjectImporter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProjectImporter.m; sourceTree = "<group>"; };
 		DAB6AA14293364C800B290FC /* TextTools.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TextTools.xcodeproj; path = ../TextTools/TextTools.xcodeproj; sourceTree = "<group>"; };
@@ -390,6 +395,8 @@
 				DAC1515C29448B2D00760299 /* DisplayModels.swift */,
 				DA1C637D2960ECF300D3A1F5 /* ToolButton.swift */,
 				DA6D9AF82961D12A00E7F75C /* NodeFilters.swift */,
+				DA6D9AFE2962DE5500E7F75C /* NodeTextFilter.h */,
+				DA6D9AFF2962DE5500E7F75C /* NodeTextFilter.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -444,6 +451,7 @@
 				DA6A448F2920EB2B00DCEDBB /* ProfilerApp.swift */,
 				DA1C637B29608E4300D3A1F5 /* Env.swift */,
 				DAB6AA2A2936447000B290FC /* FilePicker.swift */,
+				DA6D9AFC2962DCEA00E7F75C /* Hacks.swift */,
 				DA31F6BC292586680077AF03 /* Profiler-Bridging-Header.h */,
 				DA6A44982920EB2C00DCEDBB /* Assets.xcassets */,
 				DA6A449A2920EB2C00DCEDBB /* Profiler.entitlements */,
@@ -832,11 +840,13 @@
 				DA6A44C72921431A00DCEDBB /* Profiler.xcdatamodeld in Sources */,
 				DA6D9AF92961D12A00E7F75C /* NodeFilters.swift in Sources */,
 				DAB6AA312936A3F700B290FC /* ProjectLink.swift in Sources */,
+				DA6D9AFD2962DCEA00E7F75C /* Hacks.swift in Sources */,
 				DA58FD772922E2A00034E588 /* PreviewExtensions.swift in Sources */,
 				DA6A44902920EB2B00DCEDBB /* ProfilerApp.swift in Sources */,
 				DAF8FAB0294288CB00404F75 /* LineChart.swift in Sources */,
 				DAC1515D29448B2D00760299 /* DisplayModels.swift in Sources */,
 				DAED2F89293FCFBB0095A2FC /* NodeDuration.c in Sources */,
+				DA6D9B002962DE5500E7F75C /* NodeTextFilter.m in Sources */,
 				DA6A44922920EB2B00DCEDBB /* Database.swift in Sources */,
 				DA1C637C29608E4300D3A1F5 /* Env.swift in Sources */,
 				DA58FD792922E2B20034E588 /* SampleData.swift in Sources */,

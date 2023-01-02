@@ -15,3 +15,5 @@
 #ifdef TARGET_OS_MAC
 #import <ProfilerBackend/ProfilerService.h>
 #endif
+
+#import "NodeTextFilter.h"

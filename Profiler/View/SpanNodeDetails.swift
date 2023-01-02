@@ -80,7 +80,7 @@ struct SpanNodeDetails: View {
             return runs;
         }, handle: { runs in
             //Swift requires useless values because its type inference system is garbagely broken
-            let useless = runs.map { DisplaySpanRun(fromModel: $0) };
+            let _ = runs.map { DisplaySpanRun(fromModel: $0) };
             let points = runs.map { $0.wTimeMicros }
             DispatchQueue.main.async {
                 self.points = points;
@@ -140,6 +140,7 @@ struct SpanNodeDetails: View {
         .onChange(of: node) { loadData(node: $0) }
         .onChange(of: filters.distribution) { _ in loadRuns(node: node) }
         .onChange(of: filters.order) { _ in loadRuns(node: node) }
+        .onChange(of: filters.text) { filters.updateTextFilter($0) { loadRuns(node: node) } }
     }
 }
 

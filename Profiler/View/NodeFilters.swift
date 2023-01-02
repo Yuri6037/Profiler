@@ -23,7 +23,7 @@
 
 import Foundation
 
-//TODO: Support text filter
+//TODO: Support text filter (https://stackoverflow.com/questions/52010925/nspredicate-example-of-one-to-many-relationship-query)
 
 class NodeFilters: ObservableObject {
     enum Order {
@@ -41,6 +41,18 @@ class NodeFilters: ObservableObject {
     @Published var order: Order = .insertion;
     @Published var distribution: Distribution = .even;
     @Published var text: String = "";
+    private var _textFilter = NodeTextFilter();
+    private var _lastUpdate: Date = Date();
+
+    func updateTextFilter(_ newText: String, action: @escaping () -> Void) {
+        _textFilter.text = newText;
+        _lastUpdate = Date();
+        DispatchQueue.main.schedule(after: .init(.now().advanced(by: .seconds(2)))) {
+            if Date() - self._lastUpdate >= 1 {
+                action();
+            }
+        };
+    }
 
     func getSortDescriptors() -> [NSSortDescriptor] {
         switch order {
@@ -82,20 +94,16 @@ class NodeFilters: ObservableObject {
     }
 
     func getPredicate(size: Int, maxSize: Int, node: NSManagedObject) -> NSPredicate {
-        switch distribution {
-        case .even:
-            if size > maxSize {
-                //Compute how many times to halve the rows in order to be under 20K
-                var halves = 2;
-                while size / halves > maxSize {
-                    halves += 1;
-                }
-                return NSPredicate(format: "node=%@ AND modulus:by:(order, %d) == 0", node, halves);
-            } else {
-                return NSPredicate(format: "node=%@", node);
+        var predicates = [NSPredicate(format: "node=%@", node)];
+        predicates.append(contentsOf: _textFilter.getPredicates() ?? []);
+        if distribution == .even {
+            //Compute how many times to halve the rows in order to be under 20K
+            var halves = 2;
+            while size / halves > maxSize {
+                halves += 1;
             }
-        case .nFirst, .nLast:
-            return NSPredicate(format: "node=%@", node);
+            predicates.append(NSPredicate(format: "modulus:by:(order, %d) == 0", halves));
         }
+        return NSCompoundPredicate(andPredicateWithSubpredicates: predicates);
     }
 }
