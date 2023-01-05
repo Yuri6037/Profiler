@@ -39,7 +39,7 @@ struct ContentView: View {
     @State private var projectSelection: Project?;
     @State private var nodeSelection: SpanNode?;
     @State private var columnVisibility = NavigationSplitViewVisibility.all;
-    @State private var hack: Bool = false;
+    @State private var deleteMode: Bool = false;
     @State private var renderNode: Bool = true;
     @State private var showImportProgress: Bool = false;
     @State private var progress: CGFloat = 0.0;
@@ -47,8 +47,8 @@ struct ContentView: View {
 
     var sidebar: some View {
         VStack {
-            if hack {
-                Text("Attempting to prevail against CoreData blowing up SwiftUI.")
+            if deleteMode {
+                ProgressView()
             } else {
                 List(items, selection: $projectSelection) { ProjectLink(project: $0) }
                 if showImportProgress {
@@ -128,12 +128,11 @@ struct ContentView: View {
         if let selection = self.projectSelection {
             self.projectSelection = nil;
             self.nodeSelection = nil;
-            self.hack = true;
-            DispatchQueue.main.async {
-                withAnimation {
-                    database.removeProject(proj: selection);
-                    self.hack = false;
-                }
+            self.deleteMode = true;
+            withAnimation {
+                database.removeProject(proj: selection, onFinish: {
+                    self.deleteMode = false;
+                });
             }
         }
     }
