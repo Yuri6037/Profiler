@@ -23,8 +23,6 @@
 
 import Foundation
 
-//TODO: Support text filter (https://stackoverflow.com/questions/52010925/nspredicate-example-of-one-to-many-relationship-query)
-
 class NodeFilters: ObservableObject {
     enum Order {
         case insertion;
@@ -96,7 +94,7 @@ class NodeFilters: ObservableObject {
     func getPredicate(size: Int, maxSize: Int, node: NSManagedObject) -> NSPredicate {
         var predicates = [NSPredicate(format: "node=%@", node)];
         predicates.append(contentsOf: _textFilter.getPredicates() ?? []);
-        if distribution == .even {
+        if distribution == .even && size > maxSize {
             //Compute how many times to halve the rows in order to be under 20K
             var halves = 2;
             while size / halves > maxSize {

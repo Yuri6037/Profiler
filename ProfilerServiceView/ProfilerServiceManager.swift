@@ -158,8 +158,6 @@ class ProfilerServiceManager {
     private func handleEvent(broker: BrokerLine) {
         switch (broker.type) {
         case BLT_CONNECTION_EVENT:
-            let connection = broker as! BrokerLineConnection;
-            print("Received new connection from \(connection.address)");
             if let handler = self._waitingSubscriptions.first {
                 self._waitingSubscriptions.remove(at: 0);
                 let obj = ProfilerSubscribtion(service: self._service, client: broker.clientIndex)
