@@ -176,7 +176,6 @@ class ProfilerServiceManager {
                 || log.msg().contains("Client has disconnected") {
                 //Ok the client is gone get rid of it!
                 self._subscribtions.removeValue(forKey: broker.clientIndex);
-                //TODO: Start project import.
             }
             break;
         case BLT_SPAN_ALLOC:
@@ -217,8 +216,7 @@ class ProfilerServiceManager {
         case BLT_SPAN_PATH:
             let span = broker as! BrokerLineSpanPath;
             let subscribtion = _subscribtions[broker.clientIndex];
-            let id = subscribtion?.spanIdMap[span.index] ?? 0;
-            if let node = (id > 0 && id < subscribtion?.spans.count ?? 0) ? subscribtion?.spans[id] : nil {
+            if let node = subscribtion?.spans[subscribtion?.spanIdMap[span.index] ?? 0] {
                 node.path = span.path;
             }
             break;
