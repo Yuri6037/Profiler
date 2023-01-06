@@ -65,6 +65,7 @@ class BaseDatabase: Database {
         let cpuId = proj.cpu?.projects?.count ?? 0 == 1 ? proj.cpu?.objectID : nil;
         let projId = proj.objectID;
         container.performBackgroundTask { ctx in
+            ctx.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy;
             let proj = ctx.object(with: projId);
             let fvariables = NSFetchRequest<NSFetchRequestResult>(entityName: String(describing: SpanVariable.self));
             fvariables.predicate = NSPredicate(format: "run.node.project = %@ OR event.node.project = %@", proj, proj);
