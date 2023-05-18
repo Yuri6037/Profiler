@@ -25,13 +25,13 @@ import Foundation
 import NIO
 
 public struct ComponentOption<T: Component>: Component {
-    public typealias Out = T?;
+    public typealias Out = T.Out?;
     public static var size: Int { 1 + T.size };
 
-    public static func read(buffer: inout NIOCore.ByteBuffer) -> T? {
+    public static func read(buffer: inout NIOCore.ByteBuffer) -> T.Out? {
         let flag = buffer.readInteger(endianness: .little, as: UInt8.self);
         if (flag == 1) {
-            return T.read(buffer: &buffer) as? T;
+            return T.read(buffer: &buffer);
         }
         return nil;
     }
