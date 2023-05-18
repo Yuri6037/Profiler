@@ -1,6 +1,6 @@
 // Copyright 2023 Yuri6037
 //
-// Permission is hereby granted, free of charge, to any person obtaining a
+// Permission is hereby granted, free of charge, to any person obtaining a 
 // copy
 // of this software and associated documentation files (the "Software"),
 // to deal in the Software without restriction, including without limitation
@@ -13,21 +13,35 @@
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
 // THE
 // AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
 // DEALINGS
 // IN THE SOFTWARE.
 
 import Foundation
+import NIO
 
-public enum Constants {
-    //public static let PROTOCOL_VERSION = new Version(1, "rc.2.0.0");
-    //public static let PROTOCOL = new Protocol("prof", PROTOCOL_VERSION);
-    public static let defaultPort = 4026;
-    public static let messageQueueSize = 128;
+public struct Size {
+    public let bytes: Int;
 
-    public static let helloMessageSize = 40; //The hello packet is always 40 bytes long.
+    public func add<T: Component>(_ c: T.Type) -> Size {
+        return Size(bytes: self.bytes + c.size);
+    }
+}
+
+public struct Reader {
+    var buffer: ByteBuffer;
+
+    public mutating func read<T: Component>(_ c: T.Type) -> T.Out {
+        return c.read(buffer: &buffer);
+    }
+}
+
+public protocol Message {
+    static var size: Size { get };
+    static func read(reader: Reader) -> Self;
+    var payloadSize: Int { get };
 }

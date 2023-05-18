@@ -1,6 +1,6 @@
 // Copyright 2023 Yuri6037
 //
-// Permission is hereby granted, free of charge, to any person obtaining a
+// Permission is hereby granted, free of charge, to any person obtaining a 
 // copy
 // of this software and associated documentation files (the "Software"),
 // to deal in the Software without restriction, including without limitation
@@ -13,21 +13,25 @@
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
 // THE
 // AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
 // DEALINGS
 // IN THE SOFTWARE.
 
 import Foundation
+import NIO
 
-public enum Constants {
-    //public static let PROTOCOL_VERSION = new Version(1, "rc.2.0.0");
-    //public static let PROTOCOL = new Protocol("prof", PROTOCOL_VERSION);
-    public static let defaultPort = 4026;
-    public static let messageQueueSize = 128;
+public struct ComponentDuration: Component {
+    public typealias Out = Duration;
 
-    public static let helloMessageSize = 40; //The hello packet is always 40 bytes long.
+    public static var size: Int = ComponentU32.size * 2;
+
+    public static func read(buffer: inout NIOCore.ByteBuffer) -> Duration {
+        let seconds = ComponentU32.read(buffer: &buffer);
+        let nanos = ComponentU32.read(buffer: &buffer);
+        return Duration(secondsComponent: Int64(seconds), attosecondsComponent: Int64(nanos) * 1000000000);
+    }
 }

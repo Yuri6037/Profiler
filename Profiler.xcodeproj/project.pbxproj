@@ -31,6 +31,9 @@
 		DA837D052A153D5600B91BCE /* ComponentLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA837D042A153D5600B91BCE /* ComponentLevel.swift */; };
 		DA837D072A153EF800B91BCE /* ComponentI64.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA837D062A153EF800B91BCE /* ComponentI64.swift */; };
 		DA837D092A153FD900B91BCE /* ComponentOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA837D082A153FD900B91BCE /* ComponentOption.swift */; };
+		DA837D122A15897F00B91BCE /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA837D112A15897F00B91BCE /* Message.swift */; };
+		DA837D142A162AE100B91BCE /* MessageRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA837D132A162AE100B91BCE /* MessageRegistry.swift */; };
+		DA837D162A16513B00B91BCE /* ComponentDuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA837D152A16513B00B91BCE /* ComponentDuration.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -112,6 +115,9 @@
 		DA837D042A153D5600B91BCE /* ComponentLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentLevel.swift; sourceTree = "<group>"; };
 		DA837D062A153EF800B91BCE /* ComponentI64.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentI64.swift; sourceTree = "<group>"; };
 		DA837D082A153FD900B91BCE /* ComponentOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentOption.swift; sourceTree = "<group>"; };
+		DA837D112A15897F00B91BCE /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		DA837D132A162AE100B91BCE /* MessageRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRegistry.swift; sourceTree = "<group>"; };
+		DA837D152A16513B00B91BCE /* ComponentDuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentDuration.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -222,6 +228,7 @@
 		DA17E8282A12BACA00554B8A /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
+				DA837D0E2A15868100B91BCE /* Message */,
 				DA837CFD2A1410A500B91BCE /* Component */,
 				DA17E8292A12BACA00554B8A /* Protocol.h */,
 				DA17E8432A12BADD00554B8A /* NetManager.swift */,
@@ -248,8 +255,18 @@
 				DA837D042A153D5600B91BCE /* ComponentLevel.swift */,
 				DA837D062A153EF800B91BCE /* ComponentI64.swift */,
 				DA837D082A153FD900B91BCE /* ComponentOption.swift */,
+				DA837D152A16513B00B91BCE /* ComponentDuration.swift */,
 			);
 			path = Component;
+			sourceTree = "<group>";
+		};
+		DA837D0E2A15868100B91BCE /* Message */ = {
+			isa = PBXGroup;
+			children = (
+				DA837D112A15897F00B91BCE /* Message.swift */,
+				DA837D132A162AE100B91BCE /* MessageRegistry.swift */,
+			);
+			path = Message;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -491,12 +508,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA837D032A153CC600B91BCE /* ComponentU32.swift in Sources */,
+				DA837D142A162AE100B91BCE /* MessageRegistry.swift in Sources */,
 				DA837D092A153FD900B91BCE /* ComponentOption.swift in Sources */,
+				DA837D162A16513B00B91BCE /* ComponentDuration.swift in Sources */,
 				DA17E8442A12BADD00554B8A /* NetManager.swift in Sources */,
 				DA837CFF2A1410B500B91BCE /* Component.swift in Sources */,
 				DA837D072A153EF800B91BCE /* ComponentI64.swift in Sources */,
 				DA837CFC2A140AA500B91BCE /* Decoder.swift in Sources */,
 				DA837D052A153D5600B91BCE /* ComponentLevel.swift in Sources */,
+				DA837D122A15897F00B91BCE /* Message.swift in Sources */,
 				DA17E8462A12BAE600554B8A /* Constants.swift in Sources */,
 				DA837D012A14116600B91BCE /* ComponentVchar.swift in Sources */,
 			);
