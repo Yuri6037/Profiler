@@ -22,18 +22,30 @@
 // IN THE SOFTWARE.
 
 import Foundation
-import NIO
 
-public enum MessageRegistry {
-    private static var map: [UInt8: Message.Type] = [:];
+public struct MessageProject: Message {
+    public let appName: Vchar;
+    public let name: Vchar;
+    public let version: Vchar;
+    public let commandLine: Vchar;
+    public let target: Target;
+    public let cpu: Cpu?;
 
-    public static func sizeof(type: UInt8) -> Int? {
-        return map[type]?.size;
+    public static var size: Int = Size(bytes: ComponentVchar.size * 4)
+        .add(ComponentTarget.self).add(ComponentOption<ComponentCpu>.self).bytes
+
+    public static func read(reader: inout Reader) -> MessageProject {
+        let appName = reader.read(ComponentVchar.self);
+        let name = reader.read(ComponentVchar.self);
+        let version = reader.read(ComponentVchar.self);
+        let commandLine = reader.read(ComponentVchar.self);
+        let target = reader.read(ComponentTarget.self);
+        let cpu = reader.read(ComponentOption<ComponentCpu>.self);
+        return MessageProject(appName: appName, name: name, version: version, commandLine: commandLine, target: target, cpu: cpu);
     }
 
-    public static func read(type: UInt8, buffer: inout ByteBuffer) -> Message? {
-        //Because swift is a peace of shit.
-        var motherfuckingbrokenswift = Reader(buffer: buffer);
-        return map[type]?.read(reader: &motherfuckingbrokenswift)
-    }
+    public var payloadSize: Int {
+        Int(appName.length + name.length + version.length + commandLine.length)
+        + target.payloadSize + (cpu?.payloadSize ?? 0)
+    };
 }

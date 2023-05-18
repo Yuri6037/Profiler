@@ -27,6 +27,10 @@ import NIO
 public struct Size {
     public let bytes: Int;
 
+    init(bytes: Int = 0) {
+        self.bytes = bytes;
+    }
+
     public func add<T: Component>(_ c: T.Type) -> Size {
         return Size(bytes: self.bytes + c.size);
     }
@@ -41,7 +45,7 @@ public struct Reader {
 }
 
 public protocol Message {
-    static var size: Size { get };
-    static func read(reader: Reader) -> Self;
+    static var size: Int { get };
+    static func read(reader: inout Reader) -> Self;
     var payloadSize: Int { get };
 }
