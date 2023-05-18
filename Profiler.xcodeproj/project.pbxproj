@@ -34,6 +34,10 @@
 		DA837D122A15897F00B91BCE /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA837D112A15897F00B91BCE /* Message.swift */; };
 		DA837D142A162AE100B91BCE /* MessageRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA837D132A162AE100B91BCE /* MessageRegistry.swift */; };
 		DA837D162A16513B00B91BCE /* ComponentDuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA837D152A16513B00B91BCE /* ComponentDuration.swift */; };
+		DA837D182A16528900B91BCE /* MessageServerConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA837D172A16528900B91BCE /* MessageServerConfig.swift */; };
+		DA837D1A2A16551500B91BCE /* MessageProject.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA837D192A16551500B91BCE /* MessageProject.swift */; };
+		DA837D1C2A16560A00B91BCE /* ComponentTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA837D1B2A16560A00B91BCE /* ComponentTarget.swift */; };
+		DA837D1E2A16561800B91BCE /* ComponentCpu.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA837D1D2A16561800B91BCE /* ComponentCpu.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -118,6 +122,10 @@
 		DA837D112A15897F00B91BCE /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		DA837D132A162AE100B91BCE /* MessageRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRegistry.swift; sourceTree = "<group>"; };
 		DA837D152A16513B00B91BCE /* ComponentDuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentDuration.swift; sourceTree = "<group>"; };
+		DA837D172A16528900B91BCE /* MessageServerConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageServerConfig.swift; sourceTree = "<group>"; };
+		DA837D192A16551500B91BCE /* MessageProject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageProject.swift; sourceTree = "<group>"; };
+		DA837D1B2A16560A00B91BCE /* ComponentTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentTarget.swift; sourceTree = "<group>"; };
+		DA837D1D2A16561800B91BCE /* ComponentCpu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentCpu.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -256,6 +264,8 @@
 				DA837D062A153EF800B91BCE /* ComponentI64.swift */,
 				DA837D082A153FD900B91BCE /* ComponentOption.swift */,
 				DA837D152A16513B00B91BCE /* ComponentDuration.swift */,
+				DA837D1B2A16560A00B91BCE /* ComponentTarget.swift */,
+				DA837D1D2A16561800B91BCE /* ComponentCpu.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -265,6 +275,8 @@
 			children = (
 				DA837D112A15897F00B91BCE /* Message.swift */,
 				DA837D132A162AE100B91BCE /* MessageRegistry.swift */,
+				DA837D172A16528900B91BCE /* MessageServerConfig.swift */,
+				DA837D192A16551500B91BCE /* MessageProject.swift */,
 			);
 			path = Message;
 			sourceTree = "<group>";
@@ -507,14 +519,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA837D1C2A16560A00B91BCE /* ComponentTarget.swift in Sources */,
 				DA837D032A153CC600B91BCE /* ComponentU32.swift in Sources */,
+				DA837D182A16528900B91BCE /* MessageServerConfig.swift in Sources */,
 				DA837D142A162AE100B91BCE /* MessageRegistry.swift in Sources */,
 				DA837D092A153FD900B91BCE /* ComponentOption.swift in Sources */,
 				DA837D162A16513B00B91BCE /* ComponentDuration.swift in Sources */,
 				DA17E8442A12BADD00554B8A /* NetManager.swift in Sources */,
 				DA837CFF2A1410B500B91BCE /* Component.swift in Sources */,
+				DA837D1E2A16561800B91BCE /* ComponentCpu.swift in Sources */,
 				DA837D072A153EF800B91BCE /* ComponentI64.swift in Sources */,
 				DA837CFC2A140AA500B91BCE /* Decoder.swift in Sources */,
+				DA837D1A2A16551500B91BCE /* MessageProject.swift in Sources */,
 				DA837D052A153D5600B91BCE /* ComponentLevel.swift in Sources */,
 				DA837D122A15897F00B91BCE /* Message.swift in Sources */,
 				DA17E8462A12BAE600554B8A /* Constants.swift in Sources */,
