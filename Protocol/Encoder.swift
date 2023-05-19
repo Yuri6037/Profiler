@@ -1,6 +1,6 @@
 // Copyright 2023 Yuri6037
 //
-// Permission is hereby granted, free of charge, to any person obtaining a
+// Permission is hereby granted, free of charge, to any person obtaining a 
 // copy
 // of this software and associated documentation files (the "Software"),
 // to deal in the Software without restriction, including without limitation
@@ -13,27 +13,21 @@
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
 // THE
 // AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
 // DEALINGS
 // IN THE SOFTWARE.
 
 import Foundation
+import NIO
 
-public enum Constants {
-    public static let defaultPort = 4026;
-    public static let messageQueueSize = 128;
+public final class Encoder: MessageToByteEncoder {
+    public typealias OutboundIn = Writable;
 
-    //This is supposed to be b"BP3D", but swift is far too much of a peace of shit to handle it!
-    public static let signature: UInt32 = 0x42503344;
-
-    public static let helloMessageSize = 40; //The hello packet is always 40 bytes long.
-
-    //This is supposed to be b"PROF", but swift is far too much of a peace of shit to handle it!
-    public static let protoName: UInt32 = 0x50524F46;
-    public static let protoVersion = Version(major: 1, preRelease: "rc.2.0.0");
-    public static let proto = BP3DProtocol(name: protoName, version: protoVersion);
+    public func encode(data: OutboundIn, out: inout ByteBuffer) throws {
+        data.write(buffer: &out);
+    }
 }

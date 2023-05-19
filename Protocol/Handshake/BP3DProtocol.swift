@@ -24,32 +24,37 @@
 import Foundation
 import NIO
 
-public struct Size {
-    public let bytes: Int;
-
-    init(bytes: Int = 0) {
-        self.bytes = bytes;
-    }
-
-    public func add<T: Component>(_ c: T.Type) -> Size {
-        return Size(bytes: self.bytes + c.size);
-    }
+public struct BP3DProtocolMismatchError {
+    public let expected: UInt32;
+    public let actual: UInt32;
 }
 
-public struct Reader {
-    var buffer: ByteBuffer;
+public struct BP3DVersionMismatchError {
+    public let expected: Version;
+    public let actual: Version;
+}
 
-    public mutating func read<T: Component>(_ c: T.Type) -> T.Out {
-        return c.read(buffer: &buffer);
+public enum BP3DProtocolError: Error {
+    case signatureMismatch;
+    case protocolMismatch(BP3DProtocolMismatchError);
+    case versionMismatch(BP3DVersionMismatchError);
+}
+
+public struct BP3DProtocol {
+    public let name: UInt32;
+    public let version: Version;
+
+    public func initialHandshake(buffer: inout ByteBuffer) throws -> MessageHello {
+        let msg = MessageHello(buffer: &buffer);
+        if msg.signature != Constants.signature {
+            throw BP3DProtocolError.signatureMismatch;
+        }
+        if msg.name != name {
+            throw BP3DProtocolError.protocolMismatch(BP3DProtocolMismatchError(expected: name, actual: msg.name));
+        }
+        if !msg.version.matches(other: version) {
+            throw BP3DProtocolError.versionMismatch(BP3DVersionMismatchError(expected: version, actual: msg.version));
+        }
+        return msg;
     }
-}
-
-public protocol Message {
-    static var size: Int { get };
-    static func read(reader: inout Reader) -> Self;
-    var payloadSize: Int { get };
-}
-
-public protocol Writable {
-    func write(buffer: inout ByteBuffer);
 }

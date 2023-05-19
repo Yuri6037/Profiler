@@ -34,22 +34,23 @@ public final class Decoder: ByteToMessageDecoder {
 
     private final var state = DecoderState.handshake;
 
-    private func decodeHello(buffer: inout NIOCore.ByteBuffer) -> ByteBuffer? {
+    private func decodeHello(buffer: inout ByteBuffer) -> ByteBuffer? {
         guard let slice = buffer.readSlice(length: Constants.helloMessageSize) else {
             return nil;
         }
         return slice;
     }
 
-    public func decode(context: NIOCore.ChannelHandlerContext, buffer: inout NIOCore.ByteBuffer) throws -> NIOCore.DecodingState {
+    public func decode(context: ChannelHandlerContext, buffer: inout ByteBuffer) throws -> DecodingState {
         if (state == DecoderState.handshake) {
-            guard let buffer = decodeHello(buffer: &buffer) else {
+            guard var buffer = decodeHello(buffer: &buffer) else {
                 return .needMoreData;
             }
-            context.fireChannelRead(self.wrapInboundOut(buffer));
+            let msg = try Constants.proto.initialHandshake(buffer: &buffer);
+            let _ = context.write(NIOAny(msg));
+            state = .running;
             return .continue;
         }
-        
         return .continue;
     }
 }

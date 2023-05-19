@@ -27,10 +27,15 @@ import NIOCore
 import NIOPosix
 
 class NetManager {
+    public let channelFuture: EventLoopFuture<Channel>;
+
     init(address: String, port: Int = Constants.defaultPort) {
         let group = MultiThreadedEventLoopGroup(numberOfThreads: 4);
-        let bootstrap = ClientBootstrap(group: group);
-        //bootstrap.connect(host: address, port: port);
-        
+        let bootstrap = ClientBootstrap(group: group).channelInitializer { handler in
+            handler.pipeline.addHandler(ByteToMessageHandler(Decoder()));
+            //Annoyingly enough it appears that it's impossible to have multiple handlers in 1 channel...
+            //handler.pipeline.addHandler(MessageToByteHandler(Encoder()));
+        }
+        channelFuture = bootstrap.connect(host: address, port: port);
     }
 }

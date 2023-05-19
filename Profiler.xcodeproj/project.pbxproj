@@ -38,6 +38,9 @@
 		DA837D1A2A16551500B91BCE /* MessageProject.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA837D192A16551500B91BCE /* MessageProject.swift */; };
 		DA837D1C2A16560A00B91BCE /* ComponentTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA837D1B2A16560A00B91BCE /* ComponentTarget.swift */; };
 		DA837D1E2A16561800B91BCE /* ComponentCpu.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA837D1D2A16561800B91BCE /* ComponentCpu.swift */; };
+		DA837D212A1774E400B91BCE /* MessageHello.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA837D202A1774E400B91BCE /* MessageHello.swift */; };
+		DA837D232A1778AB00B91BCE /* BP3DProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA837D222A1778AB00B91BCE /* BP3DProtocol.swift */; };
+		DA837D292A17AC7900B91BCE /* Encoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA837D282A17AC7900B91BCE /* Encoder.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -126,6 +129,9 @@
 		DA837D192A16551500B91BCE /* MessageProject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageProject.swift; sourceTree = "<group>"; };
 		DA837D1B2A16560A00B91BCE /* ComponentTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentTarget.swift; sourceTree = "<group>"; };
 		DA837D1D2A16561800B91BCE /* ComponentCpu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentCpu.swift; sourceTree = "<group>"; };
+		DA837D202A1774E400B91BCE /* MessageHello.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageHello.swift; sourceTree = "<group>"; };
+		DA837D222A1778AB00B91BCE /* BP3DProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BP3DProtocol.swift; sourceTree = "<group>"; };
+		DA837D282A17AC7900B91BCE /* Encoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Encoder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -236,12 +242,14 @@
 		DA17E8282A12BACA00554B8A /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
+				DA837D1F2A1774CA00B91BCE /* Handshake */,
 				DA837D0E2A15868100B91BCE /* Message */,
 				DA837CFD2A1410A500B91BCE /* Component */,
 				DA17E8292A12BACA00554B8A /* Protocol.h */,
 				DA17E8432A12BADD00554B8A /* NetManager.swift */,
 				DA17E8452A12BAE600554B8A /* Constants.swift */,
 				DA837CFB2A140AA500B91BCE /* Decoder.swift */,
+				DA837D282A17AC7900B91BCE /* Encoder.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -279,6 +287,15 @@
 				DA837D192A16551500B91BCE /* MessageProject.swift */,
 			);
 			path = Message;
+			sourceTree = "<group>";
+		};
+		DA837D1F2A1774CA00B91BCE /* Handshake */ = {
+			isa = PBXGroup;
+			children = (
+				DA837D202A1774E400B91BCE /* MessageHello.swift */,
+				DA837D222A1778AB00B91BCE /* BP3DProtocol.swift */,
+			);
+			path = Handshake;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -523,6 +540,7 @@
 				DA837D032A153CC600B91BCE /* ComponentU32.swift in Sources */,
 				DA837D182A16528900B91BCE /* MessageServerConfig.swift in Sources */,
 				DA837D142A162AE100B91BCE /* MessageRegistry.swift in Sources */,
+				DA837D232A1778AB00B91BCE /* BP3DProtocol.swift in Sources */,
 				DA837D092A153FD900B91BCE /* ComponentOption.swift in Sources */,
 				DA837D162A16513B00B91BCE /* ComponentDuration.swift in Sources */,
 				DA17E8442A12BADD00554B8A /* NetManager.swift in Sources */,
@@ -533,7 +551,9 @@
 				DA837D1A2A16551500B91BCE /* MessageProject.swift in Sources */,
 				DA837D052A153D5600B91BCE /* ComponentLevel.swift in Sources */,
 				DA837D122A15897F00B91BCE /* Message.swift in Sources */,
+				DA837D212A1774E400B91BCE /* MessageHello.swift in Sources */,
 				DA17E8462A12BAE600554B8A /* Constants.swift in Sources */,
+				DA837D292A17AC7900B91BCE /* Encoder.swift in Sources */,
 				DA837D012A14116600B91BCE /* ComponentVchar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
