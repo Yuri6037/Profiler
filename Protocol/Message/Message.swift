@@ -44,7 +44,7 @@ public struct Reader {
     }
 }
 
-public protocol Message {
+public protocol MessageHeader {
     static var size: Int { get };
     static func read(reader: inout Reader) -> Self;
     var payloadSize: Int { get };

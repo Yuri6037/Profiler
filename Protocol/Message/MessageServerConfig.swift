@@ -23,14 +23,14 @@
 
 import Foundation
 
-public struct MessageServerConfig: Message {
+public struct MessageHeaderServerConfig: MessageHeader {
     public let logsPath: Vchar?;
 
     public var payloadSize: Int { Int(logsPath?.length ?? 0) };
 
     public static var size: Int = Size().add(ComponentOption<ComponentVchar>.self).bytes;
 
-    public static func read(reader: inout Reader) -> MessageServerConfig {
-        return MessageServerConfig(logsPath: reader.read(ComponentOption<ComponentVchar>.self));
+    public static func read(reader: inout Reader) -> MessageHeaderServerConfig {
+        return MessageHeaderServerConfig(logsPath: reader.read(ComponentOption<ComponentVchar>.self));
     }
 }

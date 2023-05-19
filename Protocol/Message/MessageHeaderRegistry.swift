@@ -24,14 +24,14 @@
 import Foundation
 import NIO
 
-public enum MessageRegistry {
-    private static var map: [UInt8: Message.Type] = [:];
+public enum MessageHeaderRegistry {
+    private static var map: [UInt8: MessageHeader.Type] = [:];
 
     public static func sizeof(type: UInt8) -> Int? {
         return map[type]?.size;
     }
 
-    public static func read(type: UInt8, buffer: inout ByteBuffer) -> Message? {
+    public static func read(type: UInt8, buffer: inout ByteBuffer) -> MessageHeader? {
         //Because swift is a peace of shit.
         var motherfuckingbrokenswift = Reader(buffer: buffer);
         return map[type]?.read(reader: &motherfuckingbrokenswift)

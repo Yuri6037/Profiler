@@ -23,7 +23,7 @@
 
 import Foundation
 
-public struct MessageProject: Message {
+public struct MessageHeaderProject: MessageHeader {
     public let appName: Vchar;
     public let name: Vchar;
     public let version: Vchar;
@@ -34,14 +34,14 @@ public struct MessageProject: Message {
     public static var size: Int = Size(bytes: ComponentVchar.size * 4)
         .add(ComponentTarget.self).add(ComponentOption<ComponentCpu>.self).bytes
 
-    public static func read(reader: inout Reader) -> MessageProject {
+    public static func read(reader: inout Reader) -> MessageHeaderProject {
         let appName = reader.read(ComponentVchar.self);
         let name = reader.read(ComponentVchar.self);
         let version = reader.read(ComponentVchar.self);
         let commandLine = reader.read(ComponentVchar.self);
         let target = reader.read(ComponentTarget.self);
         let cpu = reader.read(ComponentOption<ComponentCpu>.self);
-        return MessageProject(appName: appName, name: name, version: version, commandLine: commandLine, target: target, cpu: cpu);
+        return MessageHeaderProject(appName: appName, name: name, version: version, commandLine: commandLine, target: target, cpu: cpu);
     }
 
     public var payloadSize: Int {

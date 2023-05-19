@@ -29,10 +29,21 @@ enum DecoderState {
     case running;
 }
 
+enum ReadError: Error {
+    case unknownMessage(UInt8);
+}
+
+enum MessageReadingState {
+    case none;
+    case header(UInt8);
+    case payload(MessageHeader);
+}
+
 public final class Decoder: ByteToMessageDecoder {
-    public typealias InboundOut = ByteBuffer;
+    public typealias InboundOut = (MessageHeader, ByteBuffer?);
 
     private final var state = DecoderState.handshake;
+    private final var msgReadState = MessageReadingState.none;
 
     private func decodeHello(buffer: inout ByteBuffer) -> ByteBuffer? {
         guard let slice = buffer.readSlice(length: Constants.helloMessageSize) else {
@@ -50,6 +61,38 @@ public final class Decoder: ByteToMessageDecoder {
             let _ = context.write(NIOAny(msg));
             state = .running;
             return .continue;
+        }
+        switch (self.msgReadState) {
+        case .none:
+            guard let ty = buffer.readInteger(endianness: .little, as: UInt8.self) else {
+                return .needMoreData;
+            }
+            msgReadState = .header(ty);
+            break;
+        case let .header(ty):
+            guard let size = MessageHeaderRegistry.sizeof(type: ty) else {
+                throw ReadError.unknownMessage(ty);
+            }
+            guard var buffer = buffer.readSlice(length: size) else {
+                return .needMoreData;
+            }
+            guard let msg = MessageHeaderRegistry.read(type: ty, buffer: &buffer) else {
+                throw ReadError.unknownMessage(ty);
+            }
+            msgReadState = .payload(msg)
+            break;
+        case let .payload(msg):
+            if msg.payloadSize == 0 {
+                context.fireChannelRead(self.wrapInboundOut((msg, nil)))
+                msgReadState = .none;
+                return .continue;
+            }
+            guard let buffer = buffer.readSlice(length: msg.payloadSize) else {
+                return .needMoreData;
+            }
+            context.fireChannelRead(self.wrapInboundOut((msg, buffer)))
+            msgReadState = .none;
+            break;
         }
         return .continue;
     }
