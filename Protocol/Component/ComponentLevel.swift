@@ -24,12 +24,13 @@
 import Foundation
 import NIO
 
-public enum Level: Component {
+public enum Level: Component, Writable {
     case trace;
     case debug;
     case info;
     case warning;
     case error;
+
     init(fromRaw: UInt8) {
         switch (fromRaw) {
         case 0:
@@ -53,10 +54,29 @@ public enum Level: Component {
         }
     }
 
+    var raw: UInt8 {
+        switch (self) {
+        case .trace:
+            return 0;
+        case .debug:
+            return 1;
+        case .info:
+            return 2;
+        case .warning:
+            return 3;
+        case .error:
+            return 4;
+        }
+    }
+
     public static var size: Int = 1;
 
     public static func read(buffer: inout ByteBuffer) -> Level {
         let val = buffer.readInteger(endianness: .little, as: UInt8.self);
         return .init(fromRaw: val!);
+    }
+
+    public func write(buffer: inout ByteBuffer) {
+        buffer.writeInteger(self.raw, endianness: .little);
     }
 }

@@ -24,10 +24,14 @@
 import Foundation
 import NIO
 
-extension UInt32: Component {
+extension UInt32: Component, Writable {
     public static var size: Int = 4;
 
     public static func read(buffer: inout ByteBuffer) -> UInt32 {
         return buffer.readInteger(endianness: .little, as: UInt32.self)!;
+    }
+
+    public func write(buffer: inout ByteBuffer) {
+        buffer.writeInteger(self, endianness: .little);
     }
 }
