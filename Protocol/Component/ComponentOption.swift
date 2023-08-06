@@ -41,7 +41,7 @@ extension Option: Writable where T: Writable {
     public func write(buffer: inout ByteBuffer) {
         if let val = value {
             buffer.writeInteger(UInt8(1), endianness: .little);
-            value?.write(buffer: &buffer);
+            val.write(buffer: &buffer);
         } else {
             buffer.writeInteger(UInt8(0), endianness: .little);
         }

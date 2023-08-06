@@ -39,7 +39,7 @@ public struct Size {
 public struct Reader {
     var buffer: ByteBuffer;
 
-    public mutating func read<T: Component>(_ c: T.Type) -> T.Out {
+    public mutating func read<T: Component>(_ c: T.Type) -> T {
         return c.read(buffer: &buffer);
     }
 

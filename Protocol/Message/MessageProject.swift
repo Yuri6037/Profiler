@@ -40,7 +40,7 @@ public struct MessageHeaderProject: MessageHeader {
         let commandLine = reader.read(Vchar.self);
         let target = reader.read(TargetHeader.self);
         let cpu = reader.read(Option<CpuHeader>.self);
-        return MessageHeaderProject(appName: appName, name: name, version: version, commandLine: commandLine, target: target, cpu: cpu);
+        return MessageHeaderProject(appName: appName, name: name, version: version, commandLine: commandLine, target: target, cpu: cpu.value);
     }
 
     public var payloadSize: Int {

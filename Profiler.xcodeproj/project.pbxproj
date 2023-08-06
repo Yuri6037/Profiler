@@ -41,6 +41,7 @@
 		DA837D212A1774E400B91BCE /* MessageHello.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA837D202A1774E400B91BCE /* MessageHello.swift */; };
 		DA837D232A1778AB00B91BCE /* BP3DProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA837D222A1778AB00B91BCE /* BP3DProtocol.swift */; };
 		DA837D292A17AC7900B91BCE /* Encoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA837D282A17AC7900B91BCE /* Encoder.swift */; };
+		DAADF8522A7FDE3B00E4247C /* ComponentBool.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAADF8512A7FDE3B00E4247C /* ComponentBool.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -132,6 +133,7 @@
 		DA837D202A1774E400B91BCE /* MessageHello.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageHello.swift; sourceTree = "<group>"; };
 		DA837D222A1778AB00B91BCE /* BP3DProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BP3DProtocol.swift; sourceTree = "<group>"; };
 		DA837D282A17AC7900B91BCE /* Encoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Encoder.swift; sourceTree = "<group>"; };
+		DAADF8512A7FDE3B00E4247C /* ComponentBool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentBool.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -274,6 +276,7 @@
 				DA837D152A16513B00B91BCE /* ComponentDuration.swift */,
 				DA837D1B2A16560A00B91BCE /* ComponentTarget.swift */,
 				DA837D1D2A16561800B91BCE /* ComponentCpu.swift */,
+				DAADF8512A7FDE3B00E4247C /* ComponentBool.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -545,6 +548,7 @@
 				DA837D162A16513B00B91BCE /* ComponentDuration.swift in Sources */,
 				DA17E8442A12BADD00554B8A /* NetManager.swift in Sources */,
 				DA837CFF2A1410B500B91BCE /* Component.swift in Sources */,
+				DAADF8522A7FDE3B00E4247C /* ComponentBool.swift in Sources */,
 				DA837D1E2A16561800B91BCE /* ComponentCpu.swift in Sources */,
 				DA837D072A153EF800B91BCE /* ComponentI64.swift in Sources */,
 				DA837CFC2A140AA500B91BCE /* Decoder.swift in Sources */,

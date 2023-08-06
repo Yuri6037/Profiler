@@ -32,9 +32,11 @@ class NetManager {
     init(address: String, port: Int = Constants.defaultPort) {
         let group = MultiThreadedEventLoopGroup(numberOfThreads: 4);
         let bootstrap = ClientBootstrap(group: group).channelInitializer { handler in
-            handler.pipeline.addHandler(ByteToMessageHandler(Decoder()));
-            //Annoyingly enough it appears that it's impossible to have multiple handlers in 1 channel...
-            //handler.pipeline.addHandler(MessageToByteHandler(Encoder()));
+            handler.pipeline.addHandler(MessageToByteHandler(Encoder())).flatMap { _ in
+                handler.pipeline.addHandler(ByteToMessageHandler(Decoder())).flatMap { _ in
+                    handler.pipeline.addHandler(MessageDecoder())
+                }
+            }
         }
         channelFuture = bootstrap.connect(host: address, port: port);
     }
