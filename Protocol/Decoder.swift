@@ -83,17 +83,38 @@ public final class Decoder: ByteToMessageDecoder {
             break;
         case let .payload(msg):
             if msg.payloadSize == 0 {
-                context.fireChannelRead(self.wrapInboundOut((msg, nil)))
+                context.fireChannelRead(self.wrapInboundOut((msg, nil)));
                 msgReadState = .none;
                 return .continue;
             }
             guard let buffer = buffer.readSlice(length: msg.payloadSize) else {
                 return .needMoreData;
             }
-            context.fireChannelRead(self.wrapInboundOut((msg, buffer)))
+            context.fireChannelRead(self.wrapInboundOut((msg, buffer)));
             msgReadState = .none;
             break;
         }
         return .continue;
+    }
+}
+
+public final class MessageDecoder: ChannelInboundHandler {
+    public typealias InboundIn = (MessageHeader, ByteBuffer?);
+    public typealias InboundOut = Message;
+
+    public func channelRead(context: ChannelHandlerContext, data: NIOAny) {
+        var (header, buffer) = self.unwrapInboundIn(data);
+        var reader: Reader;
+        if let buf = buffer {
+            reader = Reader(buffer: buf);
+        } else {
+            reader = Reader(buffer: ByteBuffer());
+        }
+        do {
+            let msg = try header.decode(reader: &reader);
+            print(msg)
+        } catch {
+            print("error")
+        }
     }
 }
