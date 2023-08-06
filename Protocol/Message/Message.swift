@@ -42,14 +42,33 @@ public struct Reader {
     public mutating func read<T: Component>(_ c: T.Type) -> T.Out {
         return c.read(buffer: &buffer);
     }
+
+    public mutating func read<T: PayloadComponent>(_ c: T) throws -> T.PayloadOut {
+        return try c.readPayload(buffer: &buffer);
+    }
+
+    public mutating func read<T: PayloadComponent>(_ c: T?) throws -> T.PayloadOut? {
+        if let c = c {
+            return try c.readPayload(buffer: &buffer);
+        } else {
+            return nil;
+        }
+    }
 }
 
 public protocol MessageHeader {
     static var size: Int { get };
     static func read(reader: inout Reader) -> Self;
     var payloadSize: Int { get };
+
+    func decode(reader: inout Reader) throws -> Message;
 }
 
 public protocol Writable {
     func write(buffer: inout ByteBuffer);
+}
+
+public enum Message {
+    case serverConfig(MessageServerConfig);
+    case project(MessageProject);
 }

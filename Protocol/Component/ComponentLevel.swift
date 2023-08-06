@@ -24,7 +24,7 @@
 import Foundation
 import NIO
 
-public enum Level {
+public enum Level: Component {
     case trace;
     case debug;
     case info;
@@ -52,10 +52,6 @@ public enum Level {
             break;
         }
     }
-}
-
-public struct ComponentLevel: Component {
-    public typealias Out = Level;
 
     public static var size: Int = 1;
 

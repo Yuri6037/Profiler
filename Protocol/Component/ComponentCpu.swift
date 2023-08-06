@@ -24,21 +24,31 @@
 import Foundation
 import NIO
 
-public struct Cpu {
+public struct CpuHeader: Component {
     public let name: Vchar;
     public let coreCount: UInt32;
-
+    
     public var payloadSize: Int { Int(name.length) };
+    
+    public static var size: Int = Size().add(Vchar.self).add(UInt32.self).bytes;
+
+    public static func read(buffer: inout ByteBuffer) -> CpuHeader {
+        let name = Vchar.read(buffer: &buffer);
+        let coreCount = UInt32.read(buffer: &buffer);
+        return CpuHeader(name: name, coreCount: coreCount);
+    }
 }
 
-public struct ComponentCpu: Component {
-    public typealias Out = Cpu;
+public struct Cpu {
+    public let name: String;
+    public let coreCount: UInt32;
+}
 
-    public static var size: Int = Size().add(ComponentVchar.self).add(ComponentU32.self).bytes;
+extension CpuHeader: PayloadComponent {
+    public typealias PayloadOut = Cpu;
 
-    public static func read(buffer: inout ByteBuffer) -> Cpu {
-        let name = ComponentVchar.read(buffer: &buffer);
-        let coreCount = ComponentU32.read(buffer: &buffer);
+    public func readPayload(buffer: inout ByteBuffer) throws -> Cpu {
+        let name = try name.readPayload(buffer: &buffer);
         return Cpu(name: name, coreCount: coreCount);
     }
 }

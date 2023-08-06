@@ -24,9 +24,7 @@
 import Foundation
 import NIO
 
-public struct ComponentU32: Component {
-    public typealias Out = UInt32;
-
+extension UInt32: Component {
     public static var size: Int = 4;
 
     public static func read(buffer: inout ByteBuffer) -> UInt32 {

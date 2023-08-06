@@ -28,19 +28,18 @@ public struct MessageHeaderProject: MessageHeader {
     public let name: Vchar;
     public let version: Vchar;
     public let commandLine: Vchar;
-    public let target: Target;
-    public let cpu: Cpu?;
+    public let target: TargetHeader;
+    public let cpu: CpuHeader?;
 
-    public static var size: Int = Size(bytes: ComponentVchar.size * 4)
-        .add(ComponentTarget.self).add(ComponentOption<ComponentCpu>.self).bytes
+    public static var size: Int = Size(bytes: Vchar.size * 4).add(TargetHeader.self).add(Option<CpuHeader>.self).bytes
 
     public static func read(reader: inout Reader) -> MessageHeaderProject {
-        let appName = reader.read(ComponentVchar.self);
-        let name = reader.read(ComponentVchar.self);
-        let version = reader.read(ComponentVchar.self);
-        let commandLine = reader.read(ComponentVchar.self);
-        let target = reader.read(ComponentTarget.self);
-        let cpu = reader.read(ComponentOption<ComponentCpu>.self);
+        let appName = reader.read(Vchar.self);
+        let name = reader.read(Vchar.self);
+        let version = reader.read(Vchar.self);
+        let commandLine = reader.read(Vchar.self);
+        let target = reader.read(TargetHeader.self);
+        let cpu = reader.read(Option<CpuHeader>.self);
         return MessageHeaderProject(appName: appName, name: name, version: version, commandLine: commandLine, target: target, cpu: cpu);
     }
 
@@ -48,4 +47,24 @@ public struct MessageHeaderProject: MessageHeader {
         Int(appName.length + name.length + version.length + commandLine.length)
         + target.payloadSize + (cpu?.payloadSize ?? 0)
     };
+
+    public func decode(reader: inout Reader) throws -> Message {
+        return .project(MessageProject(
+            appName: try reader.read(appName),
+            name: try reader.read(name),
+            version: try reader.read(version),
+            commandLine: try reader.read(commandLine),
+            target: try reader.read(target),
+            cpu: try reader.read(cpu)
+        ));
+    }
+}
+
+public struct MessageProject {
+    public let appName: String;
+    public let name: String;
+    public let version: String;
+    public let commandLine: String;
+    public let target: Target;
+    public let cpu: Cpu?;
 }

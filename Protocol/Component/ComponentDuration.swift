@@ -24,14 +24,12 @@
 import Foundation
 import NIO
 
-public struct ComponentDuration: Component {
-    public typealias Out = Duration;
+extension Duration: Component {
+    public static var size: Int = UInt32.size * 2;
 
-    public static var size: Int = ComponentU32.size * 2;
-
-    public static func read(buffer: inout NIOCore.ByteBuffer) -> Duration {
-        let seconds = ComponentU32.read(buffer: &buffer);
-        let nanos = ComponentU32.read(buffer: &buffer);
+    public static func read(buffer: inout ByteBuffer) -> Duration {
+        let seconds = UInt32.read(buffer: &buffer);
+        let nanos = UInt32.read(buffer: &buffer);
         return Duration(secondsComponent: Int64(seconds), attosecondsComponent: Int64(nanos) * 1000000000);
     }
 }
