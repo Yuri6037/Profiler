@@ -41,8 +41,12 @@ public struct Version: Writable {
         self.major = major;
         let buf = Data(preRelease.utf8);
         var tuple: (UInt64, UInt64, UInt64) = (0, 0, 0);
+        var motherfuckingswift = 24;
+        if buf.count < motherfuckingswift {
+            motherfuckingswift = buf.count;
+        }
         let _ = withUnsafeMutableBytes(of: &tuple, { pointer in
-            buf.copyBytes(to: pointer, count: 24);
+            buf.copyBytes(to: pointer, count: motherfuckingswift);
         });
         self.preRelease = tuple;
     }
