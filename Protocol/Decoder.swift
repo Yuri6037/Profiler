@@ -51,14 +51,14 @@ public final class Decoder: ByteToMessageDecoder {
         }
         return slice;
     }
-
-    public func decode(context: ChannelHandlerContext, buffer: inout ByteBuffer) throws -> DecodingState {
+    
+    private func decodeInternal(context: ChannelHandlerContext, buffer: inout ByteBuffer) throws -> DecodingState {
         if (state == DecoderState.handshake) {
             guard var buffer = decodeHello(buffer: &buffer) else {
                 return .needMoreData;
             }
             let msg = try Constants.proto.initialHandshake(buffer: &buffer);
-            let _ = context.write(NIOAny(msg));
+            let _ = context.writeAndFlush(NIOAny(msg))
             state = .running;
             return .continue;
         }
@@ -96,6 +96,19 @@ public final class Decoder: ByteToMessageDecoder {
         }
         return .continue;
     }
+
+    public func decode(context: ChannelHandlerContext, buffer: inout ByteBuffer) throws -> DecodingState {
+        var state: DecodingState = .continue;
+        while (state != .needMoreData) {
+            do {
+                state = try self.decodeInternal(context: context, buffer: &buffer);
+            } catch let error {
+                print("Error while reading message: ", error);
+                context.close(promise: nil);
+            }
+        }
+        return state;
+    }
 }
 
 public final class MessageDecoder: ChannelInboundHandler {
@@ -103,7 +116,7 @@ public final class MessageDecoder: ChannelInboundHandler {
     public typealias InboundOut = Message;
 
     public func channelRead(context: ChannelHandlerContext, data: NIOAny) {
-        var (header, buffer) = self.unwrapInboundIn(data);
+        let (header, buffer) = self.unwrapInboundIn(data);
         var reader: Reader;
         if let buf = buffer {
             reader = Reader(buffer: buf);
@@ -113,8 +126,9 @@ public final class MessageDecoder: ChannelInboundHandler {
         do {
             let msg = try header.decode(reader: &reader);
             print(msg)
-        } catch {
-            print("error")
+        } catch let error {
+            print("Error while decoding message: ", error);
+            context.close(promise: nil);
         }
     }
 }
