@@ -25,7 +25,9 @@ import Foundation
 import NIO
 
 public enum MessageHeaderRegistry {
-    private static var map: [UInt8: MessageHeader.Type] = [:];
+    private static var map: [UInt8: MessageHeader.Type] = [
+        7: MessageServerConfig.self
+    ];
 
     public static func sizeof(type: UInt8) -> Int? {
         return map[type]?.size;

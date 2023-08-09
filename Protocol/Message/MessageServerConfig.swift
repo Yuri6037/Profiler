@@ -28,7 +28,7 @@ public struct MessageServerConfig: MessageHeader {
 
     public var payloadSize: Int { 0 };
 
-    public static var size: Int = Size().add(Option<Vchar>.self).bytes;
+    public static var size: Int = Size().add(UInt32.self).bytes;
 
     public static func read(reader: inout Reader) -> MessageServerConfig {
         return MessageServerConfig(maxRows: reader.read(UInt32.self));
