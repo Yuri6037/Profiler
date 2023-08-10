@@ -23,6 +23,9 @@
 		DA17E83B2A12BACA00554B8A /* Protocol.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA17E8272A12BACA00554B8A /* Protocol.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DA17E8442A12BADD00554B8A /* NetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA17E8432A12BADD00554B8A /* NetManager.swift */; };
 		DA17E8462A12BAE600554B8A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA17E8452A12BAE600554B8A /* Constants.swift */; };
+		DA2A7EB92A8534AA009B454D /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2A7EB82A8534AA009B454D /* Project.swift */; };
+		DA2A7EBB2A85357A009B454D /* SpanNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2A7EBA2A85357A009B454D /* SpanNode.swift */; };
+		DA2A7EBD2A85393D009B454D /* Dataset.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2A7EBC2A85393D009B454D /* Dataset.swift */; };
 		DA837CFA2A14076300B91BCE /* NIO in Frameworks */ = {isa = PBXBuildFile; productRef = DA837CF92A14076300B91BCE /* NIO */; };
 		DA837CFC2A140AA500B91BCE /* Decoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA837CFB2A140AA500B91BCE /* Decoder.swift */; };
 		DA837CFF2A1410B500B91BCE /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA837CFE2A1410B500B91BCE /* Component.swift */; };
@@ -119,6 +122,9 @@
 		DA17E8352A12BACA00554B8A /* ProtocolTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolTests.swift; sourceTree = "<group>"; };
 		DA17E8432A12BADD00554B8A /* NetManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetManager.swift; sourceTree = "<group>"; };
 		DA17E8452A12BAE600554B8A /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		DA2A7EB82A8534AA009B454D /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
+		DA2A7EBA2A85357A009B454D /* SpanNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpanNode.swift; sourceTree = "<group>"; };
+		DA2A7EBC2A85393D009B454D /* Dataset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dataset.swift; sourceTree = "<group>"; };
 		DA837CFB2A140AA500B91BCE /* Decoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Decoder.swift; sourceTree = "<group>"; };
 		DA837CFE2A1410B500B91BCE /* Component.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
 		DA837D002A14116600B91BCE /* ComponentVchar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentVchar.swift; sourceTree = "<group>"; };
@@ -211,12 +217,12 @@
 		DA17E7EE2A12B84300554B8A /* Profiler */ = {
 			isa = PBXGroup;
 			children = (
+				DA2A7EB52A8533E9009B454D /* Model */,
 				DA17E7EF2A12B84300554B8A /* ProfilerApp.swift */,
 				DA17E7F12A12B84300554B8A /* Persistence.swift */,
 				DA17E7F62A12B84300554B8A /* ContentView.swift */,
 				DA17E7F82A12B84400554B8A /* Assets.xcassets */,
 				DA17E7FA2A12B84400554B8A /* Profiler.entitlements */,
-				DA17E7F32A12B84300554B8A /* Profiler.xcdatamodeld */,
 				DA17E7FB2A12B84400554B8A /* Preview Content */,
 			);
 			path = Profiler;
@@ -268,6 +274,17 @@
 				DA17E8352A12BACA00554B8A /* ProtocolTests.swift */,
 			);
 			path = ProtocolTests;
+			sourceTree = "<group>";
+		};
+		DA2A7EB52A8533E9009B454D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				DA17E7F32A12B84300554B8A /* Profiler.xcdatamodeld */,
+				DA2A7EB82A8534AA009B454D /* Project.swift */,
+				DA2A7EBA2A85357A009B454D /* SpanNode.swift */,
+				DA2A7EBC2A85393D009B454D /* Dataset.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		DA837CFD2A1410A500B91BCE /* Component */ = {
@@ -521,8 +538,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA17E7F02A12B84300554B8A /* ProfilerApp.swift in Sources */,
+				DA2A7EBD2A85393D009B454D /* Dataset.swift in Sources */,
 				DA17E7F22A12B84300554B8A /* Persistence.swift in Sources */,
 				DA17E7F72A12B84300554B8A /* ContentView.swift in Sources */,
+				DA2A7EBB2A85357A009B454D /* SpanNode.swift in Sources */,
+				DA2A7EB92A8534AA009B454D /* Project.swift in Sources */,
 				DA17E7F52A12B84300554B8A /* Profiler.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

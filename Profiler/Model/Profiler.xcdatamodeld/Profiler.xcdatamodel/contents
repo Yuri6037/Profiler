@@ -28,9 +28,10 @@
         <relationship name="target" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Target" inverseName="projects" inverseEntity="Target"/>
     </entity>
     <entity name="SpanEvent" representedClassName="SpanEvent" syncable="YES" codeGenerationType="class">
+        <attribute name="level" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="message" attributeType="String" defaultValueString=""/>
         <attribute name="order" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="timestamp" attributeType="Date" usesScalarValueType="NO"/>
         <relationship name="node" maxCount="1" deletionRule="Nullify" destinationEntity="SpanNode" inverseName="events" inverseEntity="SpanNode"/>
         <relationship name="variables" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="SpanVariable" inverseName="event" inverseEntity="SpanVariable"/>
     </entity>
