@@ -24,7 +24,7 @@
 import Foundation
 import NIO
 
-public enum MessageHeaderRegistry {
+enum MessageHeaderRegistry {
     private static var map: [UInt8: MessageHeader.Type] = [
         7: MessageServerConfig.self
     ];

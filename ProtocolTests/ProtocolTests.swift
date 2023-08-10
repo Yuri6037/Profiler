@@ -24,8 +24,21 @@
 import XCTest
 @testable import Protocol
 
-class ProtocolTests: XCTestCase {
+struct Handler: MsgHandler {
+    func onConnect(connection: Connection) {
+        
+    }
 
+    func onMessage(message: Message) {
+        print(message);
+    }
+
+    func onError(error: Error) {
+        print("Error while decoding message: ", error);
+    }
+}
+
+class ProtocolTests: XCTestCase {
     override func setUpWithError() throws {
     }
 
@@ -33,8 +46,8 @@ class ProtocolTests: XCTestCase {
     }
 
     func testExample() async throws {
-        let manager = NetManager(address: "localhost");
-        let channel = try await manager.channelFuture.get();
-        try await channel.closeFuture.get();
+        let manager = NetManager(handler: Handler());
+        await manager.connect(address: "localhost");
+        await manager.wait();
     }
 }

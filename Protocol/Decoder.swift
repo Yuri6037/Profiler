@@ -39,8 +39,23 @@ enum MessageReadingState {
     case payload(MessageHeader);
 }
 
-public final class Decoder: ByteToMessageDecoder {
-    public typealias InboundOut = (MessageHeader, ByteBuffer?);
+struct Packet {
+    let header: MessageHeader;
+    let payload: ByteBuffer?;
+
+    init(header: MessageHeader, payload: ByteBuffer?) {
+        self.header = header;
+        self.payload = payload;
+    }
+
+    init(header: MessageHeader) {
+        self.header = header;
+        self.payload = nil;
+    }
+}
+
+final class Decoder: ByteToMessageDecoder {
+    public typealias InboundOut = (Packet?, Error?);
 
     private final var state = DecoderState.handshake;
     private final var msgReadState = MessageReadingState.none;
@@ -83,14 +98,14 @@ public final class Decoder: ByteToMessageDecoder {
             break;
         case let .payload(msg):
             if msg.payloadSize == 0 {
-                context.fireChannelRead(self.wrapInboundOut((msg, nil)));
+                context.fireChannelRead(self.wrapInboundOut((Packet(header: msg), nil)));
                 msgReadState = .none;
                 return .continue;
             }
             guard let buffer = buffer.readSlice(length: msg.payloadSize) else {
                 return .needMoreData;
             }
-            context.fireChannelRead(self.wrapInboundOut((msg, buffer)));
+            context.fireChannelRead(self.wrapInboundOut((Packet(header: msg, payload: buffer), nil)));
             msgReadState = .none;
             break;
         }
@@ -103,32 +118,55 @@ public final class Decoder: ByteToMessageDecoder {
             do {
                 state = try self.decodeInternal(context: context, buffer: &buffer);
             } catch let error {
-                print("Error while reading message: ", error);
-                context.close(promise: nil);
+                context.fireChannelRead(self.wrapInboundOut((nil, error)));
             }
         }
         return state;
     }
 }
 
-public final class MessageDecoder: ChannelInboundHandler {
-    public typealias InboundIn = (MessageHeader, ByteBuffer?);
-    public typealias InboundOut = Message;
+final class MessageDecoder: ChannelInboundHandler {
+    public typealias InboundIn = (Packet?, Error?);
+    public typealias InboundOut = (Message?, Error?);
 
     public func channelRead(context: ChannelHandlerContext, data: NIOAny) {
-        let (header, buffer) = self.unwrapInboundIn(data);
+        let (packet, error) = self.unwrapInboundIn(data);
         var reader: Reader;
-        if let buf = buffer {
-            reader = Reader(buffer: buf);
-        } else {
-            reader = Reader(buffer: ByteBuffer());
+        if let error = error {
+            context.fireChannelRead(self.wrapInboundOut((nil, error)));
         }
-        do {
-            let msg = try header.decode(reader: &reader);
-            print(msg)
-        } catch let error {
-            print("Error while decoding message: ", error);
-            context.close(promise: nil);
+        if let packet = packet {
+            if let buf = packet.payload {
+                reader = Reader(buffer: buf);
+            } else {
+                reader = Reader(buffer: ByteBuffer());
+            }
+            do {
+                let msg = try packet.header.decode(reader: &reader);
+                context.fireChannelRead(self.wrapInboundOut((msg, nil)));
+            } catch let error {
+                context.fireChannelRead(self.wrapInboundOut((nil, error)));
+            }
+        }
+    }
+}
+
+final class MessageHandler: ChannelInboundHandler {
+    public typealias InboundIn = (Message?, Error?);
+
+    private let handler: MsgHandler;
+
+    init(handler: MsgHandler) {
+        self.handler = handler;
+    }
+
+    public func channelRead(context: ChannelHandlerContext, data: NIOAny) {
+        let (msg, error) = self.unwrapInboundIn(data);
+        if let error = error {
+            self.handler.onError(error: error);
+        }
+        if let msg = msg {
+            self.handler.onMessage(message: msg);
         }
     }
 }

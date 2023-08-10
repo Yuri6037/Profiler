@@ -26,18 +26,65 @@ import Network
 import NIOCore
 import NIOPosix
 
-class NetManager {
-    public let channelFuture: EventLoopFuture<Channel>;
+public protocol MsgHandler {
+    func onMessage(message: Message);
+    func onError(error: Error);
+    func onConnect(connection: Connection);
+}
 
-    init(address: String, port: Int = Constants.defaultPort) {
+public class Connection {
+    private let channel: Channel;
+
+    fileprivate init(channel: Channel) {
+        self.channel = channel
+    }
+
+    public func close() {
+        self.channel.close(promise: nil);
+    }
+
+    public func sendClientConfig() {
+        
+    }
+
+    public func sendRecord() {
+        
+    }
+}
+
+public class NetManager {
+    private let handler: MsgHandler;
+    private var close: EventLoopFuture<Void>?;
+
+    init(handler: MsgHandler) {
+        self.handler = handler;
+    }
+
+    public func connect(address: String, port: Int = Constants.defaultPort) async {
         let group = MultiThreadedEventLoopGroup(numberOfThreads: 4);
         let bootstrap = ClientBootstrap(group: group).channelInitializer { handler in
             handler.pipeline.addHandler(MessageToByteHandler(Encoder())).flatMap { _ in
                 handler.pipeline.addHandler(ByteToMessageHandler(Decoder())).flatMap { _ in
-                    handler.pipeline.addHandler(MessageDecoder())
+                    handler.pipeline.addHandler(MessageDecoder()).flatMap { _ in
+                        handler.pipeline.addHandlers(MessageHandler(handler: self.handler))
+                    }
                 }
             }
         }
-        channelFuture = bootstrap.connect(host: address, port: port);
+        do {
+            let channel = try await bootstrap.connect(host: address, port: port).get();
+            self.handler.onConnect(connection: Connection(channel: channel))
+            self.close = channel.closeFuture;
+        } catch let error {
+            self.handler.onError(error: error);
+        }
+    }
+
+    public func wait() async {
+        do {
+            try await self.close?.get();
+        } catch let error {
+            self.handler.onError(error: error);
+        }
     }
 }

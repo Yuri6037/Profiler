@@ -24,7 +24,7 @@
 import Foundation
 import NIO
 
-public final class Encoder: MessageToByteEncoder {
+final class Encoder: MessageToByteEncoder {
     public typealias OutboundIn = Writable;
 
     public func encode(data: OutboundIn, out: inout ByteBuffer) throws {
