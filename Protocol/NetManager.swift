@@ -43,12 +43,12 @@ public class Connection {
         self.channel.close(promise: nil);
     }
 
-    public func sendClientConfig() {
-        
+    public func send(config: MessageClientConfig) {
+        let _ = self.channel.writeAndFlush(config);
     }
 
-    public func sendRecord() {
-        
+    public func send(record: MessageClientRecord) {
+        let _ = self.channel.writeAndFlush(record);
     }
 }
 
