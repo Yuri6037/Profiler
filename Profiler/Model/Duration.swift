@@ -23,9 +23,16 @@
 
 import Foundation
 
-extension Dataset {
-    var wAverageTime: Duration { Duration(microseconds: UInt64(self.averageTime)) }
-    var wMinTime: Duration { Duration(microseconds: UInt64(self.minTime)) }
-    var wMaxTime: Duration { Duration(microseconds: UInt64(self.maxTime)) }
-    var wMedianTime: Duration { Duration(microseconds: UInt64(self.medianTime)) }
+struct Duration {
+    let microseconds: UInt64;
+    var seconds: Float64 { Float64(microseconds) / 1000000.0 }
+    var milliseconds: Float64 { Float64(microseconds) / 1000.0 }
+
+    init(microseconds: UInt64) {
+        self.microseconds = microseconds;
+    }
+
+    init(seconds: UInt32, milliseconds: UInt32, microseconds: UInt32) {
+        self.microseconds = UInt64(seconds * 1000000) + UInt64(milliseconds * 1000) + UInt64(microseconds);
+    }
 }
