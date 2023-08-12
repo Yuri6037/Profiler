@@ -41,6 +41,7 @@ extension Project {
     var wCommandLine: String? { self.commandLine }
     var wTimestamp: Date { self.timestamp! }
     var wNodes: [SpanNode] { (self.nodes?.array ?? []) as! [SpanNode] }
+    var wDatasets: [Dataset] { (self.datasets?.array ?? []) as! [Dataset] }
     var wVersion: String? { self.version }
     var wCpu: Cpu? { self.cpu }
     var wTarget: Target? { self.target }
