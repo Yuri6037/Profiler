@@ -26,7 +26,8 @@ import SwiftUI
 struct ProjectDetails: View {
     @ObservedObject var project: Project;
     
-    @Binding var selection: SpanNode?;
+    @Binding var node: SpanNode?;
+    @Binding var dataset: Dataset?;
     @Binding var renderNode: Bool;
 
     var body: some View {
@@ -35,9 +36,9 @@ struct ProjectDetails: View {
                 HStack {
                     ProjectInfo(project: project)
                     if renderNode {
-                        if let selection = selection {
+                        if let node = node {
                             Spacer()
-                            SpanNodeInfo(node: selection)
+                            SpanNodeInfo(node: node, dataset: $dataset)
                         }
                     }
                 }.padding(.horizontal).padding(.top)
@@ -48,7 +49,10 @@ struct ProjectDetails: View {
                         Text(cmdline)
                     }
                 }
-                List(project.wNodes.sorted(by: { $1.wOrder > $0.wOrder }), selection: $selection) { item in
+                List(project.wDatasets.sorted(by: { $1.wTimestamp > $0.wTimestamp }), selection: $dataset) { item in
+                    Text(item.wTimestamp.formatted())
+                }
+                List(project.wNodes.sorted(by: { $1.wOrder > $0.wOrder }), selection: $node) { item in
                     NavigationLink(value: item) {
                         Text(item.wPath)
                     }
@@ -68,6 +72,6 @@ struct ProjectDetails: View {
 
 struct ProjectDetails_Previews: PreviewProvider {
     static var previews: some View {
-        ProjectDetails(project: Store.preview.newSample(), selection: .constant(nil), renderNode: .constant(true))
+        ProjectDetails(project: Store.preview.newSample(), node: .constant(nil), dataset: .constant(nil), renderNode: .constant(true))
     }
 }

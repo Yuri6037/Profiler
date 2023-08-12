@@ -36,6 +36,7 @@ struct ContentView: View {
 
     @State private var projectSelection: Project?;
     @State private var nodeSelection: SpanNode?;
+    @State private var datasetSelection: Dataset?;
     @State private var columnVisibility = NavigationSplitViewVisibility.all;
     @State private var deleteMode: Bool = false;
     @State private var renderNode: Bool = true;
@@ -68,14 +69,14 @@ struct ContentView: View {
             sidebar: { sidebar },
             content: {
                 if let project = projectSelection {
-                    ProjectDetails(project: project, selection: $nodeSelection, renderNode: $renderNode)
+                    ProjectDetails(project: project, node: $nodeSelection, dataset: $datasetSelection, renderNode: $renderNode)
                 } else {
                     Text("Select an item")
                 }
             },
             detail: {
                 if let node = nodeSelection {
-                    SpanNodeDetails(node: node, renderNode: !renderNode)
+                    SpanNodeDetails(node: node, dataset: $datasetSelection, renderNode: !renderNode)
                         .environmentObject(filters)
                 } else {
                     Text("Select an item")

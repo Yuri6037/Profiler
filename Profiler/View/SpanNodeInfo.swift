@@ -50,6 +50,7 @@ extension SpanNode {
 
 struct SpanNodeInfo: View {
     @ObservedObject var node: SpanNode;
+    @Binding var dataset: Dataset?;
 
     var body: some View {
         VStack {
@@ -105,6 +106,6 @@ struct SpanNodeInfo: View {
 
 struct SpanNodeInfo_Previews: PreviewProvider {
     static var previews: some View {
-        SpanNodeInfo(node: Store.preview.newSample())
+        SpanNodeInfo(node: Store.preview.newSample(), dataset: .constant(Store.preview.newSample()))
     }
 }

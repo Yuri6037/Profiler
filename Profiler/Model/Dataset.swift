@@ -22,10 +22,20 @@
 // IN THE SOFTWARE.
 
 import Foundation
+import CoreData
 
 extension Dataset {
+    var wTimestamp: Date { self.timestamp! }
     var wAverageTime: Duration { Duration(microseconds: UInt64(self.averageTime)) }
     var wMinTime: Duration { Duration(microseconds: UInt64(self.minTime)) }
     var wMaxTime: Duration { Duration(microseconds: UInt64(self.maxTime)) }
     var wMedianTime: Duration { Duration(microseconds: UInt64(self.medianTime)) }
+}
+
+extension Dataset: SampleData {
+    static func newSample(context: NSManagedObjectContext) -> Self {
+        let dataset = Dataset(context: context);
+        dataset.timestamp = Date();
+        return dataset as! Self; //WTF!?
+    }
 }

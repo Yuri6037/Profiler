@@ -27,6 +27,7 @@ let MAX_UI_ROWS = 20000;
 
 struct SpanNodeDetails: View {
     @ObservedObject var node: SpanNode;
+    @Binding var dataset: Dataset?;
     @EnvironmentObject var errorHandler: ErrorHandler;
     @EnvironmentObject var filters: NodeFilters;
     @Environment(\.managedObjectContext) var viewContext;
@@ -113,7 +114,7 @@ struct SpanNodeDetails: View {
     var body: some View {
         VStack {
             if renderNode {
-                SpanNodeInfo(node: node)
+                SpanNodeInfo(node: node, dataset: $dataset)
             }
             if let runs = runs {
                 SpanRunTable(runs: runs)
@@ -146,7 +147,7 @@ struct SpanNodeDetails: View {
 
 struct SpanNodeDetails_Previews: PreviewProvider {
     static var previews: some View {
-        SpanNodeDetails(node: Store.preview.newSample())
+        SpanNodeDetails(node: Store.preview.newSample(), dataset: .constant(Store.preview.newSample()))
             .environment(\.persistentContainer, Store.preview.container)
             .environment(\.managedObjectContext, Store.preview.container.viewContext)
             .environmentObject(ErrorHandler())
