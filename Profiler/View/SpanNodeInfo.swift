@@ -40,14 +40,6 @@ extension Level {
     }
 }
 
-extension SpanNode {
-    var dAverageTime: String { wAverageTime.formatted() }
-
-    var dMinTime: String { wMinTime.formatted() }
-
-    var dMaxTime: String { wMaxTime.formatted() }
-}
-
 struct SpanNodeInfo: View {
     @ObservedObject var node: SpanNode;
     @Binding var dataset: Dataset?;
@@ -89,16 +81,38 @@ struct SpanNodeInfo: View {
                 }
                 HStack {
                     Text("Min time").bold()
-                    Text(node.dMinTime)
+                    Text(node.wMinTime.formatted())
                 }
                 HStack {
                     Text("Max time").bold()
-                    Text(node.dMaxTime)
+                    Text(node.wMaxTime.formatted())
                 }
                 HStack {
                     Text("Average time").bold()
-                    Text(node.dAverageTime)
+                    Text(node.wAverageTime.formatted())
                 }
+                if let dataset = dataset {
+                    Text("Dataset").bold()
+                    VStack(alignment: .leading) {
+                        HStack {
+                            Text("Min time").bold()
+                            Text(dataset.wMinTime.formatted())
+                        }
+                        HStack {
+                            Text("Max time").bold()
+                            Text(dataset.wMaxTime.formatted())
+                        }
+                        HStack {
+                            Text("Average time").bold()
+                            Text(dataset.wAverageTime.formatted())
+                        }
+                        HStack {
+                            Text("Median time").bold()
+                            Text(dataset.wMedianTime.formatted())
+                        }
+                    }.padding(.leading)
+                }
+
             }
         }
     }
