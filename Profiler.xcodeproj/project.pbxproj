@@ -22,7 +22,6 @@
 		DA17E83B2A12BACA00554B8A /* Protocol.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA17E8272A12BACA00554B8A /* Protocol.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DA17E8442A12BADD00554B8A /* NetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA17E8432A12BADD00554B8A /* NetManager.swift */; };
 		DA17E8462A12BAE600554B8A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA17E8452A12BAE600554B8A /* Constants.swift */; };
-		DA1AB3CF2A862A90008DBB2D /* NodeTextFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = DA1AB3C12A862A90008DBB2D /* NodeTextFilter.m */; };
 		DA1AB3D02A862A90008DBB2D /* LineChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1AB3C22A862A90008DBB2D /* LineChart.swift */; };
 		DA1AB3D12A862A90008DBB2D /* NodeFilters.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1AB3C32A862A90008DBB2D /* NodeFilters.swift */; };
 		DA1AB3D22A862A90008DBB2D /* ProjectDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1AB3C42A862A90008DBB2D /* ProjectDetails.swift */; };
@@ -40,6 +39,7 @@
 		DA2A7EB92A8534AA009B454D /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2A7EB82A8534AA009B454D /* Project.swift */; };
 		DA2A7EBB2A85357A009B454D /* SpanNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2A7EBA2A85357A009B454D /* SpanNode.swift */; };
 		DA2A7EBD2A85393D009B454D /* Dataset.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2A7EBC2A85393D009B454D /* Dataset.swift */; };
+		DA5A3AA32A87FF65000375A2 /* SwiftString in Frameworks */ = {isa = PBXBuildFile; productRef = DA5A3AA22A87FF65000375A2 /* SwiftString */; };
 		DA837CFA2A14076300B91BCE /* NIO in Frameworks */ = {isa = PBXBuildFile; productRef = DA837CF92A14076300B91BCE /* NIO */; };
 		DA837CFC2A140AA500B91BCE /* Decoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA837CFB2A140AA500B91BCE /* Decoder.swift */; };
 		DA837CFF2A1410B500B91BCE /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA837CFE2A1410B500B91BCE /* Component.swift */; };
@@ -136,7 +136,6 @@
 		DA17E8352A12BACA00554B8A /* ProtocolTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolTests.swift; sourceTree = "<group>"; };
 		DA17E8432A12BADD00554B8A /* NetManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetManager.swift; sourceTree = "<group>"; };
 		DA17E8452A12BAE600554B8A /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		DA1AB3C12A862A90008DBB2D /* NodeTextFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NodeTextFilter.m; sourceTree = "<group>"; };
 		DA1AB3C22A862A90008DBB2D /* LineChart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineChart.swift; sourceTree = "<group>"; };
 		DA1AB3C32A862A90008DBB2D /* NodeFilters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeFilters.swift; sourceTree = "<group>"; };
 		DA1AB3C42A862A90008DBB2D /* ProjectDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectDetails.swift; sourceTree = "<group>"; };
@@ -144,7 +143,6 @@
 		DA1AB3C62A862A90008DBB2D /* SpanRunTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpanRunTable.swift; sourceTree = "<group>"; };
 		DA1AB3C72A862A90008DBB2D /* SpanNodeInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpanNodeInfo.swift; sourceTree = "<group>"; };
 		DA1AB3C82A862A90008DBB2D /* SpanEventTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpanEventTable.swift; sourceTree = "<group>"; };
-		DA1AB3C92A862A90008DBB2D /* NodeTextFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NodeTextFilter.h; sourceTree = "<group>"; };
 		DA1AB3CA2A862A90008DBB2D /* DisplayModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplayModels.swift; sourceTree = "<group>"; };
 		DA1AB3CB2A862A90008DBB2D /* ToolButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolButton.swift; sourceTree = "<group>"; };
 		DA1AB3CC2A862A90008DBB2D /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -185,6 +183,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA17E83A2A12BACA00554B8A /* Protocol.framework in Frameworks */,
+				DA5A3AA32A87FF65000375A2 /* SwiftString in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -342,9 +341,7 @@
 		DA5A3A9C2A875606000375A2 /* Util */ = {
 			isa = PBXGroup;
 			children = (
-				DA1AB3C12A862A90008DBB2D /* NodeTextFilter.m */,
 				DA1AB3C32A862A90008DBB2D /* NodeFilters.swift */,
-				DA1AB3C92A862A90008DBB2D /* NodeTextFilter.h */,
 				DA1AB3CA2A862A90008DBB2D /* DisplayModels.swift */,
 			);
 			path = Util;
@@ -419,6 +416,9 @@
 				DA17E8392A12BACA00554B8A /* PBXTargetDependency */,
 			);
 			name = Profiler;
+			packageProductDependencies = (
+				DA5A3AA22A87FF65000375A2 /* SwiftString */,
+			);
 			productName = Profiler;
 			productReference = DA17E7EC2A12B84300554B8A /* Profiler.app */;
 			productType = "com.apple.product-type.application";
@@ -541,6 +541,7 @@
 			mainGroup = DA17E7E32A12B84300554B8A;
 			packageReferences = (
 				DA837CF82A14076300B91BCE /* XCRemoteSwiftPackageReference "swift-nio" */,
+				DA5A3AA12A87FF65000375A2 /* XCRemoteSwiftPackageReference "SwiftString" */,
 			);
 			productRefGroup = DA17E7ED2A12B84300554B8A /* Products */;
 			projectDirPath = "";
@@ -614,7 +615,6 @@
 				DA17E7F22A12B84300554B8A /* Persistence.swift in Sources */,
 				DA1AB3D72A862A90008DBB2D /* DisplayModels.swift in Sources */,
 				DA1AB3D52A862A90008DBB2D /* SpanNodeInfo.swift in Sources */,
-				DA1AB3CF2A862A90008DBB2D /* NodeTextFilter.m in Sources */,
 				DA2A7EBB2A85357A009B454D /* SpanNode.swift in Sources */,
 				DA1AB3D92A862A90008DBB2D /* ContentView.swift in Sources */,
 				DA1AB3D62A862A90008DBB2D /* SpanEventTable.swift in Sources */,
@@ -1163,6 +1163,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		DA5A3AA12A87FF65000375A2 /* XCRemoteSwiftPackageReference "SwiftString" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/iamjono/SwiftString.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 		DA837CF82A14076300B91BCE /* XCRemoteSwiftPackageReference "swift-nio" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-nio.git";
@@ -1174,6 +1182,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		DA5A3AA22A87FF65000375A2 /* SwiftString */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DA5A3AA12A87FF65000375A2 /* XCRemoteSwiftPackageReference "SwiftString" */;
+			productName = SwiftString;
+		};
 		DA837CF92A14076300B91BCE /* NIO */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = DA837CF82A14076300B91BCE /* XCRemoteSwiftPackageReference "swift-nio" */;

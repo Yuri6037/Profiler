@@ -23,6 +23,7 @@
 
 import Foundation
 import CoreData
+import SwiftString
 
 class NodeFilters: ObservableObject {
     enum Order {
@@ -40,13 +41,9 @@ class NodeFilters: ObservableObject {
     @Published var order: Order = .insertion;
     @Published var distribution: Distribution = .even;
     @Published var text: String = "";
-    //TODO: fixme
-    //private var _textFilter = NodeTextFilter();
     private var _lastUpdate: Date = Date();
 
     func updateTextFilter(_ newText: String, action: @escaping () -> Void) {
-        //TODO: fixme
-        //_textFilter.text = newText;
         _lastUpdate = Date();
         DispatchQueue.main.schedule(after: .init(.now().advanced(by: .seconds(2)))) {
             if Date() - self._lastUpdate >= 1 {
@@ -86,17 +83,42 @@ class NodeFilters: ObservableObject {
         }
     }
 
+    func parseTextFilter(text: String) -> [NSPredicate] {
+        var text = text;
+        var predicates: [NSPredicate] = [];
+        if text.count > 1 {
+            if text.starts(with: "message") {
+                let id = text.index(of: "=");
+                if id != -1 {
+                    text = text[safe: id + 1...999999];
+                    text.trimPrefix(while: { ch in ch == " " || ch == "\t" });
+                    predicates.append(NSPredicate(format: "message CONTAINS[cd] %@", text));
+                }
+            } else {
+                let vars = text.split(",");
+                for v in vars {
+                    var v = v;
+                    let id = v.index(of: " = ");
+                    if id == -1 {
+                        v = v.replacing("=", with: " = ");
+                    }
+                    predicates.append(NSPredicate(format: "ANY variables.data =[cd] %@", v));
+                }
+            }
+        }
+        return predicates;
+    }
+
     func getPredicate(size: Int, maxSize: Int, node: NSManagedObject, dataset: NSManagedObject?) -> NSPredicate {
         var predicates = [NSPredicate(format: "node=%@", node)];
         if let dataset = dataset {
             predicates.append(NSPredicate(format: "dataset=%@", dataset));
         }
-        //TODO: fixme
-        //predicates.append(contentsOf: _textFilter.getPredicates() ?? []);
+        predicates.append(contentsOf: parseTextFilter(text: text));
         if distribution == .even && size > maxSize {
             //Compute how many times to halve the rows in order to be under 20K
-            var halves = 2;
-            while size / halves > maxSize {
+            var halves = size / maxSize; //Approach the target.
+            if size / halves > maxSize { //If we're one step too far
                 halves += 1;
             }
             predicates.append(NSPredicate(format: "modulus:by:(order, %d) == 0", halves));
