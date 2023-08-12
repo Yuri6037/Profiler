@@ -86,8 +86,11 @@ class NodeFilters: ObservableObject {
         }
     }
 
-    func getPredicate(size: Int, maxSize: Int, node: NSManagedObject) -> NSPredicate {
+    func getPredicate(size: Int, maxSize: Int, node: NSManagedObject, dataset: NSManagedObject?) -> NSPredicate {
         var predicates = [NSPredicate(format: "node=%@", node)];
+        if let dataset = dataset {
+            predicates.append(NSPredicate(format: "dataset=%@", dataset));
+        }
         //TODO: fixme
         //predicates.append(contentsOf: _textFilter.getPredicates() ?? []);
         if distribution == .even && size > maxSize {

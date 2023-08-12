@@ -27,14 +27,11 @@ struct SpanEventTable: View {
     var events: [DisplaySpanEvent];
 
     var body: some View {
-        List {
-            ForEach(events) { item in
-                HStack {
-                    Text(item.message)
-                    Spacer()
-                    Text(item.variables)
-                }
-            }
+        Table(events) {
+            TableColumn("Timestamp", value: \.timestamp)
+            TableColumn("Level", value: \.level)
+            TableColumn("Message", value: \.message)
+            TableColumn("Variables", value: \.variables)
         }
     }
 }

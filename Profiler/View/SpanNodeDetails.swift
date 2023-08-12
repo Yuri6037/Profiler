@@ -40,11 +40,11 @@ struct SpanNodeDetails: View {
     private func loadRuns(node: SpanNode) {
         runs = nil;
         let size = node.runs?.count ?? 0;
-        dbFunc(node: node, fetch: { node in
+        dbFunc(node: node, fetch: { node, dataset in
             let runs: NSFetchRequest<SpanRun> = SpanRun.fetchRequest();
             runs.fetchLimit = MAX_UI_ROWS;
             runs.sortDescriptors = filters.getSortDescriptors();
-            runs.predicate = filters.getPredicate(size: size, maxSize: MAX_UI_ROWS, node: node);
+            runs.predicate = filters.getPredicate(size: size, maxSize: MAX_UI_ROWS, node: node, dataset: dataset);
             return runs;
         }, handle: { runs in
             let runs1 = runs.map { DisplaySpanRun(fromModel: $0) };
@@ -56,7 +56,7 @@ struct SpanNodeDetails: View {
 
     private func loadEvents(node: SpanNode) {
         events = nil;
-        dbFunc(node: node, fetch: { node in
+        dbFunc(node: node, fetch: { node, _ in
             let events: NSFetchRequest<SpanEvent> = SpanEvent.fetchRequest();
             events.fetchLimit = MAX_UI_ROWS;
             events.predicate = NSPredicate(format: "node=%@", node);
@@ -72,12 +72,12 @@ struct SpanNodeDetails: View {
     private func loadPoints(node: SpanNode) {
         points = nil;
         let size = node.runs?.count ?? 0;
-        dbFunc(node: node, fetch: { node in
+        dbFunc(node: node, fetch: { node, dataset in
             let filters = NodeFilters();
             let runs: NSFetchRequest<SpanRun> = SpanRun.fetchRequest();
             runs.fetchLimit = 1500;
             runs.sortDescriptors = filters.getSortDescriptors();
-            runs.predicate = filters.getPredicate(size: size, maxSize: 1500, node: node);
+            runs.predicate = filters.getPredicate(size: size, maxSize: 1500, node: node, dataset: dataset);
             return runs;
         }, handle: { runs in
             //Swift requires useless values because its type inference system is garbagely broken
@@ -89,11 +89,18 @@ struct SpanNodeDetails: View {
         });
     }
 
-    private func dbFunc<T>(node: SpanNode, fetch: @escaping (NSManagedObject) -> NSFetchRequest<T>, handle: @escaping ([T]) -> Void) {
+    private func dbFunc<T>(node: SpanNode, fetch: @escaping (NSManagedObject, NSManagedObject?) -> NSFetchRequest<T>, handle: @escaping ([T]) -> Void) {
         let nodeId = node.objectID;
+        let datasetId = dataset?.objectID;
         container.performBackgroundTask { ctx in
+            let dataset: NSManagedObject?;
+            if let datasetId = datasetId {
+                dataset = ctx.object(with: datasetId);
+            } else {
+                dataset = nil;
+            }
             let node = ctx.object(with: nodeId);
-            let req = fetch(node);
+            let req = fetch(node, dataset);
             do {
                 let data = try ctx.fetch(req);
                 handle(data);

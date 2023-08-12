@@ -33,7 +33,6 @@ struct DisplaySpanRun: Identifiable {
         self.time = model.wTime.formatted()
         self.message = model.wMessage ?? "No message specified";
         self.variables = model.wVariables.map { item in item.data ?? "" }.joined(separator: ", ");
-        self.variables = ""
         self.id = UUID();
     }
 }
@@ -42,11 +41,14 @@ struct DisplaySpanEvent: Identifiable {
     var id: UUID;
     var variables: String;
     var message: String;
+    var level: String;
+    var timestamp: String;
 
     init(fromModel model: SpanEvent) {
+        self.timestamp = model.wTimestamp.formatted()
         self.variables = model.wVariables.map { item in item.data ?? "" }.joined(separator: ", ")
-        self.variables = ""
         self.message = model.wMessage;
+        self.level = model.wLevel.name;
         self.id = UUID();
     }
 }
