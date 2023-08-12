@@ -248,6 +248,7 @@
 		DA17E7EE2A12B84300554B8A /* Profiler */ = {
 			isa = PBXGroup;
 			children = (
+				DA5A3A9C2A875606000375A2 /* Util */,
 				DA1AB3C02A862A90008DBB2D /* View */,
 				DA2A7EB52A8533E9009B454D /* Model */,
 				DA17E7EF2A12B84300554B8A /* ProfilerApp.swift */,
@@ -312,16 +313,12 @@
 		DA1AB3C02A862A90008DBB2D /* View */ = {
 			isa = PBXGroup;
 			children = (
-				DA1AB3C12A862A90008DBB2D /* NodeTextFilter.m */,
 				DA1AB3C22A862A90008DBB2D /* LineChart.swift */,
-				DA1AB3C32A862A90008DBB2D /* NodeFilters.swift */,
 				DA1AB3C42A862A90008DBB2D /* ProjectDetails.swift */,
 				DA1AB3C52A862A90008DBB2D /* SpanNodeDetails.swift */,
 				DA1AB3C62A862A90008DBB2D /* SpanRunTable.swift */,
 				DA1AB3C72A862A90008DBB2D /* SpanNodeInfo.swift */,
 				DA1AB3C82A862A90008DBB2D /* SpanEventTable.swift */,
-				DA1AB3C92A862A90008DBB2D /* NodeTextFilter.h */,
-				DA1AB3CA2A862A90008DBB2D /* DisplayModels.swift */,
 				DA1AB3CB2A862A90008DBB2D /* ToolButton.swift */,
 				DA1AB3CC2A862A90008DBB2D /* ContentView.swift */,
 				DA1AB3CD2A862A90008DBB2D /* ProjectLink.swift */,
@@ -340,6 +337,17 @@
 				DAACDA9D2A863FC300CDDC34 /* Duration.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		DA5A3A9C2A875606000375A2 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				DA1AB3C12A862A90008DBB2D /* NodeTextFilter.m */,
+				DA1AB3C32A862A90008DBB2D /* NodeFilters.swift */,
+				DA1AB3C92A862A90008DBB2D /* NodeTextFilter.h */,
+				DA1AB3CA2A862A90008DBB2D /* DisplayModels.swift */,
+			);
+			path = Util;
 			sourceTree = "<group>";
 		};
 		DA837CFD2A1410A500B91BCE /* Component */ = {
