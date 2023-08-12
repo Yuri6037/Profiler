@@ -1,4 +1,4 @@
-// Copyright 2023 Yuri6037
+// Copyright 2022 Yuri6037
 //
 // Permission is hereby granted, free of charge, to any person obtaining a 
 // copy
@@ -21,28 +21,22 @@
 // DEALINGS
 // IN THE SOFTWARE.
 
-import Foundation
+import SwiftUI
 
-struct Duration {
-    let microseconds: UInt64;
-    var seconds: Float64 { Float64(microseconds) / 1000000.0 }
-    var milliseconds: Float64 { Float64(microseconds) / 1000.0 }
+struct SpanRunTable: View {
+    var runs: [DisplaySpanRun];
 
-    init(microseconds: UInt64) {
-        self.microseconds = microseconds;
-    }
-
-    init(seconds: UInt32, milliseconds: UInt32, microseconds: UInt32) {
-        self.microseconds = UInt64(seconds * 1000000) + UInt64(milliseconds * 1000) + UInt64(microseconds);
-    }
-
-    func formatted() -> String {
-        if seconds > 0 {
-            return seconds.formatted() + "s";
-        } else if milliseconds > 0 {
-            return milliseconds.formatted() + "ms";
-        } else {
-            return microseconds.formatted() + "µs";
+    var body: some View {
+        Table(runs) {
+            TableColumn("Time", value: \.time)
+            TableColumn("Message", value: \.message)
+            TableColumn("Variables", value: \.variables)
         }
+    }
+}
+
+struct SpanRunTable_Previews: PreviewProvider {
+    static var previews: some View {
+        SpanRunTable(runs: [])
     }
 }

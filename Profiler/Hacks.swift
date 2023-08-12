@@ -23,26 +23,9 @@
 
 import Foundation
 
-struct Duration {
-    let microseconds: UInt64;
-    var seconds: Float64 { Float64(microseconds) / 1000000.0 }
-    var milliseconds: Float64 { Float64(microseconds) / 1000.0 }
-
-    init(microseconds: UInt64) {
-        self.microseconds = microseconds;
-    }
-
-    init(seconds: UInt32, milliseconds: UInt32, microseconds: UInt32) {
-        self.microseconds = UInt64(seconds * 1000000) + UInt64(milliseconds * 1000) + UInt64(microseconds);
-    }
-
-    func formatted() -> String {
-        if seconds > 0 {
-            return seconds.formatted() + "s";
-        } else if milliseconds > 0 {
-            return milliseconds.formatted() + "ms";
-        } else {
-            return microseconds.formatted() + "µs";
-        }
+//More hacks because Swift is too badly broken to include proper subtraction operators in Date...
+extension Date {
+    static func - (lhs: Date, rhs: Date) -> TimeInterval {
+        return lhs.timeIntervalSinceReferenceDate - rhs.timeIntervalSinceReferenceDate
     }
 }

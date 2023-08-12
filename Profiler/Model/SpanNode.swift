@@ -22,6 +22,7 @@
 // IN THE SOFTWARE.
 
 import Foundation
+import CoreData
 
 enum Level {
     case trace;
@@ -92,24 +93,45 @@ extension SpanMetadata {
 
 extension SpanRun {
     var wOrder: UInt { UInt(self.order) }
-    //var wVariables: [SpanVariable] { Array(self.variables ?? []) }
+    var wVariables: [SpanVariable] { (self.variables?.allObjects ?? []) as! [SpanVariable] }
     var wMessage: String? { self.message }
     var wTime: Duration { Duration(microseconds: UInt64(self.time)) }
 }
 
 extension SpanEvent {
     var wOrder: UInt { UInt(self.order) }
-    //var wVariables: [SpanVariable] { Array(self.variables ?? []) }
+    var wVariables: [SpanVariable] { (self.variables?.allObjects ?? []) as! [SpanVariable] }
     var wMessage: String { self.message! }
     var wTimestamp: Date { self.timestamp! }
     var wLevel: Level { Level(code: self.level) }
 }
 
 extension SpanNode {
+    var wOrder: UInt32 { UInt32(self.order) }
     var wPath: String { self.path! }
     var wMetadata: SpanMetadata? { self.metadata }
 
     var wAverageTime: Duration { Duration(microseconds: UInt64(self.averageTime)) }
     var wMinTime: Duration { Duration(microseconds: UInt64(self.minTime)) }
     var wMaxTime: Duration { Duration(microseconds: UInt64(self.maxTime)) }
+}
+
+extension SpanMetadata: SampleData {
+    static func newSample(context: NSManagedObjectContext) -> Self {
+        let metadata = SpanMetadata(context: context);
+        metadata.name = "test";
+        metadata.target = "test target";
+        metadata.level = 0;
+        return metadata as! Self;
+    }
+}
+
+extension SpanNode: SampleData {
+    static func newSample(context: NSManagedObjectContext) -> Self {
+        let node = SpanNode(context: context);
+        node.project = Project.newSample(context: context);
+        node.path = "root";
+        node.metadata = SpanMetadata.newSample(context: context);
+        return node as! Self;
+    }
 }

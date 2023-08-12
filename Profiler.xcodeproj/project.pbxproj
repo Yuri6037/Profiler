@@ -10,7 +10,6 @@
 		DA17E7F02A12B84300554B8A /* ProfilerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA17E7EF2A12B84300554B8A /* ProfilerApp.swift */; };
 		DA17E7F22A12B84300554B8A /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA17E7F12A12B84300554B8A /* Persistence.swift */; };
 		DA17E7F52A12B84300554B8A /* Profiler.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DA17E7F32A12B84300554B8A /* Profiler.xcdatamodeld */; };
-		DA17E7F72A12B84300554B8A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA17E7F62A12B84300554B8A /* ContentView.swift */; };
 		DA17E7F92A12B84400554B8A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA17E7F82A12B84400554B8A /* Assets.xcassets */; };
 		DA17E7FD2A12B84400554B8A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA17E7FC2A12B84400554B8A /* Preview Assets.xcassets */; };
 		DA17E8072A12B84400554B8A /* ProfilerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA17E8062A12B84400554B8A /* ProfilerTests.swift */; };
@@ -23,6 +22,21 @@
 		DA17E83B2A12BACA00554B8A /* Protocol.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA17E8272A12BACA00554B8A /* Protocol.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DA17E8442A12BADD00554B8A /* NetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA17E8432A12BADD00554B8A /* NetManager.swift */; };
 		DA17E8462A12BAE600554B8A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA17E8452A12BAE600554B8A /* Constants.swift */; };
+		DA1AB3CF2A862A90008DBB2D /* NodeTextFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = DA1AB3C12A862A90008DBB2D /* NodeTextFilter.m */; };
+		DA1AB3D02A862A90008DBB2D /* LineChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1AB3C22A862A90008DBB2D /* LineChart.swift */; };
+		DA1AB3D12A862A90008DBB2D /* NodeFilters.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1AB3C32A862A90008DBB2D /* NodeFilters.swift */; };
+		DA1AB3D22A862A90008DBB2D /* ProjectDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1AB3C42A862A90008DBB2D /* ProjectDetails.swift */; };
+		DA1AB3D32A862A90008DBB2D /* SpanNodeDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1AB3C52A862A90008DBB2D /* SpanNodeDetails.swift */; };
+		DA1AB3D42A862A90008DBB2D /* SpanRunTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1AB3C62A862A90008DBB2D /* SpanRunTable.swift */; };
+		DA1AB3D52A862A90008DBB2D /* SpanNodeInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1AB3C72A862A90008DBB2D /* SpanNodeInfo.swift */; };
+		DA1AB3D62A862A90008DBB2D /* SpanEventTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1AB3C82A862A90008DBB2D /* SpanEventTable.swift */; };
+		DA1AB3D72A862A90008DBB2D /* DisplayModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1AB3CA2A862A90008DBB2D /* DisplayModels.swift */; };
+		DA1AB3D82A862A90008DBB2D /* ToolButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1AB3CB2A862A90008DBB2D /* ToolButton.swift */; };
+		DA1AB3D92A862A90008DBB2D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1AB3CC2A862A90008DBB2D /* ContentView.swift */; };
+		DA1AB3DA2A862A90008DBB2D /* ProjectLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1AB3CD2A862A90008DBB2D /* ProjectLink.swift */; };
+		DA1AB3DB2A862A90008DBB2D /* ProjectInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1AB3CE2A862A90008DBB2D /* ProjectInfo.swift */; };
+		DA1AB3DD2A862B87008DBB2D /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1AB3DC2A862B87008DBB2D /* ErrorHandler.swift */; };
+		DA1AB3DF2A862D6B008DBB2D /* Hacks.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1AB3DE2A862D6B008DBB2D /* Hacks.swift */; };
 		DA2A7EB92A8534AA009B454D /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2A7EB82A8534AA009B454D /* Project.swift */; };
 		DA2A7EBB2A85357A009B454D /* SpanNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2A7EBA2A85357A009B454D /* SpanNode.swift */; };
 		DA2A7EBD2A85393D009B454D /* Dataset.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2A7EBC2A85393D009B454D /* Dataset.swift */; };
@@ -47,6 +61,7 @@
 		DAA45DB62A84EC64009ABBCB /* MessageClientConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA45DB52A84EC64009ABBCB /* MessageClientConfig.swift */; };
 		DAA45DB82A84ECF7009ABBCB /* MessageClientRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA45DB72A84ECF7009ABBCB /* MessageClientRecord.swift */; };
 		DAA45DBA2A84EDD8009ABBCB /* ComponentU16.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA45DB92A84EDD8009ABBCB /* ComponentU16.swift */; };
+		DAACDA9E2A863FC300CDDC34 /* Duration.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAACDA9D2A863FC300CDDC34 /* Duration.swift */; };
 		DAADF8522A7FDE3B00E4247C /* ComponentBool.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAADF8512A7FDE3B00E4247C /* ComponentBool.swift */; };
 /* End PBXBuildFile section */
 
@@ -107,7 +122,6 @@
 		DA17E7EF2A12B84300554B8A /* ProfilerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilerApp.swift; sourceTree = "<group>"; };
 		DA17E7F12A12B84300554B8A /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		DA17E7F42A12B84300554B8A /* Profiler.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Profiler.xcdatamodel; sourceTree = "<group>"; };
-		DA17E7F62A12B84300554B8A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		DA17E7F82A12B84400554B8A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DA17E7FA2A12B84400554B8A /* Profiler.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Profiler.entitlements; sourceTree = "<group>"; };
 		DA17E7FC2A12B84400554B8A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -122,6 +136,22 @@
 		DA17E8352A12BACA00554B8A /* ProtocolTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolTests.swift; sourceTree = "<group>"; };
 		DA17E8432A12BADD00554B8A /* NetManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetManager.swift; sourceTree = "<group>"; };
 		DA17E8452A12BAE600554B8A /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		DA1AB3C12A862A90008DBB2D /* NodeTextFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NodeTextFilter.m; sourceTree = "<group>"; };
+		DA1AB3C22A862A90008DBB2D /* LineChart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineChart.swift; sourceTree = "<group>"; };
+		DA1AB3C32A862A90008DBB2D /* NodeFilters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeFilters.swift; sourceTree = "<group>"; };
+		DA1AB3C42A862A90008DBB2D /* ProjectDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectDetails.swift; sourceTree = "<group>"; };
+		DA1AB3C52A862A90008DBB2D /* SpanNodeDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpanNodeDetails.swift; sourceTree = "<group>"; };
+		DA1AB3C62A862A90008DBB2D /* SpanRunTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpanRunTable.swift; sourceTree = "<group>"; };
+		DA1AB3C72A862A90008DBB2D /* SpanNodeInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpanNodeInfo.swift; sourceTree = "<group>"; };
+		DA1AB3C82A862A90008DBB2D /* SpanEventTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpanEventTable.swift; sourceTree = "<group>"; };
+		DA1AB3C92A862A90008DBB2D /* NodeTextFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NodeTextFilter.h; sourceTree = "<group>"; };
+		DA1AB3CA2A862A90008DBB2D /* DisplayModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplayModels.swift; sourceTree = "<group>"; };
+		DA1AB3CB2A862A90008DBB2D /* ToolButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolButton.swift; sourceTree = "<group>"; };
+		DA1AB3CC2A862A90008DBB2D /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		DA1AB3CD2A862A90008DBB2D /* ProjectLink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectLink.swift; sourceTree = "<group>"; };
+		DA1AB3CE2A862A90008DBB2D /* ProjectInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectInfo.swift; sourceTree = "<group>"; };
+		DA1AB3DC2A862B87008DBB2D /* ErrorHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
+		DA1AB3DE2A862D6B008DBB2D /* Hacks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hacks.swift; sourceTree = "<group>"; };
 		DA2A7EB82A8534AA009B454D /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
 		DA2A7EBA2A85357A009B454D /* SpanNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpanNode.swift; sourceTree = "<group>"; };
 		DA2A7EBC2A85393D009B454D /* Dataset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dataset.swift; sourceTree = "<group>"; };
@@ -145,6 +175,7 @@
 		DAA45DB52A84EC64009ABBCB /* MessageClientConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageClientConfig.swift; sourceTree = "<group>"; };
 		DAA45DB72A84ECF7009ABBCB /* MessageClientRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageClientRecord.swift; sourceTree = "<group>"; };
 		DAA45DB92A84EDD8009ABBCB /* ComponentU16.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentU16.swift; sourceTree = "<group>"; };
+		DAACDA9D2A863FC300CDDC34 /* Duration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Duration.swift; sourceTree = "<group>"; };
 		DAADF8512A7FDE3B00E4247C /* ComponentBool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentBool.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -217,10 +248,12 @@
 		DA17E7EE2A12B84300554B8A /* Profiler */ = {
 			isa = PBXGroup;
 			children = (
+				DA1AB3C02A862A90008DBB2D /* View */,
 				DA2A7EB52A8533E9009B454D /* Model */,
 				DA17E7EF2A12B84300554B8A /* ProfilerApp.swift */,
 				DA17E7F12A12B84300554B8A /* Persistence.swift */,
-				DA17E7F62A12B84300554B8A /* ContentView.swift */,
+				DA1AB3DC2A862B87008DBB2D /* ErrorHandler.swift */,
+				DA1AB3DE2A862D6B008DBB2D /* Hacks.swift */,
 				DA17E7F82A12B84400554B8A /* Assets.xcassets */,
 				DA17E7FA2A12B84400554B8A /* Profiler.entitlements */,
 				DA17E7FB2A12B84400554B8A /* Preview Content */,
@@ -276,6 +309,27 @@
 			path = ProtocolTests;
 			sourceTree = "<group>";
 		};
+		DA1AB3C02A862A90008DBB2D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				DA1AB3C12A862A90008DBB2D /* NodeTextFilter.m */,
+				DA1AB3C22A862A90008DBB2D /* LineChart.swift */,
+				DA1AB3C32A862A90008DBB2D /* NodeFilters.swift */,
+				DA1AB3C42A862A90008DBB2D /* ProjectDetails.swift */,
+				DA1AB3C52A862A90008DBB2D /* SpanNodeDetails.swift */,
+				DA1AB3C62A862A90008DBB2D /* SpanRunTable.swift */,
+				DA1AB3C72A862A90008DBB2D /* SpanNodeInfo.swift */,
+				DA1AB3C82A862A90008DBB2D /* SpanEventTable.swift */,
+				DA1AB3C92A862A90008DBB2D /* NodeTextFilter.h */,
+				DA1AB3CA2A862A90008DBB2D /* DisplayModels.swift */,
+				DA1AB3CB2A862A90008DBB2D /* ToolButton.swift */,
+				DA1AB3CC2A862A90008DBB2D /* ContentView.swift */,
+				DA1AB3CD2A862A90008DBB2D /* ProjectLink.swift */,
+				DA1AB3CE2A862A90008DBB2D /* ProjectInfo.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		DA2A7EB52A8533E9009B454D /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -283,6 +337,7 @@
 				DA2A7EB82A8534AA009B454D /* Project.swift */,
 				DA2A7EBA2A85357A009B454D /* SpanNode.swift */,
 				DA2A7EBC2A85393D009B454D /* Dataset.swift */,
+				DAACDA9D2A863FC300CDDC34 /* Duration.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -538,12 +593,27 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA17E7F02A12B84300554B8A /* ProfilerApp.swift in Sources */,
+				DAACDA9E2A863FC300CDDC34 /* Duration.swift in Sources */,
+				DA1AB3DA2A862A90008DBB2D /* ProjectLink.swift in Sources */,
+				DA1AB3D42A862A90008DBB2D /* SpanRunTable.swift in Sources */,
+				DA1AB3D82A862A90008DBB2D /* ToolButton.swift in Sources */,
 				DA2A7EBD2A85393D009B454D /* Dataset.swift in Sources */,
+				DA1AB3D32A862A90008DBB2D /* SpanNodeDetails.swift in Sources */,
+				DA1AB3D02A862A90008DBB2D /* LineChart.swift in Sources */,
+				DA1AB3D12A862A90008DBB2D /* NodeFilters.swift in Sources */,
+				DA1AB3D22A862A90008DBB2D /* ProjectDetails.swift in Sources */,
+				DA1AB3DF2A862D6B008DBB2D /* Hacks.swift in Sources */,
 				DA17E7F22A12B84300554B8A /* Persistence.swift in Sources */,
-				DA17E7F72A12B84300554B8A /* ContentView.swift in Sources */,
+				DA1AB3D72A862A90008DBB2D /* DisplayModels.swift in Sources */,
+				DA1AB3D52A862A90008DBB2D /* SpanNodeInfo.swift in Sources */,
+				DA1AB3CF2A862A90008DBB2D /* NodeTextFilter.m in Sources */,
 				DA2A7EBB2A85357A009B454D /* SpanNode.swift in Sources */,
+				DA1AB3D92A862A90008DBB2D /* ContentView.swift in Sources */,
+				DA1AB3D62A862A90008DBB2D /* SpanEventTable.swift in Sources */,
 				DA2A7EB92A8534AA009B454D /* Project.swift in Sources */,
+				DA1AB3DD2A862B87008DBB2D /* ErrorHandler.swift in Sources */,
 				DA17E7F52A12B84300554B8A /* Profiler.xcdatamodeld in Sources */,
+				DA1AB3DB2A862A90008DBB2D /* ProjectInfo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

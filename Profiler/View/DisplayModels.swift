@@ -1,4 +1,4 @@
-// Copyright 2023 Yuri6037
+// Copyright 2022 Yuri6037
 //
 // Permission is hereby granted, free of charge, to any person obtaining a 
 // copy
@@ -23,26 +23,30 @@
 
 import Foundation
 
-struct Duration {
-    let microseconds: UInt64;
-    var seconds: Float64 { Float64(microseconds) / 1000000.0 }
-    var milliseconds: Float64 { Float64(microseconds) / 1000.0 }
+struct DisplaySpanRun: Identifiable {
+    var id: UUID;
+    var time: String;
+    var message: String;
+    var variables: String;
 
-    init(microseconds: UInt64) {
-        self.microseconds = microseconds;
+    init(fromModel model: SpanRun) {
+        self.time = model.wTime.formatted()
+        self.message = model.wMessage ?? "No message specified";
+        self.variables = model.wVariables.map { item in item.data ?? "" }.joined(separator: ", ");
+        self.variables = ""
+        self.id = UUID();
     }
+}
 
-    init(seconds: UInt32, milliseconds: UInt32, microseconds: UInt32) {
-        self.microseconds = UInt64(seconds * 1000000) + UInt64(milliseconds * 1000) + UInt64(microseconds);
-    }
+struct DisplaySpanEvent: Identifiable {
+    var id: UUID;
+    var variables: String;
+    var message: String;
 
-    func formatted() -> String {
-        if seconds > 0 {
-            return seconds.formatted() + "s";
-        } else if milliseconds > 0 {
-            return milliseconds.formatted() + "ms";
-        } else {
-            return microseconds.formatted() + "µs";
-        }
+    init(fromModel model: SpanEvent) {
+        self.variables = model.wVariables.map { item in item.data ?? "" }.joined(separator: ", ")
+        self.variables = ""
+        self.message = model.wMessage;
+        self.id = UUID();
     }
 }

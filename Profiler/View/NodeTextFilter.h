@@ -21,28 +21,17 @@
 // DEALINGS
 // IN THE SOFTWARE.
 
-import Foundation
+#import <CoreData/CoreData.h>
+#import <Foundation/Foundation.h>
 
-struct Duration {
-    let microseconds: UInt64;
-    var seconds: Float64 { Float64(microseconds) / 1000000.0 }
-    var milliseconds: Float64 { Float64(microseconds) / 1000.0 }
+NS_ASSUME_NONNULL_BEGIN
 
-    init(microseconds: UInt64) {
-        self.microseconds = microseconds;
-    }
+@interface NodeTextFilter : NSObject
 
-    init(seconds: UInt32, milliseconds: UInt32, microseconds: UInt32) {
-        self.microseconds = UInt64(seconds * 1000000) + UInt64(milliseconds * 1000) + UInt64(microseconds);
-    }
+@property (readwrite) NSString *text;
 
-    func formatted() -> String {
-        if seconds > 0 {
-            return seconds.formatted() + "s";
-        } else if milliseconds > 0 {
-            return milliseconds.formatted() + "ms";
-        } else {
-            return microseconds.formatted() + "µs";
-        }
-    }
-}
+- (NSArray<NSPredicate *> * _Nullable)getPredicates;
+
+@end
+
+NS_ASSUME_NONNULL_END

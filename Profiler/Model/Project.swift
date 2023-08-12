@@ -22,6 +22,7 @@
 // IN THE SOFTWARE.
 
 import Foundation
+import CoreData
 
 extension Target {
     var wArch: String { self.arch! }
@@ -43,4 +44,34 @@ extension Project {
     var wVersion: String? { self.version }
     var wCpu: Cpu? { self.cpu }
     var wTarget: Target? { self.target }
+}
+
+extension Target: SampleData {
+    static func newSample(context: NSManagedObjectContext) -> Self {
+        let target = Target(context: context);
+        target.os = "macOS";
+        target.family = "unix";
+        target.arch = "aarch64";
+        return target as! Self; //WTF!?
+    }
+}
+
+extension Cpu: SampleData {
+    static func newSample(context: NSManagedObjectContext) -> Self {
+        let cpu = Cpu(context: context);
+        cpu.coreCount = 10;
+        cpu.name = "Apple M1 Max";
+        return cpu as! Self; //WTF!?
+    }
+}
+
+extension Project: SampleData {
+    static func newSample(context: NSManagedObjectContext) -> Self {
+        let project = Project(context: context);
+        project.name = "Test";
+        project.timestamp = Date();
+        project.cpu = Cpu.newSample(context: context);
+        project.target = Target.newSample(context: context);
+        return project as! Self; //WTF!?
+    }
 }
