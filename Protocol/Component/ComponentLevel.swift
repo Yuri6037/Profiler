@@ -31,7 +31,7 @@ public enum Level: Component, Writable {
     case warning;
     case error;
 
-    init(fromRaw: UInt8) {
+    public init(fromRaw: UInt8) {
         switch (fromRaw) {
         case 0:
             self = .trace;
@@ -54,7 +54,7 @@ public enum Level: Component, Writable {
         }
     }
 
-    var raw: UInt8 {
+    public var raw: UInt8 {
         switch (self) {
         case .trace:
             return 0;

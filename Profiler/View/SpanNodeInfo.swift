@@ -23,23 +23,6 @@
 
 import SwiftUI
 
-extension Level {
-    var color: Color {
-        switch self {
-        case .trace:
-            return .cyan;
-        case .debug:
-            return .accentColor;
-        case .info:
-            return .green;
-        case .warning:
-            return .yellow;
-        case .error:
-            return .red;
-        }
-    }
-}
-
 struct SpanNodeInfo: View {
     @ObservedObject var node: SpanNode;
     @Binding var dataset: Dataset?;

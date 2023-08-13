@@ -30,6 +30,13 @@ public struct MessageClientConfig: Writable {
     public let record: MessageClientRecord;
     public let period: UInt16;
 
+    public init(maxAveragePoints: UInt32, maxLevel: Level? = nil, record: MessageClientRecord, period: UInt16) {
+        self.maxAveragePoints = maxAveragePoints
+        self.maxLevel = maxLevel
+        self.record = record
+        self.period = period
+    }
+
     public func write(buffer: inout ByteBuffer) {
         maxAveragePoints.write(buffer: &buffer);
         Option(value: maxLevel).write(buffer: &buffer);

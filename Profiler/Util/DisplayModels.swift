@@ -21,7 +21,9 @@
 // DEALINGS
 // IN THE SOFTWARE.
 
+import SwiftUI
 import Foundation
+import Protocol
 
 struct DisplaySpanRun: Identifiable {
     var id: UUID;
@@ -50,5 +52,22 @@ struct DisplaySpanEvent: Identifiable {
         self.message = model.wMessage;
         self.level = model.wLevel.name;
         self.id = UUID();
+    }
+}
+
+extension Level {
+    var color: Color {
+        switch self {
+        case .trace:
+            return .cyan;
+        case .debug:
+            return .accentColor;
+        case .info:
+            return .green;
+        case .warning:
+            return .yellow;
+        case .error:
+            return .red;
+        }
     }
 }

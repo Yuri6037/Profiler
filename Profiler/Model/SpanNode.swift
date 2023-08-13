@@ -23,8 +23,9 @@
 
 import Foundation
 import CoreData
+import Protocol
 
-enum Level {
+/*enum Level {
     case trace;
     case debug;
     case info;
@@ -64,6 +65,27 @@ enum Level {
         case .error:
             return 4;
         }
+    }
+
+    var name: String {
+        switch self {
+        case .trace:
+            return "Trace";
+        case .debug:
+            return "Debug";
+        case .info:
+            return "Info";
+        case .warning:
+            return "Warning";
+        case .error:
+            return "Error";
+        }
+    }
+}*/
+
+extension Level {
+    init(code: Int16) {
+        self.init(fromRaw: UInt8(code));
     }
 
     var name: String {

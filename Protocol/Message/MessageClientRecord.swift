@@ -28,6 +28,11 @@ public struct MessageClientRecord: Writable {
     public let maxRows: UInt32;
     public let enable: Bool;
 
+    public init(maxRows: UInt32, enable: Bool) {
+        self.maxRows = maxRows
+        self.enable = enable
+    }
+
     public func write(buffer: inout ByteBuffer) {
         maxRows.write(buffer: &buffer);
         enable.write(buffer: &buffer);

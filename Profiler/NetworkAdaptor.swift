@@ -27,10 +27,26 @@ import SwiftString
 
 class NetworkAdaptor: ObservableObject, MsgHandler {
     private var net: NetManager?;
-    private var errorHandler: ErrorHandler?;
+    private let errorHandler: ErrorHandler;
     private var connection: Connection?;
     @Published var showConnectSheet = false;
     @Published var config: MessageServerConfig?;
+
+    init(errorHandler: ErrorHandler) {
+        self.errorHandler = errorHandler;
+    }
+
+    func disconnect() {
+        connection?.close();
+    }
+
+    func send(config: MessageClientConfig) {
+        connection?.send(config: config);
+    }
+
+    func send(record: MessageClientRecord) {
+        connection?.send(record: record);
+    }
 
     func onMessage(message: Message) {
         switch message {
@@ -44,15 +60,14 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
     }
 
     func onError(error: Error) {
-        errorHandler?.pushError(AppError(fromError: error));
+        errorHandler.pushError(AppError(fromError: error));
     }
 
     func onConnect(connection: Connection) {
         self.connection = connection;
     }
 
-    public func connect(errorHandler: ErrorHandler, url: URL) {
-        self.errorHandler = errorHandler;
+    public func connect(url: URL) {
         var path = url.path;
         let id = path.index(of: ":");
         var port: Int? = nil;
@@ -80,7 +95,7 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
                 self.net = nil;
                 self.showConnectSheet = false;
                 self.config = nil;
-                self.errorHandler?.pushError(AppError(description: "Lost connection with debug server"));
+                self.errorHandler.pushError(AppError(description: "Lost connection with debug server"));
             }
         }
     }

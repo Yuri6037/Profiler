@@ -22,49 +22,81 @@
 // IN THE SOFTWARE.
 
 import SwiftUI
+import Protocol
 
 struct ClientConfig: View {
     let maxRows: UInt32;
     let minPeriod: UInt16;
+    @EnvironmentObject var adaptor: NetworkAdaptor;
     @State var rows: Int;
     @State var period: Int;
-    @State var averagePoints = 100;
+    @State var averagePoints: Int;
     @State var enableRecording = true;
+    @State var maxLevel = Level.trace;
 
     init(maxRows: UInt32, minPeriod: UInt16) {
         self.minPeriod = minPeriod;
         self.maxRows = maxRows;
         _rows = .init(initialValue: Int(maxRows));
         _period = .init(initialValue: Int(minPeriod));
+        _averagePoints = .init(initialValue: 100);
     }
 
     var body: some View {
-        VStack(alignment: .leading) {
-            HStack {
-                Text("Number of points for average:")
-                IntPicker(min: 1, max: Int(UInt32.max), value: $averagePoints)
-            }
-            HStack {
-                Text("Min period (ms):")
-                Text(minPeriod.formatted()).bold()
-            }
-            HStack {
-                Text("Period (ms):")
-                IntPicker(min: Int(minPeriod), max: 1000, value: $period)
-            }
-            Text("Recording configuration").bold()
-                .padding(.top)
+        VStack {
             VStack(alignment: .leading) {
                 HStack {
-                    Text("Max rows:")
-                    Text(maxRows.formatted()).bold()
+                    Text("Number of points for average:")
+                    IntPicker(min: 1, max: Int(UInt32.max), value: $averagePoints)
                 }
                 HStack {
-                    Text("Rows:")
-                    IntPicker(min: 0, max: Int(maxRows), value: $rows);
+                    Text("Min period (ms):")
+                    Text(minPeriod.formatted()).bold()
                 }
-                Toggle("Start enabled", isOn: $enableRecording)
-            }.padding(.leading)
+                HStack {
+                    Text("Period (ms):")
+                    IntPicker(min: Int(minPeriod), max: 1000, value: $period)
+                }
+                HStack {
+                    Text("Max level:")
+                    Picker("", selection: $maxLevel) {
+                        Text(Level.trace.name).foregroundColor(Level.trace.color).tag(Level.trace)
+                        Text(Level.debug.name).foregroundColor(Level.debug.color).tag(Level.debug)
+                        Text(Level.info.name).foregroundColor(Level.info.color).tag(Level.info)
+                        Text(Level.warning.name).foregroundColor(Level.warning.color).tag(Level.warning)
+                        Text(Level.error.name).foregroundColor(Level.error.color).tag(Level.error)
+                    }.frame(width: 100)
+                }
+                Text("Recording configuration").bold()
+                    .padding(.top)
+                VStack(alignment: .leading) {
+                    HStack {
+                        Text("Max rows:")
+                        Text(maxRows.formatted()).bold()
+                    }
+                    HStack {
+                        Text("Rows:")
+                        IntPicker(min: 0, max: Int(maxRows), value: $rows);
+                    }
+                    Toggle("Start enabled", isOn: $enableRecording)
+                }.padding(.leading)
+            }
+            HStack {
+                Button("Continue") {
+                    adaptor.send(config: MessageClientConfig(
+                        maxAveragePoints: UInt32(averagePoints),
+                        maxLevel: maxLevel,
+                        record: MessageClientRecord(
+                            maxRows: UInt32(rows),
+                            enable: enableRecording
+                        ),
+                        period: UInt16(period)
+                    ));
+                }.keyboardShortcut(.defaultAction)
+                Button("Cancel", role: .destructive) {
+                    adaptor.disconnect();
+                }
+            }
         }
     }
 }
@@ -72,5 +104,6 @@ struct ClientConfig: View {
 struct ClientConfig_Previews: PreviewProvider {
     static var previews: some View {
         ClientConfig(maxRows: 1000000, minPeriod: 200)
+            .environmentObject(NetworkAdaptor(errorHandler: ErrorHandler()))
     }
 }

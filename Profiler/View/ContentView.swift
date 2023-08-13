@@ -25,6 +25,7 @@ import SwiftUI
 import CoreData
 
 struct ContentView: View {
+    @EnvironmentObject private var adaptor: NetworkAdaptor;
     @EnvironmentObject private var errorHandler: ErrorHandler;
     @Environment(\.managedObjectContext) private var viewContext;
     @Environment(\.persistentContainer) private var container;
@@ -121,6 +122,12 @@ struct ContentView: View {
                 }
             }*/
         }
+        .sheet(isPresented: $adaptor.showConnectSheet, onDismiss: { adaptor.disconnect() }) {
+            VStack {
+                ClientConfig(maxRows: adaptor.config?.maxRows ?? 0, minPeriod: adaptor.config?.minPeriod ?? 0)
+                    .padding()
+            }
+        }
     }
 
     private func deleteItem() {
@@ -143,5 +150,6 @@ struct ContentView_Previews: PreviewProvider {
             .environment(\.persistentContainer, Store.preview.container)
             .environment(\.managedObjectContext, Store.preview.container.viewContext)
             .environmentObject(ErrorHandler())
+            .environmentObject(NetworkAdaptor(errorHandler: ErrorHandler()))
     }
 }
