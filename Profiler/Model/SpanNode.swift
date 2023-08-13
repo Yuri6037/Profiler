@@ -25,64 +25,6 @@ import Foundation
 import CoreData
 import Protocol
 
-/*enum Level {
-    case trace;
-    case debug;
-    case info;
-    case warning;
-    case error;
-    
-    init(code: Int16) {
-        switch code {
-        case 0:
-            self = .trace;
-            break;
-        case 1:
-            self = .debug;
-            break;
-        case 3:
-            self = .warning;
-            break;
-        case 4:
-            self = .error;
-            break;
-        default:
-            self = .info;
-            break;
-        }
-    }
-
-    var code: Int16 {
-        switch self {
-        case .trace:
-            return 0;
-        case .debug:
-            return 1;
-        case .info:
-            return 2;
-        case .warning:
-            return 3;
-        case .error:
-            return 4;
-        }
-    }
-
-    var name: String {
-        switch self {
-        case .trace:
-            return "Trace";
-        case .debug:
-            return "Debug";
-        case .info:
-            return "Info";
-        case .warning:
-            return "Warning";
-        case .error:
-            return "Error";
-        }
-    }
-}*/
-
 extension Level {
     init(code: Int16) {
         self.init(fromRaw: UInt8(code));
