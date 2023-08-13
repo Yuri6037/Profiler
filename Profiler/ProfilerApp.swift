@@ -58,6 +58,7 @@ struct ProfilerApp: App {
                 }
                 .sheet(isPresented: $adaptor.showConnectSheet) {
                     ClientConfig(maxRows: adaptor.config?.maxRows ?? 0, minPeriod: adaptor.config?.minPeriod ?? 0)
+                        .padding()
                 }
         }
     }
