@@ -73,9 +73,11 @@ public class ErrorHandler: ObservableObject, Hashable, Equatable {
     public func popError() {
         topError = nil;
         showError = false;
-        if let error = errorStack.popLast() {
-            topError = error;
-            showError = true;
+        DispatchQueue.main.async {
+            if let error = self.errorStack.popLast() {
+                self.topError = error;
+                self.showError = true;
+            }
         }
     }
 
