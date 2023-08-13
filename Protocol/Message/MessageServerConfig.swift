@@ -25,13 +25,14 @@ import Foundation
 
 public struct MessageServerConfig: MessageHeader {
     public let maxRows: UInt32;
+    public let minPeriod: UInt16;
 
     public var payloadSize: Int { 0 };
 
     public static var size: Int = Size().add(UInt32.self).bytes;
 
     public static func read(reader: inout Reader) -> MessageServerConfig {
-        return MessageServerConfig(maxRows: reader.read(UInt32.self));
+        return MessageServerConfig(maxRows: reader.read(UInt32.self), minPeriod: reader.read(UInt16.self));
     }
 
     public func decode(reader: inout Reader) throws -> Message {

@@ -56,7 +56,7 @@ public class NetManager {
     private let handler: MsgHandler;
     private var close: EventLoopFuture<Void>?;
 
-    init(handler: MsgHandler) {
+    public init(handler: MsgHandler) {
         self.handler = handler;
     }
 
