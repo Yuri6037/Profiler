@@ -44,6 +44,7 @@ class AppDelegate: NSObject, NSApplicationDelegate
 struct ProfilerApp: App {
     //When swift finally accepts #if os(macOS) on a class use it to enable the app under iOS
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate;
+    @StateObject var adaptor = NetworkAdaptor();
 
     var body: some Scene {
         WindowGroup {
@@ -51,6 +52,13 @@ struct ProfilerApp: App {
                 .environmentObject(appDelegate.errorHandler)
                 .environment(\.persistentContainer, appDelegate.store.container)
                 .environment(\.managedObjectContext, appDelegate.store.container.viewContext)
+                .handlesExternalEvents(preferring: ["*"], allowing: ["*"])
+                .onOpenURL { url in
+                    adaptor.connect(errorHandler: appDelegate.errorHandler, url: url);
+                }
+                .sheet(isPresented: $adaptor.showConnectSheet) {
+                    ClientConfig(maxRows: adaptor.config?.maxRows ?? 0, minPeriod: adaptor.config?.minPeriod ?? 0)
+                }
         }
     }
 }

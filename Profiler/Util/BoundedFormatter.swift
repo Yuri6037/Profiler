@@ -21,28 +21,42 @@
 // DEALINGS
 // IN THE SOFTWARE.
 
-import SwiftUI
+import Foundation
 
-struct ToolButton<T: Hashable>: View {
-    let icon: String;
-    let text: String;
-    let value: T;
+class BoundedFormatter: Formatter {
+    let max: Int;
+    let min: Int;
 
-    init(icon: String, text: String, value: T) {
-        self.icon = icon;
-        self.text = text;
-        self.value = value;
+    init(min: Int, max: Int) {
+        self.min = min;
+        self.max = max;
+        super.init();
     }
 
-    var body: some View {
-        Image(systemName: icon)
-            .help(text)
-            .tag(value)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) cannot be implemented: a min/max is required")
     }
-}
 
-struct ToolButton_Previews: PreviewProvider {
-    static var previews: some View {
-        ToolButton(icon: "doc", text: "This is a test", value: 0)
+    func clamp(with value: Int, min: Int, max: Int) -> Int {
+        return value > max ? max : (value < min ? min : value);
+    }
+
+    override func string(for obj: Any?) -> String? {
+        guard let number = obj as? Int else {
+            return nil
+        }
+        return String(number)
+        
+    }
+
+    override func getObjectValue(_ obj: AutoreleasingUnsafeMutablePointer<AnyObject?>?, for string: String, errorDescription error: AutoreleasingUnsafeMutablePointer<NSString?>?) -> Bool {
+
+        guard let number = Int(string) else {
+            return false
+        }
+        
+        obj?.pointee = clamp(with: number, min: self.min, max: self.max) as AnyObject
+        
+        return true
     }
 }

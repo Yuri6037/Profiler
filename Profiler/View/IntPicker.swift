@@ -23,26 +23,24 @@
 
 import SwiftUI
 
-struct ToolButton<T: Hashable>: View {
-    let icon: String;
-    let text: String;
-    let value: T;
-
-    init(icon: String, text: String, value: T) {
-        self.icon = icon;
-        self.text = text;
-        self.value = value;
-    }
+struct IntPicker: View {
+    let min: Int;
+    let max: Int;
+    @Binding var value: Int;
 
     var body: some View {
-        Image(systemName: icon)
-            .help(text)
-            .tag(value)
+        HStack {
+            TextField("", value: $value, formatter: BoundedFormatter(min: min, max: max))
+                .frame(width: 100)
+            Stepper(value: $value, in: min...max) {
+                EmptyView()
+            }
+        }
     }
 }
 
-struct ToolButton_Previews: PreviewProvider {
+struct IntPicker_Previews: PreviewProvider {
     static var previews: some View {
-        ToolButton(icon: "doc", text: "This is a test", value: 0)
+        IntPicker(min: 0, max: 100, value: .constant(10))
     }
 }
