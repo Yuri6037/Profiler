@@ -30,11 +30,14 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
     private var net: NetManager?;
     private let errorHandler: ErrorHandler;
     private var connection: Connection?;
+    private let container: NSPersistentContainer;
+    private var projectId: NSManagedObjectID?;
     @Published var showConnectSheet = false;
     @Published var config: MessageServerConfig?;
 
     init(errorHandler: ErrorHandler, container: NSPersistentContainer) {
         self.errorHandler = errorHandler;
+        self.container = container;
     }
 
     func disconnect() {
@@ -51,6 +54,18 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
         connection?.send(record: record);
     }
 
+    func execDb(_ fn: @escaping (NSManagedObjectContext) throws -> Void) {
+        container.performBackgroundTask { ctx in
+            do {
+                try fn(ctx)
+            } catch let error {
+                DispatchQueue.main.async {
+                    self.errorHandler.pushError(AppError(fromError: error));
+                }
+            }
+        };
+    }
+
     func onMessage(message: Message) {
         switch message {
         case .serverConfig(let config):
@@ -58,10 +73,61 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
             self.config = config;
             break;
         case .project(let project):
-            print(project);
+            execDb { ctx in
+                let p = Project(context: ctx);
+                p.timestamp = Date();
+                p.appName = project.appName;
+                p.name = project.name;
+                p.version = project.version;
+                p.commandLine = project.commandLine;
+                let request: NSFetchRequest<Target> = NSFetchRequest(entityName: "Target");
+                request.predicate = NSPredicate(format: "os = %@ AND family = %@ AND arch = %@", project.target.os, project.target.family, project.target.arch);
+                var retrieved = try ctx.fetch(request).first;
+                if retrieved == nil {
+                    retrieved = Target(context: ctx);
+                    retrieved?.os = project.target.os;
+                    retrieved?.family = project.target.family;
+                    retrieved?.arch = project.target.arch;
+                }
+                p.target = retrieved;
+                if let cpu = project.cpu {
+                    let request: NSFetchRequest<Cpu> = NSFetchRequest(entityName: "Cpu");
+                    request.predicate = NSPredicate(format: "name = %@ AND coreCount = %d", cpu.name, cpu.coreCount);
+                    var retrieved = try ctx.fetch(request).first;
+                    if retrieved == nil {
+                        retrieved = Cpu(context: ctx);
+                        retrieved?.name = cpu.name;
+                        retrieved?.coreCount = Int32(cpu.coreCount);
+                    }
+                    p.cpu = retrieved;
+                }
+                try ctx.save();
+                DispatchQueue.main.async {
+                    self.projectId = p.objectID;
+                }
+            };
             break;
         case .spanAlloc(let span):
-            print(span);
+            if let projectId = projectId {
+                execDb { ctx in
+                    let p = ctx.object(with: projectId) as! Project;
+                    let nodes = p.nodes?.mutableCopy() as! NSMutableOrderedSet;
+                    let node = SpanNode(context: ctx);
+                    node.order = Int32(span.id);
+                    let metadata = SpanMetadata(context: ctx);
+                    metadata.level = Int16(span.metadata.level.raw);
+                    metadata.file = span.metadata.file;
+                    metadata.modulePath = span.metadata.modulePath;
+                    metadata.target = span.metadata.target;
+                    metadata.line = span.metadata.line != nil ? Int32(span.metadata.line!) : -1;
+                    metadata.name = span.metadata.name;
+                    node.metadata = metadata;
+                    node.path = "/" + span.metadata.name;
+                    nodes.add(node);
+                    p.nodes = nodes.copy() as? NSOrderedSet;
+                    try ctx.save();
+                };
+            }
             break
         }
     }
