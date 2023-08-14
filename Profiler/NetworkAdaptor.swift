@@ -24,6 +24,7 @@
 import Protocol
 import Foundation
 import SwiftString
+import CoreData
 
 class NetworkAdaptor: ObservableObject, MsgHandler {
     private var net: NetManager?;
@@ -32,7 +33,7 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
     @Published var showConnectSheet = false;
     @Published var config: MessageServerConfig?;
 
-    init(errorHandler: ErrorHandler) {
+    init(errorHandler: ErrorHandler, container: NSPersistentContainer) {
         self.errorHandler = errorHandler;
     }
 

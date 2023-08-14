@@ -25,7 +25,6 @@ import SwiftUI
 
 class AppGlobals: ObservableObject {
     @Published var errorHandler: ErrorHandler = ErrorHandler();
-    lazy var adaptor: NetworkAdaptor = { NetworkAdaptor(errorHandler: errorHandler) }();
     lazy var store: Store = {
 #if DEBUG
         if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1" {
@@ -36,6 +35,7 @@ class AppGlobals: ObservableObject {
             self.errorHandler.pushError(AppError(fromNSError: error));
         })
     }()
+    lazy var adaptor: NetworkAdaptor = { NetworkAdaptor(errorHandler: errorHandler, container: store.container) }();
 }
 
 @main

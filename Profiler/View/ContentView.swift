@@ -150,6 +150,6 @@ struct ContentView_Previews: PreviewProvider {
             .environment(\.persistentContainer, Store.preview.container)
             .environment(\.managedObjectContext, Store.preview.container.viewContext)
             .environmentObject(ErrorHandler())
-            .environmentObject(NetworkAdaptor(errorHandler: ErrorHandler()))
+            .environmentObject(NetworkAdaptor(errorHandler: ErrorHandler(), container: Store.preview.container))
     }
 }
