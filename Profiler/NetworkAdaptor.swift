@@ -41,6 +41,8 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
     }
 
     func send(config: MessageClientConfig) {
+        showConnectSheet = false;
+        self.config = nil;
         connection?.send(config: config);
     }
 
@@ -55,12 +57,14 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
             self.config = config;
             break;
         case .project(let project):
+            print(project);
             break;
         }
     }
 
     func onError(error: Error) {
         errorHandler.pushError(AppError(fromError: error));
+        connection?.close();
     }
 
     func onConnect(connection: Connection) {

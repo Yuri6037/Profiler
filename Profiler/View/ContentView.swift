@@ -122,7 +122,7 @@ struct ContentView: View {
                 }
             }*/
         }
-        .sheet(isPresented: $adaptor.showConnectSheet, onDismiss: { adaptor.disconnect() }) {
+        .sheet(isPresented: $adaptor.showConnectSheet) {
             VStack {
                 ClientConfig(maxRows: adaptor.config?.maxRows ?? 0, minPeriod: adaptor.config?.minPeriod ?? 0)
                     .padding()
