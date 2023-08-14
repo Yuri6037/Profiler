@@ -36,6 +36,8 @@
 		DA1AB3DB2A862A90008DBB2D /* ProjectInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1AB3CE2A862A90008DBB2D /* ProjectInfo.swift */; };
 		DA1AB3DD2A862B87008DBB2D /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1AB3DC2A862B87008DBB2D /* ErrorHandler.swift */; };
 		DA1AB3DF2A862D6B008DBB2D /* Hacks.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1AB3DE2A862D6B008DBB2D /* Hacks.swift */; };
+		DA270D912A8AA6E500AE5707 /* MessageSpanAlloc.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA270D902A8AA6E500AE5707 /* MessageSpanAlloc.swift */; };
+		DA270D932A8AA74F00AE5707 /* ComponentMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA270D922A8AA74F00AE5707 /* ComponentMetadata.swift */; };
 		DA2A7EB92A8534AA009B454D /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2A7EB82A8534AA009B454D /* Project.swift */; };
 		DA2A7EBB2A85357A009B454D /* SpanNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2A7EBA2A85357A009B454D /* SpanNode.swift */; };
 		DA2A7EBD2A85393D009B454D /* Dataset.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2A7EBC2A85393D009B454D /* Dataset.swift */; };
@@ -154,6 +156,8 @@
 		DA1AB3CE2A862A90008DBB2D /* ProjectInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectInfo.swift; sourceTree = "<group>"; };
 		DA1AB3DC2A862B87008DBB2D /* ErrorHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
 		DA1AB3DE2A862D6B008DBB2D /* Hacks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hacks.swift; sourceTree = "<group>"; };
+		DA270D902A8AA6E500AE5707 /* MessageSpanAlloc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageSpanAlloc.swift; sourceTree = "<group>"; };
+		DA270D922A8AA74F00AE5707 /* ComponentMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentMetadata.swift; sourceTree = "<group>"; };
 		DA2A7EB82A8534AA009B454D /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
 		DA2A7EBA2A85357A009B454D /* SpanNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpanNode.swift; sourceTree = "<group>"; };
 		DA2A7EBC2A85393D009B454D /* Dataset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dataset.swift; sourceTree = "<group>"; };
@@ -375,6 +379,7 @@
 				DA837D1D2A16561800B91BCE /* ComponentCpu.swift */,
 				DAADF8512A7FDE3B00E4247C /* ComponentBool.swift */,
 				DAA45DB92A84EDD8009ABBCB /* ComponentU16.swift */,
+				DA270D922A8AA74F00AE5707 /* ComponentMetadata.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -388,6 +393,7 @@
 				DA837D192A16551500B91BCE /* MessageProject.swift */,
 				DAA45DB52A84EC64009ABBCB /* MessageClientConfig.swift */,
 				DAA45DB72A84ECF7009ABBCB /* MessageClientRecord.swift */,
+				DA270D902A8AA6E500AE5707 /* MessageSpanAlloc.swift */,
 			);
 			path = Message;
 			sourceTree = "<group>";
@@ -667,8 +673,10 @@
 				DA837D1C2A16560A00B91BCE /* ComponentTarget.swift in Sources */,
 				DA837D032A153CC600B91BCE /* ComponentU32.swift in Sources */,
 				DA837D182A16528900B91BCE /* MessageServerConfig.swift in Sources */,
+				DA270D912A8AA6E500AE5707 /* MessageSpanAlloc.swift in Sources */,
 				DA837D142A162AE100B91BCE /* MessageHeaderRegistry.swift in Sources */,
 				DA837D232A1778AB00B91BCE /* BP3DProtocol.swift in Sources */,
+				DA270D932A8AA74F00AE5707 /* ComponentMetadata.swift in Sources */,
 				DA837D092A153FD900B91BCE /* ComponentOption.swift in Sources */,
 				DA837D162A16513B00B91BCE /* ComponentDuration.swift in Sources */,
 				DAA45DBA2A84EDD8009ABBCB /* ComponentU16.swift in Sources */,

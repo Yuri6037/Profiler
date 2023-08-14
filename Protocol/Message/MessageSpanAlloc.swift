@@ -22,38 +22,31 @@
 // IN THE SOFTWARE.
 
 import Foundation
-import NIO
 
-public struct TargetHeader: Component {
-    public let os: Vchar;
-    public let family: Vchar;
-    public let arch: Vchar;
+public struct MessageHeaderSpanAlloc: MessageHeader {
+    public let id: UInt32;
+    public let metadata: MetadataHeader;
 
-    public var payloadSize: Int { Int(os.length + family.length + arch.length) };
+    public static var size: Int = UInt32.size + MetadataHeader.size;
 
-    public static var size: Int = Vchar.size * 3;
+    public static func read(reader: inout Reader) -> MessageHeaderSpanAlloc {
+        return MessageHeaderSpanAlloc(
+            id: reader.read(UInt32.self),
+            metadata: reader.read(MetadataHeader.self)
+        );
+    }
 
-    public static func read(buffer: inout ByteBuffer) -> TargetHeader {
-        let os = Vchar.read(buffer: &buffer);
-        let family = Vchar.read(buffer: &buffer);
-        let arch = Vchar.read(buffer: &buffer);
-        return TargetHeader(os: os, family: family, arch: arch);
+    public var payloadSize: Int { metadata.payloadSize };
+
+    public func decode(reader: inout Reader) throws -> Message {
+        return .spanAlloc(MessageSpanAlloc(
+            id: id,
+            metadata: try reader.read(metadata)
+        ));
     }
 }
 
-public struct Target {
-    public let os: String;
-    public let family: String;
-    public let arch: String;
-}
-
-extension TargetHeader: PayloadComponent {
-    public typealias PayloadOut = Target;
-
-    public func readPayload(buffer: inout ByteBuffer) throws -> Target {
-        let os = try os.readPayload(buffer: &buffer);
-        let family = try family.readPayload(buffer: &buffer);
-        let arch = try arch.readPayload(buffer: &buffer);
-        return Target(os: os, family: family, arch: arch);
-    }
+public struct MessageSpanAlloc {
+    public let id: UInt32;
+    public let metadata: Metadata;
 }

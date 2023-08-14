@@ -71,4 +71,5 @@ public protocol Writable {
 public enum Message {
     case serverConfig(MessageServerConfig);
     case project(MessageProject);
+    case spanAlloc(MessageSpanAlloc);
 }

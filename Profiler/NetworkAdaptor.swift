@@ -60,6 +60,9 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
         case .project(let project):
             print(project);
             break;
+        case .spanAlloc(let span):
+            print(span);
+            break
         }
     }
 

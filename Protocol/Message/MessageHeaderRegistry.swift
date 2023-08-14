@@ -27,6 +27,7 @@ import NIO
 enum MessageHeaderRegistry {
     private static var map: [UInt8: MessageHeader.Type] = [
         0: MessageHeaderProject.self,
+        1: MessageHeaderSpanAlloc.self,
         7: MessageServerConfig.self
     ];
 
