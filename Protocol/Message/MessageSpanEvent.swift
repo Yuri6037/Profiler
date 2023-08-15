@@ -30,7 +30,7 @@ public struct MessageHeaderSpanEvent: MessageHeader {
     public let level: Level;
     public let message: Vchar;
 
-    public var payloadSize: Int { 0 };
+    public var payloadSize: Int { Int(message.length) };
 
     public static var size: Int = UInt32.size + Int64.size + Level.size + Vchar.size;
 
