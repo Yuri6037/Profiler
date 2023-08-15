@@ -27,8 +27,8 @@ import NIO
 public struct Duration {
     public let nanoseconds: UInt64;
     public var microseconds: Float64 { Float64(nanoseconds) / 1000.0 }
-    public var seconds: Float64 { Float64(microseconds) / 1000000000.0 }
-    public var milliseconds: Float64 { Float64(microseconds) / 1000000.0 }
+    public var seconds: Float64 { Float64(nanoseconds) / 1000000000.0 }
+    public var milliseconds: Float64 { Float64(nanoseconds) / 1000000.0 }
 
     public init(nanoseconds: UInt64) {
         self.nanoseconds = nanoseconds;

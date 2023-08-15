@@ -25,18 +25,6 @@ import Foundation
 import CoreData
 import Protocol
 
-extension Duration {
-    func formatted() -> String {
-        if seconds > 0 {
-            return seconds.formatted() + "s";
-        } else if milliseconds > 0 {
-            return milliseconds.formatted() + "ms";
-        } else {
-            return microseconds.formatted() + "µs";
-        }
-    }
-}
-
 extension Dataset {
     var wTimestamp: Date { self.timestamp! }
     var wAverageTime: Duration { Duration(nanoseconds: UInt64(self.averageTime)) }

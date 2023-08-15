@@ -71,3 +71,17 @@ extension Level {
         }
     }
 }
+
+extension Duration {
+    func formatted() -> String {
+        if Int(seconds) > 0 {
+            return seconds.formatted() + "s";
+        } else if Int(milliseconds) > 0 {
+            return milliseconds.formatted() + "ms";
+        } else if Int(microseconds) > 0 {
+            return microseconds.formatted() + "µs";
+        } else {
+            return nanoseconds.formatted() + "ns";
+        }
+    }
+}
