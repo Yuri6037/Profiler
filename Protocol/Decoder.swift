@@ -138,7 +138,7 @@ final class Decoder: ByteToMessageDecoder {
                 break;
             }
         }
-        return .continue;
+        return state == .needMoreData ? .needMoreData : .continue;
     }
 }
 
