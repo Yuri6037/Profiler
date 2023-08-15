@@ -24,23 +24,38 @@
 import Foundation
 import NIO
 
-enum MessageHeaderRegistry {
-    private static var map: [UInt8: MessageHeader.Type] = [
-        0: MessageHeaderProject.self,
-        1: MessageHeaderSpanAlloc.self,
-        2: MessageSpanParent.self,
-        3: MessageSpanFollows.self,
-        4: MessageHeaderSpanEvent.self,
-        5: MessageSpanUpdate.self,
-        6: MessageHeaderSpanDataset.self,
-        7: MessageServerConfig.self
-    ];
+public struct MessageHeaderSpanDataset: MessageHeader {
+    public let id: UInt32;
+    public let runCount: UInt32;
+    public let size1: UInt32;
 
-    public static func sizeof(type: UInt8) -> Int? {
-        return map[type]?.size;
+    public var payloadSize: Int { Int(size1) };
+
+    public static var size: Int = UInt32.size * 3;
+
+    public static func read(buffer: inout ByteBuffer) -> MessageHeaderSpanDataset {
+        return MessageHeaderSpanDataset(
+            id: .read(buffer: &buffer),
+            runCount: .read(buffer: &buffer),
+            size1: .read(buffer: &buffer)
+        );
     }
 
-    public static func read(type: UInt8, buffer: inout ByteBuffer) -> MessageHeader? {
-        return map[type]?.read(buffer: &buffer)
+    public func decode(buffer: inout ByteBuffer) throws -> Message {
+        guard let str = buffer.getString(at: 0, length: Int(size1)) else {
+            throw ComponentReadError.string;
+        }
+        return .spanDataset(MessageSpanDataset(
+            id: id,
+            runCount: runCount,
+            content: str
+        ));
     }
 }
+
+public struct MessageSpanDataset {
+    public let id: UInt32;
+    public let runCount: UInt32;
+    public let content: String;
+}
+

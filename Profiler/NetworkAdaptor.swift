@@ -140,6 +140,9 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
             break;
         case .spanUpdate(_):
             break;
+        case .spanDataset(let dataset):
+            print(dataset.content);
+            break;
         }
     }
 
