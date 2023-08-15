@@ -30,6 +30,7 @@ enum MessageHeaderRegistry {
         1: MessageHeaderSpanAlloc.self,
         2: MessageSpanParent.self,
         3: MessageSpanFollows.self,
+        4: MessageHeaderSpanEvent.self,
         7: MessageServerConfig.self
     ];
 

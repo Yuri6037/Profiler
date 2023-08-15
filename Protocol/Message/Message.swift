@@ -54,4 +54,5 @@ public enum Message {
     case spanAlloc(MessageSpanAlloc);
     case spanParent(MessageSpanParent);
     case spanFollows(MessageSpanFollows);
+    case spanEvent(MessageSpanEvent);
 }

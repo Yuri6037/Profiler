@@ -22,8 +22,9 @@
 // IN THE SOFTWARE.
 
 import Foundation
+import NIO
 
-/*public struct MessageHeaderSpanEvent: MessageHeader {
+public struct MessageHeaderSpanEvent: MessageHeader {
     public let id: UInt32;
     public let timestamp: Int64;
     public let level: Level;
@@ -33,17 +34,22 @@ import Foundation
 
     public static var size: Int = UInt32.size + Int64.size + Level.size + Vchar.size;
 
-    public static func read(reader: inout Reader) -> MessageHeaderSpanEvent {
+    public static func read(buffer: inout ByteBuffer) -> MessageHeaderSpanEvent {
         return MessageHeaderSpanEvent(
-            id: reader.read(UInt32.self),
-            timestamp: ,
-            level: <#T##Level#>,
-            message: <#T##Vchar#>
+            id: .read(buffer: &buffer),
+            timestamp: .read(buffer: &buffer),
+            level: .read(buffer: &buffer),
+            message: .read(buffer: &buffer)
         );
     }
 
-    public func decode(reader: inout Reader) throws -> Message {
-        return .spanParent(self)
+    public func decode(buffer: inout ByteBuffer) throws -> Message {
+        return .spanEvent(MessageSpanEvent(
+            id: id,
+            timestamp: timestamp,
+            level: level,
+            message: try message.readPayload(buffer: &buffer)
+        ));
     }
 }
 
@@ -52,4 +58,4 @@ public struct MessageSpanEvent {
     public let timestamp: Int64;
     public let level: Level;
     public let message: String;
-}*/
+}
