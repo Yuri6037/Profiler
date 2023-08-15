@@ -101,6 +101,11 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
                     }
                     p.cpu = retrieved;
                 }
+                let zerospan = SpanNode(context: ctx)
+                zerospan.project = p;
+                zerospan.path = "/";
+                zerospan.order = 0;
+                zerospan.metadata = nil;
                 try ctx.save();
                 DispatchQueue.main.async {
                     self.projectId = p.objectID;
@@ -111,8 +116,8 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
             if let projectId = projectId {
                 execDb { ctx in
                     let p = ctx.object(with: projectId) as! Project;
-                    let nodes = p.nodes?.mutableCopy() as! NSMutableOrderedSet;
                     let node = SpanNode(context: ctx);
+                    node.project = p;
                     node.order = Int32(span.id);
                     let metadata = SpanMetadata(context: ctx);
                     metadata.level = Int16(span.metadata.level.raw);
@@ -123,8 +128,6 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
                     metadata.name = span.metadata.name;
                     node.metadata = metadata;
                     node.path = "/" + span.metadata.name;
-                    nodes.add(node);
-                    p.nodes = nodes.copy() as? NSOrderedSet;
                     try ctx.save();
                 };
             }
