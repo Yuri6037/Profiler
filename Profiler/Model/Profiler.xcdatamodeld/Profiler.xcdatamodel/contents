@@ -56,6 +56,9 @@
         <relationship name="metadata" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="SpanMetadata" inverseName="nodes" inverseEntity="SpanMetadata"/>
         <relationship name="project" maxCount="1" deletionRule="Nullify" destinationEntity="Project" inverseName="nodes" inverseEntity="Project"/>
         <relationship name="runs" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="SpanRun" inverseName="node" inverseEntity="SpanRun"/>
+        <fetchIndex name="GetExisting">
+            <fetchIndexElement property="order" type="Binary" order="ascending"/>
+        </fetchIndex>
     </entity>
     <entity name="SpanRun" representedClassName="SpanRun" syncable="YES" codeGenerationType="class">
         <attribute name="message" optional="YES" attributeType="String"/>
