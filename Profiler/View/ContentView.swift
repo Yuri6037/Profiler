@@ -136,9 +136,12 @@ struct ContentView: View {
             self.nodeSelection = nil;
             self.deleteMode = true;
             withAnimation {
-                /*database.removeProject(proj: selection, onFinish: {
+                StoreUtils(container: container).deleteProject(selection) { error in
+                    if let error = error {
+                        errorHandler.pushError(AppError(fromNSError: error));
+                    }
                     self.deleteMode = false;
-                });*/
+                };
             }
         }
     }
