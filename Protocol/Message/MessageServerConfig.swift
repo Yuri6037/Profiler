@@ -22,6 +22,7 @@
 // IN THE SOFTWARE.
 
 import Foundation
+import NIO
 
 public struct MessageServerConfig: MessageHeader {
     public let maxRows: UInt32;
@@ -31,11 +32,11 @@ public struct MessageServerConfig: MessageHeader {
 
     public static var size: Int = Size().add(UInt32.self).add(UInt16.self).bytes;
 
-    public static func read(reader: inout Reader) -> MessageServerConfig {
-        return MessageServerConfig(maxRows: reader.read(UInt32.self), minPeriod: reader.read(UInt16.self));
+    public static func read(buffer: inout ByteBuffer) -> MessageServerConfig {
+        return MessageServerConfig(maxRows: .read(buffer: &buffer), minPeriod: .read(buffer: &buffer));
     }
 
-    public func decode(reader: inout Reader) throws -> Message {
+    public func decode(buffer: inout ByteBuffer) throws -> Message {
         return .serverConfig(self)
     }
 }

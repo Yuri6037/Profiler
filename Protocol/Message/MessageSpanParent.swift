@@ -22,6 +22,7 @@
 // IN THE SOFTWARE.
 
 import Foundation
+import NIO
 
 public struct MessageSpanParent: MessageHeader {
     public let id: UInt32;
@@ -31,11 +32,11 @@ public struct MessageSpanParent: MessageHeader {
 
     public static var size: Int = UInt32.size * 2;
 
-    public static func read(reader: inout Reader) -> MessageSpanParent {
-        return MessageSpanParent(id: reader.read(UInt32.self), parentNode: reader.read(UInt32.self));
+    public static func read(buffer: inout ByteBuffer) -> MessageSpanParent {
+        return MessageSpanParent(id: .read(buffer: &buffer), parentNode: .read(buffer: &buffer));
     }
 
-    public func decode(reader: inout Reader) throws -> Message {
+    public func decode(buffer: inout ByteBuffer) throws -> Message {
         return .spanParent(self)
     }
 }
@@ -48,11 +49,11 @@ public struct MessageSpanFollows: MessageHeader {
 
     public static var size: Int = UInt32.size * 2;
 
-    public static func read(reader: inout Reader) -> MessageSpanFollows {
-        return MessageSpanFollows(id: reader.read(UInt32.self), follows: reader.read(UInt32.self));
+    public static func read(buffer: inout ByteBuffer) -> MessageSpanFollows {
+        return MessageSpanFollows(id: .read(buffer: &buffer), follows: .read(buffer: &buffer));
     }
 
-    public func decode(reader: inout Reader) throws -> Message {
+    public func decode(buffer: inout ByteBuffer) throws -> Message {
         return .spanFollows(self)
     }
 }

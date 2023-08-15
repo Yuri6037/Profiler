@@ -38,8 +38,6 @@ enum MessageHeaderRegistry {
     }
 
     public static func read(type: UInt8, buffer: inout ByteBuffer) -> MessageHeader? {
-        //Because swift is a peace of shit.
-        var motherfuckingbrokenswift = Reader(buffer: buffer);
-        return map[type]?.read(reader: &motherfuckingbrokenswift)
+        return map[type]?.read(buffer: &buffer)
     }
 }

@@ -80,6 +80,7 @@ struct ContentView: View {
                     SpanNodeDetails(node: node, dataset: $datasetSelection, renderNode: !renderNode)
                         .environmentObject(filters)
                 } else {
+                    //TODO: Implement project overview dashboard with list of all nodes and overall running times for each node.
                     Text("Select an item")
                 }
             }

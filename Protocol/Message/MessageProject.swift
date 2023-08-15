@@ -22,6 +22,7 @@
 // IN THE SOFTWARE.
 
 import Foundation
+import NIO
 
 public struct MessageHeaderProject: MessageHeader {
     public let appName: Vchar;
@@ -33,14 +34,15 @@ public struct MessageHeaderProject: MessageHeader {
 
     public static var size: Int = Size(bytes: Vchar.size * 4).add(TargetHeader.self).add(Option<CpuHeader>.self).bytes
 
-    public static func read(reader: inout Reader) -> MessageHeaderProject {
-        let appName = reader.read(Vchar.self);
-        let name = reader.read(Vchar.self);
-        let version = reader.read(Vchar.self);
-        let commandLine = reader.read(Vchar.self);
-        let target = reader.read(TargetHeader.self);
-        let cpu = reader.read(Option<CpuHeader>.self);
-        return MessageHeaderProject(appName: appName, name: name, version: version, commandLine: commandLine, target: target, cpu: cpu.value);
+    public static func read(buffer: inout ByteBuffer) -> MessageHeaderProject {
+        return MessageHeaderProject(
+            appName: .read(buffer: &buffer),
+            name: .read(buffer: &buffer),
+            version: .read(buffer: &buffer),
+            commandLine: .read(buffer: &buffer),
+            target: .read(buffer: &buffer),
+            cpu: .read(buffer: &buffer)
+        );
     }
 
     public var payloadSize: Int {
@@ -48,14 +50,14 @@ public struct MessageHeaderProject: MessageHeader {
         + target.payloadSize + (cpu?.payloadSize ?? 0)
     };
 
-    public func decode(reader: inout Reader) throws -> Message {
+    public func decode(buffer: inout ByteBuffer) throws -> Message {
         return .project(MessageProject(
-            appName: try reader.read(appName),
-            name: try reader.read(name),
-            version: try reader.read(version),
-            commandLine: try reader.read(commandLine),
-            target: try reader.read(target),
-            cpu: try reader.read(cpu)
+            appName: try appName.readPayload(buffer: &buffer),
+            name: try name.readPayload(buffer: &buffer),
+            version: try version.readPayload(buffer: &buffer),
+            commandLine: try commandLine.readPayload(buffer: &buffer),
+            target: try target.readPayload(buffer: &buffer),
+            cpu: try cpu?.readPayload(buffer: &buffer)
         ));
     }
 }

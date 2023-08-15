@@ -22,36 +22,34 @@
 // IN THE SOFTWARE.
 
 import Foundation
-import NIO
 
-public struct Size {
-    public let bytes: Int;
+/*public struct MessageHeaderSpanEvent: MessageHeader {
+    public let id: UInt32;
+    public let timestamp: Int64;
+    public let level: Level;
+    public let message: Vchar;
 
-    init(bytes: Int = 0) {
-        self.bytes = bytes;
+    public var payloadSize: Int { 0 };
+
+    public static var size: Int = UInt32.size + Int64.size + Level.size + Vchar.size;
+
+    public static func read(reader: inout Reader) -> MessageHeaderSpanEvent {
+        return MessageHeaderSpanEvent(
+            id: reader.read(UInt32.self),
+            timestamp: ,
+            level: <#T##Level#>,
+            message: <#T##Vchar#>
+        );
     }
 
-    public func add<T: Component>(_ c: T.Type) -> Size {
-        return Size(bytes: self.bytes + c.size);
+    public func decode(reader: inout Reader) throws -> Message {
+        return .spanParent(self)
     }
 }
 
-public protocol MessageHeader {
-    static var size: Int { get };
-    static func read(buffer: inout ByteBuffer) -> Self;
-    var payloadSize: Int { get };
-
-    func decode(buffer: inout ByteBuffer) throws -> Message;
-}
-
-public protocol Writable {
-    func write(buffer: inout ByteBuffer);
-}
-
-public enum Message {
-    case serverConfig(MessageServerConfig);
-    case project(MessageProject);
-    case spanAlloc(MessageSpanAlloc);
-    case spanParent(MessageSpanParent);
-    case spanFollows(MessageSpanFollows);
-}
+public struct MessageSpanEvent {
+    public let id: UInt32;
+    public let timestamp: Int64;
+    public let level: Level;
+    public let message: String;
+}*/

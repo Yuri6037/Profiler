@@ -148,18 +148,18 @@ final class MessageDecoder: ChannelInboundHandler {
 
     public func channelRead(context: ChannelHandlerContext, data: NIOAny) {
         let (packet, error) = self.unwrapInboundIn(data);
-        var reader: Reader;
         if let error = error {
             context.fireChannelRead(self.wrapInboundOut((nil, error)));
         }
         if let packet = packet {
+            var buffer: ByteBuffer;
             if let buf = packet.payload {
-                reader = Reader(buffer: buf);
+                buffer = buf;
             } else {
-                reader = Reader(buffer: ByteBuffer());
+                buffer = ByteBuffer();
             }
             do {
-                let msg = try packet.header.decode(reader: &reader);
+                let msg = try packet.header.decode(buffer: &buffer);
                 context.fireChannelRead(self.wrapInboundOut((msg, nil)));
             } catch let error {
                 context.fireChannelRead(self.wrapInboundOut((nil, error)));

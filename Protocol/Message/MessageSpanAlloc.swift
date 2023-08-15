@@ -22,6 +22,7 @@
 // IN THE SOFTWARE.
 
 import Foundation
+import NIO
 
 public struct MessageHeaderSpanAlloc: MessageHeader {
     public let id: UInt32;
@@ -29,19 +30,19 @@ public struct MessageHeaderSpanAlloc: MessageHeader {
 
     public static var size: Int = UInt32.size + MetadataHeader.size;
 
-    public static func read(reader: inout Reader) -> MessageHeaderSpanAlloc {
+    public static func read(buffer: inout ByteBuffer) -> MessageHeaderSpanAlloc {
         return MessageHeaderSpanAlloc(
-            id: reader.read(UInt32.self),
-            metadata: reader.read(MetadataHeader.self)
+            id: .read(buffer: &buffer),
+            metadata: .read(buffer: &buffer)
         );
     }
 
     public var payloadSize: Int { metadata.payloadSize };
 
-    public func decode(reader: inout Reader) throws -> Message {
+    public func decode(buffer: inout ByteBuffer) throws -> Message {
         return .spanAlloc(MessageSpanAlloc(
             id: id,
-            metadata: try reader.read(metadata)
+            metadata: try metadata.readPayload(buffer: &buffer)
         ));
     }
 }
