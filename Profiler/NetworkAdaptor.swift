@@ -30,6 +30,8 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
     private var net: NetManager?;
     private let errorHandler: ErrorHandler;
     private var connection: Connection?;
+    private let queue: DispatchQueue;
+    private let context: NSManagedObjectContext;
     private let container: NSPersistentContainer;
     private var projectId: NSManagedObjectID?;
     @Published var showConnectSheet = false;
@@ -38,6 +40,8 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
     init(errorHandler: ErrorHandler, container: NSPersistentContainer) {
         self.errorHandler = errorHandler;
         self.container = container;
+        self.queue = DispatchQueue(label: "NetworkAdaptor", qos: .userInteractive);
+        self.context = container.newBackgroundContext();
     }
 
     func disconnect() {
@@ -54,16 +58,22 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
         connection?.send(record: record);
     }
 
-    func execDb(_ fn: @escaping (NSManagedObjectContext) throws -> Void) {
-        container.performBackgroundTask { ctx in
+    func execDb(_ fn: @escaping (NSManagedObjectContext, Project?) throws -> Void) {
+        self.queue.async {
+            let p: Project?;
+            if let projectId = self.projectId {
+                p = self.context.object(with: projectId) as? Project;
+            } else {
+                p = nil;
+            }
             do {
-                try fn(ctx)
+                try fn(self.context, p);
             } catch let error {
                 DispatchQueue.main.async {
                     self.errorHandler.pushError(AppError(fromError: error));
                 }
             }
-        };
+        }
     }
 
     func onMessage(message: Message) {
@@ -73,7 +83,7 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
             self.config = config;
             break;
         case .project(let project):
-            execDb { ctx in
+            execDb { ctx, _ in
                 let p = Project(context: ctx);
                 p.timestamp = Date();
                 p.appName = project.appName;
@@ -107,30 +117,26 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
                 zerospan.order = 0;
                 zerospan.metadata = nil;
                 try ctx.save();
-                DispatchQueue.main.async {
-                    self.projectId = p.objectID;
-                }
+                self.projectId = p.objectID;
             };
             break;
         case .spanAlloc(let span):
-            if let projectId = projectId {
-                execDb { ctx in
-                    let p = ctx.object(with: projectId) as! Project;
-                    let node = SpanNode(context: ctx);
-                    node.project = p;
-                    node.order = Int32(span.id);
-                    let metadata = SpanMetadata(context: ctx);
-                    metadata.level = Int16(span.metadata.level.raw);
-                    metadata.file = span.metadata.file;
-                    metadata.modulePath = span.metadata.modulePath;
-                    metadata.target = span.metadata.target;
-                    metadata.line = span.metadata.line != nil ? Int32(span.metadata.line!) : -1;
-                    metadata.name = span.metadata.name;
-                    node.metadata = metadata;
-                    node.path = "/" + span.metadata.name;
-                    try ctx.save();
-                };
-            }
+            print(span);
+            execDb { ctx, p in
+                let node = SpanNode(context: ctx);
+                node.project = p;
+                node.order = Int32(span.id);
+                let metadata = SpanMetadata(context: ctx);
+                metadata.level = Int16(span.metadata.level.raw);
+                metadata.file = span.metadata.file;
+                metadata.modulePath = span.metadata.modulePath;
+                metadata.target = span.metadata.target;
+                metadata.line = span.metadata.line != nil ? Int32(span.metadata.line!) : -1;
+                metadata.name = span.metadata.name;
+                node.metadata = metadata;
+                node.path = "/" + span.metadata.name;
+                try ctx.save();
+            };
             break;
         case .spanParent(_):
             break;
@@ -139,34 +145,27 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
         case .spanEvent(let event):
             //TODO: This needs CSV parsing for the message (as it contains variables in CSV formats).
             print(event.message);
-            /*if let projectId = projectId {
-                execDb { ctx in
-                    let p = ctx.object(with: projectId) as! Project;
-                    let request: NSFetchRequest<SpanNode> = NSFetchRequest(entityName: "SpanNode");
-                    request.predicate = NSPredicate(format: "project = %@ AND order = %d", p, event.id);
-                    if let node = try ctx.fetch(request).first {
-                        event.
-                    }
-                };
-            }*/
+            /*execDb { ctx, p in
+                let request: NSFetchRequest<SpanNode> = NSFetchRequest(entityName: "SpanNode");
+                request.predicate = NSPredicate(format: "project = %@ AND order = %d", p, event.id);
+                if let node = try ctx.fetch(request).first {
+                    event.
+                }
+            };*/
             break;
         case .spanUpdate(let span):
-            if let projectId = projectId {
-                execDb { ctx in
-                    let p = ctx.object(with: projectId) as! Project;
-                    let request: NSFetchRequest<SpanNode> = NSFetchRequest(entityName: "SpanNode");
-                    request.predicate = NSPredicate(format: "project = %@ AND order = %d", p, span.id);
-                    if let node = try ctx.fetch(request).first {
-                        node.averageTime = Int64(span.averageTime.nanoseconds);
-                        node.maxTime = Int64(span.maxTime.nanoseconds);
-                        node.minTime = Int64(span.minTime.nanoseconds);
-                    }
-                    try ctx.save();
-                };
-            }
+            execDb { ctx, p in
+                let request: NSFetchRequest<SpanNode> = NSFetchRequest(entityName: "SpanNode");
+                request.predicate = NSPredicate(format: "project = %@ AND order = %d", p!, span.id);
+                if let node = try ctx.fetch(request).first {
+                    node.averageTime = Int64(span.averageTime.nanoseconds);
+                    node.maxTime = Int64(span.maxTime.nanoseconds);
+                    node.minTime = Int64(span.minTime.nanoseconds);
+                }
+                try ctx.save();
+            };
             break;
-        case .spanDataset(let dataset):
-            print(dataset.content);
+        case .spanDataset(_):
             break;
         }
     }
