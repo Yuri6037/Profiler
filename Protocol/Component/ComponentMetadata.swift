@@ -39,11 +39,11 @@ public struct MetadataHeader: Component {
     public static func read(buffer: inout ByteBuffer) -> MetadataHeader {
         return MetadataHeader(
             level: .read(buffer: &buffer),
-            line: .read(buffer: &buffer),
+            line: Option<UInt32>.read(buffer: &buffer).value,
             name: .read(buffer: &buffer),
             target: .read(buffer: &buffer),
-            modulePath: .read(buffer: &buffer),
-            file: .read(buffer: &buffer)
+            modulePath: Option<Vchar>.read(buffer: &buffer).value,
+            file: Option<Vchar>.read(buffer: &buffer).value
         );
     }
 }

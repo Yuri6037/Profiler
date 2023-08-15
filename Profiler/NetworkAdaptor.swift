@@ -136,9 +136,34 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
             break;
         case .spanFollows(_):
             break;
-        case .spanEvent(_):
+        case .spanEvent(let event):
+            //TODO: This needs CSV parsing for the message (as it contains variables in CSV formats).
+            print(event.message);
+            /*if let projectId = projectId {
+                execDb { ctx in
+                    let p = ctx.object(with: projectId) as! Project;
+                    let request: NSFetchRequest<SpanNode> = NSFetchRequest(entityName: "SpanNode");
+                    request.predicate = NSPredicate(format: "project = %@ AND order = %d", p, event.id);
+                    if let node = try ctx.fetch(request).first {
+                        event.
+                    }
+                };
+            }*/
             break;
-        case .spanUpdate(_):
+        case .spanUpdate(let span):
+            if let projectId = projectId {
+                execDb { ctx in
+                    let p = ctx.object(with: projectId) as! Project;
+                    let request: NSFetchRequest<SpanNode> = NSFetchRequest(entityName: "SpanNode");
+                    request.predicate = NSPredicate(format: "project = %@ AND order = %d", p, span.id);
+                    if let node = try ctx.fetch(request).first {
+                        node.averageTime = Int64(span.averageTime.nanoseconds);
+                        node.maxTime = Int64(span.maxTime.nanoseconds);
+                        node.minTime = Int64(span.minTime.nanoseconds);
+                    }
+                    try ctx.save();
+                };
+            }
             break;
         case .spanDataset(let dataset):
             print(dataset.content);

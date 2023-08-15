@@ -41,7 +41,7 @@ public struct MessageHeaderProject: MessageHeader {
             version: .read(buffer: &buffer),
             commandLine: .read(buffer: &buffer),
             target: .read(buffer: &buffer),
-            cpu: .read(buffer: &buffer)
+            cpu: Option<CpuHeader>.read(buffer: &buffer).value
         );
     }
 
