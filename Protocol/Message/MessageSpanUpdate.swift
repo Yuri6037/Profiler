@@ -33,7 +33,7 @@ public struct MessageSpanUpdate: MessageHeader {
 
     public var payloadSize: Int { 0 };
 
-    public static var size: Int = UInt32.size * 2;
+    public static var size: Int = UInt32.size * 2 + Duration.size * 3;
 
     public static func read(buffer: inout ByteBuffer) -> MessageSpanUpdate {
         return MessageSpanUpdate(
