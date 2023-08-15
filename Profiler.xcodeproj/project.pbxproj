@@ -66,10 +66,10 @@
 		DA837D292A17AC7900B91BCE /* Encoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA837D282A17AC7900B91BCE /* Encoder.swift */; };
 		DA8436882A8BC13600A280B3 /* MessageSpanParent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8436872A8BC13600A280B3 /* MessageSpanParent.swift */; };
 		DA84368A2A8BC70F00A280B3 /* MessageSpanEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8436892A8BC70F00A280B3 /* MessageSpanEvent.swift */; };
+		DA84368C2A8BCC5C00A280B3 /* MessageSpanUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA84368B2A8BCC5C00A280B3 /* MessageSpanUpdate.swift */; };
 		DAA45DB62A84EC64009ABBCB /* MessageClientConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA45DB52A84EC64009ABBCB /* MessageClientConfig.swift */; };
 		DAA45DB82A84ECF7009ABBCB /* MessageClientRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA45DB72A84ECF7009ABBCB /* MessageClientRecord.swift */; };
 		DAA45DBA2A84EDD8009ABBCB /* ComponentU16.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA45DB92A84EDD8009ABBCB /* ComponentU16.swift */; };
-		DAACDA9E2A863FC300CDDC34 /* Duration.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAACDA9D2A863FC300CDDC34 /* Duration.swift */; };
 		DAADF8522A7FDE3B00E4247C /* ComponentBool.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAADF8512A7FDE3B00E4247C /* ComponentBool.swift */; };
 /* End PBXBuildFile section */
 
@@ -187,10 +187,10 @@
 		DA837D282A17AC7900B91BCE /* Encoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Encoder.swift; sourceTree = "<group>"; };
 		DA8436872A8BC13600A280B3 /* MessageSpanParent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageSpanParent.swift; sourceTree = "<group>"; };
 		DA8436892A8BC70F00A280B3 /* MessageSpanEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageSpanEvent.swift; sourceTree = "<group>"; };
+		DA84368B2A8BCC5C00A280B3 /* MessageSpanUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageSpanUpdate.swift; sourceTree = "<group>"; };
 		DAA45DB52A84EC64009ABBCB /* MessageClientConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageClientConfig.swift; sourceTree = "<group>"; };
 		DAA45DB72A84ECF7009ABBCB /* MessageClientRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageClientRecord.swift; sourceTree = "<group>"; };
 		DAA45DB92A84EDD8009ABBCB /* ComponentU16.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentU16.swift; sourceTree = "<group>"; };
-		DAACDA9D2A863FC300CDDC34 /* Duration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Duration.swift; sourceTree = "<group>"; };
 		DAADF8512A7FDE3B00E4247C /* ComponentBool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentBool.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -352,7 +352,6 @@
 				DA2A7EB82A8534AA009B454D /* Project.swift */,
 				DA2A7EBA2A85357A009B454D /* SpanNode.swift */,
 				DA2A7EBC2A85393D009B454D /* Dataset.swift */,
-				DAACDA9D2A863FC300CDDC34 /* Duration.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -400,6 +399,7 @@
 				DA270D902A8AA6E500AE5707 /* MessageSpanAlloc.swift */,
 				DA8436872A8BC13600A280B3 /* MessageSpanParent.swift */,
 				DA8436892A8BC70F00A280B3 /* MessageSpanEvent.swift */,
+				DA84368B2A8BCC5C00A280B3 /* MessageSpanUpdate.swift */,
 			);
 			path = Message;
 			sourceTree = "<group>";
@@ -628,7 +628,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA17E7F02A12B84300554B8A /* ProfilerApp.swift in Sources */,
-				DAACDA9E2A863FC300CDDC34 /* Duration.swift in Sources */,
 				DA1AB3DA2A862A90008DBB2D /* ProjectLink.swift in Sources */,
 				DA5A3AAC2A89165F000375A2 /* IntPicker.swift in Sources */,
 				DA1AB3D42A862A90008DBB2D /* SpanRunTable.swift in Sources */,
@@ -700,6 +699,7 @@
 				DA837D052A153D5600B91BCE /* ComponentLevel.swift in Sources */,
 				DA837D122A15897F00B91BCE /* Message.swift in Sources */,
 				DA837D212A1774E400B91BCE /* MessageHello.swift in Sources */,
+				DA84368C2A8BCC5C00A280B3 /* MessageSpanUpdate.swift in Sources */,
 				DA17E8462A12BAE600554B8A /* Constants.swift in Sources */,
 				DA837D292A17AC7900B91BCE /* Encoder.swift in Sources */,
 				DA837D012A14116600B91BCE /* ComponentVchar.swift in Sources */,

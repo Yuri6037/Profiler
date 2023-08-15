@@ -138,6 +138,8 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
             break;
         case .spanEvent(_):
             break;
+        case .spanUpdate(_):
+            break;
         }
     }
 

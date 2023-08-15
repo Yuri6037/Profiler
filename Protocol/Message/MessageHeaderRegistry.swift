@@ -31,6 +31,7 @@ enum MessageHeaderRegistry {
         2: MessageSpanParent.self,
         3: MessageSpanFollows.self,
         4: MessageHeaderSpanEvent.self,
+        5: MessageSpanUpdate.self,
         7: MessageServerConfig.self
     ];
 

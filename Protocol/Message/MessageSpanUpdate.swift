@@ -22,27 +22,30 @@
 // IN THE SOFTWARE.
 
 import Foundation
+import NIO
 
-struct Duration {
-    let microseconds: UInt64;
-    var seconds: Float64 { Float64(microseconds) / 1000000.0 }
-    var milliseconds: Float64 { Float64(microseconds) / 1000.0 }
+public struct MessageSpanUpdate: MessageHeader {
+    public let id: UInt32;
+    public let runCount: UInt32;
+    public let averageTime: Duration;
+    public let minTime: Duration;
+    public let maxTime: Duration;
 
-    init(microseconds: UInt64) {
-        self.microseconds = microseconds;
+    public var payloadSize: Int { 0 };
+
+    public static var size: Int = UInt32.size * 2;
+
+    public static func read(buffer: inout ByteBuffer) -> MessageSpanUpdate {
+        return MessageSpanUpdate(
+            id: .read(buffer: &buffer),
+            runCount: .read(buffer: &buffer),
+            averageTime: .read(buffer: &buffer),
+            minTime: .read(buffer: &buffer),
+            maxTime: .read(buffer: &buffer)
+        );
     }
 
-    init(seconds: UInt32, milliseconds: UInt32, microseconds: UInt32) {
-        self.microseconds = UInt64(seconds * 1000000) + UInt64(milliseconds * 1000) + UInt64(microseconds);
-    }
-
-    func formatted() -> String {
-        if seconds > 0 {
-            return seconds.formatted() + "s";
-        } else if milliseconds > 0 {
-            return milliseconds.formatted() + "ms";
-        } else {
-            return microseconds.formatted() + "µs";
-        }
+    public func decode(buffer: inout ByteBuffer) throws -> Message {
+        return .spanUpdate(self)
     }
 }
