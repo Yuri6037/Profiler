@@ -134,7 +134,6 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
 
     func onError(error: Error) {
         errorHandler.pushError(AppError(fromError: error));
-        connection?.close();
     }
 
     func onConnect(connection: Connection) {
@@ -151,6 +150,7 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
         }
         if net != nil {
             errorHandler.pushError(AppError(description: "A network link already exists"));
+            return;
         }
         net = NetManager(handler: self);
         //Again another sign of a garbage language: far too stupid to understand

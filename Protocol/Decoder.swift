@@ -27,6 +27,7 @@ import NIO
 enum DecoderState {
     case handshake;
     case running;
+    case error;
 }
 
 enum ReadError: Error {
@@ -37,6 +38,12 @@ enum MessageReadingState {
     case none;
     case header(UInt8);
     case payload(MessageHeader);
+}
+
+enum MsgDecodeState {
+    case needMoreSteps;
+    case needMoreData;
+    case `continue`;
 }
 
 struct Packet {
@@ -67,7 +74,7 @@ final class Decoder: ByteToMessageDecoder {
         return slice;
     }
     
-    private func decodeInternal(context: ChannelHandlerContext, buffer: inout ByteBuffer) throws -> DecodingState {
+    private func decodeInternal(context: ChannelHandlerContext, buffer: inout ByteBuffer) throws -> MsgDecodeState {
         if (state == DecoderState.handshake) {
             guard var buffer = decodeHello(buffer: &buffer) else {
                 return .needMoreData;
@@ -107,21 +114,31 @@ final class Decoder: ByteToMessageDecoder {
             }
             context.fireChannelRead(self.wrapInboundOut((Packet(header: msg, payload: buffer), nil)));
             msgReadState = .none;
-            break;
+            return .continue;
         }
-        return .continue;
+        return .needMoreSteps;
     }
 
     public func decode(context: ChannelHandlerContext, buffer: inout ByteBuffer) throws -> DecodingState {
-        var state: DecodingState = .continue;
-        while (state != .needMoreData) {
+        if state == .error {
+            //Empty the buffer.
+            buffer.clear()
+            //Ensure connection is closed.
+            let _ = context.close();
+            //Return need for more data even if we just want to terminate the connection.
+            return .needMoreData;
+        }
+        var state: MsgDecodeState = .needMoreSteps;
+        while (state == .needMoreSteps) {
             do {
                 state = try self.decodeInternal(context: context, buffer: &buffer);
             } catch let error {
                 context.fireChannelRead(self.wrapInboundOut((nil, error)));
+                self.state = .error;
+                break;
             }
         }
-        return state;
+        return .continue;
     }
 }
 
