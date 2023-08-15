@@ -59,7 +59,7 @@ extension SpanRun {
     var wOrder: UInt { UInt(self.order) }
     var wVariables: [SpanVariable] { (self.variables?.allObjects ?? []) as! [SpanVariable] }
     var wMessage: String? { self.message }
-    var wTime: Duration { Duration(microseconds: UInt64(self.time)) }
+    var wTime: Duration { Duration(nanoseconds: UInt64(self.time)) }
 }
 
 extension SpanEvent {
@@ -75,9 +75,9 @@ extension SpanNode {
     var wPath: String { self.path! }
     var wMetadata: SpanMetadata? { self.metadata }
 
-    var wAverageTime: Duration { Duration(microseconds: UInt64(self.averageTime)) }
-    var wMinTime: Duration { Duration(microseconds: UInt64(self.minTime)) }
-    var wMaxTime: Duration { Duration(microseconds: UInt64(self.maxTime)) }
+    var wAverageTime: Duration { Duration(nanoseconds: UInt64(self.averageTime)) }
+    var wMinTime: Duration { Duration(nanoseconds: UInt64(self.minTime)) }
+    var wMaxTime: Duration { Duration(nanoseconds: UInt64(self.maxTime)) }
 }
 
 extension SpanMetadata: SampleData {

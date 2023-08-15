@@ -24,12 +24,31 @@
 import Foundation
 import NIO
 
+public struct Duration {
+    public let nanoseconds: UInt64;
+    public var microseconds: Float64 { Float64(nanoseconds) / 1000.0 }
+    public var seconds: Float64 { Float64(microseconds) / 1000000000.0 }
+    public var milliseconds: Float64 { Float64(microseconds) / 1000000.0 }
+
+    public init(nanoseconds: UInt64) {
+        self.nanoseconds = nanoseconds;
+    }
+
+    public init(seconds: UInt32, milliseconds: UInt32, microseconds: UInt32) {
+        self.nanoseconds = UInt64(seconds * 1000000000) + UInt64(milliseconds * 1000000) + UInt64(microseconds * 1000);
+    }
+
+    public init(seconds: UInt32, nanoseconds: UInt32) {
+        self.nanoseconds = UInt64(seconds * 1000000000) + UInt64(nanoseconds);
+    }
+}
+
 extension Duration: Component {
     public static var size: Int = UInt32.size * 2;
 
     public static func read(buffer: inout ByteBuffer) -> Duration {
         let seconds = UInt32.read(buffer: &buffer);
         let nanos = UInt32.read(buffer: &buffer);
-        return Duration(secondsComponent: Int64(seconds), attosecondsComponent: Int64(nanos) * 1000000000);
+        return Duration(seconds: seconds, nanoseconds: nanos);
     }
 }
