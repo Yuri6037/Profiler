@@ -64,6 +64,7 @@
 		DA837D212A1774E400B91BCE /* MessageHello.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA837D202A1774E400B91BCE /* MessageHello.swift */; };
 		DA837D232A1778AB00B91BCE /* BP3DProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA837D222A1778AB00B91BCE /* BP3DProtocol.swift */; };
 		DA837D292A17AC7900B91BCE /* Encoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA837D282A17AC7900B91BCE /* Encoder.swift */; };
+		DA8436882A8BC13600A280B3 /* MessageSpanParent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8436872A8BC13600A280B3 /* MessageSpanParent.swift */; };
 		DAA45DB62A84EC64009ABBCB /* MessageClientConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA45DB52A84EC64009ABBCB /* MessageClientConfig.swift */; };
 		DAA45DB82A84ECF7009ABBCB /* MessageClientRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA45DB72A84ECF7009ABBCB /* MessageClientRecord.swift */; };
 		DAA45DBA2A84EDD8009ABBCB /* ComponentU16.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA45DB92A84EDD8009ABBCB /* ComponentU16.swift */; };
@@ -183,6 +184,7 @@
 		DA837D202A1774E400B91BCE /* MessageHello.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageHello.swift; sourceTree = "<group>"; };
 		DA837D222A1778AB00B91BCE /* BP3DProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BP3DProtocol.swift; sourceTree = "<group>"; };
 		DA837D282A17AC7900B91BCE /* Encoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Encoder.swift; sourceTree = "<group>"; };
+		DA8436872A8BC13600A280B3 /* MessageSpanParent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageSpanParent.swift; sourceTree = "<group>"; };
 		DAA45DB52A84EC64009ABBCB /* MessageClientConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageClientConfig.swift; sourceTree = "<group>"; };
 		DAA45DB72A84ECF7009ABBCB /* MessageClientRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageClientRecord.swift; sourceTree = "<group>"; };
 		DAA45DB92A84EDD8009ABBCB /* ComponentU16.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentU16.swift; sourceTree = "<group>"; };
@@ -394,6 +396,7 @@
 				DAA45DB52A84EC64009ABBCB /* MessageClientConfig.swift */,
 				DAA45DB72A84ECF7009ABBCB /* MessageClientRecord.swift */,
 				DA270D902A8AA6E500AE5707 /* MessageSpanAlloc.swift */,
+				DA8436872A8BC13600A280B3 /* MessageSpanParent.swift */,
 			);
 			path = Message;
 			sourceTree = "<group>";
@@ -673,6 +676,7 @@
 				DA837D1C2A16560A00B91BCE /* ComponentTarget.swift in Sources */,
 				DA837D032A153CC600B91BCE /* ComponentU32.swift in Sources */,
 				DA837D182A16528900B91BCE /* MessageServerConfig.swift in Sources */,
+				DA8436882A8BC13600A280B3 /* MessageSpanParent.swift in Sources */,
 				DA270D912A8AA6E500AE5707 /* MessageSpanAlloc.swift in Sources */,
 				DA837D142A162AE100B91BCE /* MessageHeaderRegistry.swift in Sources */,
 				DA837D232A1778AB00B91BCE /* BP3DProtocol.swift in Sources */,

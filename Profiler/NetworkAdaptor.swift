@@ -131,7 +131,11 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
                     try ctx.save();
                 };
             }
-            break
+            break;
+        case .spanParent(_):
+            break;
+        case .spanFollows(_):
+            break;
         }
     }
 

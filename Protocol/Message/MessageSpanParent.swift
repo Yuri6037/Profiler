@@ -22,24 +22,37 @@
 // IN THE SOFTWARE.
 
 import Foundation
-import NIO
 
-enum MessageHeaderRegistry {
-    private static var map: [UInt8: MessageHeader.Type] = [
-        0: MessageHeaderProject.self,
-        1: MessageHeaderSpanAlloc.self,
-        2: MessageSpanParent.self,
-        3: MessageSpanFollows.self,
-        7: MessageServerConfig.self
-    ];
+public struct MessageSpanParent: MessageHeader {
+    public let id: UInt32;
+    public let parentNode: UInt32;
 
-    public static func sizeof(type: UInt8) -> Int? {
-        return map[type]?.size;
+    public var payloadSize: Int { 0 };
+
+    public static var size: Int = UInt32.size * 2;
+
+    public static func read(reader: inout Reader) -> MessageSpanParent {
+        return MessageSpanParent(id: reader.read(UInt32.self), parentNode: reader.read(UInt32.self));
     }
 
-    public static func read(type: UInt8, buffer: inout ByteBuffer) -> MessageHeader? {
-        //Because swift is a peace of shit.
-        var motherfuckingbrokenswift = Reader(buffer: buffer);
-        return map[type]?.read(reader: &motherfuckingbrokenswift)
+    public func decode(reader: inout Reader) throws -> Message {
+        return .spanParent(self)
+    }
+}
+
+public struct MessageSpanFollows: MessageHeader {
+    public let id: UInt32;
+    public let follows: UInt32;
+
+    public var payloadSize: Int { 0 };
+
+    public static var size: Int = UInt32.size * 2;
+
+    public static func read(reader: inout Reader) -> MessageSpanFollows {
+        return MessageSpanFollows(id: reader.read(UInt32.self), follows: reader.read(UInt32.self));
+    }
+
+    public func decode(reader: inout Reader) throws -> Message {
+        return .spanFollows(self)
     }
 }

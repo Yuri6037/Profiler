@@ -72,4 +72,6 @@ public enum Message {
     case serverConfig(MessageServerConfig);
     case project(MessageProject);
     case spanAlloc(MessageSpanAlloc);
+    case spanParent(MessageSpanParent);
+    case spanFollows(MessageSpanFollows);
 }
