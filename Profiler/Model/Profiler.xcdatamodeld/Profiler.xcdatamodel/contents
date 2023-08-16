@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22F82" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22G74" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Cpu" representedClassName="Cpu" syncable="YES" codeGenerationType="class">
         <attribute name="coreCount" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" attributeType="String" defaultValueString=""/>
@@ -32,7 +32,9 @@
     <entity name="SpanEvent" representedClassName="SpanEvent" syncable="YES" codeGenerationType="class">
         <attribute name="level" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="message" attributeType="String" defaultValueString=""/>
+        <attribute name="module" attributeType="String"/>
         <attribute name="order" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="target" attributeType="String"/>
         <attribute name="timestamp" attributeType="Date" usesScalarValueType="NO"/>
         <relationship name="node" maxCount="1" deletionRule="Nullify" destinationEntity="SpanNode" inverseName="events" inverseEntity="SpanNode"/>
         <relationship name="variables" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="SpanVariable" inverseName="event" inverseEntity="SpanVariable"/>

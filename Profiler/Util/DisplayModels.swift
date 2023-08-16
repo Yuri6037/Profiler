@@ -45,6 +45,8 @@ struct DisplaySpanEvent: Identifiable {
     var message: String;
     var level: String;
     var timestamp: String;
+    var target: String;
+    var module: String;
 
     init(fromModel model: SpanEvent) {
         self.timestamp = model.wTimestamp.formatted()
@@ -52,6 +54,8 @@ struct DisplaySpanEvent: Identifiable {
         self.message = model.wMessage;
         self.level = model.wLevel.name;
         self.id = UUID();
+        self.target = model.wTarget;
+        self.module = model.wModule;
     }
 }
 

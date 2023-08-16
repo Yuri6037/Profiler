@@ -68,6 +68,8 @@ extension SpanEvent {
     var wMessage: String { self.message! }
     var wTimestamp: Date { self.timestamp! }
     var wLevel: Level { Level(code: self.level) }
+    var wTarget: String { self.target! }
+    var wModule: String { self.module! }
 }
 
 extension SpanNode {

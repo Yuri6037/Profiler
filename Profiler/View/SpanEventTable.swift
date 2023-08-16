@@ -30,6 +30,8 @@ struct SpanEventTable: View {
         Table(events) {
             TableColumn("Timestamp", value: \.timestamp)
             TableColumn("Level", value: \.level)
+            TableColumn("Target", value: \.target)
+            TableColumn("Module", value: \.module)
             TableColumn("Message", value: \.message)
             TableColumn("Variables", value: \.variables)
         }

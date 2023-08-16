@@ -24,6 +24,8 @@
 import SwiftUI
 import CoreData
 
+//TODO: Support removal under iOS.
+
 struct ContentView: View {
     @EnvironmentObject private var adaptor: NetworkAdaptor;
     @EnvironmentObject private var errorHandler: ErrorHandler;
