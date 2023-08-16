@@ -52,14 +52,6 @@ struct ContentView: View {
                 ProgressView()
             } else {
                 List(items, selection: $projectSelection) { ProjectLink(project: $0) }
-                    .toolbar {
-                        Button(action: {
-                            nodeSelection = nil;
-                            projectSelection = nil;
-                        }) {
-                            ToolButton(icon: "filemenu.and.cursorarrow", text: "Reset selection", value: 0)
-                        }
-                    }
                 if showImportProgress {
                     Divider()
                     VStack {
@@ -70,12 +62,14 @@ struct ContentView: View {
                     }.padding(.bottom, 5)
                 } else {
                     Divider()
-                    HStack {
-                        TextField("Debug server address", text: $address)
-                        Button(action: { }) {
-                            ToolButton(icon: "plus", text: "Connect to debug server", value: 0)
-                        }
-                    }.padding(.horizontal)
+                    VStack {
+                        HStack {
+                            TextField("Debug server address", text: $address)
+                            Button(action: { }) {
+                                ToolButton(icon: "plus", text: "Connect to debug server", value: 0)
+                            }
+                        }.padding(.horizontal)
+                    }.padding(.bottom, 8)
                 }
             }
         }

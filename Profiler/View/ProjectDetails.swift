@@ -49,6 +49,12 @@ struct ProjectDetails: View {
                         Text(cmdline)
                     }
                 }
+                Divider()
+                NavigationLink(destination: { ProjectOverview(project: project) }) {
+                    ToolButton(icon: "filemenu.and.cursorarrow", text: "Project Overview", value: 0)
+                    Text("Project Overview")
+                }
+                Divider()
                 HStack {
                     List(project.wDatasets.sorted(by: { $1.wTimestamp > $0.wTimestamp }), selection: $dataset) { item in
                         Text(item.wTimestamp.formatted())

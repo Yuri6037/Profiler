@@ -72,6 +72,7 @@
 		DAA45DB82A84ECF7009ABBCB /* MessageClientRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA45DB72A84ECF7009ABBCB /* MessageClientRecord.swift */; };
 		DAA45DBA2A84EDD8009ABBCB /* ComponentU16.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA45DB92A84EDD8009ABBCB /* ComponentU16.swift */; };
 		DAADF8522A7FDE3B00E4247C /* ComponentBool.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAADF8512A7FDE3B00E4247C /* ComponentBool.swift */; };
+		DAFD445C2A8D1B4C008F99D2 /* ProjectOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFD445B2A8D1B4C008F99D2 /* ProjectOverview.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -194,6 +195,7 @@
 		DAA45DB72A84ECF7009ABBCB /* MessageClientRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageClientRecord.swift; sourceTree = "<group>"; };
 		DAA45DB92A84EDD8009ABBCB /* ComponentU16.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentU16.swift; sourceTree = "<group>"; };
 		DAADF8512A7FDE3B00E4247C /* ComponentBool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentBool.swift; sourceTree = "<group>"; };
+		DAFD445B2A8D1B4C008F99D2 /* ProjectOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectOverview.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -343,6 +345,7 @@
 				DA1AB3CE2A862A90008DBB2D /* ProjectInfo.swift */,
 				DA5A3AA72A8912A1000375A2 /* ClientConfig.swift */,
 				DA5A3AAB2A89165F000375A2 /* IntPicker.swift */,
+				DAFD445B2A8D1B4C008F99D2 /* ProjectOverview.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -647,6 +650,7 @@
 				DA2A7EBB2A85357A009B454D /* SpanNode.swift in Sources */,
 				DA1AB3D92A862A90008DBB2D /* ContentView.swift in Sources */,
 				DA5A3AA62A88CF9B000375A2 /* NetworkAdaptor.swift in Sources */,
+				DAFD445C2A8D1B4C008F99D2 /* ProjectOverview.swift in Sources */,
 				DA1AB3D62A862A90008DBB2D /* SpanEventTable.swift in Sources */,
 				DA2A7EB92A8534AA009B454D /* Project.swift in Sources */,
 				DA5A3AA82A8912A1000375A2 /* ClientConfig.swift in Sources */,
