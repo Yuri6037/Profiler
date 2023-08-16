@@ -43,6 +43,7 @@ struct ContentView: View {
     @State private var renderNode: Bool = true;
     @State private var showImportProgress: Bool = false;
     @State private var progress: CGFloat = 0.0;
+    @State private var address = "";
     @StateObject private var filters: NodeFilters = NodeFilters();
 
     var sidebar: some View {
@@ -51,6 +52,14 @@ struct ContentView: View {
                 ProgressView()
             } else {
                 List(items, selection: $projectSelection) { ProjectLink(project: $0) }
+                    .toolbar {
+                        Button(action: {
+                            nodeSelection = nil;
+                            projectSelection = nil;
+                        }) {
+                            ToolButton(icon: "filemenu.and.cursorarrow", text: "Reset selection", value: 0)
+                        }
+                    }
                 if showImportProgress {
                     Divider()
                     VStack {
@@ -59,6 +68,14 @@ struct ContentView: View {
                             .padding(.leading)
                             .padding(.trailing)
                     }.padding(.bottom, 5)
+                } else {
+                    Divider()
+                    HStack {
+                        TextField("Debug server address", text: $address)
+                        Button(action: { }) {
+                            ToolButton(icon: "plus", text: "Connect to debug server", value: 0)
+                        }
+                    }.padding(.horizontal)
                 }
             }
         }

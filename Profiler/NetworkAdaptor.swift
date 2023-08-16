@@ -179,13 +179,8 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
     }
 
     public func connect(url: URL) {
-        var path = url.path;
-        let id = path.index(of: ":");
-        var port: Int? = nil;
-        if id != -1 {
-            port = path[safe: id + 1...9999999].toInt();
-            path = path[0..<id];
-        }
+        let address = url.host ?? "localhost";
+        let port = url.port;
         if net != nil {
             errorHandler.pushError(AppError(description: "A network link already exists"));
             return;
@@ -194,13 +189,11 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
         //Again another sign of a garbage language: far too stupid to understand
         //that path and port are intended to be MOVED not borrowed!!!
         //Even Rust borrow checker works better than this stupidly broken shitty language.
-        let motherfuckingswift = path;
-        let motherfuckingswift1 = port;
         Task {
-            if let port = motherfuckingswift1 {
-                await net?.connect(address: motherfuckingswift, port:port);
+            if let port = port {
+                await net?.connect(address: address, port:port);
             } else {
-                await net?.connect(address: motherfuckingswift);
+                await net?.connect(address: address);
             }
             await net?.wait()
             DispatchQueue.main.async {

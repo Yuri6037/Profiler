@@ -49,14 +49,17 @@ struct ProjectDetails: View {
                         Text(cmdline)
                     }
                 }
-                List(project.wDatasets.sorted(by: { $1.wTimestamp > $0.wTimestamp }), selection: $dataset) { item in
-                    Text(item.wTimestamp.formatted())
-                }
-                List(project.wNodes.sorted(by: { $1.wOrder > $0.wOrder }), selection: $node) { item in
-                    NavigationLink(value: item) {
-                        Text(item.wPath)
+                HStack {
+                    List(project.wDatasets.sorted(by: { $1.wTimestamp > $0.wTimestamp }), selection: $dataset) { item in
+                        Text(item.wTimestamp.formatted())
+                    }
+                    List(project.wNodes.sorted(by: { $1.wOrder > $0.wOrder }), selection: $node) { item in
+                        NavigationLink(value: item) {
+                            Text(item.wPath)
+                        }
                     }
                 }
+                //TODO: Implement a preferences menu to provide defaults to the clientconfig message.
                 //TODO: Implement dataset list
             }
             .onChange(of: geometry.size) { newSize in

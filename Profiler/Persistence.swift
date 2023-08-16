@@ -47,6 +47,7 @@ struct Store {
         }, inMemory: true);
         let viewContext = result.container.viewContext
         do {
+            let _ = Project.newSample(context: viewContext);
             try viewContext.save()
         } catch {
             let nsError = error as NSError
