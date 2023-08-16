@@ -22,6 +22,7 @@
 // IN THE SOFTWARE.
 
 import SwiftUI
+import CoreData
 
 let MAX_UI_ROWS = 20000;
 
