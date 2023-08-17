@@ -25,14 +25,16 @@ import Protocol
 import Foundation
 import SwiftString
 import CoreData
+import TextTools
 
 class NetworkAdaptor: ObservableObject, MsgHandler {
-    private var net: NetManager?;
     private let errorHandler: ErrorHandler;
-    private var connection: Connection?;
     private let queue: DispatchQueue;
     private let context: NSManagedObjectContext;
     private let container: NSPersistentContainer;
+    private let parser = CSVParser(delimiter: ",");
+    private var net: NetManager?;
+    private var connection: Connection?;
     private var projectId: NSManagedObjectID?;
     @Published var showConnectSheet = false;
     @Published var config: MessageServerConfig?;
@@ -143,15 +145,28 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
         case .spanFollows(_):
             break;
         case .spanEvent(let event):
-            //TODO: This needs CSV parsing for the message (as it contains variables in CSV formats).
-            print(event.message);
-            /*execDb { ctx, p in
-                let request: NSFetchRequest<SpanNode> = NSFetchRequest(entityName: "SpanNode");
-                request.predicate = NSPredicate(format: "project = %@ AND order = %d", p, event.id);
-                if let node = try ctx.fetch(request).first {
-                    event.
+            execDb { ctx, p in
+                let row = self.parser.parseRow(event.message);
+                if row.count < 3 {
+                    return;
                 }
-            };*/
+                let request: NSFetchRequest<SpanNode> = NSFetchRequest(entityName: "SpanNode");
+                request.predicate = NSPredicate(format: "project = %@ AND order = %d", p!, event.id);
+                if let node = try ctx.fetch(request).first {
+                    let e = SpanEvent(context: ctx);
+                    e.node = node;
+                    e.level = Int16(event.level.raw);
+                    e.timestamp = Date(timeIntervalSince1970: Double(event.timestamp));
+                    e.message = row[0];
+                    e.target = row[row.count - 1];
+                    e.module = row[row.count - 2];
+                    for i in 1..<row.count - 2 {
+                        let v = SpanVariable(context: ctx);
+                        v.event = e;
+                        v.data = row[i];
+                    }
+                }
+            }
             break;
         case .spanUpdate(let span):
             execDb { ctx, p in
