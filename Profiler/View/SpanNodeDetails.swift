@@ -60,6 +60,7 @@ struct SpanNodeDetails: View {
         dbFunc(node: node, fetch: { node, _ in
             let events: NSFetchRequest<SpanEvent> = SpanEvent.fetchRequest();
             events.fetchLimit = MAX_UI_ROWS;
+            events.sortDescriptors = [ NSSortDescriptor(keyPath: \SpanEvent.order, ascending: true) ];
             events.predicate = NSPredicate(format: "node=%@", node);
             return events;
         }, handle: { events in
