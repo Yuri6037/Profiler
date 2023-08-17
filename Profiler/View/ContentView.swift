@@ -97,30 +97,30 @@ struct ContentView: View {
                 if let node = nodeSelection {
                     SpanNodeDetails(node: node, dataset: $datasetSelection)
                         .environmentObject(filters)
+                        .toolbar {
+                            Picker("Order", selection: $filters.order) {
+                                //Swift is far too broken to see that the context is the Picker!!
+                                ToolButton(icon: "square", text: "Keep items in the order of insertion", value: NodeFilters.Order.insertion)
+                                ToolButton(icon: "arrow.up.square", text: "Sort from maximum time to minimum time", value: NodeFilters.Order.maximum)
+                                ToolButton(icon: "arrow.down.square", text: "Sort from minimum time to maximum time", value: NodeFilters.Order.minimum)
+                            }
+                            .pickerStyle(SegmentedPickerStyle())
+                            Spacer()
+                            Picker("Distribution", selection: $filters.distribution) {
+                                //Swift is far too broken to see that the context is the Picker!!
+                                ToolButton(icon: "square.fill.on.square.fill", text: "Pick N items evenly distributed", value: NodeFilters.Distribution.even)
+                                ToolButton(icon: "square.and.arrow.up.fill", text: "Pick the first N items", value: NodeFilters.Distribution.nFirst)
+                                ToolButton(icon: "square.and.arrow.down.fill", text: "Pick the last N items", value: NodeFilters.Distribution.nLast)
+                            }
+                            .pickerStyle(SegmentedPickerStyle())
+                            Spacer()
+                        }
+                        .searchable(text: $filters.text)
                 } else {
                     Text("Select an item")
                 }
             }
         )
-        .toolbar {
-            Picker("Order", selection: $filters.order) {
-                //Swift is far too broken to see that the context is the Picker!!
-                ToolButton(icon: "square", text: "Keep items in the order of insertion", value: NodeFilters.Order.insertion)
-                ToolButton(icon: "arrow.up.square", text: "Sort from maximum time to minimum time", value: NodeFilters.Order.maximum)
-                ToolButton(icon: "arrow.down.square", text: "Sort from minimum time to maximum time", value: NodeFilters.Order.minimum)
-            }
-            .pickerStyle(SegmentedPickerStyle())
-            Spacer()
-            Picker("Distribution", selection: $filters.distribution) {
-                //Swift is far too broken to see that the context is the Picker!!
-                ToolButton(icon: "square.fill.on.square.fill", text: "Pick N items evenly distributed", value: NodeFilters.Distribution.even)
-                ToolButton(icon: "square.and.arrow.up.fill", text: "Pick the first N items", value: NodeFilters.Distribution.nFirst)
-                ToolButton(icon: "square.and.arrow.down.fill", text: "Pick the last N items", value: NodeFilters.Distribution.nLast)
-            }
-            .pickerStyle(SegmentedPickerStyle())
-            Spacer()
-        }
-        .searchable(text: $filters.text)
 #if os(macOS)
         .onDeleteCommand(perform: self.deleteItem)
 #endif
@@ -131,14 +131,6 @@ struct ContentView: View {
         }
         .onAppear {
             columnVisibility = .all;
-            /*importManager.setEventBlock { current, total in
-                if current < total {
-                    showImportProgress = true;
-                    progress = CGFloat(current) / CGFloat(total);
-                } else {
-                    showImportProgress = false;
-                }
-            }*/
         }
         .sheet(isPresented: $adaptor.showConnectSheet) {
             VStack {
