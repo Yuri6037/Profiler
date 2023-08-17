@@ -82,6 +82,18 @@ extension SpanNode {
     var wMaxTime: Duration { Duration(nanoseconds: UInt64(bitPattern: self.maxTime)) }
 }
 
+extension SpanEvent: SampleData {
+    static func newSample(context: NSManagedObjectContext) -> Self {
+        let event = SpanEvent(context: context);
+        event.module = "test";
+        event.target = "test target";
+        event.level = Int16(Level.warning.raw);
+        event.timestamp = Date();
+        event.message = "this is a test log message";
+        return event as! Self;
+    }
+}
+
 extension SpanMetadata: SampleData {
     static func newSample(context: NSManagedObjectContext) -> Self {
         let metadata = SpanMetadata(context: context);

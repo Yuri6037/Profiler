@@ -29,9 +29,13 @@ struct SpanEventTable: View {
     var body: some View {
         Table(events) {
             TableColumn("Timestamp", value: \.timestamp)
+                .width(130)
             TableColumn("Level", value: \.level)
+                .width(50)
             TableColumn("Target", value: \.target)
+                .width(100)
             TableColumn("Module", value: \.module)
+                .width(100)
             TableColumn("Message", value: \.message)
             TableColumn("Variables", value: \.variables)
         }
@@ -40,6 +44,6 @@ struct SpanEventTable: View {
 
 struct SpanEventTable_Previews: PreviewProvider {
     static var previews: some View {
-        SpanEventTable(events: [])
+        SpanEventTable(events: [DisplaySpanEvent(fromModel: Store.preview.newSample())])
     }
 }
