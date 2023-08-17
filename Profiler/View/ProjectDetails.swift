@@ -46,6 +46,7 @@ struct ProjectDetails: View {
                     VStack {
                         if g.size.height > 1000 {
                             ProjectInfo(project: project)
+                                .padding(.bottom)
                         }
                         Button(action: { showInfoSheet = true }) {
                             ToolButton(icon: "viewfinder", text: "Open project/node information", value: 0)

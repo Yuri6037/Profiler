@@ -37,6 +37,7 @@ struct SpanNodeDetails: View {
     @State private var points: [Double]?;
     @State private var runs: [DisplaySpanRun]?;
     @State private var events: [DisplaySpanEvent]?;
+    @State private var showMoreSheet = false;
 
     private func loadRuns(node: SpanNode) {
         runs = nil;
@@ -123,9 +124,6 @@ struct SpanNodeDetails: View {
     var body: some View {
         GeometryReader { g in
             VStack {
-                if sizeClass == .compact {
-                    SpanNodeInfo(node: node, dataset: $dataset)
-                }
                 if let runs = runs {
                     SpanRunTable(runs: runs)
                 } else {
@@ -136,6 +134,11 @@ struct SpanNodeDetails: View {
                         SpanEventTable(events: events)
                     } else {
                         ProgressView()
+                    }
+                } else {
+                    Button(action: { showMoreSheet = true }) {
+                        ToolButton(icon: "viewfinder", text: "More information", value: 0)
+                        Text("More information")
                     }
                 }
                 if let points = points {
@@ -154,6 +157,24 @@ struct SpanNodeDetails: View {
             .onChange(of: filters.distribution) { _ in loadRuns(node: node) }
             .onChange(of: filters.order) { _ in loadRuns(node: node) }
             .onChange(of: filters.text) { filters.updateTextFilter($0) { loadRuns(node: node) } }
+            .sheet(isPresented: $showMoreSheet, onDismiss: { showMoreSheet = false }) {
+                VStack {
+                    VStack {
+                        if sizeClass == .compact {
+                            SpanNodeInfo(node: node, dataset: $dataset)
+                            Divider()
+                        }
+                        if let events = events {
+                            SpanEventTable(events: events)
+                        } else {
+                            ProgressView()
+                        }
+                    }.padding()
+                    Button(action: { showMoreSheet = false }) {
+                        Text("OK")
+                    }
+                }.padding().frame(minWidth: 500, minHeight: 200)
+            }
         }
     }
 }
