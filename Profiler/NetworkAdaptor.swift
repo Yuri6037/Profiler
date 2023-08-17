@@ -170,6 +170,7 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
                         v.data = row[i];
                     }
                 }
+                try ctx.save();
             }
             break;
         case .spanUpdate(let span):
