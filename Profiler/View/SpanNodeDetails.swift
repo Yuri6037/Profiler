@@ -33,6 +33,7 @@ struct SpanNodeDetails: View {
     @EnvironmentObject var filters: NodeFilters;
     @Environment(\.managedObjectContext) var viewContext;
     @Environment(\.persistentContainer) var container: NSPersistentContainer;
+    @Environment(\.horizontalSizeClass) var sizeClass;
     @State private var points: [Double]?;
     @State private var runs: [DisplaySpanRun]?;
     @State private var events: [DisplaySpanEvent]?;
@@ -122,6 +123,9 @@ struct SpanNodeDetails: View {
     var body: some View {
         GeometryReader { g in
             VStack {
+                if sizeClass == .compact {
+                    SpanNodeInfo(node: node, dataset: $dataset)
+                }
                 if let runs = runs {
                     SpanRunTable(runs: runs)
                 } else {

@@ -72,6 +72,7 @@
 		DAA45DB82A84ECF7009ABBCB /* MessageClientRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA45DB72A84ECF7009ABBCB /* MessageClientRecord.swift */; };
 		DAA45DBA2A84EDD8009ABBCB /* ComponentU16.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA45DB92A84EDD8009ABBCB /* ComponentU16.swift */; };
 		DAADF8522A7FDE3B00E4247C /* ComponentBool.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAADF8512A7FDE3B00E4247C /* ComponentBool.swift */; };
+		DAC183412A8ECA4D002B496F /* IOSShim.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC183402A8ECA4D002B496F /* IOSShim.swift */; };
 		DACD16CF2A8E0D8700982725 /* TextTools.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DACD16C72A8E0D8600982725 /* TextTools.framework */; };
 		DACD16D62A8E0D8700982725 /* TextToolsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACD16D52A8E0D8700982725 /* TextToolsTests.swift */; };
 		DACD16D72A8E0D8700982725 /* TextTools.h in Headers */ = {isa = PBXBuildFile; fileRef = DACD16C92A8E0D8600982725 /* TextTools.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -224,6 +225,7 @@
 		DAA45DB72A84ECF7009ABBCB /* MessageClientRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageClientRecord.swift; sourceTree = "<group>"; };
 		DAA45DB92A84EDD8009ABBCB /* ComponentU16.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentU16.swift; sourceTree = "<group>"; };
 		DAADF8512A7FDE3B00E4247C /* ComponentBool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentBool.swift; sourceTree = "<group>"; };
+		DAC183402A8ECA4D002B496F /* IOSShim.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOSShim.swift; sourceTree = "<group>"; };
 		DACD16C72A8E0D8600982725 /* TextTools.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TextTools.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DACD16C92A8E0D8600982725 /* TextTools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TextTools.h; sourceTree = "<group>"; };
 		DACD16CE2A8E0D8700982725 /* TextToolsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TextToolsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -424,6 +426,7 @@
 				DA1AB3DE2A862D6B008DBB2D /* Hacks.swift */,
 				DA1AB3DC2A862B87008DBB2D /* ErrorHandler.swift */,
 				DA5A3AA92A89159B000375A2 /* BoundedFormatter.swift */,
+				DAC183402A8ECA4D002B496F /* IOSShim.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -790,6 +793,7 @@
 				DA17E7F22A12B84300554B8A /* Persistence.swift in Sources */,
 				DA1AB3D72A862A90008DBB2D /* DisplayModels.swift in Sources */,
 				DA1AB3D52A862A90008DBB2D /* SpanNodeInfo.swift in Sources */,
+				DAC183412A8ECA4D002B496F /* IOSShim.swift in Sources */,
 				DA2A7EBB2A85357A009B454D /* SpanNode.swift in Sources */,
 				DA1AB3D92A862A90008DBB2D /* ContentView.swift in Sources */,
 				DA5A3AA62A88CF9B000375A2 /* NetworkAdaptor.swift in Sources */,
