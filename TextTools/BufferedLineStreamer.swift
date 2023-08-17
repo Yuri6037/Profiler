@@ -23,15 +23,15 @@
 
 import Foundation
 
-class BufferedLineStreamer {
+public class BufferedLineStreamer {
     private var buffer: ContiguousArray<CChar>;
     private var cursor = 0;
 
-    init(str: String) {
+    public init(str: String) {
         buffer = str.utf8CString;
     }
 
-    func readLine() -> String? {
+    public func readLine() -> String? {
         if cursor >= buffer.count {
             return nil;
         }

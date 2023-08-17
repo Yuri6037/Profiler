@@ -23,10 +23,14 @@
 
 import Foundation
 
-struct CSVParser {
+public struct CSVParser {
     let delimiter: Character;
 
-    func parseRow(_ row: String) -> [String] {
+    public init(delimiter: Character) {
+        self.delimiter = delimiter
+    }
+
+    public func parseRow(_ row: String) -> [String] {
         let delimiter = self.delimiter.asciiValue!;
         let str = row.utf8CString;
         var quote = false;
