@@ -27,7 +27,31 @@ import SwiftString
 import CoreData
 import TextTools
 
+class ConnectionStatus {
+    @Published var isConnected = false;
+    @Published var text = "";
+    @Published var progress: CGFloat = 0;
+
+    func setText(_ text: String) {
+        self.text = text;
+        if text != "" {
+            isConnected = true;
+        } else {
+            isConnected = false;
+        }
+    }
+
+    func setProgress(total: UInt, current: UInt) {
+        if total == 0 && current == 0 {
+            progress = 0;
+        } else {
+            progress = CGFloat(current) / CGFloat(total);
+        }
+    }
+}
+
 class NetworkAdaptor: ObservableObject, MsgHandler {
+    private let status = ConnectionStatus();
     private let errorHandler: ErrorHandler;
     private let queue: DispatchQueue;
     private let context: NSManagedObjectContext;
@@ -178,14 +202,90 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
                 let request: NSFetchRequest<SpanNode> = NSFetchRequest(entityName: "SpanNode");
                 request.predicate = NSPredicate(format: "project = %@ AND order = %d", p!, span.id);
                 if let node = try ctx.fetch(request).first {
-                    node.averageTime = Int64(span.averageTime.nanoseconds);
-                    node.maxTime = Int64(span.maxTime.nanoseconds);
-                    node.minTime = Int64(span.minTime.nanoseconds);
+                    node.averageTime = Int64(bitPattern: span.averageTime.nanoseconds);
+                    node.maxTime = Int64(bitPattern: span.maxTime.nanoseconds);
+                    node.minTime = Int64(bitPattern: span.minTime.nanoseconds);
                 }
                 try ctx.save();
             };
             break;
-        case .spanDataset(_):
+        case .spanDataset(let dataset):
+            let total = UInt(dataset.runCount);
+            status.setText("Importing dataset");
+            status.setProgress(total: total, current: 0);
+            execDb { ctx, p in
+                let reader = BufferedLineStreamer(str: dataset.content);
+                let request: NSFetchRequest<SpanNode> = NSFetchRequest(entityName: "SpanNode");
+                request.predicate = NSPredicate(format: "project = %@ AND order = %d", p!, dataset.id);
+                if let node = try ctx.fetch(request).first {
+                    let medianHalfIndex = total / 2 - 1;
+                    let medianCount = total % 2 == 0 ? 1 : 2;
+                    let dataset = Dataset(context: ctx);
+                    dataset.timestamp = Date();
+                    dataset.node = node;
+                    var maxTime = UInt64(0);
+                    var minTime = UInt64.max;
+                    var averageTime = UInt64(0);
+                    var medianValues = [UInt64(0), UInt64(0)];
+                    var current = UInt(0);
+                    while let line = reader.readLine() {
+                        let row = self.parser.parseRow(line);
+                        if row.count < 3 {
+                            continue;
+                        }
+                        let run = SpanRun(context: ctx);
+                        run.node = node;
+                        run.order = Int64(self.runIndex);
+                        self.runIndex += 1;
+                        run.dataset = dataset;
+                        run.message = row[0];
+                        let secs = UInt32(row[row.count - 2]) ?? 0;
+                        let nanos = UInt32(row[row.count - 1]) ?? 0;
+                        let time = Duration(seconds: secs, nanoseconds: nanos).nanoseconds;
+                        run.time = Int64(bitPattern: time);
+                        if time > maxTime {
+                            maxTime = time;
+                        }
+                        if time < minTime {
+                            minTime = time;
+                        }
+                        averageTime += time;
+                        if current == medianHalfIndex {
+                            medianValues[0] = time;
+                        }
+                        if current ==  medianHalfIndex + 1 {
+                            medianValues[1] = time;
+                        }
+                        for i in 1..<row.count - 2 {
+                            let v = SpanVariable(context: ctx);
+                            v.run = run;
+                            v.data = row[i];
+                        }
+                        current += 1;
+                        DispatchQueue.main.async {
+                            self.status.setProgress(total: total, current: current);
+                        }
+                    }
+                    averageTime = averageTime / UInt64(total);
+                    dataset.averageTime = Int64(bitPattern: averageTime);
+                    dataset.minTime = Int64(bitPattern: minTime);
+                    dataset.maxTime = Int64(bitPattern: maxTime);
+                    let medianTime = medianCount == 2 ? (medianValues[0] + medianValues[1]) / 2 : medianValues[0];
+                    dataset.medianTime = Int64(bitPattern: medianTime);
+                    node.averageTime = Int64(bitPattern: (UInt64(bitPattern: node.averageTime) + averageTime) / 2);
+                    if minTime < UInt64(bitPattern: node.minTime) {
+                        node.minTime = Int64(bitPattern: minTime);
+                    }
+                    if maxTime > UInt64(bitPattern: node.maxTime) {
+                        node.maxTime = Int64(bitPattern: maxTime);
+                    }
+                }
+                try ctx.save();
+                DispatchQueue.main.async {
+                    self.status.setProgress(total: 0, current: 0);
+                    self.status.setText("Connected with debug server");
+                }
+            }
             break;
         }
     }
@@ -198,6 +298,16 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
         self.connection = connection;
         evIndex = 0;
         runIndex = 0;
+        status.setText("Connected with debug server");
+        status.setProgress(total: 0, current: 0);
+    }
+
+    func onDisconnect() {
+        net = nil;
+        showConnectSheet = false;
+        config = nil;
+        status.setText("");
+        errorHandler.pushError(AppError(description: "Lost connection with debug server"));
     }
 
     public func connect(url: URL) {
@@ -219,10 +329,7 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
             }
             await net?.wait()
             DispatchQueue.main.async {
-                self.net = nil;
-                self.showConnectSheet = false;
-                self.config = nil;
-                self.errorHandler.pushError(AppError(description: "Lost connection with debug server"));
+                self.onDisconnect();
             }
         }
     }
