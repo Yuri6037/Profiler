@@ -78,6 +78,7 @@
 		DACD16DA2A8E0D8700982725 /* TextTools.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DACD16C72A8E0D8600982725 /* TextTools.framework */; };
 		DACD16DB2A8E0D8700982725 /* TextTools.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DACD16C72A8E0D8600982725 /* TextTools.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DACD16E32A8E0F6D00982725 /* CSVParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACD16E22A8E0F6D00982725 /* CSVParser.swift */; };
+		DACD16E52A8E153C00982725 /* BufferedLineStreamer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACD16E42A8E153C00982725 /* BufferedLineStreamer.swift */; };
 		DAFD445C2A8D1B4C008F99D2 /* ProjectOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFD445B2A8D1B4C008F99D2 /* ProjectOverview.swift */; };
 /* End PBXBuildFile section */
 
@@ -228,6 +229,7 @@
 		DACD16CE2A8E0D8700982725 /* TextToolsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TextToolsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DACD16D52A8E0D8700982725 /* TextToolsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextToolsTests.swift; sourceTree = "<group>"; };
 		DACD16E22A8E0F6D00982725 /* CSVParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSVParser.swift; sourceTree = "<group>"; };
+		DACD16E42A8E153C00982725 /* BufferedLineStreamer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferedLineStreamer.swift; sourceTree = "<group>"; };
 		DAFD445B2A8D1B4C008F99D2 /* ProjectOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectOverview.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -477,6 +479,7 @@
 			children = (
 				DACD16C92A8E0D8600982725 /* TextTools.h */,
 				DACD16E22A8E0F6D00982725 /* CSVParser.swift */,
+				DACD16E42A8E153C00982725 /* BufferedLineStreamer.swift */,
 			);
 			path = TextTools;
 			sourceTree = "<group>";
@@ -867,6 +870,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DACD16E32A8E0F6D00982725 /* CSVParser.swift in Sources */,
+				DACD16E52A8E153C00982725 /* BufferedLineStreamer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
