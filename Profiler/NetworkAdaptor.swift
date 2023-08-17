@@ -27,31 +27,7 @@ import SwiftString
 import CoreData
 import TextTools
 
-class ConnectionStatus {
-    @Published var isConnected = false;
-    @Published var text = "";
-    @Published var progress: CGFloat = 0;
-
-    func setText(_ text: String) {
-        self.text = text;
-        if text != "" {
-            isConnected = true;
-        } else {
-            isConnected = false;
-        }
-    }
-
-    func setProgress(total: UInt, current: UInt) {
-        if total == 0 && current == 0 {
-            progress = 0;
-        } else {
-            progress = CGFloat(current) / CGFloat(total);
-        }
-    }
-}
-
 class NetworkAdaptor: ObservableObject, MsgHandler {
-    let status = ConnectionStatus();
     private let errorHandler: ErrorHandler;
     private let queue: DispatchQueue;
     private let context: NSManagedObjectContext;
@@ -62,14 +38,37 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
     private var projectId: NSManagedObjectID?;
     private var evIndex = 0;
     private var runIndex = 0;
+    private var inHandler = false;
     @Published var showConnectSheet = false;
     @Published var config: MessageServerConfig?;
+
+    //Inline ConnectionStatus in NetworkAdaptor since SwiftUI is a peace of shit unable to work behind 2 layers of ObservableObject.
+    @Published var isConnected = false;
+    @Published var text = "";
+    @Published var progress: CGFloat = 0;
 
     init(errorHandler: ErrorHandler, container: NSPersistentContainer) {
         self.errorHandler = errorHandler;
         self.container = container;
         self.queue = DispatchQueue(label: "NetworkAdaptor", qos: .userInteractive);
         self.context = container.newBackgroundContext();
+    }
+
+    private func setConnectionStatusText(_ text: String) {
+        self.text = text;
+        if text != "" {
+            isConnected = true;
+        } else {
+            isConnected = false;
+        }
+    }
+
+    private func setConnectionStatusProgress(total: UInt, current: UInt) {
+        if total == 0 && current == 0 {
+            progress = 0;
+        } else {
+            progress = CGFloat(current) / CGFloat(total);
+        }
     }
 
     func disconnect() {
@@ -87,6 +86,7 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
     }
 
     func execDb(_ fn: @escaping (NSManagedObjectContext, Project?) throws -> Void) {
+        inHandler = true;
         self.queue.async {
             let p: Project?;
             if let projectId = self.projectId {
@@ -96,9 +96,16 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
             }
             do {
                 try fn(self.context, p);
+                DispatchQueue.main.async {
+                    self.inHandler = false;
+                    if self.connection == nil {
+                        self.setConnectionStatusText("");
+                    }
+                }
             } catch let error {
                 DispatchQueue.main.async {
                     self.errorHandler.pushError(AppError(fromError: error));
+                    self.inHandler = false;
                 }
             }
         }
@@ -210,8 +217,8 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
             break;
         case .spanDataset(let dataset):
             let total = UInt(dataset.runCount);
-            status.setText("Importing dataset");
-            status.setProgress(total: total, current: 0);
+            setConnectionStatusText("Importing dataset");
+            setConnectionStatusProgress(total: total, current: 0);
             execDb { ctx, p in
                 let reader = BufferedLineStreamer(str: dataset.content);
                 let request: NSFetchRequest<SpanNode> = NSFetchRequest(entityName: "SpanNode");
@@ -262,7 +269,7 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
                         }
                         current += 1;
                         DispatchQueue.main.async {
-                            self.status.setProgress(total: total, current: current);
+                            self.setConnectionStatusProgress(total: total, current: current);
                         }
                     }
                     averageTime = averageTime / UInt64(total);
@@ -281,8 +288,10 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
                 }
                 try ctx.save();
                 DispatchQueue.main.async {
-                    self.status.setProgress(total: 0, current: 0);
-                    self.status.setText("Connected with debug server");
+                    self.setConnectionStatusProgress(total: 0, current: 0);
+                    if self.connection != nil {
+                        self.setConnectionStatusText("Connected with debug server");
+                    }
                 }
             }
             break;
@@ -297,15 +306,18 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
         self.connection = connection;
         evIndex = 0;
         runIndex = 0;
-        status.setText("Connected with debug server");
-        status.setProgress(total: 0, current: 0);
+        setConnectionStatusText("Connected with debug server");
+        setConnectionStatusProgress(total: 0, current: 0);
     }
 
     func onDisconnect() {
         net = nil;
+        connection = nil;
         showConnectSheet = false;
         config = nil;
-        status.setText("");
+        if !inHandler {
+            setConnectionStatusText("");
+        }
         errorHandler.pushError(AppError(description: "Lost connection with debug server"));
     }
 

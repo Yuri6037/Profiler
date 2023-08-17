@@ -54,13 +54,19 @@ struct ContentView: View {
                 ProgressView()
             } else {
                 List(items, selection: $projectSelection) { ProjectLink(project: $0) }
-                if adaptor.status.isConnected {
+                if adaptor.isConnected {
                     Divider()
                     VStack {
-                        Text(adaptor.status.text)
-                        ProgressView(value: adaptor.status.progress)
-                            .padding(.leading)
-                            .padding(.trailing)
+                        Text(adaptor.text)
+                        if adaptor.progress > 0 {
+                            ProgressView(value: adaptor.progress)
+                                .padding(.leading)
+                                .padding(.trailing)
+                        } else {
+                            ProgressView()
+                                .padding(.leading)
+                                .padding(.trailing)
+                        }
                     }.padding(.bottom, 5)
                 } else {
                     Divider()

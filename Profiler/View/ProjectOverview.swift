@@ -22,6 +22,7 @@
 // IN THE SOFTWARE.
 
 import SwiftUI
+import CoreData
 
 struct NodeDashboard: View {
     @ObservedObject var node: SpanNode;

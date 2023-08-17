@@ -35,6 +35,9 @@ public class BufferedLineStreamer {
         if cursor >= buffer.count {
             return nil;
         }
+        if buffer[cursor] == UInt8(ascii: "\n") {
+            cursor += 1;
+        }
         var data: [UInt8] = [];
         while cursor < buffer.count && buffer[cursor] != UInt8(ascii: "\n") {
             data.append(UInt8(bitPattern: buffer[cursor]))
