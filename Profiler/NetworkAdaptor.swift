@@ -51,7 +51,7 @@ class ConnectionStatus {
 }
 
 class NetworkAdaptor: ObservableObject, MsgHandler {
-    private let status = ConnectionStatus();
+    let status = ConnectionStatus();
     private let errorHandler: ErrorHandler;
     private let queue: DispatchQueue;
     private let context: NSManagedObjectContext;
@@ -149,7 +149,6 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
             };
             break;
         case .spanAlloc(let span):
-            print(span);
             execDb { ctx, p in
                 let node = SpanNode(context: ctx);
                 node.project = p;

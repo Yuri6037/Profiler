@@ -54,11 +54,11 @@ struct ContentView: View {
                 ProgressView()
             } else {
                 List(items, selection: $projectSelection) { ProjectLink(project: $0) }
-                if showImportProgress {
+                if adaptor.status.isConnected {
                     Divider()
                     VStack {
-                        Text("Importing nodes...")
-                        ProgressView(value: progress)
+                        Text(adaptor.status.text)
+                        ProgressView(value: adaptor.status.progress)
                             .padding(.leading)
                             .padding(.trailing)
                     }.padding(.bottom, 5)
