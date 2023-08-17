@@ -36,6 +36,8 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
     private var net: NetManager?;
     private var connection: Connection?;
     private var projectId: NSManagedObjectID?;
+    private var evIndex = 0;
+    private var runIndex = 0;
     @Published var showConnectSheet = false;
     @Published var config: MessageServerConfig?;
 
@@ -160,6 +162,8 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
                     e.message = row[0];
                     e.target = row[row.count - 1];
                     e.module = row[row.count - 2];
+                    e.order = Int64(self.evIndex);
+                    self.evIndex += 1;
                     for i in 1..<row.count - 2 {
                         let v = SpanVariable(context: ctx);
                         v.event = e;
@@ -191,6 +195,8 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
 
     func onConnect(connection: Connection) {
         self.connection = connection;
+        evIndex = 0;
+        runIndex = 0;
     }
 
     public func connect(url: URL) {
