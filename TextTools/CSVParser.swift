@@ -51,7 +51,7 @@ public struct CSVParser {
                 data = [];
             } else {
                 //Just append the character to the array
-                data.append(UInt8(str[i]))
+                data.append(UInt8(bitPattern: str[i]))
             }
             i += 1;
         }

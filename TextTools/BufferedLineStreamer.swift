@@ -37,7 +37,7 @@ public class BufferedLineStreamer {
         }
         var data: [UInt8] = [];
         while cursor < buffer.count && buffer[cursor] != UInt8(ascii: "\n") {
-            data.append(UInt8(buffer[cursor]))
+            data.append(UInt8(bitPattern: buffer[cursor]))
             cursor += 1;
         }
         return String(decoding: data, as: UTF8.self);
