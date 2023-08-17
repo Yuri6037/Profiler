@@ -77,9 +77,9 @@ extension SpanNode {
     var wPath: String { self.path! }
     var wMetadata: SpanMetadata? { self.metadata }
 
-    var wAverageTime: Duration { Duration(nanoseconds: UInt64(self.averageTime)) }
-    var wMinTime: Duration { Duration(nanoseconds: UInt64(self.minTime)) }
-    var wMaxTime: Duration { Duration(nanoseconds: UInt64(self.maxTime)) }
+    var wAverageTime: Duration { Duration(nanoseconds: UInt64(bitPattern: self.averageTime)) }
+    var wMinTime: Duration { Duration(nanoseconds: UInt64(bitPattern: self.minTime)) }
+    var wMaxTime: Duration { Duration(nanoseconds: UInt64(bitPattern: self.maxTime)) }
 }
 
 extension SpanMetadata: SampleData {

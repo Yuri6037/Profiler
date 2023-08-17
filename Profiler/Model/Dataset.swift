@@ -27,10 +27,10 @@ import Protocol
 
 extension Dataset {
     var wTimestamp: Date { self.timestamp! }
-    var wAverageTime: Duration { Duration(nanoseconds: UInt64(self.averageTime)) }
-    var wMinTime: Duration { Duration(nanoseconds: UInt64(self.minTime)) }
-    var wMaxTime: Duration { Duration(nanoseconds: UInt64(self.maxTime)) }
-    var wMedianTime: Duration { Duration(nanoseconds: UInt64(self.medianTime)) }
+    var wAverageTime: Duration { Duration(nanoseconds: UInt64(bitPattern: self.averageTime)) }
+    var wMinTime: Duration { Duration(nanoseconds: UInt64(bitPattern: self.minTime)) }
+    var wMaxTime: Duration { Duration(nanoseconds: UInt64(bitPattern: self.maxTime)) }
+    var wMedianTime: Duration { Duration(nanoseconds: UInt64(bitPattern: self.medianTime)) }
 }
 
 extension Dataset: SampleData {
