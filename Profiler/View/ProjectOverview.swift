@@ -97,9 +97,19 @@ struct ProjectOverview: View {
 
     var body: some View {
         VStack {
-            ScrollView {
-                ForEach(project.wNodes) { item in
-                    NodeDashboard(node: item)
+            GeometryReader { g in
+                ScrollView {
+                    if g.size.width > 500 {
+                        LazyVGrid(columns: [.init(), .init()]) {
+                            ForEach(project.wNodes) { item in
+                                NodeDashboard(node: item)
+                            }
+                        }
+                    } else {
+                        ForEach(project.wNodes) { item in
+                            NodeDashboard(node: item)
+                        }
+                    }
                 }
             }
             Divider()
