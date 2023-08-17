@@ -42,7 +42,6 @@ struct ContentView: View {
     @State private var datasetSelection: Dataset?;
     @State private var columnVisibility = NavigationSplitViewVisibility.all;
     @State private var deleteMode: Bool = false;
-    @State private var renderNode: Bool = true;
     @State private var showImportProgress: Bool = false;
     @State private var progress: CGFloat = 0.0;
     @State private var address = "";
@@ -89,14 +88,14 @@ struct ContentView: View {
             sidebar: { sidebar },
             content: {
                 if let project = projectSelection {
-                    ProjectDetails(project: project, node: $nodeSelection, dataset: $datasetSelection, renderNode: $renderNode)
+                    ProjectDetails(project: project, node: $nodeSelection, dataset: $datasetSelection)
                 } else {
                     Text("Select an item")
                 }
             },
             detail: {
                 if let node = nodeSelection {
-                    SpanNodeDetails(node: node, dataset: $datasetSelection, renderNode: !renderNode)
+                    SpanNodeDetails(node: node, dataset: $datasetSelection)
                         .environmentObject(filters)
                 } else {
                     Text("Select an item")

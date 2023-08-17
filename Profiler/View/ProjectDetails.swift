@@ -28,20 +28,31 @@ struct ProjectDetails: View {
     
     @Binding var node: SpanNode?;
     @Binding var dataset: Dataset?;
-    @Binding var renderNode: Bool;
+    
+    @State var showInfoSheet = false;
 
     var body: some View {
-        GeometryReader { geometry in
+        GeometryReader { g in
             VStack {
-                HStack {
-                    ProjectInfo(project: project)
-                    if renderNode {
+                if g.size.width > 500 {
+                    HStack {
+                        ProjectInfo(project: project)
                         if let node = node {
                             Spacer()
                             SpanNodeInfo(node: node, dataset: $dataset)
                         }
-                    }
-                }.padding(.horizontal).padding(.top)
+                    }.padding(.horizontal).padding(.top)
+                } else {
+                    VStack {
+                        if g.size.height > 1000 {
+                            ProjectInfo(project: project)
+                        }
+                        Button(action: { showInfoSheet = true }) {
+                            ToolButton(icon: "viewfinder", text: "Open project/node information", value: 0)
+                            Text("Open project/node information")
+                        }
+                    }.padding(.horizontal).padding(.top)
+                }
                 if let cmdline = project.wCommandLine {
                     Divider()
                     VStack {
@@ -55,25 +66,30 @@ struct ProjectDetails: View {
                     Text("Project Overview")
                 }
                 Divider()
-                HStack {
-                    List(project.wDatasets.sorted(by: { $1.wTimestamp > $0.wTimestamp }), selection: $dataset) { item in
-                        Text(item.wTimestamp.formatted())
+                List(project.wNodes.sorted(by: { $1.wOrder > $0.wOrder }), selection: $node) { item in
+                    NavigationLink(value: item) {
+                        Text(item.wPath)
                     }
-                    List(project.wNodes.sorted(by: { $1.wOrder > $0.wOrder }), selection: $node) { item in
-                        NavigationLink(value: item) {
-                            Text(item.wPath)
-                        }
-                    }
+                }
+                List(project.wDatasets.sorted(by: { $1.wTimestamp > $0.wTimestamp }), selection: $dataset) { item in
+                    Text(item.wTimestamp.formatted())
                 }
                 //TODO: Implement a preferences menu to provide defaults to the clientconfig message.
                 //TODO: Implement dataset list
             }
-            .onChange(of: geometry.size) { newSize in
-                if newSize.width < 400 {
-                    renderNode = false;
-                } else {
-                    renderNode = true;
-                }
+            .sheet(isPresented: $showInfoSheet, onDismiss: { showInfoSheet = false }) {
+                VStack {
+                    HStack {
+                        ProjectInfo(project: project)
+                        if let node = node {
+                            Spacer()
+                            SpanNodeInfo(node: node, dataset: $dataset)
+                        }
+                    }.padding()
+                    Button(action: { showInfoSheet = false }) {
+                        Text("OK")
+                    }
+                }.padding()
             }
         }
     }
@@ -81,6 +97,6 @@ struct ProjectDetails: View {
 
 struct ProjectDetails_Previews: PreviewProvider {
     static var previews: some View {
-        ProjectDetails(project: Store.preview.newSample(), node: .constant(nil), dataset: .constant(nil), renderNode: .constant(true))
+        ProjectDetails(project: Store.preview.newSample(), node: .constant(nil), dataset: .constant(nil))
     }
 }

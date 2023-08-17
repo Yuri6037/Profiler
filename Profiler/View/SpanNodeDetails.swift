@@ -33,7 +33,6 @@ struct SpanNodeDetails: View {
     @EnvironmentObject var filters: NodeFilters;
     @Environment(\.managedObjectContext) var viewContext;
     @Environment(\.persistentContainer) var container: NSPersistentContainer;
-    var renderNode: Bool = false;
     @State private var points: [Double]?;
     @State private var runs: [DisplaySpanRun]?;
     @State private var events: [DisplaySpanEvent]?;
@@ -121,36 +120,37 @@ struct SpanNodeDetails: View {
     }
 
     var body: some View {
-        VStack {
-            if renderNode {
-                SpanNodeInfo(node: node, dataset: $dataset)
-            }
-            if let runs = runs {
-                SpanRunTable(runs: runs)
-            } else {
-                ProgressView()
-            }
-            if let events = events {
-                SpanEventTable(events: events)
-            } else {
-                ProgressView()
-            }
-            if let points = points {
-                if points.count > 0 {
-                    ScrollView(.horizontal) {
-                        LineChart(width: 2048, height: 256, points: points)
-                    }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+        GeometryReader { g in
+            VStack {
+                if let runs = runs {
+                    SpanRunTable(runs: runs)
+                } else {
+                    ProgressView()
                 }
-            } else {
-                ProgressView()
+                if g.size.height > 1000 {
+                    if let events = events {
+                        SpanEventTable(events: events)
+                    } else {
+                        ProgressView()
+                    }
+                }
+                if let points = points {
+                    if points.count > 0 {
+                        ScrollView(.horizontal) {
+                            LineChart(width: 2048, height: 256, points: points)
+                        }
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    }
+                } else {
+                    ProgressView()
+                }
             }
+            .onAppear { loadData(node: node) }
+            .onChange(of: node) { loadData(node: $0) }
+            .onChange(of: filters.distribution) { _ in loadRuns(node: node) }
+            .onChange(of: filters.order) { _ in loadRuns(node: node) }
+            .onChange(of: filters.text) { filters.updateTextFilter($0) { loadRuns(node: node) } }
         }
-        .onAppear { loadData(node: node) }
-        .onChange(of: node) { loadData(node: $0) }
-        .onChange(of: filters.distribution) { _ in loadRuns(node: node) }
-        .onChange(of: filters.order) { _ in loadRuns(node: node) }
-        .onChange(of: filters.text) { filters.updateTextFilter($0) { loadRuns(node: node) } }
     }
 }
 
