@@ -80,13 +80,29 @@ struct NodeDashboard: View {
 }
 
 struct ProjectOverview: View {
+    @EnvironmentObject var errorHandler: ErrorHandler;
+    @Environment(\.persistentContainer) var container: NSPersistentContainer;
     @ObservedObject var project: Project;
+    @FetchRequest var events: FetchedResults<SpanEvent>;
+
+    init(project: Project) {
+        self.project = project;
+        let events: NSFetchRequest<SpanEvent> = SpanEvent.fetchRequest();
+        events.sortDescriptors = [ NSSortDescriptor(keyPath: \SpanEvent.order, ascending: true) ];
+        events.predicate = NSPredicate(format: "node.project=%@", project);
+        events.fetchLimit = MAX_UI_ROWS;
+        _events = FetchRequest(fetchRequest: events);
+    }
 
     var body: some View {
-        ScrollView {
-            ForEach(project.wNodes) { item in
-                NodeDashboard(node: item)
+        VStack {
+            ScrollView {
+                ForEach(project.wNodes) { item in
+                    NodeDashboard(node: item)
+                }
             }
+            Divider()
+            SpanEventTable(events: events.map { DisplaySpanEvent(fromModel: $0) })
         }
     }
 }
@@ -96,6 +112,8 @@ struct ProjectOverview_Previews: PreviewProvider {
         VStack {
             NodeDashboard(node: Store.preview.newSample())
             ProjectOverview(project: Store.preview.newSample())
+                .environment(\.persistentContainer, Store.preview.container)
+                .environmentObject(ErrorHandler())
         }
     }
 }
