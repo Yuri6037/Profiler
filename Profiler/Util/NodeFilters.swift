@@ -100,7 +100,7 @@ class NodeFilters: ObservableObject {
                     var v = v;
                     let id = v.index(of: " = ");
                     if id == -1 {
-                        v = v.replacing("=", with: " = ");
+                        v = v.replacing(" = ", with: "=");
                     }
                     predicates.append(NSPredicate(format: "ANY variables.data =[cd] %@", v));
                 }
