@@ -52,7 +52,12 @@ struct ContentView: View {
             if deleteMode {
                 ProgressView()
             } else {
-                List(items, selection: $projectSelection) { ProjectLink(project: $0) }
+                List(selection: $projectSelection) {
+                    ForEach(items) { ProjectLink(project: $0) }
+#if os(iOS)
+                        .onDelete(perform: { self.deleteItem(index: $0) })
+#endif
+                }
                 if adaptor.isConnected {
                     Divider()
                     VStack {
@@ -137,6 +142,14 @@ struct ContentView: View {
                 ClientConfig(maxRows: adaptor.config?.maxRows ?? 0, minPeriod: adaptor.config?.minPeriod ?? 0)
                     .padding()
             }
+        }
+    }
+
+    private func deleteItem(index: IndexSet) {
+        if let index = index.first {
+            let project = items[index];
+            projectSelection = project;
+            self.deleteItem();
         }
     }
 

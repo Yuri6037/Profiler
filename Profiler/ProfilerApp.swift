@@ -38,6 +38,8 @@ class AppGlobals: ObservableObject {
     lazy var adaptor: NetworkAdaptor = { NetworkAdaptor(errorHandler: errorHandler, container: store.container) }();
 }
 
+//TODO: Preferences window under macOS (Settings SwiftUI component)
+
 @main
 struct ProfilerApp: App {
     @StateObject var globals = AppGlobals();
