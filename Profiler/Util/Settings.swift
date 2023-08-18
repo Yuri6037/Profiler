@@ -50,6 +50,22 @@ func checkAndAutoNegociate(maxRows: UInt32, minPeriod: UInt16) -> MessageClientC
     if !flag {
         return nil;
     }
-    //TODO: Implement
-    return nil;
+    let rows: Int;
+    let period: Int;
+    let defaults = ClientConfigDefaults();
+    if defaults.rowsIsDebugServer {
+        rows = Int(maxRows);
+    } else {
+        rows = Int(defaults.rows > maxRows ? Int(maxRows) : defaults.rows);
+    }
+    if defaults.periodIsDebugServer {
+        period = Int(minPeriod);
+    } else {
+        period = Int(defaults.period < minPeriod ? Int(minPeriod) : defaults.period);
+    }
+    return MessageClientConfig(
+        maxAveragePoints: UInt32(defaults.averagePoints),
+        record: MessageClientRecord(maxRows: UInt32(rows), enable: defaults.enableRecording),
+        period: UInt16(period)
+    );
 }

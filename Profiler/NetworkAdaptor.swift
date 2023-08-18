@@ -114,8 +114,13 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
     func onMessage(message: Message) {
         switch message {
         case .serverConfig(let config):
-            showConnectSheet = true;
-            self.config = config;
+            if let msg = checkAndAutoNegociate(maxRows: config.maxRows, minPeriod: config.minPeriod) {
+                self.connection?.send(config: msg);
+                self.connection?.send(config: msg);
+            } else {
+                showConnectSheet = true;
+                self.config = config;
+            }
             break;
         case .project(let project):
             execDb { ctx, _ in
