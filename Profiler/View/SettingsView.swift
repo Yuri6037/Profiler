@@ -94,7 +94,6 @@ struct NetworkSettingsView: View {
                     Spacer()
                     IntPicker(min: 0, max: Int.max, value: $rows);
                 }
-                
             }
         }
         .padding()
