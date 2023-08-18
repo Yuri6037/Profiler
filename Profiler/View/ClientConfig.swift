@@ -45,41 +45,46 @@ struct ClientConfig: View {
     var body: some View {
         VStack {
             VStack(alignment: .leading) {
+                Text("Main configuration").bold()
                 HStack {
                     Text("Number of points for average:")
+                    Spacer()
                     IntPicker(min: 1, max: Int(UInt32.max), value: $averagePoints)
                 }
                 HStack {
                     Text("Min period (ms):")
+                    Spacer()
                     Text(minPeriod.formatted()).bold()
                 }
                 HStack {
                     Text("Period (ms):")
+                    Spacer()
                     IntPicker(min: Int(minPeriod), max: 1000, value: $period)
                 }
                 HStack {
                     Text("Max level:")
+                    Spacer()
                     Picker("", selection: $maxLevel) {
                         Text(Level.trace.name).foregroundColor(Level.trace.color).tag(Level.trace)
                         Text(Level.debug.name).foregroundColor(Level.debug.color).tag(Level.debug)
                         Text(Level.info.name).foregroundColor(Level.info.color).tag(Level.info)
                         Text(Level.warning.name).foregroundColor(Level.warning.color).tag(Level.warning)
                         Text(Level.error.name).foregroundColor(Level.error.color).tag(Level.error)
-                    }.frame(width: 100)
+                    }.frame(width: 128)
                 }
+                Divider()
                 Text("Recording configuration").bold()
-                    .padding(.top)
-                VStack(alignment: .leading) {
-                    HStack {
-                        Text("Max rows:")
-                        Text(maxRows.formatted()).bold()
-                    }
-                    HStack {
-                        Text("Rows:")
-                        IntPicker(min: 0, max: Int(maxRows), value: $rows);
-                    }
-                    Toggle("Start enabled", isOn: $enableRecording)
-                }.padding(.leading)
+                HStack {
+                    Text("Max rows:")
+                    Spacer()
+                    Text(maxRows.formatted()).bold()
+                }
+                HStack {
+                    Text("Rows:")
+                    Spacer()
+                    IntPicker(min: 0, max: Int(maxRows), value: $rows);
+                }
+                Toggle("Start enabled", isOn: $enableRecording)
             }
             HStack {
                 Button("Continue") {
