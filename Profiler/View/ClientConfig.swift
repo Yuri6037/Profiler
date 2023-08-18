@@ -31,15 +31,26 @@ struct ClientConfig: View {
     @State var rows: Int;
     @State var period: Int;
     @State var averagePoints: Int;
-    @State var enableRecording = true;
-    @State var maxLevel = Level.trace;
+    @State var enableRecording: Bool;
+    @State var maxLevel: Level;
 
     init(maxRows: UInt32, minPeriod: UInt16) {
         self.minPeriod = minPeriod;
         self.maxRows = maxRows;
-        _rows = .init(initialValue: Int(maxRows));
-        _period = .init(initialValue: Int(minPeriod));
-        _averagePoints = .init(initialValue: 100);
+        let defaults = ClientConfigDefaults();
+        if defaults.rowsIsDebugServer {
+            _rows = .init(initialValue: Int(maxRows));
+        } else {
+            _rows = .init(initialValue: Int(defaults.rows > maxRows ? Int(maxRows) : defaults.rows));
+        }
+        if defaults.periodIsDebugServer {
+            _period = .init(initialValue: Int(minPeriod));
+        } else {
+            _period = .init(initialValue: Int(defaults.period < minPeriod ? Int(minPeriod) : defaults.period));
+        }
+        _enableRecording = .init(initialValue: defaults.enableRecording);
+        _averagePoints = .init(initialValue: defaults.averagePoints);
+        _maxLevel = .init(initialValue: defaults.maxLevel);
     }
 
     var body: some View {

@@ -56,5 +56,10 @@ struct ProfilerApp: App {
                     globals.adaptor.connect(url: url);
                 }
         }
+#if os(macOS)
+        Settings {
+            SettingsView()
+        }
+#endif
     }
 }

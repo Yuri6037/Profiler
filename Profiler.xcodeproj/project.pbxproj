@@ -46,6 +46,7 @@
 		DA5A3AA82A8912A1000375A2 /* ClientConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5A3AA72A8912A1000375A2 /* ClientConfig.swift */; };
 		DA5A3AAA2A89159B000375A2 /* BoundedFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5A3AA92A89159B000375A2 /* BoundedFormatter.swift */; };
 		DA5A3AAC2A89165F000375A2 /* IntPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5A3AAB2A89165F000375A2 /* IntPicker.swift */; };
+		DA66852E2A8FFA32000913A1 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA66852D2A8FFA32000913A1 /* Settings.swift */; };
 		DA837CFA2A14076300B91BCE /* NIO in Frameworks */ = {isa = PBXBuildFile; productRef = DA837CF92A14076300B91BCE /* NIO */; };
 		DA837CFC2A140AA500B91BCE /* Decoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA837CFB2A140AA500B91BCE /* Decoder.swift */; };
 		DA837CFF2A1410B500B91BCE /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA837CFE2A1410B500B91BCE /* Component.swift */; };
@@ -73,6 +74,7 @@
 		DAA45DBA2A84EDD8009ABBCB /* ComponentU16.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA45DB92A84EDD8009ABBCB /* ComponentU16.swift */; };
 		DAADF8522A7FDE3B00E4247C /* ComponentBool.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAADF8512A7FDE3B00E4247C /* ComponentBool.swift */; };
 		DAC183412A8ECA4D002B496F /* IOSShim.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC183402A8ECA4D002B496F /* IOSShim.swift */; };
+		DAC183432A8F9C13002B496F /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC183422A8F9C13002B496F /* SettingsView.swift */; };
 		DACD16CF2A8E0D8700982725 /* TextTools.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DACD16C72A8E0D8600982725 /* TextTools.framework */; };
 		DACD16D62A8E0D8700982725 /* TextToolsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACD16D52A8E0D8700982725 /* TextToolsTests.swift */; };
 		DACD16D72A8E0D8700982725 /* TextTools.h in Headers */ = {isa = PBXBuildFile; fileRef = DACD16C92A8E0D8600982725 /* TextTools.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -200,6 +202,7 @@
 		DA5A3AA72A8912A1000375A2 /* ClientConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientConfig.swift; sourceTree = "<group>"; };
 		DA5A3AA92A89159B000375A2 /* BoundedFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundedFormatter.swift; sourceTree = "<group>"; };
 		DA5A3AAB2A89165F000375A2 /* IntPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntPicker.swift; sourceTree = "<group>"; };
+		DA66852D2A8FFA32000913A1 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		DA837CFB2A140AA500B91BCE /* Decoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Decoder.swift; sourceTree = "<group>"; };
 		DA837CFE2A1410B500B91BCE /* Component.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
 		DA837D002A14116600B91BCE /* ComponentVchar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentVchar.swift; sourceTree = "<group>"; };
@@ -226,6 +229,7 @@
 		DAA45DB92A84EDD8009ABBCB /* ComponentU16.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentU16.swift; sourceTree = "<group>"; };
 		DAADF8512A7FDE3B00E4247C /* ComponentBool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentBool.swift; sourceTree = "<group>"; };
 		DAC183402A8ECA4D002B496F /* IOSShim.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOSShim.swift; sourceTree = "<group>"; };
+		DAC183422A8F9C13002B496F /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		DACD16C72A8E0D8600982725 /* TextTools.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TextTools.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DACD16C92A8E0D8600982725 /* TextTools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TextTools.h; sourceTree = "<group>"; };
 		DACD16CE2A8E0D8700982725 /* TextToolsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TextToolsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -403,6 +407,7 @@
 				DA5A3AA72A8912A1000375A2 /* ClientConfig.swift */,
 				DA5A3AAB2A89165F000375A2 /* IntPicker.swift */,
 				DAFD445B2A8D1B4C008F99D2 /* ProjectOverview.swift */,
+				DAC183422A8F9C13002B496F /* SettingsView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -427,6 +432,7 @@
 				DA1AB3DC2A862B87008DBB2D /* ErrorHandler.swift */,
 				DA5A3AA92A89159B000375A2 /* BoundedFormatter.swift */,
 				DAC183402A8ECA4D002B496F /* IOSShim.swift */,
+				DA66852D2A8FFA32000913A1 /* Settings.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -797,9 +803,11 @@
 				DA2A7EBB2A85357A009B454D /* SpanNode.swift in Sources */,
 				DA1AB3D92A862A90008DBB2D /* ContentView.swift in Sources */,
 				DA5A3AA62A88CF9B000375A2 /* NetworkAdaptor.swift in Sources */,
+				DA66852E2A8FFA32000913A1 /* Settings.swift in Sources */,
 				DAFD445C2A8D1B4C008F99D2 /* ProjectOverview.swift in Sources */,
 				DA1AB3D62A862A90008DBB2D /* SpanEventTable.swift in Sources */,
 				DA2A7EB92A8534AA009B454D /* Project.swift in Sources */,
+				DAC183432A8F9C13002B496F /* SettingsView.swift in Sources */,
 				DA5A3AA82A8912A1000375A2 /* ClientConfig.swift in Sources */,
 				DA1AB3DD2A862B87008DBB2D /* ErrorHandler.swift in Sources */,
 				DA17E7F52A12B84300554B8A /* Profiler.xcdatamodeld in Sources */,
