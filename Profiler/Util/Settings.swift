@@ -24,6 +24,22 @@
 import Foundation
 import Protocol
 
+struct Defaults {
+    static func integer(forKey: String) -> Int? {
+        if UserDefaults.standard.object(forKey: forKey) == nil {
+            return nil
+        }
+        return UserDefaults.standard.integer(forKey: forKey);
+    }
+
+    static func bool(forKey: String) -> Bool? {
+        if UserDefaults.standard.object(forKey: forKey) == nil {
+            return nil
+        }
+        return UserDefaults.standard.bool(forKey: forKey);
+    }
+}
+
 struct ClientConfigDefaults {
     let averagePoints: Int;
     let period: Int;
@@ -34,19 +50,18 @@ struct ClientConfigDefaults {
     let enableRecording: Bool;
 
     init() {
-        let defaults = UserDefaults.standard;
-        averagePoints = defaults.integer(forKey: "network.maxPointsAverage");
-        period = defaults.integer(forKey: "network.period");
-        maxLevel = Level(fromRaw: UInt8(defaults.integer(forKey: "network.maxLevel")));
-        rows = defaults.integer(forKey: "network.rows");
-        rowsIsDebugServer = defaults.bool(forKey: "network.rowsIsDebugServer");
-        periodIsDebugServer = defaults.bool(forKey: "network.periodIsDebugServer");
-        enableRecording = defaults.bool(forKey: "network.enableRecording");
+        averagePoints = Defaults.integer(forKey: "network.maxPointsAverage") ?? 100;
+        period = Defaults.integer(forKey: "network.period") ?? 200;
+        maxLevel = Level(fromRaw: UInt8(Defaults.integer(forKey: "network.maxLevel") ?? 0));
+        rows = Defaults.integer(forKey: "network.rows") ?? 0;
+        rowsIsDebugServer = Defaults.bool(forKey: "network.rowsIsDebugServer") ?? true;
+        periodIsDebugServer = Defaults.bool(forKey: "network.periodIsDebugServer") ?? true;
+        enableRecording = Defaults.bool(forKey: "network.enableRecording") ?? true;
     }
 }
 
 func checkAndAutoNegociate(maxRows: UInt32, minPeriod: UInt16) -> MessageClientConfig? {
-    let flag = UserDefaults.standard.bool(forKey: "general.autoNegociate");
+    let flag = Defaults.bool(forKey: "general.autoNegociate") ?? false;
     if !flag {
         return nil;
     }
