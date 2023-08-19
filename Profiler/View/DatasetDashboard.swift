@@ -25,9 +25,12 @@ import SwiftUI
 
 struct DatasetDashboard: View {
     let dataset: DisplayDataset;
+    let onChecked: () -> Void;
+    let onUnchecked: () -> Void;
+    let checked: Bool;
 
     var body: some View {
-        GroupBox(label: Label(dataset.timestamp, systemImage: "doc")) {
+        GroupBox(label: Label(dataset.timestamp, systemImage: checked ? "checkmark.circle.fill" : "checkmark.circle")) {
             HStack {
                 Text("Average Time").bold()
                 Spacer()
@@ -49,11 +52,18 @@ struct DatasetDashboard: View {
                 Text(dataset.median)
             }
         }
+        .onTapGesture {
+            if checked {
+                onUnchecked();
+            } else {
+                onChecked();
+            }
+        }
     }
 }
 
 struct DatasetDashboard_Previews: PreviewProvider {
     static var previews: some View {
-        DatasetDashboard(dataset: DisplayDataset(fromModel: Store.preview.newSample()))
+        DatasetDashboard(dataset: DisplayDataset(fromModel: Store.preview.newSample()), onChecked: {}, onUnchecked: {}, checked: false)
     }
 }

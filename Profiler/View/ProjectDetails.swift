@@ -72,11 +72,15 @@ struct ProjectDetails: View {
                         Text(item.wPath)
                     }
                 }
-                //List selection does not allow de-selection under iOS so disable this feature
-                List(/*selection: $datasets*/) {
+                List {
                     if let node = node {
                         ForEach(node.wDatasets.sorted(by: { $1.wTimestamp > $0.wTimestamp })) { item in
-                            DatasetDashboard(dataset: DisplayDataset(fromModel: item)).tag(item)
+                            DatasetDashboard(
+                                dataset: DisplayDataset(fromModel: item),
+                                onChecked: { datasets.insert(item) },
+                                onUnchecked: { datasets.remove(item) },
+                                checked: datasets.contains(item)
+                            ).tag(item)
                         }
                     }
                 }
