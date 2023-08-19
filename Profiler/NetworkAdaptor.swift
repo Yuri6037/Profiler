@@ -222,6 +222,10 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
             break;
         case .spanDataset(let dataset):
             let total = UInt(dataset.runCount);
+            if total == 0 {
+                //Do not attempt to import a 0 entry dataset.
+                break;
+            }
             setConnectionStatusText("Importing dataset");
             setConnectionStatusProgress(total: total, current: 0);
             execDb { ctx, p in
