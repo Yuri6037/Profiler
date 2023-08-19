@@ -76,6 +76,7 @@ extension SpanNode {
     var wOrder: UInt32 { UInt32(self.order) }
     var wPath: String { self.path! }
     var wMetadata: SpanMetadata? { self.metadata }
+    var wDatasets: [Dataset] { (self.datasets?.allObjects ?? []) as! [Dataset] }
 
     var wAverageTime: Duration { Duration(nanoseconds: UInt64(bitPattern: self.averageTime)) }
     var wMinTime: Duration { Duration(nanoseconds: UInt64(bitPattern: self.minTime)) }

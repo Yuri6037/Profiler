@@ -28,7 +28,7 @@ let MAX_UI_ROWS = 20000;
 
 struct SpanNodeDetails: View {
     @ObservedObject var node: SpanNode;
-    @Binding var dataset: Dataset?;
+    @Binding var datasets: Set<Dataset>;
     @EnvironmentObject var errorHandler: ErrorHandler;
     @EnvironmentObject var filters: NodeFilters;
     @Environment(\.managedObjectContext) var viewContext;
@@ -42,11 +42,11 @@ struct SpanNodeDetails: View {
     private func loadRuns(node: SpanNode) {
         runs = nil;
         let size = node.runs?.count ?? 0;
-        dbFunc(node: node, fetch: { node, dataset in
+        dbFunc(node: node, fetch: { node, datasets in
             let runs: NSFetchRequest<SpanRun> = SpanRun.fetchRequest();
             runs.fetchLimit = MAX_UI_ROWS;
             runs.sortDescriptors = filters.getSortDescriptors();
-            runs.predicate = filters.getPredicate(size: size, maxSize: MAX_UI_ROWS, node: node, dataset: dataset);
+            runs.predicate = filters.getPredicate(size: size, maxSize: MAX_UI_ROWS, node: node, datasets: datasets);
             return runs;
         }, handle: { runs in
             let runs1 = runs.map { DisplaySpanRun(fromModel: $0) };
@@ -75,12 +75,12 @@ struct SpanNodeDetails: View {
     private func loadPoints(node: SpanNode) {
         points = nil;
         let size = node.runs?.count ?? 0;
-        dbFunc(node: node, fetch: { node, dataset in
+        dbFunc(node: node, fetch: { node, datasets in
             let filters = NodeFilters();
             let runs: NSFetchRequest<SpanRun> = SpanRun.fetchRequest();
             runs.fetchLimit = 1500;
             runs.sortDescriptors = filters.getSortDescriptors();
-            runs.predicate = filters.getPredicate(size: size, maxSize: 1500, node: node, dataset: dataset);
+            runs.predicate = filters.getPredicate(size: size, maxSize: 1500, node: node, datasets: datasets);
             return runs;
         }, handle: { runs in
             //Swift requires useless values because its type inference system is garbagely broken
@@ -92,18 +92,13 @@ struct SpanNodeDetails: View {
         });
     }
 
-    private func dbFunc<T>(node: SpanNode, fetch: @escaping (NSManagedObject, NSManagedObject?) -> NSFetchRequest<T>, handle: @escaping ([T]) -> Void) {
+    private func dbFunc<T>(node: SpanNode, fetch: @escaping (NSManagedObject, [NSManagedObject]) -> NSFetchRequest<T>, handle: @escaping ([T]) -> Void) {
         let nodeId = node.objectID;
-        let datasetId = dataset?.objectID;
+        let datasetIds = datasets.map { v in v.objectID };
         container.performBackgroundTask { ctx in
-            let dataset: NSManagedObject?;
-            if let datasetId = datasetId {
-                dataset = ctx.object(with: datasetId);
-            } else {
-                dataset = nil;
-            }
+            let datasets = datasetIds.map { v in ctx.object(with: v) };
             let node = ctx.object(with: nodeId);
-            let req = fetch(node, dataset);
+            let req = fetch(node, datasets);
             do {
                 let data = try ctx.fetch(req);
                 handle(data);
@@ -161,7 +156,7 @@ struct SpanNodeDetails: View {
                 VStack {
                     VStack {
                         if sizeClass == .compact {
-                            SpanNodeInfo(node: node, dataset: $dataset)
+                            SpanNodeInfo(node: node)
                             Divider()
                         }
                         if let events = events {
@@ -181,7 +176,7 @@ struct SpanNodeDetails: View {
 
 struct SpanNodeDetails_Previews: PreviewProvider {
     static var previews: some View {
-        SpanNodeDetails(node: Store.preview.newSample(), dataset: .constant(Store.preview.newSample()))
+        SpanNodeDetails(node: Store.preview.newSample(), datasets: .constant([]))
             .environment(\.persistentContainer, Store.preview.container)
             .environment(\.managedObjectContext, Store.preview.container.viewContext)
             .environmentObject(ErrorHandler())

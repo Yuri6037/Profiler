@@ -27,8 +27,8 @@ struct ProjectDetails: View {
     @ObservedObject var project: Project;
     
     @Binding var node: SpanNode?;
-    @Binding var dataset: Dataset?;
-    
+    @Binding var datasets: Set<Dataset>;
+
     @State var showInfoSheet = false;
 
     var body: some View {
@@ -39,7 +39,7 @@ struct ProjectDetails: View {
                         ProjectInfo(project: project)
                         if let node = node {
                             Spacer()
-                            SpanNodeInfo(node: node, dataset: $dataset)
+                            SpanNodeInfo(node: node)
                         }
                     }.padding(.horizontal).padding(.top)
                 } else {
@@ -72,8 +72,13 @@ struct ProjectDetails: View {
                         Text(item.wPath)
                     }
                 }
-                List(project.wDatasets.sorted(by: { $1.wTimestamp > $0.wTimestamp }), selection: $dataset) { item in
-                    Text(item.wTimestamp.formatted())
+                //List selection does not allow de-selection under iOS so disable this feature
+                List(/*selection: $datasets*/) {
+                    if let node = node {
+                        ForEach(node.wDatasets.sorted(by: { $1.wTimestamp > $0.wTimestamp })) { item in
+                            DatasetDashboard(dataset: DisplayDataset(fromModel: item)).tag(item)
+                        }
+                    }
                 }
                 //TODO: Implement a preferences menu to provide defaults to the clientconfig message.
                 //TODO: Implement dataset list
@@ -84,7 +89,7 @@ struct ProjectDetails: View {
                         ProjectInfo(project: project)
                         if let node = node {
                             Spacer()
-                            SpanNodeInfo(node: node, dataset: $dataset)
+                            SpanNodeInfo(node: node)
                         }
                     }.padding()
                     Button(action: { showInfoSheet = false }) {
@@ -98,6 +103,6 @@ struct ProjectDetails: View {
 
 struct ProjectDetails_Previews: PreviewProvider {
     static var previews: some View {
-        ProjectDetails(project: Store.preview.newSample(), node: .constant(nil), dataset: .constant(nil))
+        ProjectDetails(project: Store.preview.newSample(), node: .constant(nil), datasets: .constant([]))
     }
 }

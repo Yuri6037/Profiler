@@ -109,10 +109,12 @@ class NodeFilters: ObservableObject {
         return predicates;
     }
 
-    func getPredicate(size: Int, maxSize: Int, node: NSManagedObject, dataset: NSManagedObject?) -> NSPredicate {
+    func getPredicate(size: Int, maxSize: Int, node: NSManagedObject, datasets: [NSManagedObject]) -> NSPredicate {
         var predicates = [NSPredicate(format: "node=%@", node)];
-        if let dataset = dataset {
-            predicates.append(NSPredicate(format: "dataset=%@", dataset));
+        if !datasets.isEmpty {
+            for dataset in datasets {
+                predicates.append(NSPredicate(format: "dataset=%@", dataset));
+            }
         }
         predicates.append(contentsOf: parseTextFilter(text: text));
         if distribution == .even && size > maxSize {

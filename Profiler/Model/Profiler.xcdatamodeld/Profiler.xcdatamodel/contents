@@ -15,8 +15,7 @@
         <attribute name="medianTime" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="minTime" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="timestamp" attributeType="Date" usesScalarValueType="NO"/>
-        <relationship name="node" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SpanNode" inverseName="dataset" inverseEntity="SpanNode"/>
-        <relationship name="project" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Project" inverseName="datasets" inverseEntity="Project"/>
+        <relationship name="node" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SpanNode" inverseName="datasets" inverseEntity="SpanNode"/>
         <relationship name="runs" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SpanRun" inverseName="dataset" inverseEntity="SpanRun"/>
     </entity>
     <entity name="Project" representedClassName="Project" syncable="YES" codeGenerationType="class">
@@ -26,7 +25,6 @@
         <attribute name="timestamp" attributeType="Date" defaultDateTimeInterval="690046200" usesScalarValueType="NO"/>
         <attribute name="version" optional="YES" attributeType="String"/>
         <relationship name="cpu" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Cpu" inverseName="projects" inverseEntity="Cpu"/>
-        <relationship name="datasets" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Dataset" inverseName="project" inverseEntity="Dataset"/>
         <relationship name="nodes" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="SpanNode" inverseName="project" inverseEntity="SpanNode"/>
         <relationship name="target" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Target" inverseName="projects" inverseEntity="Target"/>
     </entity>
@@ -55,7 +53,7 @@
         <attribute name="minTime" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="order" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="path" attributeType="String" defaultValueString=""/>
-        <relationship name="dataset" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Dataset" inverseName="node" inverseEntity="Dataset"/>
+        <relationship name="datasets" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Dataset" inverseName="node" inverseEntity="Dataset"/>
         <relationship name="events" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="SpanEvent" inverseName="node" inverseEntity="SpanEvent"/>
         <relationship name="metadata" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="SpanMetadata" inverseName="nodes" inverseEntity="SpanMetadata"/>
         <relationship name="project" maxCount="1" deletionRule="Nullify" destinationEntity="Project" inverseName="nodes" inverseEntity="Project"/>

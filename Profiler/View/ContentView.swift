@@ -37,7 +37,7 @@ struct ContentView: View {
 
     @State private var projectSelection: Project?;
     @State private var nodeSelection: SpanNode?;
-    @State private var datasetSelection: Dataset?;
+    @State private var datasetsSelection: Set<Dataset> = [];
     @State private var columnVisibility = NavigationSplitViewVisibility.all;
     @State private var deleteMode: Bool = false;
     @State private var showImportProgress: Bool = false;
@@ -91,14 +91,14 @@ struct ContentView: View {
             sidebar: { sidebar },
             content: {
                 if let project = projectSelection {
-                    ProjectDetails(project: project, node: $nodeSelection, dataset: $datasetSelection)
+                    ProjectDetails(project: project, node: $nodeSelection, datasets: $datasetsSelection)
                 } else {
                     Text("Select an item")
                 }
             },
             detail: {
                 if let node = nodeSelection {
-                    SpanNodeDetails(node: node, dataset: $datasetSelection)
+                    SpanNodeDetails(node: node, datasets: $datasetsSelection)
                         .environmentObject(filters)
                         .toolbar {
                             Picker("Order", selection: $filters.order) {

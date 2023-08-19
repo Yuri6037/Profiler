@@ -25,7 +25,6 @@ import SwiftUI
 
 struct SpanNodeInfo: View {
     @ObservedObject var node: SpanNode;
-    @Binding var dataset: Dataset?;
 
     var body: some View {
         VStack {
@@ -74,28 +73,6 @@ struct SpanNodeInfo: View {
                     Text("Average time").bold()
                     Text(node.wAverageTime.formatted())
                 }
-                if let dataset = dataset {
-                    Text("Dataset").bold()
-                    VStack(alignment: .leading) {
-                        HStack {
-                            Text("Min time").bold()
-                            Text(dataset.wMinTime.formatted())
-                        }
-                        HStack {
-                            Text("Max time").bold()
-                            Text(dataset.wMaxTime.formatted())
-                        }
-                        HStack {
-                            Text("Average time").bold()
-                            Text(dataset.wAverageTime.formatted())
-                        }
-                        HStack {
-                            Text("Median time").bold()
-                            Text(dataset.wMedianTime.formatted())
-                        }
-                    }.padding(.leading)
-                }
-
             }
         }
     }
@@ -103,6 +80,6 @@ struct SpanNodeInfo: View {
 
 struct SpanNodeInfo_Previews: PreviewProvider {
     static var previews: some View {
-        SpanNodeInfo(node: Store.preview.newSample(), dataset: .constant(Store.preview.newSample()))
+        SpanNodeInfo(node: Store.preview.newSample())
     }
 }

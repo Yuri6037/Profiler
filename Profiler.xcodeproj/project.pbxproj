@@ -48,6 +48,7 @@
 		DA5A3AAC2A89165F000375A2 /* IntPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5A3AAB2A89165F000375A2 /* IntPicker.swift */; };
 		DA66852E2A8FFA32000913A1 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA66852D2A8FFA32000913A1 /* Settings.swift */; };
 		DA6685302A90A63A000913A1 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = DA66852F2A90A63A000913A1 /* Settings.bundle */; };
+		DA6685342A90FE7B000913A1 /* DatasetDashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6685332A90FE7B000913A1 /* DatasetDashboard.swift */; };
 		DA837CFA2A14076300B91BCE /* NIO in Frameworks */ = {isa = PBXBuildFile; productRef = DA837CF92A14076300B91BCE /* NIO */; };
 		DA837CFC2A140AA500B91BCE /* Decoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA837CFB2A140AA500B91BCE /* Decoder.swift */; };
 		DA837CFF2A1410B500B91BCE /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA837CFE2A1410B500B91BCE /* Component.swift */; };
@@ -205,6 +206,7 @@
 		DA5A3AAB2A89165F000375A2 /* IntPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntPicker.swift; sourceTree = "<group>"; };
 		DA66852D2A8FFA32000913A1 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		DA66852F2A90A63A000913A1 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		DA6685332A90FE7B000913A1 /* DatasetDashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatasetDashboard.swift; sourceTree = "<group>"; };
 		DA837CFB2A140AA500B91BCE /* Decoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Decoder.swift; sourceTree = "<group>"; };
 		DA837CFE2A1410B500B91BCE /* Component.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
 		DA837D002A14116600B91BCE /* ComponentVchar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentVchar.swift; sourceTree = "<group>"; };
@@ -411,6 +413,7 @@
 				DA5A3AAB2A89165F000375A2 /* IntPicker.swift */,
 				DAFD445B2A8D1B4C008F99D2 /* ProjectOverview.swift */,
 				DAC183422A8F9C13002B496F /* SettingsView.swift */,
+				DA6685332A90FE7B000913A1 /* DatasetDashboard.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -809,6 +812,7 @@
 				DA5A3AA62A88CF9B000375A2 /* NetworkAdaptor.swift in Sources */,
 				DA66852E2A8FFA32000913A1 /* Settings.swift in Sources */,
 				DAFD445C2A8D1B4C008F99D2 /* ProjectOverview.swift in Sources */,
+				DA6685342A90FE7B000913A1 /* DatasetDashboard.swift in Sources */,
 				DA1AB3D62A862A90008DBB2D /* SpanEventTable.swift in Sources */,
 				DA2A7EB92A8534AA009B454D /* Project.swift in Sources */,
 				DAC183432A8F9C13002B496F /* SettingsView.swift in Sources */,

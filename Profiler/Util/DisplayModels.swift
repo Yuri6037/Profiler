@@ -26,10 +26,10 @@ import Foundation
 import Protocol
 
 struct DisplaySpanRun: Identifiable {
-    var id: UUID;
-    var time: String;
-    var message: String;
-    var variables: String;
+    let id: UUID;
+    let time: String;
+    let message: String;
+    let variables: String;
 
     init(fromModel model: SpanRun) {
         self.time = model.wTime.formatted()
@@ -40,13 +40,13 @@ struct DisplaySpanRun: Identifiable {
 }
 
 struct DisplaySpanEvent: Identifiable {
-    var id: UUID;
-    var variables: String;
-    var message: String;
-    var level: String;
-    var timestamp: String;
-    var target: String;
-    var module: String;
+    let id: UUID;
+    let variables: String;
+    let message: String;
+    let level: String;
+    let timestamp: String;
+    let target: String;
+    let module: String;
 
     init(fromModel model: SpanEvent) {
         self.timestamp = model.wTimestamp.formatted()
@@ -56,6 +56,24 @@ struct DisplaySpanEvent: Identifiable {
         self.id = UUID();
         self.target = model.wTarget;
         self.module = model.wModule;
+    }
+}
+
+struct DisplayDataset: Identifiable {
+    let id: UUID;
+    let timestamp: String;
+    let average: String;
+    let median: String;
+    let min: String;
+    let max: String;
+
+    init(fromModel model: Dataset) {
+        self.id = UUID()
+        self.timestamp = model.wTimestamp.formatted();
+        self.average = model.wAverageTime.formatted();
+        self.median = model.wMedianTime.formatted();
+        self.min = model.wMinTime.formatted();
+        self.max = model.wMaxTime.formatted();
     }
 }
 
