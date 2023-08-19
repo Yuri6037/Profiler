@@ -149,6 +149,10 @@ struct SpanNodeDetails: View {
             }
             .onAppear { loadData(node: node) }
             .onChange(of: node) { loadData(node: $0) }
+            .onChange(of: datasets) { _ in
+                loadRuns(node: node);
+                loadPoints(node: node);
+            }
             .onChange(of: filters.distribution) { _ in loadRuns(node: node) }
             .onChange(of: filters.order) { _ in loadRuns(node: node) }
             .onChange(of: filters.text) { filters.updateTextFilter($0) { loadRuns(node: node) } }
