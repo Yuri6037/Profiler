@@ -84,8 +84,6 @@ struct ProjectDetails: View {
                         }
                     }
                 }
-                //TODO: Implement a preferences menu to provide defaults to the clientconfig message.
-                //TODO: Implement dataset list
             }
             .sheet(isPresented: $showInfoSheet, onDismiss: { showInfoSheet = false }) {
                 VStack {
