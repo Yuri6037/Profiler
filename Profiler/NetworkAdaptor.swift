@@ -37,7 +37,6 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
     private var connection: Connection?;
     private var projectId: NSManagedObjectID?;
     private var evIndex = 0;
-    private var runIndex = 0;
     private var inHandler = false;
     @Published var showConnectSheet = false;
     @Published var config: MessageServerConfig?;
@@ -238,6 +237,8 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
                     let dataset = Dataset(context: ctx);
                     dataset.timestamp = Date();
                     dataset.node = node;
+                    try ctx.save();
+                    var runIndex = node.runs?.count ?? 0;
                     var maxTime = UInt64(0);
                     var minTime = UInt64.max;
                     var averageTime = UInt64(0);
@@ -250,8 +251,8 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
                         }
                         let run = SpanRun(context: ctx);
                         run.node = node;
-                        run.order = Int64(self.runIndex);
-                        self.runIndex += 1;
+                        run.order = Int64(runIndex);
+                        runIndex += 1;
                         run.dataset = dataset;
                         run.message = row[0];
                         let secs = UInt32(row[row.count - 2]) ?? 0;
@@ -314,7 +315,6 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
     func onConnect(connection: Connection) {
         self.connection = connection;
         evIndex = 0;
-        runIndex = 0;
         setConnectionStatusText("Connected with debug server");
         setConnectionStatusProgress(total: 0, current: 0);
     }
