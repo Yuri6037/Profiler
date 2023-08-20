@@ -237,7 +237,6 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
                     let dataset = Dataset(context: ctx);
                     dataset.timestamp = Date();
                     dataset.node = node;
-                    try ctx.save();
                     var runIndex = node.runs?.count ?? 0;
                     var maxTime = UInt64(0);
                     var minTime = UInt64.max;

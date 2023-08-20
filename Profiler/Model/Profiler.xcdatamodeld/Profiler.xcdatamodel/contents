@@ -16,7 +16,7 @@
         <attribute name="minTime" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="timestamp" attributeType="Date" usesScalarValueType="NO"/>
         <relationship name="node" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SpanNode" inverseName="datasets" inverseEntity="SpanNode"/>
-        <relationship name="runs" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SpanRun" inverseName="dataset" inverseEntity="SpanRun"/>
+        <relationship name="runs" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SpanRun" inverseName="dataset" inverseEntity="SpanRun"/>
     </entity>
     <entity name="Project" representedClassName="Project" syncable="YES" codeGenerationType="class">
         <attribute name="appName" attributeType="String" defaultValueString="Unknown"/>
