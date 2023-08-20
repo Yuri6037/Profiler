@@ -97,7 +97,7 @@ struct StoreUtils {
             let fevents = NSFetchRequest<NSFetchRequestResult>(entityName: String(describing: SpanEvent.self));
             fevents.predicate = NSPredicate(format: "node.project = %@", proj);
             let fdatasets = NSFetchRequest<NSFetchRequestResult>(entityName: String(describing: Dataset.self));
-            fdatasets.predicate = NSPredicate(format: "project = %@", proj);
+            fdatasets.predicate = NSPredicate(format: "node.project = %@", proj);
             let fnodes = NSFetchRequest<NSFetchRequestResult>(entityName: String(describing: SpanNode.self));
             fnodes.predicate = NSPredicate(format: "project = %@", proj);
             do {
