@@ -38,6 +38,8 @@ class AppGlobals: ObservableObject {
     lazy var adaptor: NetworkAdaptor = { NetworkAdaptor(errorHandler: errorHandler, container: store.container) }();
 }
 
+//TODO: Implement start/stop of recording
+
 @main
 struct ProfilerApp: App {
     @StateObject var globals = AppGlobals();
