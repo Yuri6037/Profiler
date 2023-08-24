@@ -140,7 +140,7 @@ class NetworkHandler {
         adaptor.execDb(node: message.id) { ctx, p, node in
             let reader = BufferedLineStreamer(str: message.content);
             let medianHalfIndex = total / 2 - 1;
-            let medianCount = total % 2 == 0 ? 1 : 2;
+            let medianCount = total % 2 == 0 ? 2 : 1;
             let dataset = Dataset(context: ctx);
             dataset.timestamp = Date();
             dataset.node = node;
@@ -148,7 +148,7 @@ class NetworkHandler {
             var maxTime = UInt64(0);
             var minTime = UInt64.max;
             var averageTime = UInt64(0);
-            var medianValues = [UInt64(0), UInt64(0)];
+            var timeValues: [UInt64] = [];
             var current = UInt(0);
             while let line = reader.readLine() {
                 let row = self.parser.parseRow(line);
@@ -172,17 +172,12 @@ class NetworkHandler {
                     minTime = time;
                 }
                 averageTime += time;
-                if current == medianHalfIndex {
-                    medianValues[0] = time;
-                }
-                if current ==  medianHalfIndex + 1 {
-                    medianValues[1] = time;
-                }
                 for i in 1..<row.count - 2 {
                     let v = SpanVariable(context: ctx);
                     v.run = run;
                     v.data = row[i];
                 }
+                timeValues.append(time);
                 current += 1;
                 DispatchQueue.main.async {
                     adaptor.setConnectionStatusProgress(total: total, current: current);
@@ -192,7 +187,13 @@ class NetworkHandler {
             dataset.averageTime = Int64(bitPattern: averageTime);
             dataset.minTime = Int64(bitPattern: minTime);
             dataset.maxTime = Int64(bitPattern: maxTime);
-            let medianTime = medianCount == 2 ? (medianValues[0] + medianValues[1]) / 2 : medianValues[0];
+            timeValues.sort();
+            let medianTime: UInt64;
+            if medianCount == 2 {
+                medianTime = (timeValues[Int(medianHalfIndex)] + timeValues[Int(medianHalfIndex) + 1]) / 2;
+            } else {
+                medianTime = timeValues[Int(medianHalfIndex)];
+            }
             dataset.medianTime = Int64(bitPattern: medianTime);
             node.averageTime = Int64(bitPattern: (UInt64(bitPattern: node.averageTime) + averageTime) / 2);
             if minTime < UInt64(bitPattern: node.minTime) {
