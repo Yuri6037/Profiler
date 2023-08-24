@@ -50,6 +50,7 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
         self.container = container;
         self.queue = DispatchQueue(label: "NetworkAdaptor", qos: .userInteractive);
         self.context = container.newBackgroundContext();
+        self.context.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy;
     }
 
     func resetConnectionStatus() {
