@@ -62,12 +62,10 @@ struct ContentView: View {
                         Text(adaptor.text)
                         if adaptor.progress > 0 {
                             ProgressView(value: adaptor.progress)
-                                .padding(.leading)
-                                .padding(.trailing)
+                                .padding(.horizontal)
                         } else {
                             ProgressView()
-                                .padding(.leading)
-                                .padding(.trailing)
+                                .padding(.horizontal)
                         }
                     }.padding(.bottom, 5)
                 } else {
@@ -81,6 +79,11 @@ struct ContentView: View {
                         }.padding(.horizontal)
                     }.padding(.bottom, 8)
                 }
+            }
+        }
+        .onChange(of: adaptor.projectId) { pid in
+            if let pid = pid {
+                projectSelection = viewContext.object(with: pid) as? Project;
             }
         }
     }
