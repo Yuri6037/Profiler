@@ -30,12 +30,12 @@ import TextTools
 class NetworkAdaptor: ObservableObject, MsgHandler {
     private let errorHandler: ErrorHandler;
     private let queue: DispatchQueue;
+    private let group = DispatchGroup();
     private let context: NSManagedObjectContext;
     private let container: NSPersistentContainer;
     private let handler = NetworkHandler();
     private var net: NetManager?;
     private var connection: Connection?;
-    private var inHandler = false;
     @Published var projectId: NSManagedObjectID?;
     @Published var showConnectSheet = false;
     @Published var config: MessageServerConfig?;
@@ -55,9 +55,7 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
 
     func resetConnectionStatus() {
         self.setConnectionStatusProgress(total: 0, current: 0);
-        if connection != nil {
-            self.setConnectionStatusText("Connected with debug server");
-        }
+        self.setConnectionStatusText("Connected with debug server");
     }
 
     func setConnectionStatusText(_ text: String) {
@@ -92,8 +90,7 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
     }
 
     func execDb(_ fn: @escaping (NSManagedObjectContext, Project?) throws -> Void) {
-        inHandler = true;
-        self.queue.async {
+        self.queue.async(group: group) {
             let p: Project?;
             if let projectId = self.projectId {
                 p = self.context.object(with: projectId) as? Project;
@@ -102,16 +99,9 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
             }
             do {
                 try fn(self.context, p);
-                DispatchQueue.main.async {
-                    self.inHandler = false;
-                    if self.connection == nil {
-                        self.setConnectionStatusText("");
-                    }
-                }
             } catch let error {
                 DispatchQueue.main.async {
                     self.errorHandler.pushError(AppError(fromError: error));
-                    self.inHandler = false;
                 }
             }
         }
@@ -132,46 +122,52 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
     }
 
     func onMessage(message: Message) {
-        switch message {
-        case .serverConfig(let config):
-            if let msg = checkAndAutoNegociate(maxRows: config.maxRows, minPeriod: config.minPeriod) {
-                self.connection?.send(config: msg);
-                self.connection?.send(config: msg);
-            } else {
-                showConnectSheet = true;
-                self.config = config;
+        DispatchQueue.main.async(group: self.group) {
+            switch message {
+            case .serverConfig(let config):
+                if let msg = checkAndAutoNegociate(maxRows: config.maxRows, minPeriod: config.minPeriod) {
+                    self.connection?.send(config: msg);
+                    self.connection?.send(config: msg);
+                } else {
+                    self.showConnectSheet = true;
+                    self.config = config;
+                }
+                break;
+            case .project(let project):
+                self.handler.handleProject(adaptor: self, message: project);
+                break;
+            case .spanAlloc(let span):
+                self.handler.handleSpanAlloc(adaptor: self, message: span);
+                break;
+            case .spanParent(_):
+                break;
+            case .spanFollows(_):
+                break;
+            case .spanEvent(let event):
+                self.handler.handleSpanEvent(adaptor: self, message: event);
+                break;
+            case .spanUpdate(let span):
+                self.handler.handleSpanUpdate(adaptor: self, message: span);
+                break;
+            case .spanDataset(let dataset):
+                self.handler.handleSpanDataset(adaptor: self, message: dataset);
+                break;
             }
-            break;
-        case .project(let project):
-            handler.handleProject(adaptor: self, message: project);
-            break;
-        case .spanAlloc(let span):
-            handler.handleSpanAlloc(adaptor: self, message: span);
-            break;
-        case .spanParent(_):
-            break;
-        case .spanFollows(_):
-            break;
-        case .spanEvent(let event):
-            handler.handleSpanEvent(adaptor: self, message: event);
-            break;
-        case .spanUpdate(let span):
-            handler.handleSpanUpdate(adaptor: self, message: span);
-            break;
-        case .spanDataset(let dataset):
-            handler.handleSpanDataset(adaptor: self, message: dataset);
-            break;
         }
     }
 
     func onError(error: Error) {
-        errorHandler.pushError(AppError(fromError: error));
+        DispatchQueue.main.async(group: self.group) {
+            self.errorHandler.pushError(AppError(fromError: error));
+        }
     }
 
     func onConnect(connection: Connection) {
-        self.connection = connection;
-        setConnectionStatusText("Connected with debug server");
-        setConnectionStatusProgress(total: 0, current: 0);
+        DispatchQueue.main.async(group: self.group) {
+            self.connection = connection;
+            self.setConnectionStatusText("Connected with debug server");
+            self.setConnectionStatusProgress(total: 0, current: 0);
+        }
     }
 
     func onDisconnect() {
@@ -179,9 +175,8 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
         connection = nil;
         showConnectSheet = false;
         config = nil;
-        if !inHandler {
-            setConnectionStatusText("");
-        }
+        setConnectionStatusText("");
+        context.reset();
         errorHandler.pushError(AppError(description: "Lost connection with debug server"));
     }
 
@@ -193,17 +188,14 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
             return;
         }
         net = NetManager(handler: self);
-        //Again another sign of a garbage language: far too stupid to understand
-        //that path and port are intended to be MOVED not borrowed!!!
-        //Even Rust borrow checker works better than this stupidly broken shitty language.
         Task {
             if let port = port {
                 await net?.connect(address: address, port:port);
             } else {
                 await net?.connect(address: address);
             }
-            await net?.wait()
-            DispatchQueue.main.async {
+            await net?.wait();
+            self.group.notify(queue: DispatchQueue.main) {
                 self.onDisconnect();
             }
         }

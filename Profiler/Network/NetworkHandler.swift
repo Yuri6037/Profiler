@@ -207,6 +207,5 @@ class NetworkHandler {
                 adaptor.resetConnectionStatus()
             }
         }
-
     }
 }

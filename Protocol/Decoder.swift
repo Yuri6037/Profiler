@@ -180,14 +180,10 @@ final class MessageHandler: ChannelInboundHandler {
     public func channelRead(context: ChannelHandlerContext, data: NIOAny) {
         let (msg, error) = self.unwrapInboundIn(data);
         if let error = error {
-            DispatchQueue.main.async {
-                self.handler.onError(error: error);
-            }
+            self.handler.onError(error: error);
         }
         if let msg = msg {
-            DispatchQueue.main.async {
-                self.handler.onMessage(message: msg);
-            }
+            self.handler.onMessage(message: msg);
         }
     }
 }

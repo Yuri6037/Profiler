@@ -73,14 +73,10 @@ public class NetManager {
         }
         do {
             let channel = try await bootstrap.connect(host: address, port: port).get();
-            DispatchQueue.main.async {
-                self.handler.onConnect(connection: Connection(channel: channel))
-            }
+            self.handler.onConnect(connection: Connection(channel: channel))
             self.close = channel.closeFuture;
         } catch let error {
-            DispatchQueue.main.async {
-                self.handler.onError(error: error);
-            }
+            self.handler.onError(error: error);
         }
     }
 
@@ -88,9 +84,7 @@ public class NetManager {
         do {
             try await self.close?.get();
         } catch let error {
-            DispatchQueue.main.async {
-                self.handler.onError(error: error);
-            }
+            self.handler.onError(error: error);
         }
     }
 }
