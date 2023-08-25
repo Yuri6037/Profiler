@@ -31,11 +31,15 @@ struct IntPicker: View {
     var body: some View {
         HStack {
             TextField("", value: $value, formatter: BoundedFormatter(min: min, max: max))
-                .frame(width: 100)
             Stepper(value: $value, in: min...max) {
                 EmptyView()
             }
         }
+#if os(iOS)
+        .frame(width: 200)
+#else
+        .frame(width: 121)
+#endif
     }
 }
 
