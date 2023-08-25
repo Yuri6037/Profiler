@@ -36,7 +36,7 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
     private let handler = NetworkHandler();
     private var net: NetManager?;
     private var connection: Connection?;
-    @Published var projectId: NSManagedObjectID?;
+    var projectId: NSManagedObjectID?;
     @Published var showConnectSheet = false;
     @Published var config: MessageServerConfig?;
 
