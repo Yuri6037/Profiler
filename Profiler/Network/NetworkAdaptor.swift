@@ -116,7 +116,7 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
             }
         }
     }
-    
+
     func setProject(_ id: NSManagedObjectID) {
         self.projectId = id;
     }
@@ -188,15 +188,17 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
             return;
         }
         net = NetManager(handler: self);
-        Task {
-            if let port = port {
-                await net?.connect(address: address, port:port);
-            } else {
-                await net?.connect(address: address);
-            }
-            await net?.wait();
-            self.group.notify(queue: DispatchQueue.main) {
-                self.onDisconnect();
+        DispatchQueue.global(qos: .background).async {
+            Task {
+                if let port = port {
+                    await self.net?.connect(address: address, port:port);
+                } else {
+                    await self.net?.connect(address: address);
+                }
+                await self.net?.wait();
+                self.group.notify(queue: DispatchQueue.main) {
+                    self.onDisconnect();
+                }
             }
         }
     }
