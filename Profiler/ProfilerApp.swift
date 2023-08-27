@@ -40,6 +40,7 @@ class AppGlobals: ObservableObject {
 
 //TODO: Implement start/stop of recording
 //TODO: Implement span parent/follows
+//TODO: Implement export and sync tool
 
 @main
 struct ProfilerApp: App {

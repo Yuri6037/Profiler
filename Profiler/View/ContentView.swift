@@ -56,6 +56,11 @@ struct ContentView: View {
                         .onDelete(perform: { self.deleteItem(index: $0) })
 #endif
                 }
+                .toolbar {
+                    Button(action: { }) {
+                        ToolButton(icon: "plus", text: "Connect to debug server", value: 0)
+                    }
+                }
                 if adaptor.isConnected {
                     Divider()
                     VStack {
@@ -68,16 +73,6 @@ struct ContentView: View {
                                 .padding(.horizontal)
                         }
                     }.padding(.bottom, 5)
-                } else {
-                    Divider()
-                    VStack {
-                        HStack {
-                            TextField("Debug server address", text: $address)
-                            Button(action: { }) {
-                                ToolButton(icon: "plus", text: "Connect to debug server", value: 0)
-                            }
-                        }.padding(.horizontal)
-                    }.padding(.bottom, 8)
                 }
             }
         }
