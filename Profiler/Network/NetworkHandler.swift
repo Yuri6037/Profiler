@@ -152,11 +152,10 @@ class NetworkHandler {
             //Do not attempt to import a 0 entry dataset.
             return;
         }
-        adaptor.setConnectionStatusText("Importing dataset");
-        adaptor.setConnectionStatusProgress(total: total, current: 0);
+        adaptor.setProgress(Progress(text: "Importing dataset...", total: total, current: 0));
         adaptor.execDb(node: message.id) { ctx, p, node in
             let reader = BufferedLineStreamer(str: message.content);
-            let medianHalfIndex = total / 2 - 1;
+            let medianHalfIndex = total > 1 ? total / 2 - 1 : 0;
             let medianCount = total % 2 == 0 ? 2 : 1;
             let dataset = Dataset(context: ctx);
             dataset.timestamp = Date();
@@ -197,7 +196,7 @@ class NetworkHandler {
                 timeValues.append(time);
                 current += 1;
                 DispatchQueue.main.async {
-                    adaptor.setConnectionStatusProgress(total: total, current: current);
+                    adaptor.setProgress(Progress(text: "Importing dataset...", total: total, current: current));
                 }
             }
             averageTime = averageTime / UInt64(total);
@@ -221,7 +220,7 @@ class NetworkHandler {
             }
             try ctx.save();
             DispatchQueue.main.async {
-                adaptor.resetConnectionStatus()
+                adaptor.setProgress(nil);
             }
         }
     }

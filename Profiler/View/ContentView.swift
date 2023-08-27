@@ -23,6 +23,7 @@
 
 import SwiftUI
 import CoreData
+import Protocol
 
 struct ContentView: View {
     @EnvironmentObject private var adaptor: NetworkAdaptor;
@@ -65,12 +66,17 @@ struct ContentView: View {
                     Divider()
                     VStack {
                         Text(adaptor.text)
-                        if adaptor.progress > 0 {
-                            ProgressView(value: adaptor.progress)
+                        if let progress = adaptor.progress {
+                            Text(progress.text)
+                            ProgressView(value: progress.value)
                                 .padding(.horizontal)
+                        }
+                        if adaptor.isRecording {
+                            Button("Stop") {
+                                adaptor.send(record: MessageClientRecord(maxRows: 0, enable: false))
+                            }
                         } else {
-                            ProgressView()
-                                .padding(.horizontal)
+                            
                         }
                     }.padding(.bottom, 5)
                 }

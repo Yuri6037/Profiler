@@ -27,6 +27,20 @@ import SwiftString
 import CoreData
 import TextTools
 
+struct Progress {
+    let text: String;
+    let value: CGFloat;
+
+    init(text: String, total: UInt, current: UInt) {
+        self.text = text
+        if total == 0 && current == 0 {
+            value = 0;
+        } else {
+            value = CGFloat(current) / CGFloat(total);
+        }
+    }
+}
+
 class NetworkAdaptor: ObservableObject, MsgHandler {
     private let errorHandler: ErrorHandler;
     private let queue: DispatchQueue;
@@ -37,13 +51,21 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
     private var net: NetManager?;
     private var connection: Connection?;
     var projectId: NSManagedObjectID?;
+
+    //ClientConfig sheet
     @Published var showConnectSheet = false;
     @Published var config: MessageServerConfig?;
+
+    //Recording status
+    @Published var isRecording = false;
+    private var rowsToRecord = UInt32(0);
+    @Published var serverMaxRows = UInt32(0);
 
     //Inline ConnectionStatus in NetworkAdaptor since SwiftUI is a peace of shit unable to work behind 2 layers of ObservableObject.
     @Published var isConnected = false;
     @Published var text = "";
-    @Published var progress: CGFloat = 0;
+    @Published var progress: Progress? = nil;
+    private var lastText = "";
 
     init(errorHandler: ErrorHandler, container: NSPersistentContainer) {
         self.errorHandler = errorHandler;
@@ -53,26 +75,12 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
         self.context.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy;
     }
 
-    func resetConnectionStatus() {
-        self.setConnectionStatusProgress(total: 0, current: 0);
-        self.setConnectionStatusText("Connected with debug server");
-    }
-
-    func setConnectionStatusText(_ text: String) {
+    func setMessage(_ text: String) {
         self.text = text;
-        if text != "" {
-            isConnected = true;
-        } else {
-            isConnected = false;
-        }
     }
 
-    func setConnectionStatusProgress(total: UInt, current: UInt) {
-        if total == 0 && current == 0 {
-            progress = 0;
-        } else {
-            progress = CGFloat(current) / CGFloat(total);
-        }
+    func setProgress(_ progress: Progress?) {
+        self.progress = progress;
     }
 
     func disconnect() {
@@ -82,10 +90,24 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
     func send(config: MessageClientConfig) {
         showConnectSheet = false;
         self.config = nil;
+        rowsToRecord = config.record.maxRows;
+        isRecording = config.record.enable;
+        if isRecording {
+            setMessage("Recording data...");
+        } else {
+            setMessage("Ready");
+        }
         connection?.send(config: config);
     }
 
     func send(record: MessageClientRecord) {
+        isRecording = record.enable;
+        rowsToRecord = record.maxRows;
+        if isRecording {
+            setMessage("Recording data...");
+        } else {
+            setMessage("Ready");
+        }
         connection?.send(record: record);
     }
 
@@ -125,9 +147,10 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
         DispatchQueue.main.async(group: self.group) {
             switch message {
             case .serverConfig(let config):
+                self.serverMaxRows = config.maxRows;
                 if let msg = checkAndAutoNegociate(maxRows: config.maxRows, minPeriod: config.minPeriod) {
-                    self.connection?.send(config: msg);
-                    self.connection?.send(config: msg);
+                    self.send(config: msg);
+                    self.send(config: msg);
                 } else {
                     self.showConnectSheet = true;
                     self.config = config;
@@ -147,6 +170,10 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
                 self.handler.handleSpanEvent(adaptor: self, message: event);
                 break;
             case .spanUpdate(let span):
+                if self.isRecording && span.runCount >= self.rowsToRecord {
+                    self.isRecording = false;
+                    self.setMessage("Ready");
+                }
                 self.handler.handleSpanUpdate(adaptor: self, message: span);
                 break;
             case .spanDataset(let dataset):
@@ -165,8 +192,9 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
     func onConnect(connection: Connection) {
         DispatchQueue.main.async(group: self.group) {
             self.connection = connection;
-            self.setConnectionStatusText("Connected with debug server");
-            self.setConnectionStatusProgress(total: 0, current: 0);
+            self.isConnected = true;
+            self.setMessage("Waiting for config...");
+            self.setProgress(nil);
         }
     }
 
@@ -175,8 +203,10 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
         connection = nil;
         showConnectSheet = false;
         config = nil;
-        setConnectionStatusText("");
+        isConnected = false;
         context.reset();
+        lastText = "";
+        text = "";
         errorHandler.pushError(AppError(description: "Lost connection with debug server"));
     }
 
