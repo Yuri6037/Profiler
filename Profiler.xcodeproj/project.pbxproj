@@ -42,6 +42,7 @@
 		DA2A7EBB2A85357A009B454D /* SpanNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2A7EBA2A85357A009B454D /* SpanNode.swift */; };
 		DA2A7EBD2A85393D009B454D /* Dataset.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2A7EBC2A85393D009B454D /* Dataset.swift */; };
 		DA2A9B5B2A9B2C330077DCC5 /* ShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2A9B5A2A9B2C330077DCC5 /* ShareView.swift */; };
+		DA2A9B5D2A9B8DBE0077DCC5 /* SpanTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2A9B5C2A9B8DBE0077DCC5 /* SpanTree.swift */; };
 		DA4359752A968A5900D51BCF /* NetworkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4359742A968A5900D51BCF /* NetworkHandler.swift */; };
 		DA5A3AA32A87FF65000375A2 /* SwiftString in Frameworks */ = {isa = PBXBuildFile; productRef = DA5A3AA22A87FF65000375A2 /* SwiftString */; };
 		DA5A3AA62A88CF9B000375A2 /* NetworkAdaptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5A3AA52A88CF9B000375A2 /* NetworkAdaptor.swift */; };
@@ -202,6 +203,7 @@
 		DA2A7EBA2A85357A009B454D /* SpanNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpanNode.swift; sourceTree = "<group>"; };
 		DA2A7EBC2A85393D009B454D /* Dataset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dataset.swift; sourceTree = "<group>"; };
 		DA2A9B5A2A9B2C330077DCC5 /* ShareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareView.swift; sourceTree = "<group>"; };
+		DA2A9B5C2A9B8DBE0077DCC5 /* SpanTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpanTree.swift; sourceTree = "<group>"; };
 		DA4359742A968A5900D51BCF /* NetworkHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkHandler.swift; sourceTree = "<group>"; };
 		DA5A3AA42A881AE5000375A2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		DA5A3AA52A88CF9B000375A2 /* NetworkAdaptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkAdaptor.swift; sourceTree = "<group>"; };
@@ -439,6 +441,7 @@
 			children = (
 				DA5A3AA52A88CF9B000375A2 /* NetworkAdaptor.swift */,
 				DA4359742A968A5900D51BCF /* NetworkHandler.swift */,
+				DA2A9B5C2A9B8DBE0077DCC5 /* SpanTree.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -817,6 +820,7 @@
 				DA1AB3D12A862A90008DBB2D /* NodeFilters.swift in Sources */,
 				DA1AB3D22A862A90008DBB2D /* ProjectDetails.swift in Sources */,
 				DA2A9B5B2A9B2C330077DCC5 /* ShareView.swift in Sources */,
+				DA2A9B5D2A9B8DBE0077DCC5 /* SpanTree.swift in Sources */,
 				DA1AB3DF2A862D6B008DBB2D /* Hacks.swift in Sources */,
 				DA17E7F22A12B84300554B8A /* Persistence.swift in Sources */,
 				DA1AB3D72A862A90008DBB2D /* DisplayModels.swift in Sources */,

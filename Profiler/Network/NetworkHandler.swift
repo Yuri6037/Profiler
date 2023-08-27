@@ -29,8 +29,10 @@ import TextTools
 class NetworkHandler {
     private let parser = CSVParser(delimiter: ",");
     private var evIndex = 0;
+    private var tree = SpanTree();
 
     func handleProject(adaptor: NetworkAdaptor, message: MessageProject) {
+        tree = SpanTree();
         evIndex = 0;
         adaptor.execDb { ctx, _ in
             let p = Project(context: ctx);
@@ -71,6 +73,7 @@ class NetworkHandler {
     }
 
     func handleSpanAlloc(adaptor: NetworkAdaptor, message: MessageSpanAlloc) {
+        tree.addNode(Span(name: message.metadata.name, id: message.id));
         adaptor.execDb { ctx, p in
             let node = SpanNode(context: ctx);
             node.project = p;
@@ -89,11 +92,25 @@ class NetworkHandler {
     }
 
     func handleSpanParent(adaptor: NetworkAdaptor, message: MessageSpanParent) {
-        
+        if tree.relocateNode(message.id, newParent: message.parentNode) {
+            let path = tree.getPath(message.id);
+            adaptor.execDb(node: message.id) { ctx, _, node in
+                node.path = path;
+                try ctx.save();
+            }
+        }
     }
 
     func handleSpanFollows(adaptor: NetworkAdaptor, message: MessageSpanFollows) {
-        
+        if let parent = tree.root.findParent(message.follows) {
+            if tree.relocateNode(message.id, newParent: parent) {
+                let path = tree.getPath(message.id);
+                adaptor.execDb(node: message.id) { ctx, _, node in
+                    node.path = path;
+                    try ctx.save();
+                }
+            }
+        }
     }
 
     func handleSpanEvent(adaptor: NetworkAdaptor, message: MessageSpanEvent) {
