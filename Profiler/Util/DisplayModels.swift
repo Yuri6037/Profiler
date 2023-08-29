@@ -61,6 +61,7 @@ struct DisplaySpanEvent: Identifiable {
 
 struct DisplayDataset: Identifiable {
     let id: UUID;
+    let path: String;
     let timestamp: String;
     let average: String;
     let median: String;
@@ -74,6 +75,7 @@ struct DisplayDataset: Identifiable {
         self.median = model.wMedianTime.formatted();
         self.min = model.wMinTime.formatted();
         self.max = model.wMaxTime.formatted();
+        self.path = model.wNode.wPath;
     }
 }
 

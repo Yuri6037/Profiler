@@ -31,6 +31,7 @@ extension Dataset {
     var wMinTime: Duration { Duration(nanoseconds: UInt64(bitPattern: self.minTime)) }
     var wMaxTime: Duration { Duration(nanoseconds: UInt64(bitPattern: self.maxTime)) }
     var wMedianTime: Duration { Duration(nanoseconds: UInt64(bitPattern: self.medianTime)) }
+    var wNode: SpanNode { self.node! }
 }
 
 extension Dataset: SampleData {

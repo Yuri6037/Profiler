@@ -30,7 +30,7 @@ struct DatasetDashboard: View {
     let checked: Bool;
 
     var body: some View {
-        GroupBox(label: Label(dataset.timestamp, systemImage: checked ? "checkmark.circle.fill" : "checkmark.circle")) {
+        GroupBox(label: Label(dataset.path + " - " + dataset.timestamp, systemImage: checked ? "checkmark.circle.fill" : "checkmark.circle")) {
             HStack {
                 Text("Average Time").bold()
                 Spacer()
