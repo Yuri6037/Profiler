@@ -66,6 +66,20 @@ struct ProjectDetails: View {
                             ToolButton(icon: "viewfinder", text: "Open project/node information", value: 0)
                             Text("Open project/node information")
                         }
+                        .popover(isPresented: $showInfoSheet) {
+                            VStack {
+                                HStack {
+                                    ProjectInfo(project: project)
+                                    if let node = node {
+                                        Spacer()
+                                        SpanNodeInfo(node: node)
+                                    }
+                                }.padding()
+                                Button(action: { showInfoSheet = false }) {
+                                    Text("OK")
+                                }
+                            }.padding()
+                        }
                     }.padding(.horizontal).padding(.top)
                 }
                 if let cmdline = project.wCommandLine {
@@ -98,20 +112,6 @@ struct ProjectDetails: View {
                         ).tag(item)
                     }
                 }
-            }
-            .sheet(isPresented: $showInfoSheet, onDismiss: { showInfoSheet = false }) {
-                VStack {
-                    HStack {
-                        ProjectInfo(project: project)
-                        if let node = node {
-                            Spacer()
-                            SpanNodeInfo(node: node)
-                        }
-                    }.padding()
-                    Button(action: { showInfoSheet = false }) {
-                        Text("OK")
-                    }
-                }.padding()
             }
         }
     }
