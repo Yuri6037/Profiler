@@ -34,6 +34,8 @@ struct ProjectDetails: View {
     
     @FetchRequest var datasetList: FetchedResults<Dataset>;
 
+    @Environment(\.horizontalSizeClass) var sizeClass;
+
     init(project: Project, node: Binding<SpanNode?>, datasets: Binding<Set<Dataset>>) {
         self.project = project
         _node = node
@@ -48,7 +50,7 @@ struct ProjectDetails: View {
     var body: some View {
         GeometryReader { g in
             VStack {
-                if g.size.width > 500 {
+                if g.size.width > 500 && sizeClass == .regular {
                     HStack {
                         ProjectInfo(project: project)
                         if let node = node {
@@ -58,10 +60,6 @@ struct ProjectDetails: View {
                     }.padding(.horizontal).padding(.top)
                 } else {
                     VStack {
-                        if g.size.height > 1000 {
-                            ProjectInfo(project: project)
-                                .padding(.bottom)
-                        }
                         Button(action: { showInfoSheet = true }) {
                             ToolButton(icon: "viewfinder", text: "Open project/node information", value: 0)
                             Text("Open project/node information")
@@ -79,6 +77,7 @@ struct ProjectDetails: View {
                                     Text("OK")
                                 }
                             }.padding()
+                                .presentationDetents([.fraction(0.4)])
                         }
                     }.padding(.horizontal).padding(.top)
                 }
