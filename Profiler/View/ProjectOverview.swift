@@ -81,6 +81,7 @@ struct NodeDashboard: View {
 }
 
 struct ProjectOverview: View {
+    @Environment(\.horizontalSizeClass) var sizeClass;
     @EnvironmentObject private var adaptor: NetworkAdaptor;
     @EnvironmentObject private var errorHandler: ErrorHandler;
     @Environment(\.persistentContainer) private var container: NSPersistentContainer;
@@ -97,8 +98,8 @@ struct ProjectOverview: View {
     }
 
     var body: some View {
-        VStack {
-            GeometryReader { g in
+        GeometryReader { g in
+            VStack {
                 ScrollView {
                     if g.size.width > 500 {
                         LazyVGrid(columns: [.init(), .init()]) {
@@ -112,12 +113,12 @@ struct ProjectOverview: View {
                         }
                     }
                 }
-            }
-            Divider()
-            SpanEventTable(events: events.map { DisplaySpanEvent(fromModel: $0) })
-            if adaptor.isConnected {
                 Divider()
-                
+                SpanEventTable(events: events.map { DisplaySpanEvent(fromModel: $0) })
+                if adaptor.isConnected && sizeClass == .compact {
+                    Divider()
+                    ConnectionStatus(width: g.size.width)
+                }
             }
         }
     }

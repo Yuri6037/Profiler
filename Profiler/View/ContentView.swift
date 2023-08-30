@@ -47,33 +47,35 @@ struct ContentView: View {
     @StateObject private var filters: NodeFilters = NodeFilters();
 
     var sidebar: some View {
-        GeometryReader { g in
-            VStack {
-                if deleteMode {
-                    ProgressView()
-                } else {
-                    List(selection: $projectSelection) {
-                        ForEach(items) { ProjectLink(project: $0) }
+        VStack {
+            if deleteMode {
+                ProgressView()
+            } else {
+                GeometryReader { g in
+                    VStack {
+                        List(selection: $projectSelection) {
+                            ForEach(items) { ProjectLink(project: $0) }
 #if os(iOS)
-                            .onDelete(perform: { self.deleteItem(index: $0) })
+                                .onDelete(perform: { self.deleteItem(index: $0) })
 #endif
-                    }
-                    .toolbar {
-                        Button(action: { }) {
-                            ToolButton(icon: "plus", text: "Connect to debug server", value: 0)
                         }
-                    }
-                    if adaptor.isConnected {
-                        Divider()
-                        ConnectionStatus(width: g.size.width)
-                            .padding(.bottom, 5)
+                        .toolbar {
+                            Button(action: { }) {
+                                ToolButton(icon: "plus", text: "Connect to debug server", value: 0)
+                            }
+                        }
+                        if adaptor.isConnected {
+                            Divider()
+                            ConnectionStatus(width: g.size.width)
+                                .padding(.bottom, 5)
+                        }
                     }
                 }
             }
-            .onChange(of: adaptor.projectId) { pid in
-                if let pid = pid {
-                    projectSelection = viewContext.object(with: pid) as? Project;
-                }
+        }
+        .onChange(of: adaptor.projectId) { pid in
+            if let pid = pid {
+                projectSelection = viewContext.object(with: pid) as? Project;
             }
         }
     }
