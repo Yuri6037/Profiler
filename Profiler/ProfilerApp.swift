@@ -38,7 +38,6 @@ class AppGlobals: ObservableObject {
     lazy var adaptor: NetworkAdaptor = { NetworkAdaptor(errorHandler: errorHandler, container: store.container) }();
 }
 
-//TODO: Implement start/stop of recording
 //TODO: Implement export and sync tool
 //TODO: Fix tables under compact size class
 
