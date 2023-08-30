@@ -44,53 +44,36 @@ struct ContentView: View {
     @State private var showImportProgress: Bool = false;
     @State private var progress: CGFloat = 0.0;
     @State private var address = "";
-    @State private var rows = 200;
     @StateObject private var filters: NodeFilters = NodeFilters();
 
     var sidebar: some View {
-        VStack {
-            if deleteMode {
-                ProgressView()
-            } else {
-                List(selection: $projectSelection) {
-                    ForEach(items) { ProjectLink(project: $0) }
+        GeometryReader { g in
+            VStack {
+                if deleteMode {
+                    ProgressView()
+                } else {
+                    List(selection: $projectSelection) {
+                        ForEach(items) { ProjectLink(project: $0) }
 #if os(iOS)
-                        .onDelete(perform: { self.deleteItem(index: $0) })
+                            .onDelete(perform: { self.deleteItem(index: $0) })
 #endif
-                }
-                .toolbar {
-                    Button(action: { }) {
-                        ToolButton(icon: "plus", text: "Connect to debug server", value: 0)
+                    }
+                    .toolbar {
+                        Button(action: { }) {
+                            ToolButton(icon: "plus", text: "Connect to debug server", value: 0)
+                        }
+                    }
+                    if adaptor.isConnected {
+                        Divider()
+                        ConnectionStatus(width: g.size.width)
+                            .padding(.bottom, 5)
                     }
                 }
-                if adaptor.isConnected {
-                    Divider()
-                    VStack {
-                        Text(adaptor.text)
-                        if let progress = adaptor.progress {
-                            Text(progress.text)
-                            ProgressView(value: progress.value)
-                                .padding(.horizontal)
-                        }
-                        if adaptor.isRecording {
-                            Button("Stop") {
-                                adaptor.send(record: MessageClientRecord(maxRows: 0, enable: false))
-                            }
-                        } else {
-                            HStack {
-                                IntPicker(min: 1, max: Int(adaptor.config?.maxRows ?? 200), value: $rows)
-                                Button("Start") {
-                                    adaptor.send(record: MessageClientRecord(maxRows: UInt32(rows), enable: true))
-                                }
-                            }
-                        }
-                    }.padding(.bottom, 5)
-                }
             }
-        }
-        .onChange(of: adaptor.projectId) { pid in
-            if let pid = pid {
-                projectSelection = viewContext.object(with: pid) as? Project;
+            .onChange(of: adaptor.projectId) { pid in
+                if let pid = pid {
+                    projectSelection = viewContext.object(with: pid) as? Project;
+                }
             }
         }
     }

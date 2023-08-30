@@ -81,10 +81,11 @@ struct NodeDashboard: View {
 }
 
 struct ProjectOverview: View {
-    @EnvironmentObject var errorHandler: ErrorHandler;
-    @Environment(\.persistentContainer) var container: NSPersistentContainer;
-    @ObservedObject var project: Project;
-    @FetchRequest var events: FetchedResults<SpanEvent>;
+    @EnvironmentObject private var adaptor: NetworkAdaptor;
+    @EnvironmentObject private var errorHandler: ErrorHandler;
+    @Environment(\.persistentContainer) private var container: NSPersistentContainer;
+    @ObservedObject private var project: Project;
+    @FetchRequest private var events: FetchedResults<SpanEvent>;
 
     init(project: Project) {
         self.project = project;
@@ -114,6 +115,10 @@ struct ProjectOverview: View {
             }
             Divider()
             SpanEventTable(events: events.map { DisplaySpanEvent(fromModel: $0) })
+            if adaptor.isConnected {
+                Divider()
+                
+            }
         }
     }
 }
@@ -125,6 +130,7 @@ struct ProjectOverview_Previews: PreviewProvider {
             ProjectOverview(project: Store.preview.newSample())
                 .environment(\.persistentContainer, Store.preview.container)
                 .environmentObject(ErrorHandler())
+                .environmentObject(NetworkAdaptor(errorHandler: ErrorHandler(), container: Store.preview.container))
         }
     }
 }

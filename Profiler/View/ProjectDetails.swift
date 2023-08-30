@@ -61,8 +61,8 @@ struct ProjectDetails: View {
                 } else {
                     VStack {
                         Button(action: { showInfoSheet = true }) {
-                            ToolButton(icon: "viewfinder", text: "Open project/node information", value: 0)
-                            Text("Open project/node information")
+                            ToolButton(icon: "viewfinder", text: "More", value: 0)
+                            Text("More")
                         }
                         .popover(isPresented: $showInfoSheet) {
                             VStack {
