@@ -80,7 +80,7 @@ struct ContentView: View {
                             HStack {
                                 IntPicker(min: 1, max: Int(adaptor.config?.maxRows ?? 200), value: $rows)
                                 Button("Start") {
-                                    
+                                    adaptor.send(record: MessageClientRecord(maxRows: UInt32(rows), enable: true))
                                 }
                             }
                         }

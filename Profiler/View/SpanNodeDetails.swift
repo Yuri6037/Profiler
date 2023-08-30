@@ -41,49 +41,50 @@ struct SpanNodeDetails: View {
 
     private func loadRuns(node: SpanNode) {
         runs = nil;
-        let size = node.runs?.count ?? 0;
-        dbFunc(node: node, fetch: { node, datasets in
+        dbFunc(node: node, fetch: { node, datasets, ctx in
             let runs: NSFetchRequest<SpanRun> = SpanRun.fetchRequest();
-            runs.fetchLimit = MAX_UI_ROWS;
             runs.sortDescriptors = filters.getSortDescriptors();
+            runs.predicate = filters.getPredicate(node: node, datasets: datasets);
+            let size = try ctx.count(for: runs);
+            runs.fetchLimit = MAX_UI_ROWS;
             runs.predicate = filters.getPredicate(size: size, maxSize: MAX_UI_ROWS, node: node, datasets: datasets);
             return runs;
         }, handle: { runs in
-            let runs1 = runs.map { DisplaySpanRun(fromModel: $0) };
+            let runs = runs.map { DisplaySpanRun(fromModel: $0) };
             DispatchQueue.main.async {
-                self.runs = runs1;
+                self.runs = runs;
             }
         });
     }
 
     private func loadEvents(node: SpanNode) {
         events = nil;
-        dbFunc(node: node, fetch: { node, _ in
+        dbFunc(node: node, fetch: { node, _, _ in
             let events: NSFetchRequest<SpanEvent> = SpanEvent.fetchRequest();
             events.fetchLimit = MAX_UI_ROWS;
             events.sortDescriptors = [ NSSortDescriptor(keyPath: \SpanEvent.order, ascending: true) ];
             events.predicate = NSPredicate(format: "node=%@", node);
             return events;
         }, handle: { events in
-            let events1 = events.map { DisplaySpanEvent(fromModel: $0) };
+            let events = events.map { DisplaySpanEvent(fromModel: $0) };
             DispatchQueue.main.async {
-                self.events = events1;
+                self.events = events;
             }
         });
     }
 
     private func loadPoints(node: SpanNode) {
         points = nil;
-        let size = node.runs?.count ?? 0;
-        dbFunc(node: node, fetch: { node, datasets in
+        dbFunc(node: node, fetch: { node, datasets, ctx in
             let filters = NodeFilters();
             let runs: NSFetchRequest<SpanRun> = SpanRun.fetchRequest();
-            runs.fetchLimit = 1500;
             runs.sortDescriptors = filters.getSortDescriptors();
+            runs.predicate = filters.getPredicate(node: node, datasets: datasets);
+            let size = try ctx.count(for: runs);
+            runs.fetchLimit = 1500;
             runs.predicate = filters.getPredicate(size: size, maxSize: 1500, node: node, datasets: datasets);
             return runs;
         }, handle: { runs in
-            //Swift requires useless values because its type inference system is garbagely broken
             let _ = runs.map { DisplaySpanRun(fromModel: $0) };
             let points = runs.map { $0.wTime.seconds }
             DispatchQueue.main.async {
@@ -92,14 +93,14 @@ struct SpanNodeDetails: View {
         });
     }
 
-    private func dbFunc<T>(node: SpanNode, fetch: @escaping (NSManagedObject, [NSManagedObject]) -> NSFetchRequest<T>, handle: @escaping ([T]) -> Void) {
+    private func dbFunc<T>(node: SpanNode, fetch: @escaping (NSManagedObject, [NSManagedObject], NSManagedObjectContext) throws -> NSFetchRequest<T>, handle: @escaping ([T]) -> Void) {
         let nodeId = node.objectID;
         let datasetIds = datasets.map { v in v.objectID };
         container.performBackgroundTask { ctx in
             let datasets = datasetIds.map { v in ctx.object(with: v) };
             let node = ctx.object(with: nodeId);
-            let req = fetch(node, datasets);
             do {
+                let req = try fetch(node, datasets, ctx);
                 let data = try ctx.fetch(req);
                 handle(data);
             } catch {
