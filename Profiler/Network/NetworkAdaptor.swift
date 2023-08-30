@@ -89,7 +89,6 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
 
     func send(config: MessageClientConfig) {
         showConnectSheet = false;
-        self.config = nil;
         rowsToRecord = config.record.maxRows;
         isRecording = config.record.enable;
         if isRecording {

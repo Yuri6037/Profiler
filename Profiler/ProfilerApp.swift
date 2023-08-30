@@ -40,6 +40,7 @@ class AppGlobals: ObservableObject {
 
 //TODO: Implement start/stop of recording
 //TODO: Implement export and sync tool
+//TODO: Fix tables under compact size class
 
 @main
 struct ProfilerApp: App {

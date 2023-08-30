@@ -44,6 +44,7 @@ struct ContentView: View {
     @State private var showImportProgress: Bool = false;
     @State private var progress: CGFloat = 0.0;
     @State private var address = "";
+    @State private var rows = 200;
     @StateObject private var filters: NodeFilters = NodeFilters();
 
     var sidebar: some View {
@@ -76,7 +77,12 @@ struct ContentView: View {
                                 adaptor.send(record: MessageClientRecord(maxRows: 0, enable: false))
                             }
                         } else {
-                            
+                            HStack {
+                                IntPicker(min: 1, max: Int(adaptor.config?.maxRows ?? 200), value: $rows)
+                                Button("Start") {
+                                    
+                                }
+                            }
                         }
                     }.padding(.bottom, 5)
                 }
@@ -123,6 +129,8 @@ struct ContentView: View {
                             Spacer()
                         }
                         .searchable(text: $filters.text)
+                } else if let project = projectSelection {
+                    ProjectOverview(project: project)
                 } else {
                     Text("Select an item")
                 }
