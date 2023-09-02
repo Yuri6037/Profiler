@@ -28,6 +28,7 @@ import Protocol
 struct ContentView: View {
     @EnvironmentObject private var adaptor: NetworkAdaptor;
     @EnvironmentObject private var errorHandler: ErrorHandler;
+    @EnvironmentObject private var progressList: ProgressList;
     @Environment(\.managedObjectContext) private var viewContext;
     @Environment(\.persistentContainer) private var container;
 
@@ -66,6 +67,10 @@ struct ContentView: View {
                             Divider()
                             ConnectionStatus(width: g.size.width)
                                 .padding(.bottom, 5)
+                        } else {
+                            ForEach(progressList.array) { item in
+                                SingleProgressView(progress: item)
+                            }
                         }
                     }
                 }
@@ -169,6 +174,7 @@ struct ContentView_Previews: PreviewProvider {
             .environment(\.persistentContainer, Store.preview.container)
             .environment(\.managedObjectContext, Store.preview.container.viewContext)
             .environmentObject(ErrorHandler())
+            .environmentObject(ProgressList())
             .environmentObject(NetworkAdaptor(errorHandler: ErrorHandler(), container: Store.preview.container, progressList: ProgressList()))
     }
 }
