@@ -49,11 +49,6 @@ struct ConnectionStatus: View {
             ForEach(progressList.array) { item in
                 SingleProgressView(progress: item)
             }
-            /*if let progress = adaptor.progressList.array.last {
-                Text(progress.text)
-                ProgressView(value: progress.value)
-                    .padding(.horizontal)
-            }*/
             if adaptor.isRecording {
                 Button("Stop") {
                     adaptor.send(record: MessageClientRecord(maxRows: 0, enable:false))
