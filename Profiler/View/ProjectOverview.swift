@@ -131,7 +131,7 @@ struct ProjectOverview_Previews: PreviewProvider {
             ProjectOverview(project: Store.preview.newSample())
                 .environment(\.persistentContainer, Store.preview.container)
                 .environmentObject(ErrorHandler())
-                .environmentObject(NetworkAdaptor(errorHandler: ErrorHandler(), container: Store.preview.container))
+                .environmentObject(NetworkAdaptor(errorHandler: ErrorHandler(), container: Store.preview.container, progressList: ProgressList()))
         }
     }
 }

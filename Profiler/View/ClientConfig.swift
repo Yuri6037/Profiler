@@ -120,6 +120,6 @@ struct ClientConfig: View {
 struct ClientConfig_Previews: PreviewProvider {
     static var previews: some View {
         ClientConfig(maxRows: 1000000, minPeriod: 200)
-            .environmentObject(NetworkAdaptor(errorHandler: ErrorHandler(), container: Store.preview.container))
+            .environmentObject(NetworkAdaptor(errorHandler: ErrorHandler(), container: Store.preview.container, progressList: ProgressList()))
     }
 }

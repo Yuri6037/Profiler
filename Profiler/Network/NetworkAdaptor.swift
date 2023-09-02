@@ -27,20 +27,6 @@ import SwiftString
 import CoreData
 import TextTools
 
-struct Progress {
-    let text: String;
-    let value: CGFloat;
-
-    init(text: String, total: UInt, current: UInt) {
-        self.text = text
-        if total == 0 && current == 0 {
-            value = 0;
-        } else {
-            value = CGFloat(current) / CGFloat(total);
-        }
-    }
-}
-
 class NetworkAdaptor: ObservableObject, MsgHandler {
     private let errorHandler: ErrorHandler;
     private let queue: DispatchQueue;
@@ -64,23 +50,20 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
     //Inline ConnectionStatus in NetworkAdaptor since SwiftUI is a peace of shit unable to work behind 2 layers of ObservableObject.
     @Published var isConnected = false;
     @Published var text = "";
-    @Published var progress: Progress? = nil;
+    var progressList: ProgressList;
     private var lastText = "";
 
-    init(errorHandler: ErrorHandler, container: NSPersistentContainer) {
+    init(errorHandler: ErrorHandler, container: NSPersistentContainer, progressList: ProgressList) {
         self.errorHandler = errorHandler;
         self.container = container;
         self.queue = DispatchQueue(label: "NetworkAdaptor", qos: .userInteractive);
         self.context = container.newBackgroundContext();
         self.context.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy;
+        self.progressList = progressList;
     }
 
     func setMessage(_ text: String) {
         self.text = text;
-    }
-
-    func setProgress(_ progress: Progress?) {
-        self.progress = progress;
     }
 
     func disconnect() {
@@ -193,7 +176,6 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
             self.connection = connection;
             self.isConnected = true;
             self.setMessage("Waiting for config...");
-            self.setProgress(nil);
         }
     }
 

@@ -24,8 +24,21 @@
 import SwiftUI
 import Protocol
 
+struct SingleProgressView: View {
+    @ObservedObject var progress: Progress;
+
+    var body: some View {
+        VStack {
+            Text(progress.text)
+            ProgressView(value: progress.value)
+                .padding(.horizontal)
+        }
+    }
+}
+
 struct ConnectionStatus: View {
     @EnvironmentObject private var adaptor: NetworkAdaptor;
+    @EnvironmentObject private var progressList: ProgressList;
     @State private var rows = 200;
 
     let width: CGFloat;
@@ -33,14 +46,17 @@ struct ConnectionStatus: View {
     var body: some View {
         VStack {
             Text(adaptor.text)
-            if let progress = adaptor.progress {
+            ForEach(progressList.array) { item in
+                SingleProgressView(progress: item)
+            }
+            /*if let progress = adaptor.progressList.array.last {
                 Text(progress.text)
                 ProgressView(value: progress.value)
                     .padding(.horizontal)
-            }
+            }*/
             if adaptor.isRecording {
                 Button("Stop") {
-                    adaptor.send(record:MessageClientRecord(maxRows: 0, enable:false))
+                    adaptor.send(record: MessageClientRecord(maxRows: 0, enable:false))
                 }
             } else {
                 if width > 150 {
@@ -66,6 +82,7 @@ struct ConnectionStatus: View {
 struct ConnectionStatus_Previews: PreviewProvider {
     static var previews: some View {
         ConnectionStatus(width: 0)
-            .environmentObject(NetworkAdaptor(errorHandler: ErrorHandler(), container: Store.preview.container))
+            .environmentObject(ProgressList())
+            .environmentObject(NetworkAdaptor(errorHandler: ErrorHandler(), container: Store.preview.container, progressList: ProgressList()))
     }
 }

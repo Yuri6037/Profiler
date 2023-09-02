@@ -24,7 +24,10 @@
 import SwiftUI
 
 class AppGlobals: ObservableObject {
+    @Published var progress: Progress? = nil;
+    @Published var projectSelection: Project?;
     @Published var errorHandler: ErrorHandler = ErrorHandler();
+    @Published var progressList: ProgressList = ProgressList();
     lazy var store: Store = {
 #if DEBUG
         if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1" {
@@ -35,7 +38,13 @@ class AppGlobals: ObservableObject {
             self.errorHandler.pushError(AppError(fromNSError: error));
         })
     }()
-    lazy var adaptor: NetworkAdaptor = { NetworkAdaptor(errorHandler: errorHandler, container: store.container) }();
+    lazy var adaptor: NetworkAdaptor = {
+        NetworkAdaptor(
+            errorHandler: errorHandler,
+            container: store.container,
+            progressList: progressList
+        )
+    }()
 }
 
 //TODO: Implement export and sync tool
@@ -47,15 +56,32 @@ struct ProfilerApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(projectSelection: $globals.projectSelection)
                 .environmentObject(globals.adaptor)
                 .environmentObject(globals.errorHandler)
+                .environmentObject(globals.progressList)
                 .environment(\.persistentContainer, globals.store.container)
                 .environment(\.managedObjectContext, globals.store.container.viewContext)
                 .handlesExternalEvents(preferring: ["*"], allowing: ["*"])
                 .onOpenURL { url in
                     globals.adaptor.connect(url: url);
                 }
+        }
+        .commands {
+            CommandGroup(replacing: .importExport) {
+                Divider()
+                Button("Share") { }
+                Button("Export to Json...") {
+                    if let proj = globals.projectSelection {
+                        globals.store.utils.generateJson(proj);
+                    } else {
+                        globals.errorHandler.pushError(AppError(description: "Please select a project to export"));
+                    }
+                }
+                Button("Export to CSV...") {}
+                Button("Import from Json...") {}
+                Button("Import from CSV...") {}
+            }
         }
 #if os(macOS)
         Settings {

@@ -36,13 +36,11 @@ struct ContentView: View {
         animation: .default)
     private var items: FetchedResults<Project>;
 
-    @State private var projectSelection: Project?;
+    @Binding var projectSelection: Project?;
     @State private var nodeSelection: SpanNode?;
     @State private var datasetsSelection: Set<Dataset> = [];
     @State private var columnVisibility = NavigationSplitViewVisibility.all;
     @State private var deleteMode: Bool = false;
-    @State private var showImportProgress: Bool = false;
-    @State private var progress: CGFloat = 0.0;
     @State private var address = "";
     @StateObject private var filters: NodeFilters = NodeFilters();
 
@@ -167,10 +165,10 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(projectSelection: .constant(nil))
             .environment(\.persistentContainer, Store.preview.container)
             .environment(\.managedObjectContext, Store.preview.container.viewContext)
             .environmentObject(ErrorHandler())
-            .environmentObject(NetworkAdaptor(errorHandler: ErrorHandler(), container: Store.preview.container))
+            .environmentObject(NetworkAdaptor(errorHandler: ErrorHandler(), container: Store.preview.container, progressList: ProgressList()))
     }
 }

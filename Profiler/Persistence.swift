@@ -62,6 +62,8 @@ struct Store {
 
     let container: NSPersistentContainer
 
+    var utils: StoreUtils { StoreUtils(container: container) }
+
     init(errorHandler: @escaping (NSError) -> Void, inMemory: Bool = false) {
         container = NSPersistentContainer(name: "Profiler")
         if inMemory {
@@ -81,6 +83,52 @@ struct StoreUtils {
 
     init(container: NSPersistentContainer) {
         self.container = container;
+    }
+
+    private func fillDictionary(_ obj: NSManagedObject, _ done: inout Set<NSManagedObject>) -> [String: Any]? {
+        if done.contains(obj) {
+            return nil;
+        }
+        done.insert(obj);
+        var dic: [String: Any] = [:];
+        for key in obj.entity.attributeKeys {
+            let val = obj.value(forKey: key);
+            dic[key] = val;
+        }
+        for key in obj.entity.toOneRelationshipKeys {
+            let val = obj.value(forKey: key) as? NSManagedObject;
+            if let val = val {
+                if let o = fillDictionary(val, &done) {
+                    dic[key] = o;
+                }
+            }
+        }
+        for key in obj.entity.toManyRelationshipKeys {
+            var val = ((obj.value(forKey: key) as? NSSet)?.allObjects) as? [NSManagedObject];
+            if val == nil {
+                val = ((obj.value(forKey: key) as! NSOrderedSet).array) as? [NSManagedObject];
+            }
+            var arr: [[String: Any]] = [];
+            if let val = val {
+                for v in val {
+                    if let o = fillDictionary(v, &done) {
+                        arr.append(o);
+                    }
+                }
+            }
+            dic[key] = arr;
+        }
+        return dic;
+    }
+
+    func generateJson(_ proj: Project) {
+        let projId = proj.objectID;
+        container.performBackgroundTask { ctx in
+            let proj = ctx.object(with: projId);
+            var set: Set<NSManagedObject> = Set();
+            let dic = fillDictionary(proj, &set);
+            print(dic);
+        }
     }
 
     func deleteProject(_ proj: Project, onFinish: @escaping (NSError?) -> Void) {
