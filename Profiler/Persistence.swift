@@ -109,17 +109,15 @@ struct StoreUtils {
             }
             var arr: [[String: Any]] = []
             if let val {
-                let progress = val.count > 10 ? progressList.begin(
+                let progress = val.count > 3 ? progressList.begin(
                     text: "Exporting object properties...",
                     total: UInt(val.count)
                 ) : nil
-                for (k, v) in val.enumerated() {
+                for v in val {
                     if let o = fillDictionary(v, &done, progressList) {
                         arr.append(o)
                     }
-                    // if k % 5 == 0 {
                     progress?.advance(count: 1)
-                    // }
                 }
                 if let progress {
                     progressList.end(progress)

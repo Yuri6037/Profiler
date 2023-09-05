@@ -23,13 +23,17 @@
 
 import Foundation
 
+let PROGRESS_TOLERANCE = 0.001
+
 class Progress: ObservableObject, Identifiable {
     let id = UUID()
     let text: String
     let total: UInt
     @Published var current: UInt = 0
     var value: CGFloat { total == 0 && current == 0 ? 0 : CGFloat(current) / CGFloat(total) }
+    var expected: UInt = 0
     var isValid = true
+    var time = Date()
 
     init(text: String, total: UInt) {
         self.text = text
@@ -40,8 +44,13 @@ class Progress: ObservableObject, Identifiable {
         if !isValid {
             return
         }
-        DispatchQueue.main.async {
-            self.current += count
+        expected += count
+        let now = Date()
+        if now - time >= PROGRESS_TOLERANCE {
+            DispatchQueue.main.async {
+                self.current = self.expected
+            }
+            time = now
         }
     }
 }
