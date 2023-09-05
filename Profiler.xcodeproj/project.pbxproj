@@ -238,6 +238,7 @@
 		DA84368D2A8C053100A280B3 /* MessageSpanDataset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageSpanDataset.swift; sourceTree = "<group>"; };
 		DA8CC1FE2A9FE893009C668B /* ConnectionStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionStatus.swift; sourceTree = "<group>"; };
 		DA8CC2002AA3DDBE009C668B /* Progress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Progress.swift; sourceTree = "<group>"; };
+		DA8CC20A2AA7C98D009C668B /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		DAA45DB52A84EC64009ABBCB /* MessageClientConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageClientConfig.swift; sourceTree = "<group>"; };
 		DAA45DB72A84ECF7009ABBCB /* MessageClientRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageClientRecord.swift; sourceTree = "<group>"; };
 		DAA45DB92A84EDD8009ABBCB /* ComponentU16.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentU16.swift; sourceTree = "<group>"; };
@@ -315,6 +316,7 @@
 		DA17E7E32A12B84300554B8A = {
 			isa = PBXGroup;
 			children = (
+				DA8CC20A2AA7C98D009C668B /* .gitignore */,
 				DA66852F2A90A63A000913A1 /* Settings.bundle */,
 				DA17E7EE2A12B84300554B8A /* Profiler */,
 				DA17E8052A12B84400554B8A /* ProfilerTests */,
