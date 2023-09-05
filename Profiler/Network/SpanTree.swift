@@ -1,6 +1,6 @@
 // Copyright 2023 Yuri6037
 //
-// Permission is hereby granted, free of charge, to any person obtaining a 
+// Permission is hereby granted, free of charge, to any person obtaining a
 // copy
 // of this software and associated documentation files (the "Software"),
 // to deal in the Software without restriction, including without limitation
@@ -13,20 +13,20 @@
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
 // THE
 // AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS
 // IN THE SOFTWARE.
 
 import Foundation
 
 class Span {
-    let name: String;
-    let id: UInt32;
-    private var children: [Span] = [];
+    let name: String
+    let id: UInt32
+    private var children: [Span] = []
 
     init(name: String, id: UInt32) {
         self.name = name
@@ -35,24 +35,24 @@ class Span {
 
     /// Attempts to find the parent of the specified node.
     func findParent(_ id: UInt32) -> UInt32? {
-        for v in self.children {
+        for v in children {
             if v.id == id {
-                return self.id;
+                return self.id
             }
             if let id = v.findParent(id) {
-                return id;
+                return id
             }
         }
-        return nil;
+        return nil
     }
 
     private func findNode(_ id: UInt32) -> Int? {
-        for (k, v) in self.children.enumerated() {
+        for (k, v) in children.enumerated() {
             if v.id == id {
-                return k;
+                return k
             }
         }
-        return nil;
+        return nil
     }
 
     /// Attempts to remove the specified node.
@@ -61,19 +61,19 @@ class Span {
     /// If the node was found and removed, the removed node is returned.
     func removeNode(_ id: UInt32) -> Span? {
         if let index = findNode(id) {
-            return self.children.remove(at: index);
+            return children.remove(at: index)
         }
-        for v in self.children {
+        for v in children {
             if let node = v.removeNode(id) {
-                return node;
+                return node
             }
         }
-        return nil;
+        return nil
     }
-    
+
     /// Inserts a new child node to this node.
     func addNode(_ node: Span) {
-        self.children.append(node);
+        children.append(node)
     }
 
     /// Attempts to add the specified node under the specified parent.
@@ -82,63 +82,63 @@ class Span {
     /// If the parent was found and the node added None is returned.
     func addNode(_ node: Span, parent: UInt32) -> Span? {
         if id == parent {
-            self.addNode(node);
-            return nil;
+            addNode(node)
+            return nil
         }
-        var node = node;
-        for v in self.children {
+        var node = node
+        for v in children {
             if let v = v.addNode(node, parent: parent) {
-                node = v;
+                node = v
             } else {
-                return nil;
+                return nil
             }
         }
-        return node;
+        return node
     }
 }
 
 class SpanTree {
-    let root = Span(name: "/", id: 0);
-    private var nodeMap: [UInt32: Span] = [:];
-    private var nodeParent: [UInt32: UInt32] = [:];
+    let root = Span(name: "/", id: 0)
+    private var nodeMap: [UInt32: Span] = [:]
+    private var nodeParent: [UInt32: UInt32] = [:]
 
     /// Inserts a new child node to this node.
     func addNode(_ node: Span) {
-        root.addNode(node);
-        nodeMap[node.id] = node;
+        root.addNode(node)
+        nodeMap[node.id] = node
     }
 
     /// Attempts to relocated the specified node under the new specified parent.
     ///
     /// Returns true if the operation has succeeded.
     func relocateNode(_ id: UInt32, newParent: UInt32) -> Bool {
-        //If the node's parent is already set and the parent has not changed, no need to set it again.
+        // If the node's parent is already set and the parent has not changed, no need to set it again.
         if nodeParent[id] == newParent {
-            return false;
+            return false
         }
         if let node = root.removeNode(id) {
             if root.addNode(node, parent: newParent) == nil {
-                nodeParent[id] = newParent;
-                return true;
+                nodeParent[id] = newParent
+                return true
             }
         }
-        return false;
+        return false
     }
 
     func getPath(_ id: UInt32) -> String {
-        var id = id;
-        var components: [String] = [];
-        let path = nodeMap[id]?.name ?? "";
-        components.append(path);
+        var id = id
+        var components: [String] = []
+        let path = nodeMap[id]?.name ?? ""
+        components.append(path)
         while let component = root.findParent(id) {
             if let node = nodeMap[component] {
-                components.append(node.name);
+                components.append(node.name)
             } else {
-                components.append("");
+                components.append("")
             }
-            id = component;
+            id = component
         }
-        components.reverse();
-        return components.joined(separator: "/");
+        components.reverse()
+        return components.joined(separator: "/")
     }
 }

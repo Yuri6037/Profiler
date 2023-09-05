@@ -1,6 +1,6 @@
 // Copyright 2023 Yuri6037
 //
-// Permission is hereby granted, free of charge, to any person obtaining a 
+// Permission is hereby granted, free of charge, to any person obtaining a
 // copy
 // of this software and associated documentation files (the "Software"),
 // to deal in the Software without restriction, including without limitation
@@ -13,19 +13,19 @@
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
 // THE
 // AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS
 // IN THE SOFTWARE.
 
-import SwiftUI
 import Protocol
+import SwiftUI
 
 struct GeneralSettingsView: View {
-    @AppStorage("general.autoNegociate") private var autoNegociate = false;
+    @AppStorage("general.autoNegociate") private var autoNegociate = false
 
     var body: some View {
         Form {
@@ -36,13 +36,13 @@ struct GeneralSettingsView: View {
 }
 
 struct NetworkSettingsView: View {
-    @AppStorage("network.maxPointsAverage") private var averagePoints = 100;
-    @AppStorage("network.period") private var period = 200;
-    @AppStorage("network.maxLevel") private var maxLevel = Int(Level.trace.raw);
-    @AppStorage("network.rows") private var rows = 0;
-    @AppStorage("network.rowsIsDebugServer") private var rowsIsDebugServer = true;
-    @AppStorage("network.periodIsDebugServer") private var periodIsDebugServer = true;
-    @AppStorage("network.enableRecording") private var enableRecording = true;
+    @AppStorage("network.maxPointsAverage") private var averagePoints = 100
+    @AppStorage("network.period") private var period = 200
+    @AppStorage("network.maxLevel") private var maxLevel = Int(Level.trace.raw)
+    @AppStorage("network.rows") private var rows = 0
+    @AppStorage("network.rowsIsDebugServer") private var rowsIsDebugServer = true
+    @AppStorage("network.periodIsDebugServer") private var periodIsDebugServer = true
+    @AppStorage("network.enableRecording") private var enableRecording = true
 
     var body: some View {
         VStack {
@@ -92,7 +92,7 @@ struct NetworkSettingsView: View {
                 HStack {
                     Text("Rows:")
                     Spacer()
-                    IntPicker(min: 0, max: Int.max, value: $rows);
+                    IntPicker(min: 0, max: Int.max, value: $rows)
                 }
             }
         }
@@ -102,7 +102,7 @@ struct NetworkSettingsView: View {
 
 struct SettingsView: View {
     private enum Tabs: Hashable {
-        case general, network;
+        case general, network
     }
 
     var body: some View {

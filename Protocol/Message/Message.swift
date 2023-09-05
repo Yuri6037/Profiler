@@ -1,6 +1,6 @@
 // Copyright 2023 Yuri6037
 //
-// Permission is hereby granted, free of charge, to any person obtaining a 
+// Permission is hereby granted, free of charge, to any person obtaining a
 // copy
 // of this software and associated documentation files (the "Software"),
 // to deal in the Software without restriction, including without limitation
@@ -13,11 +13,11 @@
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
 // THE
 // AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS
 // IN THE SOFTWARE.
 
@@ -25,36 +25,36 @@ import Foundation
 import NIO
 
 public struct Size {
-    public let bytes: Int;
+    public let bytes: Int
 
     init(bytes: Int = 0) {
-        self.bytes = bytes;
+        self.bytes = bytes
     }
 
-    public func add<T: Component>(_ c: T.Type) -> Size {
-        return Size(bytes: self.bytes + c.size);
+    public func add(_ c: (some Component).Type) -> Size {
+        Size(bytes: bytes + c.size)
     }
 }
 
 public protocol MessageHeader {
-    static var size: Int { get };
-    static func read(buffer: inout ByteBuffer) -> Self;
-    var payloadSize: Int { get };
+    static var size: Int { get }
+    static func read(buffer: inout ByteBuffer) -> Self
+    var payloadSize: Int { get }
 
-    func decode(buffer: inout ByteBuffer) throws -> Message;
+    func decode(buffer: inout ByteBuffer) throws -> Message
 }
 
 public protocol Writable {
-    func write(buffer: inout ByteBuffer);
+    func write(buffer: inout ByteBuffer)
 }
 
 public enum Message {
-    case serverConfig(MessageServerConfig);
-    case project(MessageProject);
-    case spanAlloc(MessageSpanAlloc);
-    case spanParent(MessageSpanParent);
-    case spanFollows(MessageSpanFollows);
-    case spanEvent(MessageSpanEvent);
-    case spanUpdate(MessageSpanUpdate);
-    case spanDataset(MessageSpanDataset);
+    case serverConfig(MessageServerConfig)
+    case project(MessageProject)
+    case spanAlloc(MessageSpanAlloc)
+    case spanParent(MessageSpanParent)
+    case spanFollows(MessageSpanFollows)
+    case spanEvent(MessageSpanEvent)
+    case spanUpdate(MessageSpanUpdate)
+    case spanDataset(MessageSpanDataset)
 }

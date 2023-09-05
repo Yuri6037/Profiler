@@ -556,6 +556,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DA17E8162A12B84400554B8A /* Build configuration list for PBXNativeTarget "Profiler" */;
 			buildPhases = (
+				DA8CC2072AA7C18E009C668B /* ShellScript */,
 				DA17E7E82A12B84300554B8A /* Sources */,
 				DA17E7E92A12B84300554B8A /* Frameworks */,
 				DA17E7EA2A12B84300554B8A /* Resources */,
@@ -616,6 +617,7 @@
 			buildConfigurationList = DA17E83C2A12BACA00554B8A /* Build configuration list for PBXNativeTarget "Protocol" */;
 			buildPhases = (
 				DA17E8222A12BACA00554B8A /* Headers */,
+				DA8CC2082AA7C1B3009C668B /* ShellScript */,
 				DA17E8232A12BACA00554B8A /* Sources */,
 				DA17E8242A12BACA00554B8A /* Frameworks */,
 				DA17E8252A12BACA00554B8A /* Resources */,
@@ -656,6 +658,7 @@
 			buildConfigurationList = DACD16E02A8E0D8700982725 /* Build configuration list for PBXNativeTarget "TextTools" */;
 			buildPhases = (
 				DACD16C22A8E0D8600982725 /* Headers */,
+				DA8CC2092AA7C1C6009C668B /* ShellScript */,
 				DACD16C32A8E0D8600982725 /* Sources */,
 				DACD16C42A8E0D8600982725 /* Frameworks */,
 				DACD16C52A8E0D8600982725 /* Resources */,
@@ -809,6 +812,63 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		DA8CC2072AA7C18E009C668B /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "swift run -c release --package-path BuildTools swiftformat --swiftversion 5.8.1 --disable andOperator \"$SRCROOT\"\n";
+		};
+		DA8CC2082AA7C1B3009C668B /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "swift run -c release --package-path BuildTools swiftformat --swiftversion 5.8.1 --disable andOperator \"$SRCROOT\"\n";
+		};
+		DA8CC2092AA7C1C6009C668B /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "swift run -c release --package-path BuildTools swiftformat --swiftversion 5.8.1 --disable andOperator \"$SRCROOT\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		DA17E7E82A12B84300554B8A /* Sources */ = {

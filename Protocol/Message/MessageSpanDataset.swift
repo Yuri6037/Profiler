@@ -1,6 +1,6 @@
 // Copyright 2023 Yuri6037
 //
-// Permission is hereby granted, free of charge, to any person obtaining a 
+// Permission is hereby granted, free of charge, to any person obtaining a
 // copy
 // of this software and associated documentation files (the "Software"),
 // to deal in the Software without restriction, including without limitation
@@ -13,11 +13,11 @@
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
 // THE
 // AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS
 // IN THE SOFTWARE.
 
@@ -25,37 +25,36 @@ import Foundation
 import NIO
 
 public struct MessageHeaderSpanDataset: MessageHeader {
-    public let id: UInt32;
-    public let runCount: UInt32;
-    public let size1: UInt32;
+    public let id: UInt32
+    public let runCount: UInt32
+    public let size1: UInt32
 
-    public var payloadSize: Int { Int(size1) };
+    public var payloadSize: Int { Int(size1) }
 
-    public static var size: Int = UInt32.size * 3;
+    public static var size: Int = UInt32.size * 3
 
     public static func read(buffer: inout ByteBuffer) -> MessageHeaderSpanDataset {
-        return MessageHeaderSpanDataset(
+        MessageHeaderSpanDataset(
             id: .read(buffer: &buffer),
             runCount: .read(buffer: &buffer),
             size1: .read(buffer: &buffer)
-        );
+        )
     }
 
     public func decode(buffer: inout ByteBuffer) throws -> Message {
         guard let str = buffer.getString(at: 0, length: Int(size1)) else {
-            throw ComponentReadError.string;
+            throw ComponentReadError.string
         }
         return .spanDataset(MessageSpanDataset(
             id: id,
             runCount: runCount,
             content: str
-        ));
+        ))
     }
 }
 
 public struct MessageSpanDataset {
-    public let id: UInt32;
-    public let runCount: UInt32;
-    public let content: String;
+    public let id: UInt32
+    public let runCount: UInt32
+    public let content: String
 }
-

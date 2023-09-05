@@ -25,165 +25,163 @@ import Foundation
 import NIO
 
 enum DecoderState {
-    case handshake;
-    case running;
-    case error;
+    case handshake
+    case running
+    case error
 }
 
 enum ReadError: Error {
-    case unknownMessage(UInt8);
+    case unknownMessage(UInt8)
 }
 
 enum MessageReadingState {
-    case none;
-    case header(UInt8);
-    case payload(MessageHeader);
+    case none
+    case header(UInt8)
+    case payload(MessageHeader)
 }
 
 enum MsgDecodeState {
-    case needMoreSteps;
-    case needMoreData;
-    case `continue`;
+    case needMoreSteps
+    case needMoreData
+    case `continue`
 }
 
 struct Packet {
-    let header: MessageHeader;
-    let payload: ByteBuffer?;
+    let header: MessageHeader
+    let payload: ByteBuffer?
 
     init(header: MessageHeader, payload: ByteBuffer?) {
-        self.header = header;
-        self.payload = payload;
+        self.header = header
+        self.payload = payload
     }
 
     init(header: MessageHeader) {
-        self.header = header;
-        self.payload = nil;
+        self.header = header
+        payload = nil
     }
 }
 
 final class Decoder: ByteToMessageDecoder {
-    public typealias InboundOut = (Packet?, Error?);
+    public typealias InboundOut = (Packet?, Error?)
 
-    private final var state = DecoderState.handshake;
-    private final var msgReadState = MessageReadingState.none;
+    private final var state = DecoderState.handshake
+    private final var msgReadState = MessageReadingState.none
 
     private func decodeHello(buffer: inout ByteBuffer) -> ByteBuffer? {
         guard let slice = buffer.readSlice(length: Constants.helloMessageSize) else {
-            return nil;
+            return nil
         }
-        return slice;
+        return slice
     }
-    
+
     private func decodeInternal(context: ChannelHandlerContext, buffer: inout ByteBuffer) throws -> MsgDecodeState {
-        if (state == DecoderState.handshake) {
+        if state == DecoderState.handshake {
             guard var buffer = decodeHello(buffer: &buffer) else {
-                return .needMoreData;
+                return .needMoreData
             }
-            let msg = try Constants.proto.initialHandshake(buffer: &buffer);
+            let msg = try Constants.proto.initialHandshake(buffer: &buffer)
             let _ = context.writeAndFlush(NIOAny(msg))
-            state = .running;
-            return .continue;
+            state = .running
+            return .continue
         }
-        switch (self.msgReadState) {
+        switch msgReadState {
         case .none:
             guard let ty = buffer.readInteger(endianness: .little, as: UInt8.self) else {
-                return .needMoreData;
+                return .needMoreData
             }
-            msgReadState = .header(ty);
-            break;
+            msgReadState = .header(ty)
         case let .header(ty):
             guard let size = MessageHeaderRegistry.sizeof(type: ty) else {
-                throw ReadError.unknownMessage(ty);
+                throw ReadError.unknownMessage(ty)
             }
             guard var buffer = buffer.readSlice(length: size) else {
-                return .needMoreData;
+                return .needMoreData
             }
             guard let msg = MessageHeaderRegistry.read(type: ty, buffer: &buffer) else {
-                throw ReadError.unknownMessage(ty);
+                throw ReadError.unknownMessage(ty)
             }
             msgReadState = .payload(msg)
-            break;
         case let .payload(msg):
             if msg.payloadSize == 0 {
-                context.fireChannelRead(self.wrapInboundOut((Packet(header: msg), nil)));
-                msgReadState = .none;
-                return .continue;
+                context.fireChannelRead(wrapInboundOut((Packet(header: msg), nil)))
+                msgReadState = .none
+                return .continue
             }
             guard let buffer = buffer.readSlice(length: msg.payloadSize) else {
-                return .needMoreData;
+                return .needMoreData
             }
-            context.fireChannelRead(self.wrapInboundOut((Packet(header: msg, payload: buffer), nil)));
-            msgReadState = .none;
-            return .continue;
+            context.fireChannelRead(wrapInboundOut((Packet(header: msg, payload: buffer), nil)))
+            msgReadState = .none
+            return .continue
         }
-        return .needMoreSteps;
+        return .needMoreSteps
     }
 
     public func decode(context: ChannelHandlerContext, buffer: inout ByteBuffer) throws -> DecodingState {
         if state == .error {
-            //Empty the buffer.
+            // Empty the buffer.
             buffer.clear()
-            //Ensure connection is closed.
-            let _ = context.close();
-            //Return need for more data even if we just want to terminate the connection.
-            return .needMoreData;
+            // Ensure connection is closed.
+            let _ = context.close()
+            // Return need for more data even if we just want to terminate the connection.
+            return .needMoreData
         }
-        var state: MsgDecodeState = .needMoreSteps;
-        while (state == .needMoreSteps) {
+        var state: MsgDecodeState = .needMoreSteps
+        while state == .needMoreSteps {
             do {
-                state = try self.decodeInternal(context: context, buffer: &buffer);
-            } catch let error {
-                context.fireChannelRead(self.wrapInboundOut((nil, error)));
-                self.state = .error;
-                break;
+                state = try decodeInternal(context: context, buffer: &buffer)
+            } catch {
+                context.fireChannelRead(wrapInboundOut((nil, error)))
+                self.state = .error
+                break
             }
         }
-        return state == .needMoreData ? .needMoreData : .continue;
+        return state == .needMoreData ? .needMoreData : .continue
     }
 }
 
 final class MessageDecoder: ChannelInboundHandler {
-    public typealias InboundIn = (Packet?, Error?);
-    public typealias InboundOut = (Message?, Error?);
+    public typealias InboundIn = (Packet?, Error?)
+    public typealias InboundOut = (Message?, Error?)
 
     public func channelRead(context: ChannelHandlerContext, data: NIOAny) {
-        let (packet, error) = self.unwrapInboundIn(data);
-        if let error = error {
-            context.fireChannelRead(self.wrapInboundOut((nil, error)));
+        let (packet, error) = unwrapInboundIn(data)
+        if let error {
+            context.fireChannelRead(wrapInboundOut((nil, error)))
         }
-        if let packet = packet {
-            var buffer: ByteBuffer;
+        if let packet {
+            var buffer: ByteBuffer
             if let buf = packet.payload {
-                buffer = buf;
+                buffer = buf
             } else {
-                buffer = ByteBuffer();
+                buffer = ByteBuffer()
             }
             do {
-                let msg = try packet.header.decode(buffer: &buffer);
-                context.fireChannelRead(self.wrapInboundOut((msg, nil)));
-            } catch let error {
-                context.fireChannelRead(self.wrapInboundOut((nil, error)));
+                let msg = try packet.header.decode(buffer: &buffer)
+                context.fireChannelRead(wrapInboundOut((msg, nil)))
+            } catch {
+                context.fireChannelRead(wrapInboundOut((nil, error)))
             }
         }
     }
 }
 
 final class MessageHandler: ChannelInboundHandler {
-    public typealias InboundIn = (Message?, Error?);
+    public typealias InboundIn = (Message?, Error?)
 
-    private let handler: MsgHandler;
+    private let handler: MsgHandler
 
     init(handler: MsgHandler) {
-        self.handler = handler;
+        self.handler = handler
     }
 
-    public func channelRead(context: ChannelHandlerContext, data: NIOAny) {
-        let (msg, error) = self.unwrapInboundIn(data);
-        if let error = error {
-            self.handler.onError(error: error);
+    public func channelRead(context _: ChannelHandlerContext, data: NIOAny) {
+        let (msg, error) = unwrapInboundIn(data)
+        if let error {
+            handler.onError(error: error)
         }
-        if let msg = msg {
-            self.handler.onMessage(message: msg);
+        if let msg {
+            handler.onMessage(message: msg)
         }
     }
 }

@@ -21,33 +21,29 @@
 // DEALINGS
 // IN THE SOFTWARE.
 
-import XCTest
 @testable import Protocol
+import XCTest
 
 struct Handler: MsgHandler {
-    func onConnect(connection: Connection) {
-        
-    }
+    func onConnect(connection _: Connection) {}
 
     func onMessage(message: Message) {
-        print(message);
+        print(message)
     }
 
     func onError(error: Error) {
-        print("Error while decoding message: ", error);
+        print("Error while decoding message: ", error)
     }
 }
 
 class ProtocolTests: XCTestCase {
-    override func setUpWithError() throws {
-    }
+    override func setUpWithError() throws {}
 
-    override func tearDownWithError() throws {
-    }
+    override func tearDownWithError() throws {}
 
     func testExample() async throws {
-        let manager = NetManager(handler: Handler());
-        await manager.connect(address: "localhost");
-        await manager.wait();
+        let manager = NetManager(handler: Handler())
+        await manager.connect(address: "localhost")
+        await manager.wait()
     }
 }

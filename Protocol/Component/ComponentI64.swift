@@ -25,9 +25,9 @@ import Foundation
 import NIO
 
 extension Int64: Component {
-    public static var size: Int = 8;
+    public static var size: Int = 8
 
     public static func read(buffer: inout ByteBuffer) -> Int64 {
-        return buffer.readInteger(endianness: .little, as: Int64.self)!;
+        buffer.readInteger(endianness: .little, as: Int64.self)!
     }
 }

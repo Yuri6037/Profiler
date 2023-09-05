@@ -1,6 +1,6 @@
 // Copyright 2023 Yuri6037
 //
-// Permission is hereby granted, free of charge, to any person obtaining a 
+// Permission is hereby granted, free of charge, to any person obtaining a
 // copy
 // of this software and associated documentation files (the "Software"),
 // to deal in the Software without restriction, including without limitation
@@ -13,44 +13,44 @@
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
 // THE
 // AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS
 // IN THE SOFTWARE.
 
-import SwiftUI
 import Protocol
+import SwiftUI
 
 struct ClientConfig: View {
-    let maxRows: UInt32;
-    let minPeriod: UInt16;
-    @EnvironmentObject var adaptor: NetworkAdaptor;
-    @State var rows: Int;
-    @State var period: Int;
-    @State var averagePoints: Int;
-    @State var enableRecording: Bool;
-    @State var maxLevel: Level;
+    let maxRows: UInt32
+    let minPeriod: UInt16
+    @EnvironmentObject var adaptor: NetworkAdaptor
+    @State var rows: Int
+    @State var period: Int
+    @State var averagePoints: Int
+    @State var enableRecording: Bool
+    @State var maxLevel: Level
 
     init(maxRows: UInt32, minPeriod: UInt16) {
-        self.minPeriod = minPeriod;
-        self.maxRows = maxRows;
-        let defaults = ClientConfigDefaults();
+        self.minPeriod = minPeriod
+        self.maxRows = maxRows
+        let defaults = ClientConfigDefaults()
         if defaults.rowsIsDebugServer {
-            _rows = .init(initialValue: Int(maxRows));
+            _rows = .init(initialValue: Int(maxRows))
         } else {
-            _rows = .init(initialValue: Int(defaults.rows > maxRows ? Int(maxRows) : defaults.rows));
+            _rows = .init(initialValue: Int(defaults.rows > maxRows ? Int(maxRows) : defaults.rows))
         }
         if defaults.periodIsDebugServer {
-            _period = .init(initialValue: Int(minPeriod));
+            _period = .init(initialValue: Int(minPeriod))
         } else {
-            _period = .init(initialValue: Int(defaults.period < minPeriod ? Int(minPeriod) : defaults.period));
+            _period = .init(initialValue: Int(defaults.period < minPeriod ? Int(minPeriod) : defaults.period))
         }
-        _enableRecording = .init(initialValue: defaults.enableRecording);
-        _averagePoints = .init(initialValue: defaults.averagePoints);
-        _maxLevel = .init(initialValue: defaults.maxLevel);
+        _enableRecording = .init(initialValue: defaults.enableRecording)
+        _averagePoints = .init(initialValue: defaults.averagePoints)
+        _maxLevel = .init(initialValue: defaults.maxLevel)
     }
 
     var body: some View {
@@ -93,7 +93,7 @@ struct ClientConfig: View {
                 HStack {
                     Text("Rows:")
                     Spacer()
-                    IntPicker(min: 0, max: Int(maxRows), value: $rows);
+                    IntPicker(min: 0, max: Int(maxRows), value: $rows)
                 }
                 Toggle("Start enabled", isOn: $enableRecording)
             }
@@ -107,10 +107,10 @@ struct ClientConfig: View {
                             enable: enableRecording
                         ),
                         period: UInt16(period)
-                    ));
+                    ))
                 }.keyboardShortcut(.defaultAction)
                 Button("Cancel", role: .destructive) {
-                    adaptor.disconnect();
+                    adaptor.disconnect()
                 }
             }
         }
@@ -119,7 +119,7 @@ struct ClientConfig: View {
 
 struct ClientConfig_Previews: PreviewProvider {
     static var previews: some View {
-        ClientConfig(maxRows: 1000000, minPeriod: 200)
+        ClientConfig(maxRows: 1_000_000, minPeriod: 200)
             .environmentObject(NetworkAdaptor(errorHandler: ErrorHandler(), container: Store.preview.container, progressList: ProgressList()))
     }
 }

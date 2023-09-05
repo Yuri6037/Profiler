@@ -25,11 +25,11 @@ import CoreData
 import SwiftUI
 
 protocol SampleData {
-    static func newSample(context: NSManagedObjectContext) -> Self;
+    static func newSample(context: NSManagedObjectContext) -> Self
 }
 
 struct PersistentContainerEnvironmentKey: EnvironmentKey {
-    static let defaultValue: NSPersistentContainer = NSPersistentContainer(name: "whatever");
+    static let defaultValue: NSPersistentContainer = .init(name: "whatever")
 }
 
 extension EnvironmentValues {
@@ -39,15 +39,14 @@ extension EnvironmentValues {
     }
 }
 
-
 struct Store {
     static var preview: Store = {
         let result = Store(errorHandler: { error in
-            fatalError("Unresolved error \(error), \(error.userInfo)");
-        }, inMemory: true);
+            fatalError("Unresolved error \(error), \(error.userInfo)")
+        }, inMemory: true)
         let viewContext = result.container.viewContext
         do {
-            let _ = Project.newSample(context: viewContext);
+            _ = Project.newSample(context: viewContext)
             try viewContext.save()
         } catch {
             let nsError = error as NSError
@@ -57,7 +56,7 @@ struct Store {
     }()
 
     func newSample<T: SampleData>() -> T {
-        return T.newSample(context: container.viewContext)
+        T.newSample(context: container.viewContext)
     }
 
     let container: NSPersistentContainer
@@ -69,9 +68,9 @@ struct Store {
         if inMemory {
             container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
         }
-        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+        container.loadPersistentStores(completionHandler: { _, error in
             if let error = error as NSError? {
-                errorHandler(error);
+                errorHandler(error)
             }
         })
         container.viewContext.automaticallyMergesChangesFromParent = true
@@ -79,116 +78,116 @@ struct Store {
 }
 
 struct StoreUtils {
-    private let container: NSPersistentContainer;
+    private let container: NSPersistentContainer
 
     init(container: NSPersistentContainer) {
-        self.container = container;
+        self.container = container
     }
 
     private func fillDictionary(_ obj: NSManagedObject, _ done: inout Set<NSManagedObject>, _ progressList: ProgressList) -> [String: Any]? {
         if done.contains(obj) {
-            return nil;
+            return nil
         }
-        done.insert(obj);
-        var dic: [String: Any] = [:];
+        done.insert(obj)
+        var dic: [String: Any] = [:]
         for key in obj.entity.attributeKeys {
-            let val = obj.value(forKey: key);
-            dic[key] = val;
+            let val = obj.value(forKey: key)
+            dic[key] = val
         }
         for key in obj.entity.toOneRelationshipKeys {
-            let val = obj.value(forKey: key) as? NSManagedObject;
-            if let val = val {
+            let val = obj.value(forKey: key) as? NSManagedObject
+            if let val {
                 if let o = fillDictionary(val, &done, progressList) {
-                    dic[key] = o;
+                    dic[key] = o
                 }
             }
         }
         for key in obj.entity.toManyRelationshipKeys {
-            var val = ((obj.value(forKey: key) as? NSSet)?.allObjects) as? [NSManagedObject];
+            var val = ((obj.value(forKey: key) as? NSSet)?.allObjects) as? [NSManagedObject]
             if val == nil {
-                val = ((obj.value(forKey: key) as! NSOrderedSet).array) as? [NSManagedObject];
+                val = ((obj.value(forKey: key) as! NSOrderedSet).array) as? [NSManagedObject]
             }
-            var arr: [[String: Any]] = [];
-            if let val = val {
+            var arr: [[String: Any]] = []
+            if let val {
                 let progress = val.count > 10 ? progressList.begin(
                     text: "Exporting object properties...",
                     total: UInt(val.count)
-                ) : nil;
+                ) : nil
                 for (k, v) in val.enumerated() {
                     if let o = fillDictionary(v, &done, progressList) {
-                        arr.append(o);
+                        arr.append(o)
                     }
-                    //if k % 5 == 0 {
-                        progress?.advance(count: 1);
-                    //}
+                    // if k % 5 == 0 {
+                    progress?.advance(count: 1)
+                    // }
                 }
-                if let progress = progress {
-                    progressList.end(progress);
+                if let progress {
+                    progressList.end(progress)
                 }
             }
-            dic[key] = arr;
+            dic[key] = arr
         }
-        return dic;
+        return dic
     }
 
     func generateJson(_ proj: Project, progressList: ProgressList) {
-        let projId = proj.objectID;
+        let projId = proj.objectID
         container.performBackgroundTask { ctx in
-            let proj = ctx.object(with: projId);
-            var set: Set<NSManagedObject> = Set();
-            let dic = fillDictionary(proj, &set, progressList);
+            let proj = ctx.object(with: projId)
+            var set: Set<NSManagedObject> = Set()
+            let dic = fillDictionary(proj, &set, progressList)
         }
     }
 
     func deleteProject(_ proj: Project, onFinish: @escaping (NSError?) -> Void) {
-        let targetId = proj.target?.projects?.count ?? 0 == 1 ? proj.target?.objectID : nil;
-        let cpuId = proj.cpu?.projects?.count ?? 0 == 1 ? proj.cpu?.objectID : nil;
-        let projId = proj.objectID;
+        let targetId = proj.target?.projects?.count ?? 0 == 1 ? proj.target?.objectID : nil
+        let cpuId = proj.cpu?.projects?.count ?? 0 == 1 ? proj.cpu?.objectID : nil
+        let projId = proj.objectID
         container.performBackgroundTask { ctx in
-            ctx.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy;
-            let proj = ctx.object(with: projId);
-            let fvariables = NSFetchRequest<NSFetchRequestResult>(entityName: String(describing: SpanVariable.self));
-            fvariables.predicate = NSPredicate(format: "run.node.project = %@ OR event.node.project = %@", proj, proj);
-            let fruns = NSFetchRequest<NSFetchRequestResult>(entityName: String(describing: SpanRun.self));
-            fruns.predicate = NSPredicate(format: "node.project = %@", proj);
-            let fevents = NSFetchRequest<NSFetchRequestResult>(entityName: String(describing: SpanEvent.self));
-            fevents.predicate = NSPredicate(format: "node.project = %@", proj);
-            let fdatasets = NSFetchRequest<NSFetchRequestResult>(entityName: String(describing: Dataset.self));
-            fdatasets.predicate = NSPredicate(format: "node.project = %@", proj);
-            let fnodes = NSFetchRequest<NSFetchRequestResult>(entityName: String(describing: SpanNode.self));
-            fnodes.predicate = NSPredicate(format: "project = %@", proj);
+            ctx.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+            let proj = ctx.object(with: projId)
+            let fvariables = NSFetchRequest<NSFetchRequestResult>(entityName: String(describing: SpanVariable.self))
+            fvariables.predicate = NSPredicate(format: "run.node.project = %@ OR event.node.project = %@", proj, proj)
+            let fruns = NSFetchRequest<NSFetchRequestResult>(entityName: String(describing: SpanRun.self))
+            fruns.predicate = NSPredicate(format: "node.project = %@", proj)
+            let fevents = NSFetchRequest<NSFetchRequestResult>(entityName: String(describing: SpanEvent.self))
+            fevents.predicate = NSPredicate(format: "node.project = %@", proj)
+            let fdatasets = NSFetchRequest<NSFetchRequestResult>(entityName: String(describing: Dataset.self))
+            fdatasets.predicate = NSPredicate(format: "node.project = %@", proj)
+            let fnodes = NSFetchRequest<NSFetchRequestResult>(entityName: String(describing: SpanNode.self))
+            fnodes.predicate = NSPredicate(format: "project = %@", proj)
             do {
-                let dv = NSBatchDeleteRequest(fetchRequest: fvariables);
-                let dr = NSBatchDeleteRequest(fetchRequest: fruns);
-                let de = NSBatchDeleteRequest(fetchRequest: fevents);
-                let dd = NSBatchDeleteRequest(fetchRequest: fdatasets);
-                let dn = NSBatchDeleteRequest(fetchRequest: fnodes);
-                try ctx.execute(dv);
-                try ctx.save();
-                try ctx.execute(dr);
-                try ctx.save();
-                try ctx.execute(de);
-                try ctx.save();
-                try ctx.execute(dd);
-                try ctx.save();
-                try ctx.execute(dn);
-                try ctx.save();
-                ctx.delete(proj);
-                if let targetId = targetId {
-                    ctx.delete(ctx.object(with: targetId));
+                let dv = NSBatchDeleteRequest(fetchRequest: fvariables)
+                let dr = NSBatchDeleteRequest(fetchRequest: fruns)
+                let de = NSBatchDeleteRequest(fetchRequest: fevents)
+                let dd = NSBatchDeleteRequest(fetchRequest: fdatasets)
+                let dn = NSBatchDeleteRequest(fetchRequest: fnodes)
+                try ctx.execute(dv)
+                try ctx.save()
+                try ctx.execute(dr)
+                try ctx.save()
+                try ctx.execute(de)
+                try ctx.save()
+                try ctx.execute(dd)
+                try ctx.save()
+                try ctx.execute(dn)
+                try ctx.save()
+                ctx.delete(proj)
+                if let targetId {
+                    ctx.delete(ctx.object(with: targetId))
                 }
-                if let cpuId = cpuId {
-                    ctx.delete(ctx.object(with: cpuId));
+                if let cpuId {
+                    ctx.delete(ctx.object(with: cpuId))
                 }
-                try ctx.save();
+                try ctx.save()
                 DispatchQueue.main.async {
-                    onFinish(nil);
+                    onFinish(nil)
                 }
             } catch {
                 DispatchQueue.main.async {
                     onFinish(error as NSError)
                 }
             }
-        };
+        }
     }
 }

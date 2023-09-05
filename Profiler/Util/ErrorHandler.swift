@@ -1,6 +1,6 @@
 // Copyright 2023 Yuri6037
 //
-// Permission is hereby granted, free of charge, to any person obtaining a 
+// Permission is hereby granted, free of charge, to any person obtaining a
 // copy
 // of this software and associated documentation files (the "Software"),
 // to deal in the Software without restriction, including without limitation
@@ -13,21 +13,21 @@
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
 // THE
 // AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS
 // IN THE SOFTWARE.
 
 import Foundation
 
 public struct AppError {
-    public let description: String;
-    public let reason: String?;
-    public let suggestion: String?;
-    public let help: String?;
+    public let description: String
+    public let reason: String?
+    public let suggestion: String?
+    public let help: String?
 
     public init(description: String, reason: String? = nil, suggestion: String? = nil, help: String? = nil) {
         self.description = description
@@ -37,17 +37,17 @@ public struct AppError {
     }
 
     public init(fromNSError error: NSError) {
-        self.description = error.localizedDescription;
-        self.reason = error.localizedFailureReason;
-        self.suggestion = error.localizedRecoverySuggestion;
-        self.help = error.helpAnchor;
+        description = error.localizedDescription
+        reason = error.localizedFailureReason
+        suggestion = error.localizedRecoverySuggestion
+        help = error.helpAnchor
     }
 
     public init(fromError error: Error) {
-        self.description = error.localizedDescription;
-        self.reason = nil;
-        self.suggestion = nil;
-        self.help = nil;
+        description = error.localizedDescription
+        reason = nil
+        suggestion = nil
+        help = nil
     }
 }
 
@@ -59,39 +59,39 @@ extension AppError: LocalizedError {
 }
 
 public class ErrorHandler: ObservableObject, Hashable, Equatable {
-    @Published public var showError: Bool = false;
+    @Published public var showError: Bool = false
 
     public var currentError: AppError {
         topError ?? AppError(description: "")
     }
 
-    private var topError: AppError?;
-    private var errorStack: [AppError] = [];
+    private var topError: AppError?
+    private var errorStack: [AppError] = []
 
-    public init() {} //Thanks garbagely broken Swift language unable to see that the class is public and not internal!!
+    public init() {} // Thanks garbagely broken Swift language unable to see that the class is public and not internal!!
 
     public func popError() {
-        topError = nil;
-        showError = false;
+        topError = nil
+        showError = false
         DispatchQueue.main.async {
             if let error = self.errorStack.popLast() {
-                self.topError = error;
-                self.showError = true;
+                self.topError = error
+                self.showError = true
             }
         }
     }
 
     public func pushError(_ error: AppError) {
         if topError == nil {
-            topError = error;
-            showError = true;
+            topError = error
+            showError = true
         } else {
-            self.errorStack.append(error);
+            errorStack.append(error)
         }
     }
 
     public static func == (lhs: ErrorHandler, rhs: ErrorHandler) -> Bool {
-        return ObjectIdentifier(lhs) == ObjectIdentifier(rhs);
+        ObjectIdentifier(lhs) == ObjectIdentifier(rhs)
     }
 
     public func hash(into hasher: inout Hasher) {

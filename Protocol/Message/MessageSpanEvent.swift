@@ -1,6 +1,6 @@
 // Copyright 2023 Yuri6037
 //
-// Permission is hereby granted, free of charge, to any person obtaining a 
+// Permission is hereby granted, free of charge, to any person obtaining a
 // copy
 // of this software and associated documentation files (the "Software"),
 // to deal in the Software without restriction, including without limitation
@@ -13,11 +13,11 @@
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
 // THE
 // AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS
 // IN THE SOFTWARE.
 
@@ -25,37 +25,37 @@ import Foundation
 import NIO
 
 public struct MessageHeaderSpanEvent: MessageHeader {
-    public let id: UInt32;
-    public let timestamp: Int64;
-    public let level: Level;
-    public let message: Vchar;
+    public let id: UInt32
+    public let timestamp: Int64
+    public let level: Level
+    public let message: Vchar
 
-    public var payloadSize: Int { Int(message.length) };
+    public var payloadSize: Int { Int(message.length) }
 
-    public static var size: Int = UInt32.size + Int64.size + Level.size + Vchar.size;
+    public static var size: Int = UInt32.size + Int64.size + Level.size + Vchar.size
 
     public static func read(buffer: inout ByteBuffer) -> MessageHeaderSpanEvent {
-        return MessageHeaderSpanEvent(
+        MessageHeaderSpanEvent(
             id: .read(buffer: &buffer),
             timestamp: .read(buffer: &buffer),
             level: .read(buffer: &buffer),
             message: .read(buffer: &buffer)
-        );
+        )
     }
 
     public func decode(buffer: inout ByteBuffer) throws -> Message {
-        return .spanEvent(MessageSpanEvent(
+        try .spanEvent(MessageSpanEvent(
             id: id,
             timestamp: timestamp,
             level: level,
-            message: try message.readPayload(buffer: &buffer)
-        ));
+            message: message.readPayload(buffer: &buffer)
+        ))
     }
 }
 
 public struct MessageSpanEvent {
-    public let id: UInt32;
-    public let timestamp: Int64;
-    public let level: Level;
-    public let message: String;
+    public let id: UInt32
+    public let timestamp: Int64
+    public let level: Level
+    public let message: String
 }

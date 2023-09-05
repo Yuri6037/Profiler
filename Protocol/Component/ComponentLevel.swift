@@ -25,58 +25,52 @@ import Foundation
 import NIO
 
 public enum Level: Component, Writable {
-    case trace;
-    case debug;
-    case info;
-    case warning;
-    case error;
+    case trace
+    case debug
+    case info
+    case warning
+    case error
 
     public init(fromRaw: UInt8) {
-        switch (fromRaw) {
+        switch fromRaw {
         case 0:
-            self = .trace;
-            break;
+            self = .trace
         case 1:
-            self = .debug;
-            break;
+            self = .debug
         case 2:
-            self = .info;
-            break;
+            self = .info
         case 3:
-            self = .warning;
-            break;
+            self = .warning
         case 4:
-            self = .error;
-            break;
+            self = .error
         default:
-            self = .info;
-            break;
+            self = .info
         }
     }
 
     public var raw: UInt8 {
-        switch (self) {
+        switch self {
         case .trace:
-            return 0;
+            return 0
         case .debug:
-            return 1;
+            return 1
         case .info:
-            return 2;
+            return 2
         case .warning:
-            return 3;
+            return 3
         case .error:
-            return 4;
+            return 4
         }
     }
 
-    public static var size: Int = 1;
+    public static var size: Int = 1
 
     public static func read(buffer: inout ByteBuffer) -> Level {
-        let val = buffer.readInteger(endianness: .little, as: UInt8.self);
-        return .init(fromRaw: val!);
+        let val = buffer.readInteger(endianness: .little, as: UInt8.self)
+        return .init(fromRaw: val!)
     }
 
     public func write(buffer: inout ByteBuffer) {
-        buffer.writeInteger(self.raw, endianness: .little);
+        buffer.writeInteger(raw, endianness: .little)
     }
 }

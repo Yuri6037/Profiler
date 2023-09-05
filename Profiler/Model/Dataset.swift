@@ -1,6 +1,6 @@
 // Copyright 2023 Yuri6037
 //
-// Permission is hereby granted, free of charge, to any person obtaining a 
+// Permission is hereby granted, free of charge, to any person obtaining a
 // copy
 // of this software and associated documentation files (the "Software"),
 // to deal in the Software without restriction, including without limitation
@@ -13,31 +13,31 @@
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
 // THE
 // AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS
 // IN THE SOFTWARE.
 
-import Foundation
 import CoreData
+import Foundation
 import Protocol
 
 extension Dataset {
-    var wTimestamp: Date { self.timestamp! }
-    var wAverageTime: Duration { Duration(nanoseconds: UInt64(bitPattern: self.averageTime)) }
-    var wMinTime: Duration { Duration(nanoseconds: UInt64(bitPattern: self.minTime)) }
-    var wMaxTime: Duration { Duration(nanoseconds: UInt64(bitPattern: self.maxTime)) }
-    var wMedianTime: Duration { Duration(nanoseconds: UInt64(bitPattern: self.medianTime)) }
-    var wNode: SpanNode { self.node! }
+    var wTimestamp: Date { timestamp! }
+    var wAverageTime: Duration { Duration(nanoseconds: UInt64(bitPattern: averageTime)) }
+    var wMinTime: Duration { Duration(nanoseconds: UInt64(bitPattern: minTime)) }
+    var wMaxTime: Duration { Duration(nanoseconds: UInt64(bitPattern: maxTime)) }
+    var wMedianTime: Duration { Duration(nanoseconds: UInt64(bitPattern: medianTime)) }
+    var wNode: SpanNode { node! }
 }
 
 extension Dataset: SampleData {
     static func newSample(context: NSManagedObjectContext) -> Self {
-        let dataset = Dataset(context: context);
-        dataset.timestamp = Date();
-        return dataset as! Self; //WTF!?
+        let dataset = Dataset(context: context)
+        dataset.timestamp = Date()
+        return dataset as! Self // WTF!?
     }
 }

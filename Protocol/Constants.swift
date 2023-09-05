@@ -24,16 +24,16 @@
 import Foundation
 
 public enum Constants {
-    public static let defaultPort = 4026;
-    public static let messageQueueSize = 128;
+    public static let defaultPort = 4026
+    public static let messageQueueSize = 128
 
-    //This is supposed to be b"BP3D", but swift is far too much of a peace of shit to handle it!
-    public static let signature: UInt32 = 0x44335042;
+    // This is supposed to be b"BP3D", but swift is far too much of a peace of shit to handle it!
+    public static let signature: UInt32 = 0x4433_5042
 
-    public static let helloMessageSize = 40; //The hello packet is always 40 bytes long.
+    public static let helloMessageSize = 40 // The hello packet is always 40 bytes long.
 
-    //This is supposed to be b"PROF", but swift is far too much of a peace of shit to handle it!
-    public static let protoName: UInt32 = 0x464F5250;
-    public static let protoVersion = Version(major: 1, preRelease: "rc.2.0.0");
-    public static let proto = BP3DProtocol(name: protoName, version: protoVersion);
+    // This is supposed to be b"PROF", but swift is far too much of a peace of shit to handle it!
+    public static let protoName: UInt32 = 0x464F_5250
+    public static let protoVersion = Version(major: 1, preRelease: "rc.2.0.0")
+    public static let proto = BP3DProtocol(name: protoName, version: protoVersion)
 }

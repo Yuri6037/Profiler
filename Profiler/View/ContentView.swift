@@ -21,29 +21,30 @@
 // DEALINGS
 // IN THE SOFTWARE.
 
-import SwiftUI
 import CoreData
 import Protocol
+import SwiftUI
 
 struct ContentView: View {
-    @EnvironmentObject private var adaptor: NetworkAdaptor;
-    @EnvironmentObject private var errorHandler: ErrorHandler;
-    @EnvironmentObject private var progressList: ProgressList;
+    @EnvironmentObject private var adaptor: NetworkAdaptor
+    @EnvironmentObject private var errorHandler: ErrorHandler
+    @EnvironmentObject private var progressList: ProgressList
     @Environment(\.managedObjectContext) private var viewContext;
     @Environment(\.persistentContainer) private var container;
 
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \Project.timestamp, ascending: true)],
-        animation: .default)
-    private var items: FetchedResults<Project>;
+        animation: .default
+    )
+    private var items: FetchedResults<Project>
 
-    @Binding var projectSelection: Project?;
-    @State private var nodeSelection: SpanNode?;
-    @State private var datasetsSelection: Set<Dataset> = [];
-    @State private var columnVisibility = NavigationSplitViewVisibility.all;
-    @State private var deleteMode: Bool = false;
-    @State private var address = "";
-    @StateObject private var filters: NodeFilters = NodeFilters();
+    @Binding var projectSelection: Project?
+    @State private var nodeSelection: SpanNode?
+    @State private var datasetsSelection: Set<Dataset> = []
+    @State private var columnVisibility = NavigationSplitViewVisibility.all
+    @State private var deleteMode: Bool = false
+    @State private var address = ""
+    @StateObject private var filters: NodeFilters = .init()
 
     var sidebar: some View {
         VStack {
@@ -54,12 +55,12 @@ struct ContentView: View {
                     VStack {
                         List(selection: $projectSelection) {
                             ForEach(items) { ProjectLink(project: $0) }
-#if os(iOS)
-                                .onDelete(perform: { self.deleteItem(index: $0) })
-#endif
+                            #if os(iOS)
+                                .onDelete(perform: { deleteItem(index: $0) })
+                            #endif
                         }
                         .toolbar {
-                            Button(action: { }) {
+                            Button(action: {}) {
                                 ToolButton(icon: "plus", text: "Connect to debug server", value: 0)
                             }
                         }
@@ -77,8 +78,8 @@ struct ContentView: View {
             }
         }
         .onChange(of: adaptor.projectId) { pid in
-            if let pid = pid {
-                projectSelection = viewContext.object(with: pid) as? Project;
+            if let pid {
+                projectSelection = viewContext.object(with: pid) as? Project
             }
         }
     }
@@ -100,7 +101,7 @@ struct ContentView: View {
                         .environmentObject(filters)
                         .toolbar {
                             Picker("Order", selection: $filters.order) {
-                                //Swift is far too broken to see that the context is the Picker!!
+                                // Swift is far too broken to see that the context is the Picker!!
                                 ToolButton(icon: "square", text: "Keep items in the order of insertion", value: NodeFilters.Order.insertion)
                                 ToolButton(icon: "arrow.up.square", text: "Sort from maximum time to minimum time", value: NodeFilters.Order.maximum)
                                 ToolButton(icon: "arrow.down.square", text: "Sort from minimum time to maximum time", value: NodeFilters.Order.minimum)
@@ -108,7 +109,7 @@ struct ContentView: View {
                             .pickerStyle(SegmentedPickerStyle())
                             Spacer()
                             Picker("Distribution", selection: $filters.distribution) {
-                                //Swift is far too broken to see that the context is the Picker!!
+                                // Swift is far too broken to see that the context is the Picker!!
                                 ToolButton(icon: "square.fill.on.square.fill", text: "Pick N items evenly distributed", value: NodeFilters.Distribution.even)
                                 ToolButton(icon: "square.and.arrow.up.fill", text: "Pick the first N items", value: NodeFilters.Distribution.nFirst)
                                 ToolButton(icon: "square.and.arrow.down.fill", text: "Pick the last N items", value: NodeFilters.Distribution.nLast)
@@ -124,16 +125,16 @@ struct ContentView: View {
                 }
             }
         )
-#if os(macOS)
-        .onDeleteCommand(perform: self.deleteItem)
-#endif
+        #if os(macOS)
+        .onDeleteCommand(perform: deleteItem)
+        #endif
         .alert(isPresented: $errorHandler.showError, error: errorHandler.currentError) {
             Button("OK") {
                 errorHandler.popError()
             }
         }
         .onAppear {
-            columnVisibility = .all;
+            columnVisibility = .all
         }
         .sheet(isPresented: $adaptor.showConnectSheet) {
             VStack {
@@ -145,24 +146,24 @@ struct ContentView: View {
 
     private func deleteItem(index: IndexSet) {
         if let index = index.first {
-            let project = items[index];
-            projectSelection = project;
-            self.deleteItem();
+            let project = items[index]
+            projectSelection = project
+            deleteItem()
         }
     }
 
     private func deleteItem() {
-        if let selection = self.projectSelection {
-            self.projectSelection = nil;
-            self.nodeSelection = nil;
-            self.deleteMode = true;
+        if let selection = projectSelection {
+            projectSelection = nil
+            nodeSelection = nil
+            deleteMode = true
             withAnimation {
                 StoreUtils(container: container).deleteProject(selection) { error in
-                    if let error = error {
-                        errorHandler.pushError(AppError(fromNSError: error));
+                    if let error {
+                        errorHandler.pushError(AppError(fromNSError: error))
                     }
-                    self.deleteMode = false;
-                };
+                    deleteMode = false
+                }
             }
         }
     }

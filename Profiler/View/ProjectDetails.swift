@@ -1,6 +1,6 @@
 // Copyright 2023 Yuri6037
 //
-// Permission is hereby granted, free of charge, to any person obtaining a 
+// Permission is hereby granted, free of charge, to any person obtaining a
 // copy
 // of this software and associated documentation files (the "Software"),
 // to deal in the Software without restriction, including without limitation
@@ -13,26 +13,26 @@
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
 // THE
 // AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS
 // IN THE SOFTWARE.
 
-import SwiftUI
 import CoreData
+import SwiftUI
 
 struct ProjectDetails: View {
-    @ObservedObject var project: Project;
-    
-    @Binding var node: SpanNode?;
-    @Binding var datasets: Set<Dataset>;
+    @ObservedObject var project: Project
 
-    @State var showInfoSheet = false;
-    
-    @FetchRequest var datasetList: FetchedResults<Dataset>;
+    @Binding var node: SpanNode?
+    @Binding var datasets: Set<Dataset>
+
+    @State var showInfoSheet = false
+
+    @FetchRequest var datasetList: FetchedResults<Dataset>
 
     @Environment(\.horizontalSizeClass) var sizeClass;
 
@@ -40,11 +40,11 @@ struct ProjectDetails: View {
         self.project = project
         _node = node
         _datasets = datasets
-        let datasetReq: NSFetchRequest<Dataset> = Dataset.fetchRequest();
-        datasetReq.sortDescriptors = [ NSSortDescriptor(keyPath: \Dataset.timestamp, ascending: true) ];
-        datasetReq.predicate = NSPredicate(format: "node.project=%@", project);
-        datasetReq.fetchLimit = MAX_UI_ROWS;
-        _datasetList = FetchRequest(fetchRequest: datasetReq);
+        let datasetReq: NSFetchRequest<Dataset> = Dataset.fetchRequest()
+        datasetReq.sortDescriptors = [NSSortDescriptor(keyPath: \Dataset.timestamp, ascending: true)]
+        datasetReq.predicate = NSPredicate(format: "node.project=%@", project)
+        datasetReq.fetchLimit = MAX_UI_ROWS
+        _datasetList = FetchRequest(fetchRequest: datasetReq)
     }
 
     var body: some View {
@@ -53,7 +53,7 @@ struct ProjectDetails: View {
                 if g.size.width > 500 && sizeClass == .regular {
                     HStack {
                         ProjectInfo(project: project)
-                        if let node = node {
+                        if let node {
                             Spacer()
                             SpanNodeInfo(node: node)
                         }
@@ -68,7 +68,7 @@ struct ProjectDetails: View {
                             VStack {
                                 HStack {
                                     ProjectInfo(project: project)
-                                    if let node = node {
+                                    if let node {
                                         Spacer()
                                         SpanNodeInfo(node: node)
                                     }

@@ -1,3 +1,5 @@
+// swift-tools-version:5.1
+
 // Copyright 2023 Yuri6037
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -21,20 +23,13 @@
 // DEALINGS
 // IN THE SOFTWARE.
 
-import Foundation
-import NIO
+import PackageDescription
 
-public struct MessageClientRecord: Writable {
-    public let maxRows: UInt32
-    public let enable: Bool
-
-    public init(maxRows: UInt32, enable: Bool) {
-        self.maxRows = maxRows
-        self.enable = enable
-    }
-
-    public func write(buffer: inout ByteBuffer) {
-        maxRows.write(buffer: &buffer)
-        enable.write(buffer: &buffer)
-    }
-}
+let package = Package(
+    name: "BuildTools",
+    platforms: [.macOS(.v10_11)],
+    dependencies: [
+        .package(url: "https://github.com/nicklockwood/SwiftFormat", from: "0.49.0"),
+    ],
+    targets: [.target(name: "BuildTools", path: "")]
+)

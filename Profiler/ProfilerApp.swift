@@ -24,35 +24,34 @@
 import SwiftUI
 
 class AppGlobals: ObservableObject {
-    @Published var progress: Progress? = nil;
-    @Published var projectSelection: Project?;
-    @Published var errorHandler: ErrorHandler = ErrorHandler();
-    @Published var progressList: ProgressList = ProgressList();
+    @Published var progress: Progress? = nil
+    @Published var projectSelection: Project?
+    @Published var errorHandler: ErrorHandler = .init()
+    @Published var progressList: ProgressList = .init()
     lazy var store: Store = {
-#if DEBUG
-        if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1" {
-            return Store.preview
-        }
-#endif
+        #if DEBUG
+            if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1" {
+                return Store.preview
+            }
+        #endif
         return Store(errorHandler: { error in
-            self.errorHandler.pushError(AppError(fromNSError: error));
+            self.errorHandler.pushError(AppError(fromNSError: error))
         })
     }()
-    lazy var adaptor: NetworkAdaptor = {
-        NetworkAdaptor(
-            errorHandler: errorHandler,
-            container: store.container,
-            progressList: progressList
-        )
-    }()
+
+    lazy var adaptor: NetworkAdaptor = .init(
+        errorHandler: errorHandler,
+        container: store.container,
+        progressList: progressList
+    )
 }
 
-//TODO: Implement export and sync tool
-//TODO: Fix tables under compact size class
+// TODO: Implement export and sync tool
+// TODO: Fix tables under compact size class
 
 @main
 struct ProfilerApp: App {
-    @StateObject var globals = AppGlobals();
+    @StateObject var globals = AppGlobals()
 
     var body: some Scene {
         WindowGroup {
@@ -64,18 +63,18 @@ struct ProfilerApp: App {
                 .environment(\.managedObjectContext, globals.store.container.viewContext)
                 .handlesExternalEvents(preferring: ["*"], allowing: ["*"])
                 .onOpenURL { url in
-                    globals.adaptor.connect(url: url);
+                    globals.adaptor.connect(url: url)
                 }
         }
         .commands {
             CommandGroup(replacing: .importExport) {
                 Divider()
-                Button("Share") { }
+                Button("Share") {}
                 Button("Export to Json...") {
                     if let proj = globals.projectSelection {
-                        globals.store.utils.generateJson(proj, progressList: globals.progressList);
+                        globals.store.utils.generateJson(proj, progressList: globals.progressList)
                     } else {
-                        globals.errorHandler.pushError(AppError(description: "Please select a project to export"));
+                        globals.errorHandler.pushError(AppError(description: "Please select a project to export"))
                     }
                 }
                 Button("Export to CSV...") {}
@@ -83,10 +82,10 @@ struct ProfilerApp: App {
                 Button("Import from CSV...") {}
             }
         }
-#if os(macOS)
-        Settings {
-            SettingsView()
-        }
-#endif
+        #if os(macOS)
+            Settings {
+                SettingsView()
+            }
+        #endif
     }
 }

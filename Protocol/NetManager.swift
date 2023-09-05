@@ -27,41 +27,41 @@ import NIOCore
 import NIOPosix
 
 public protocol MsgHandler {
-    func onMessage(message: Message);
-    func onError(error: Error);
-    func onConnect(connection: Connection);
+    func onMessage(message: Message)
+    func onError(error: Error)
+    func onConnect(connection: Connection)
 }
 
 public class Connection {
-    private let channel: Channel;
+    private let channel: Channel
 
     fileprivate init(channel: Channel) {
         self.channel = channel
     }
 
     public func close() {
-        self.channel.close(promise: nil);
+        channel.close(promise: nil)
     }
 
     public func send(config: MessageClientConfig) {
-        let _ = self.channel.writeAndFlush(config);
+        _ = channel.writeAndFlush(config)
     }
 
     public func send(record: MessageClientRecord) {
-        let _ = self.channel.writeAndFlush(record);
+        _ = channel.writeAndFlush(record)
     }
 }
 
 public class NetManager {
-    private let handler: MsgHandler;
-    private var close: EventLoopFuture<Void>?;
+    private let handler: MsgHandler
+    private var close: EventLoopFuture<Void>?
 
     public init(handler: MsgHandler) {
-        self.handler = handler;
+        self.handler = handler
     }
 
     public func connect(address: String, port: Int = Constants.defaultPort) async {
-        let group = MultiThreadedEventLoopGroup(numberOfThreads: 4);
+        let group = MultiThreadedEventLoopGroup(numberOfThreads: 4)
         let bootstrap = ClientBootstrap(group: group).channelInitializer { handler in
             handler.pipeline.addHandler(MessageToByteHandler(Encoder())).flatMap { _ in
                 handler.pipeline.addHandler(ByteToMessageHandler(Decoder())).flatMap { _ in
@@ -72,19 +72,19 @@ public class NetManager {
             }
         }
         do {
-            let channel = try await bootstrap.connect(host: address, port: port).get();
-            self.handler.onConnect(connection: Connection(channel: channel))
-            self.close = channel.closeFuture;
-        } catch let error {
-            self.handler.onError(error: error);
+            let channel = try await bootstrap.connect(host: address, port: port).get()
+            handler.onConnect(connection: Connection(channel: channel))
+            close = channel.closeFuture
+        } catch {
+            handler.onError(error: error)
         }
     }
 
     public func wait() async {
         do {
-            try await self.close?.get();
-        } catch let error {
-            self.handler.onError(error: error);
+            try await close?.get()
+        } catch {
+            handler.onError(error: error)
         }
     }
 }

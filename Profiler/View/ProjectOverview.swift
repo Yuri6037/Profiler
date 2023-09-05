@@ -1,6 +1,6 @@
 // Copyright 2023 Yuri6037
 //
-// Permission is hereby granted, free of charge, to any person obtaining a 
+// Permission is hereby granted, free of charge, to any person obtaining a
 // copy
 // of this software and associated documentation files (the "Software"),
 // to deal in the Software without restriction, including without limitation
@@ -13,22 +13,22 @@
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
 // THE
 // AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS
 // IN THE SOFTWARE.
 
-import SwiftUI
 import CoreData
+import SwiftUI
 
 struct NodeDashboard: View {
-    @ObservedObject var node: SpanNode;
+    @ObservedObject var node: SpanNode
 
     var body: some View {
-        GroupBox(label: Label(node.wPath, systemImage: "doc").foregroundColor(node.wMetadata?.wLevel.color ?? .accentColor) ) {
+        GroupBox(label: Label(node.wPath, systemImage: "doc").foregroundColor(node.wMetadata?.wLevel.color ?? .accentColor)) {
             if let metadata = node.wMetadata {
                 HStack {
                     Text("Name").bold()
@@ -82,19 +82,19 @@ struct NodeDashboard: View {
 
 struct ProjectOverview: View {
     @Environment(\.horizontalSizeClass) var sizeClass;
-    @EnvironmentObject private var adaptor: NetworkAdaptor;
-    @EnvironmentObject private var errorHandler: ErrorHandler;
-    @Environment(\.persistentContainer) private var container: NSPersistentContainer;
-    @ObservedObject private var project: Project;
-    @FetchRequest private var events: FetchedResults<SpanEvent>;
+    @EnvironmentObject private var adaptor: NetworkAdaptor
+    @EnvironmentObject private var errorHandler: ErrorHandler
+    @Environment(\.persistentContainer) private var container: NSPersistentContainer
+    @ObservedObject private var project: Project
+    @FetchRequest private var events: FetchedResults<SpanEvent>
 
     init(project: Project) {
-        self.project = project;
-        let events: NSFetchRequest<SpanEvent> = SpanEvent.fetchRequest();
-        events.sortDescriptors = [ NSSortDescriptor(keyPath: \SpanEvent.order, ascending: true) ];
-        events.predicate = NSPredicate(format: "node.project=%@", project);
-        events.fetchLimit = MAX_UI_ROWS;
-        _events = FetchRequest(fetchRequest: events);
+        self.project = project
+        let events: NSFetchRequest<SpanEvent> = SpanEvent.fetchRequest()
+        events.sortDescriptors = [NSSortDescriptor(keyPath: \SpanEvent.order, ascending: true)]
+        events.predicate = NSPredicate(format: "node.project=%@", project)
+        events.fetchLimit = MAX_UI_ROWS
+        _events = FetchRequest(fetchRequest: events)
     }
 
     var body: some View {

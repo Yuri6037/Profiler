@@ -25,25 +25,25 @@ import Foundation
 import NIO
 
 public struct Option<T: Component>: Component {
-    public let value: T?;
-    public static var size: Int { 1 + T.size };
+    public let value: T?
+    public static var size: Int { 1 + T.size }
 
     public static func read(buffer: inout ByteBuffer) -> Option<T> {
-        let flag = buffer.readInteger(endianness: .little, as: UInt8.self);
-        if (flag == 1) {
-            return Option(value: T.read(buffer: &buffer));
+        let flag = buffer.readInteger(endianness: .little, as: UInt8.self)
+        if flag == 1 {
+            return Option(value: T.read(buffer: &buffer))
         }
-        return Option(value: nil);
+        return Option(value: nil)
     }
 }
 
 extension Option: Writable where T: Writable {
     public func write(buffer: inout ByteBuffer) {
         if let val = value {
-            buffer.writeInteger(UInt8(1), endianness: .little);
-            val.write(buffer: &buffer);
+            buffer.writeInteger(UInt8(1), endianness: .little)
+            val.write(buffer: &buffer)
         } else {
-            buffer.writeInteger(UInt8(0), endianness: .little);
+            buffer.writeInteger(UInt8(0), endianness: .little)
         }
     }
 }

@@ -25,17 +25,17 @@ import Foundation
 import NIO
 
 public enum ComponentReadError: Error {
-    case string;
+    case string
 }
 
 public protocol Component {
-    static var size: Int { get };
+    static var size: Int { get }
 
-    static func read(buffer: inout ByteBuffer) -> Self;
+    static func read(buffer: inout ByteBuffer) -> Self
 }
 
 public protocol PayloadComponent {
-    associatedtype PayloadOut;
+    associatedtype PayloadOut
 
-    func readPayload(buffer: inout ByteBuffer) throws -> PayloadOut;
+    func readPayload(buffer: inout ByteBuffer) throws -> PayloadOut
 }
