@@ -73,7 +73,7 @@ struct ProfilerApp: App {
                 Button("Share") { }
                 Button("Export to Json...") {
                     if let proj = globals.projectSelection {
-                        globals.store.utils.generateJson(proj);
+                        globals.store.utils.generateJson(proj, progressList: globals.progressList);
                     } else {
                         globals.errorHandler.pushError(AppError(description: "Please select a project to export"));
                     }

@@ -85,7 +85,7 @@ struct StoreUtils {
         self.container = container;
     }
 
-    private func fillDictionary(_ obj: NSManagedObject, _ done: inout Set<NSManagedObject>) -> [String: Any]? {
+    private func fillDictionary(_ obj: NSManagedObject, _ done: inout Set<NSManagedObject>, _ progressList: ProgressList) -> [String: Any]? {
         if done.contains(obj) {
             return nil;
         }
@@ -98,7 +98,7 @@ struct StoreUtils {
         for key in obj.entity.toOneRelationshipKeys {
             let val = obj.value(forKey: key) as? NSManagedObject;
             if let val = val {
-                if let o = fillDictionary(val, &done) {
+                if let o = fillDictionary(val, &done, progressList) {
                     dic[key] = o;
                 }
             }
@@ -110,10 +110,20 @@ struct StoreUtils {
             }
             var arr: [[String: Any]] = [];
             if let val = val {
-                for v in val {
-                    if let o = fillDictionary(v, &done) {
+                let progress = val.count > 10 ? progressList.begin(
+                    text: "Exporting object properties...",
+                    total: UInt(val.count)
+                ) : nil;
+                for (k, v) in val.enumerated() {
+                    if let o = fillDictionary(v, &done, progressList) {
                         arr.append(o);
                     }
+                    //if k % 5 == 0 {
+                        progress?.advance(count: 1);
+                    //}
+                }
+                if let progress = progress {
+                    progressList.end(progress);
                 }
             }
             dic[key] = arr;
@@ -121,13 +131,12 @@ struct StoreUtils {
         return dic;
     }
 
-    func generateJson(_ proj: Project) {
+    func generateJson(_ proj: Project, progressList: ProgressList) {
         let projId = proj.objectID;
         container.performBackgroundTask { ctx in
             let proj = ctx.object(with: projId);
             var set: Set<NSManagedObject> = Set();
-            let dic = fillDictionary(proj, &set);
-            print(dic);
+            let dic = fillDictionary(proj, &set, progressList);
         }
     }
 

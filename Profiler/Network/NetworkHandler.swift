@@ -193,9 +193,7 @@ class NetworkHandler {
                     v.data = row[i];
                 }
                 timeValues.append(time);
-                DispatchQueue.main.async {
-                    progress.advance();
-                }
+                progress.advance();
             }
             averageTime = averageTime / UInt64(total);
             dataset.averageTime = Int64(bitPattern: averageTime);
@@ -217,9 +215,7 @@ class NetworkHandler {
                 node.maxTime = Int64(bitPattern: maxTime);
             }
             try ctx.save();
-            DispatchQueue.main.async {
-                adaptor.progressList.end(progress);
-            }
+            adaptor.progressList.end(progress);
         }
     }
 }

@@ -29,6 +29,7 @@ class Progress: ObservableObject, Identifiable {
     let total: UInt;
     @Published var current: UInt = 0;
     var value: CGFloat { total == 0 && current == 0 ? 0 : CGFloat(current) / CGFloat(total) }
+    var isValid = true;
 
     init(text: String, total: UInt) {
         self.text = text;
@@ -36,7 +37,12 @@ class Progress: ObservableObject, Identifiable {
     }
 
     func advance(count: UInt = 1) {
-        self.current += count;
+        if !isValid {
+            return;
+        }
+        DispatchQueue.main.async {
+            self.current += count;
+        }
     }
 }
 
@@ -45,11 +51,16 @@ class ProgressList: ObservableObject {
 
     func begin(text: String, total: UInt) -> Progress {
         let prog = Progress(text: text, total: total);
-        array.append(prog);
+        DispatchQueue.main.async {
+            self.array.append(prog);
+        }
         return prog;
     }
 
     func end(_ prog: Progress) {
-        array.removeAll(where: { v in v === prog });
+        prog.isValid = false;
+        DispatchQueue.main.async {
+            self.array.removeAll(where: { v in v === prog });
+        }
     }
 }
