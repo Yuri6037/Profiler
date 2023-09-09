@@ -78,6 +78,8 @@
 		DA8CC2012AA3DDBE009C668B /* Progress.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8CC2002AA3DDBE009C668B /* Progress.swift */; };
 		DA8CC20C2AA91451009C668B /* Files.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8CC20B2AA91451009C668B /* Files.swift */; };
 		DA8CC20E2AACB66F009C668B /* DocPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8CC20D2AACB66F009C668B /* DocPicker.swift */; };
+		DA8CC2122AAD1953009C668B /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8CC2112AAD1953009C668B /* Utils.swift */; };
+		DA8CC2152AAD19D6009C668B /* UIGlue.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8CC2142AAD19D6009C668B /* UIGlue.swift */; };
 		DAA45DB62A84EC64009ABBCB /* MessageClientConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA45DB52A84EC64009ABBCB /* MessageClientConfig.swift */; };
 		DAA45DB82A84ECF7009ABBCB /* MessageClientRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA45DB72A84ECF7009ABBCB /* MessageClientRecord.swift */; };
 		DAA45DBA2A84EDD8009ABBCB /* ComponentU16.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA45DB92A84EDD8009ABBCB /* ComponentU16.swift */; };
@@ -244,6 +246,8 @@
 		DA8CC20B2AA91451009C668B /* Files.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Files.swift; sourceTree = "<group>"; };
 		DA8CC20D2AACB66F009C668B /* DocPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocPicker.swift; sourceTree = "<group>"; };
 		DA8CC20F2AACB847009C668B /* format.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = format.sh; sourceTree = "<group>"; };
+		DA8CC2112AAD1953009C668B /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		DA8CC2142AAD19D6009C668B /* UIGlue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIGlue.swift; sourceTree = "<group>"; };
 		DAA45DB52A84EC64009ABBCB /* MessageClientConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageClientConfig.swift; sourceTree = "<group>"; };
 		DAA45DB72A84ECF7009ABBCB /* MessageClientRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageClientRecord.swift; sourceTree = "<group>"; };
 		DAA45DB92A84EDD8009ABBCB /* ComponentU16.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentU16.swift; sourceTree = "<group>"; };
@@ -355,10 +359,9 @@
 				DA5A3AA42A881AE5000375A2 /* Info.plist */,
 				DA5A3A9C2A875606000375A2 /* Util */,
 				DA1AB3C02A862A90008DBB2D /* View */,
-				DA2A7EB52A8533E9009B454D /* Model */,
 				DA4359732A968A2A00D51BCF /* Network */,
+				DA8CC2102AAD1910009C668B /* Data */,
 				DA17E7EF2A12B84300554B8A /* ProfilerApp.swift */,
-				DA17E7F12A12B84300554B8A /* Persistence.swift */,
 				DA17E7F82A12B84400554B8A /* Assets.xcassets */,
 				DA17E7FA2A12B84400554B8A /* Profiler.entitlements */,
 				DA17E7FB2A12B84400554B8A /* Preview Content */,
@@ -520,6 +523,17 @@
 				DA837D222A1778AB00B91BCE /* BP3DProtocol.swift */,
 			);
 			path = Handshake;
+			sourceTree = "<group>";
+		};
+		DA8CC2102AAD1910009C668B /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				DA2A7EB52A8533E9009B454D /* Model */,
+				DA17E7F12A12B84300554B8A /* Persistence.swift */,
+				DA8CC2112AAD1953009C668B /* Utils.swift */,
+				DA8CC2142AAD19D6009C668B /* UIGlue.swift */,
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 		DACD16C82A8E0D8600982725 /* TextTools */ = {
@@ -838,6 +852,7 @@
 				DA1AB3D02A862A90008DBB2D /* LineChart.swift in Sources */,
 				DA1AB3D12A862A90008DBB2D /* NodeFilters.swift in Sources */,
 				DA1AB3D22A862A90008DBB2D /* ProjectDetails.swift in Sources */,
+				DA8CC2122AAD1953009C668B /* Utils.swift in Sources */,
 				DA2A9B5B2A9B2C330077DCC5 /* ShareView.swift in Sources */,
 				DA8CC20E2AACB66F009C668B /* DocPicker.swift in Sources */,
 				DA2A9B5D2A9B8DBE0077DCC5 /* SpanTree.swift in Sources */,
@@ -858,6 +873,7 @@
 				DAC183432A8F9C13002B496F /* SettingsView.swift in Sources */,
 				DA5A3AA82A8912A1000375A2 /* ClientConfig.swift in Sources */,
 				DA1AB3DD2A862B87008DBB2D /* ErrorHandler.swift in Sources */,
+				DA8CC2152AAD19D6009C668B /* UIGlue.swift in Sources */,
 				DA17E7F52A12B84300554B8A /* Profiler.xcdatamodeld in Sources */,
 				DA5A3AAA2A89159B000375A2 /* BoundedFormatter.swift in Sources */,
 				DA1AB3DB2A862A90008DBB2D /* ProjectInfo.swift in Sources */,
