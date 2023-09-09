@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22G74" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22G90" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Cpu" representedClassName="Cpu" syncable="YES" codeGenerationType="class">
         <attribute name="coreCount" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" attributeType="String" defaultValueString=""/>
@@ -15,7 +15,7 @@
         <attribute name="medianTime" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="minTime" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="timestamp" attributeType="Date" usesScalarValueType="NO"/>
-        <relationship name="node" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SpanNode" inverseName="datasets" inverseEntity="SpanNode"/>
+        <relationship name="node" maxCount="1" deletionRule="Nullify" destinationEntity="SpanNode" inverseName="datasets" inverseEntity="SpanNode"/>
         <relationship name="runs" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SpanRun" inverseName="dataset" inverseEntity="SpanRun"/>
     </entity>
     <entity name="Project" representedClassName="Project" syncable="YES" codeGenerationType="class">
@@ -57,7 +57,6 @@
         <relationship name="events" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="SpanEvent" inverseName="node" inverseEntity="SpanEvent"/>
         <relationship name="metadata" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="SpanMetadata" inverseName="nodes" inverseEntity="SpanMetadata"/>
         <relationship name="project" maxCount="1" deletionRule="Nullify" destinationEntity="Project" inverseName="nodes" inverseEntity="Project"/>
-        <relationship name="runs" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="SpanRun" inverseName="node" inverseEntity="SpanRun"/>
         <fetchIndex name="GetExisting">
             <fetchIndexElement property="order" type="Binary" order="ascending"/>
         </fetchIndex>
@@ -66,8 +65,7 @@
         <attribute name="message" optional="YES" attributeType="String"/>
         <attribute name="order" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="time" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <relationship name="dataset" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Dataset" inverseName="runs" inverseEntity="Dataset"/>
-        <relationship name="node" maxCount="1" deletionRule="Nullify" destinationEntity="SpanNode" inverseName="runs" inverseEntity="SpanNode"/>
+        <relationship name="dataset" maxCount="1" deletionRule="Nullify" destinationEntity="Dataset" inverseName="runs" inverseEntity="Dataset"/>
         <relationship name="variables" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="SpanVariable" inverseName="run" inverseEntity="SpanVariable"/>
     </entity>
     <entity name="SpanVariable" representedClassName="SpanVariable" syncable="YES" codeGenerationType="class">

@@ -77,6 +77,13 @@ extension SpanNode {
     var wPath: String { path! }
     var wMetadata: SpanMetadata? { metadata }
     var wDatasets: [Dataset] { (datasets?.allObjects ?? []) as! [Dataset] }
+    var wRunsCount: Int {
+        var res = 0
+        for v in wDatasets {
+            res += v.runs?.count ?? 0
+        }
+        return res
+    }
 
     var wAverageTime: Duration { Duration(nanoseconds: UInt64(bitPattern: averageTime)) }
     var wMinTime: Duration { Duration(nanoseconds: UInt64(bitPattern: minTime)) }

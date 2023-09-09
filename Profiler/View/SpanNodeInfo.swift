@@ -59,7 +59,7 @@ struct SpanNodeInfo: View {
                 }
                 HStack {
                     Text("Run count").bold()
-                    Text((node.runs?.count ?? 0).formatted())
+                    Text((node.wRunsCount).formatted())
                 }
                 HStack {
                     Text("Min time").bold()

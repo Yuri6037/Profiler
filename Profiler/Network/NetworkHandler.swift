@@ -160,7 +160,7 @@ class NetworkHandler {
             let dataset = Dataset(context: ctx)
             dataset.timestamp = Date()
             dataset.node = node
-            var runIndex = node.runs?.count ?? 0
+            var runIndex = node.wRunsCount
             var maxTime = UInt64(0)
             var minTime = UInt64.max
             var averageTime = UInt64(0)
@@ -171,7 +171,6 @@ class NetworkHandler {
                     continue
                 }
                 let run = SpanRun(context: ctx)
-                run.node = node
                 run.order = Int64(runIndex)
                 runIndex += 1
                 run.dataset = dataset

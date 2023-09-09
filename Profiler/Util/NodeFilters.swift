@@ -110,7 +110,7 @@ class NodeFilters: ObservableObject {
     }
 
     func getPredicate(node: NSManagedObject, datasets: [NSManagedObject]) -> NSPredicate {
-        var predicates = [NSPredicate(format: "node=%@", node)]
+        var predicates = [NSPredicate(format: "dataset.node=%@", node)]
         if !datasets.isEmpty {
             var predicates1: [NSPredicate] = []
             for dataset in datasets {
@@ -123,7 +123,7 @@ class NodeFilters: ObservableObject {
     }
 
     func getPredicate(size: Int, maxSize: Int, node: NSManagedObject, datasets: [NSManagedObject]) -> NSPredicate {
-        var predicates = [NSPredicate(format: "node=%@", node)]
+        var predicates = [NSPredicate(format: "dataset.node=%@", node)]
         if !datasets.isEmpty {
             var predicates1: [NSPredicate] = []
             for dataset in datasets {
