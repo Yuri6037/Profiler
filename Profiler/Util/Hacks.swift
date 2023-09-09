@@ -22,6 +22,7 @@
 // IN THE SOFTWARE.
 
 import Foundation
+import CoreData
 
 // More hacks because Swift is too badly broken to include proper subtraction operators in Date...
 extension Date {
@@ -42,3 +43,22 @@ extension Date {
         self = date
     }
 }
+
+#if os(iOS)
+
+//This hack is required because reflection is half broken under iOS
+extension NSEntityDescription {
+    var attributeKeys: [String] {
+        self.attributesByName.map { v in v.key }
+    }
+
+    var toOneRelationshipKeys: [String] {
+        self.relationshipsByName.filter { v in !v.value.isToMany }.map { v in v.key }
+    }
+
+    var toManyRelationshipKeys: [String] {
+        self.relationshipsByName.filter { v in v.value.isToMany }.map { v in v.key }
+    }
+}
+
+#endif
