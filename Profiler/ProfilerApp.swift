@@ -48,7 +48,6 @@ class AppGlobals: ObservableObject {
 
 // TODO: Implement export and sync tool
 // TODO: Fix tables under compact size class
-// TODO: Attempt to fix the app when database fails to load
 
 @main
 struct ProfilerApp: App {

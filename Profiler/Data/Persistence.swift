@@ -27,7 +27,8 @@ protocol SampleData {
     static func newSample(context: NSManagedObjectContext) -> Self
 }
 
-struct Store {
+// Annoyingly garbagely broken swift language believes self is captured as mutating when it is not!!!
+class Store {
     static var preview: Store = {
         let result = Store(errorHandler: { error in
             fatalError("Unresolved error \(error), \(error.userInfo)")
@@ -51,6 +52,36 @@ struct Store {
 
     var utils: StoreUtils { StoreUtils(container: container) }
 
+    func createBackup() throws {
+        let path = try FileUtils.getDocumentsDirectory().appendingPathComponent("Backups");
+        try path.createDirsIfNotExists();
+        let path1 = path.appendingPathComponent(Date().toISO8601());
+        try path1.createDirsIfNotExists();
+        let url = try FileUtils.getAppSupportDirectory()
+        #if os(macOS)
+            .appendingPathComponent("Profiler")
+        #endif
+        let main = url.appendingPathComponent("Profiler.sqlite");
+        let shm = url.appendingPathComponent("Profiler.sqlite-shm");
+        let wal = url.appendingPathComponent("Profiler.sqlite-wal");
+        try FileUtils.copy(from: main, to: path1.appendingPathComponent("Profiler.sqlite"))
+        try FileUtils.copy(from: shm, to: path1.appendingPathComponent("Profiler.sqlite-shm"))
+        try FileUtils.copy(from: wal, to: path1.appendingPathComponent("Profiler.sqlite-wal"))
+    }
+
+    func reset() throws {
+        let url = try FileUtils.getAppSupportDirectory()
+        #if os(macOS)
+            .appendingPathComponent("Profiler")
+        #endif
+        let main = url.appendingPathComponent("Profiler.sqlite");
+        let shm = url.appendingPathComponent("Profiler.sqlite-shm");
+        let wal = url.appendingPathComponent("Profiler.sqlite-wal");
+        try FileUtils.delete(url: main)
+        try FileUtils.delete(url: shm)
+        try FileUtils.delete(url: wal)
+    }
+
     init(errorHandler: @escaping (NSError) -> Void, inMemory: Bool = false) {
         container = NSPersistentContainer(name: "Profiler")
         if inMemory {
@@ -59,6 +90,19 @@ struct Store {
         container.loadPersistentStores(completionHandler: { _, error in
             if let error = error as NSError? {
                 errorHandler(error)
+            }
+            do {
+                try self.createBackup();
+                try self.reset();
+                self.container.loadPersistentStores(completionHandler: { _, error in
+                    if let error = error as NSError? {
+                        errorHandler(error)
+                    }
+                })
+            } catch {
+                if let error = error as NSError? {
+                    errorHandler(error)
+                }
             }
         })
         container.viewContext.automaticallyMergesChangesFromParent = true

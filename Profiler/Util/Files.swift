@@ -27,10 +27,39 @@ struct FileUtils {
     static func getDataDirectory() throws -> URL {
         let path = try FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
             .appendingPathComponent(Bundle.main.bundleIdentifier!)
-        var isDir: ObjCBool = false
-        if !FileManager.default.fileExists(atPath: path.path, isDirectory: &isDir) {
-            try FileManager.default.createDirectory(at: path, withIntermediateDirectories: true, attributes: nil)
-        }
+        try path.createDirsIfNotExists();
         return path
+    }
+
+    static func getAppSupportDirectory() throws -> URL {
+        let path = try FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+        try path.createDirsIfNotExists();
+        return path
+    }
+
+    static func getDocumentsDirectory() throws -> URL {
+        let path = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+        try path.createDirsIfNotExists();
+        return path
+    }
+
+    static func copy(from: URL, to: URL) throws {
+        if FileManager.default.fileExists(atPath: to.path) {
+            try FileManager.default.removeItem(at: to)
+        }
+        try FileManager.default.copyItem(at: from, to: to)
+    }
+
+    static func delete(url: URL) throws {
+        try FileManager.default.removeItem(at: url);
+    }
+}
+
+extension URL {
+    func createDirsIfNotExists() throws {
+        var isDir: ObjCBool = false
+        if !FileManager.default.fileExists(atPath: self.path, isDirectory: &isDir) {
+            try FileManager.default.createDirectory(at: self, withIntermediateDirectories: true, attributes: nil)
+        }
     }
 }
