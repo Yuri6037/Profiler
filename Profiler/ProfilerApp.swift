@@ -72,13 +72,35 @@ struct ProfilerApp: App {
                 Button("Share") {}
                 Button("Export to Json...") {
                     if let proj = globals.projectSelection {
-                        globals.store.utils.generateJson(proj, progressList: globals.progressList)
+                        globals.store.utils.exportJson(proj, progressList: globals.progressList, onFinish: { path, error in
+                            if let path {
+                                print(path)
+                            }
+                            if let error {
+                                DispatchQueue.main.async {
+                                    globals.errorHandler.pushError(AppError(fromNSError: error))
+                                }
+                            }
+                        })
                     } else {
                         globals.errorHandler.pushError(AppError(description: "Please select a project to export"))
                     }
                 }
                 Button("Export to CSV...") {}
-                Button("Import from Json...") {}
+                Button("Import from Json...") {
+                    do {
+                        let path = try FileUtils.getDataDirectory().appendingPathComponent("export.bp3dprof")
+                        globals.store.utils.importJson(path, progressList: globals.progressList, onFinish: { error in
+                            if let error {
+                                DispatchQueue.main.async {
+                                    globals.errorHandler.pushError(AppError(fromNSError: error))
+                                }
+                            }
+                        })
+                    } catch {
+                        globals.errorHandler.pushError(AppError(fromError: error))
+                    }
+                }
                 Button("Import from CSV...") {}
             }
         }

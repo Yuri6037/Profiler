@@ -76,6 +76,7 @@
 		DA84368E2A8C053100A280B3 /* MessageSpanDataset.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA84368D2A8C053100A280B3 /* MessageSpanDataset.swift */; };
 		DA8CC1FF2A9FE893009C668B /* ConnectionStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8CC1FE2A9FE893009C668B /* ConnectionStatus.swift */; };
 		DA8CC2012AA3DDBE009C668B /* Progress.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8CC2002AA3DDBE009C668B /* Progress.swift */; };
+		DA8CC20C2AA91451009C668B /* Files.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8CC20B2AA91451009C668B /* Files.swift */; };
 		DAA45DB62A84EC64009ABBCB /* MessageClientConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA45DB52A84EC64009ABBCB /* MessageClientConfig.swift */; };
 		DAA45DB82A84ECF7009ABBCB /* MessageClientRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA45DB72A84ECF7009ABBCB /* MessageClientRecord.swift */; };
 		DAA45DBA2A84EDD8009ABBCB /* ComponentU16.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA45DB92A84EDD8009ABBCB /* ComponentU16.swift */; };
@@ -239,6 +240,7 @@
 		DA8CC1FE2A9FE893009C668B /* ConnectionStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionStatus.swift; sourceTree = "<group>"; };
 		DA8CC2002AA3DDBE009C668B /* Progress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Progress.swift; sourceTree = "<group>"; };
 		DA8CC20A2AA7C98D009C668B /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		DA8CC20B2AA91451009C668B /* Files.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Files.swift; sourceTree = "<group>"; };
 		DAA45DB52A84EC64009ABBCB /* MessageClientConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageClientConfig.swift; sourceTree = "<group>"; };
 		DAA45DB72A84ECF7009ABBCB /* MessageClientRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageClientRecord.swift; sourceTree = "<group>"; };
 		DAA45DB92A84EDD8009ABBCB /* ComponentU16.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentU16.swift; sourceTree = "<group>"; };
@@ -464,6 +466,7 @@
 				DAC183402A8ECA4D002B496F /* IOSShim.swift */,
 				DA66852D2A8FFA32000913A1 /* Settings.swift */,
 				DA8CC2002AA3DDBE009C668B /* Progress.swift */,
+				DA8CC20B2AA91451009C668B /* Files.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -879,6 +882,7 @@
 			files = (
 				DA17E7F02A12B84300554B8A /* ProfilerApp.swift in Sources */,
 				DA1AB3DA2A862A90008DBB2D /* ProjectLink.swift in Sources */,
+				DA8CC20C2AA91451009C668B /* Files.swift in Sources */,
 				DA5A3AAC2A89165F000375A2 /* IntPicker.swift in Sources */,
 				DA8CC2012AA3DDBE009C668B /* Progress.swift in Sources */,
 				DA1AB3D42A862A90008DBB2D /* SpanRunTable.swift in Sources */,

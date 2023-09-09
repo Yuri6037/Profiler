@@ -23,22 +23,14 @@
 
 import Foundation
 
-// More hacks because Swift is too badly broken to include proper subtraction operators in Date...
-extension Date {
-    static func - (lhs: Date, rhs: Date) -> TimeInterval {
-        lhs.timeIntervalSinceReferenceDate - rhs.timeIntervalSinceReferenceDate
-    }
-
-    func toISO8601() -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
-        return dateFormatter.string(from: self)
-    }
-
-    init?(fromISO8601: String) {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
-        guard let date = dateFormatter.date(from: fromISO8601) else { return nil }
-        self = date
+struct FileUtils {
+    static func getDataDirectory() throws -> URL {
+        let path = try FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+            .appendingPathComponent(Bundle.main.bundleIdentifier!)
+        var isDir: ObjCBool = false
+        if !FileManager.default.fileExists(atPath: path.path, isDirectory: &isDir) {
+            try FileManager.default.createDirectory(at: path, withIntermediateDirectories: true, attributes: nil)
+        }
+        return path
     }
 }

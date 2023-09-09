@@ -90,9 +90,14 @@ struct StoreUtils {
         }
         done.insert(obj)
         var dic: [String: Any] = [:]
+        dic["__typename"] = String(describing: type(of: obj))
         for key in obj.entity.attributeKeys {
             let val = obj.value(forKey: key)
-            dic[key] = val
+            if obj.entity.attributesByName[key]?.attributeType == .dateAttributeType {
+                dic[key] = (val as! Date).toISO8601()
+            } else {
+                dic[key] = val
+            }
         }
         for key in obj.entity.toOneRelationshipKeys {
             let val = obj.value(forKey: key) as? NSManagedObject
@@ -110,7 +115,7 @@ struct StoreUtils {
             var arr: [[String: Any]] = []
             if let val {
                 let progress = val.count > 3 ? progressList.begin(
-                    text: "Exporting object properties...",
+                    text: "Exporting linked objects...",
                     total: UInt(val.count)
                 ) : nil
                 for v in val {
@@ -128,12 +133,82 @@ struct StoreUtils {
         return dic
     }
 
-    func generateJson(_ proj: Project, progressList: ProgressList) {
+    private func createObject(_ params: [String: Any], _ ctx: NSManagedObjectContext, _ progressList: ProgressList) -> NSManagedObject? {
+        guard let typename = params["__typename"] as? String else { return nil }
+        guard let entity = NSEntityDescription.entity(forEntityName: typename, in: ctx) else { return nil }
+        let obj = NSManagedObject(entity: entity, insertInto: ctx)
+        for key in obj.entity.attributeKeys {
+            if obj.entity.attributesByName[key]?.attributeType == .dateAttributeType {
+                guard let str = params[key] as? String else { continue }
+                guard let date = Date(fromISO8601: str) else { continue }
+                obj.setValue(date, forKey: key)
+            } else {
+                obj.setValue(params[key], forKey: key)
+            }
+        }
+        for key in obj.entity.toOneRelationshipKeys {
+            guard let pars = params[key] as? [String: Any] else { continue }
+            obj.setValue(createObject(pars, ctx, progressList), forKey: key)
+        }
+        for key in obj.entity.toManyRelationshipKeys {
+            guard let arr = params[key] as? [[String: Any]] else { continue }
+            if arr.count <= 0 {
+                continue
+            }
+            let progress = arr.count > 3 ? progressList.begin(
+                text: "Creating linked objects...",
+                total: UInt(arr.count)
+            ) : nil
+            if obj.entity.relationshipsByName[key]?.isOrdered ?? false {
+                let set = NSMutableOrderedSet()
+                for v in arr {
+                    set.add(createObject(v, ctx, progressList) as Any)
+                    progress?.advance(count: 1)
+                }
+                obj.setValue(set, forKey: key)
+            } else {
+                let set = NSMutableSet()
+                for v in arr {
+                    set.add(createObject(v, ctx, progressList) as Any)
+                    progress?.advance(count: 1)
+                }
+                obj.setValue(set, forKey: key)
+            }
+            if let progress {
+                progressList.end(progress)
+            }
+        }
+        return obj
+    }
+
+    func exportJson(_ proj: Project, progressList: ProgressList, onFinish: @escaping (URL?, NSError?) -> Void) {
         let projId = proj.objectID
         container.performBackgroundTask { ctx in
             let proj = ctx.object(with: projId)
             var set: Set<NSManagedObject> = Set()
             let dic = fillDictionary(proj, &set, progressList)
+            do {
+                let data = try JSONSerialization.data(withJSONObject: dic as Any)
+                let path = try FileUtils.getDataDirectory().appendingPathComponent("export.bp3dprof")
+                try data.write(to: path)
+                onFinish(path, nil)
+            } catch {
+                onFinish(nil, error as NSError)
+            }
+        }
+    }
+
+    func importJson(_ url: URL, progressList: ProgressList, onFinish: @escaping (NSError?) -> Void) {
+        container.performBackgroundTask { ctx in
+            do {
+                if let obj = try JSONSerialization.jsonObject(with: Data(contentsOf: url)) as? [String: Any] {
+                    _ = createObject(obj, ctx, progressList)
+                    try ctx.save()
+                }
+                onFinish(nil)
+            } catch {
+                onFinish(error as NSError)
+            }
         }
     }
 
@@ -145,9 +220,9 @@ struct StoreUtils {
             ctx.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
             let proj = ctx.object(with: projId)
             let fvariables = NSFetchRequest<NSFetchRequestResult>(entityName: String(describing: SpanVariable.self))
-            fvariables.predicate = NSPredicate(format: "run.node.project = %@ OR event.node.project = %@", proj, proj)
+            fvariables.predicate = NSPredicate(format: "run.dataset.node.project = %@ OR event.node.project = %@", proj, proj)
             let fruns = NSFetchRequest<NSFetchRequestResult>(entityName: String(describing: SpanRun.self))
-            fruns.predicate = NSPredicate(format: "node.project = %@", proj)
+            fruns.predicate = NSPredicate(format: "dataset.node.project = %@", proj)
             let fevents = NSFetchRequest<NSFetchRequestResult>(entityName: String(describing: SpanEvent.self))
             fevents.predicate = NSPredicate(format: "node.project = %@", proj)
             let fdatasets = NSFetchRequest<NSFetchRequestResult>(entityName: String(describing: Dataset.self))
