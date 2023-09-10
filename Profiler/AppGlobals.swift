@@ -79,6 +79,7 @@ class ExportManager: ObservableObject {
     }
     
     func saveExport(to: URL) {
+#if os(macOS)
         if let url {
             do {
                 try FileUtils.copy(from: url, to: to)
@@ -88,10 +89,11 @@ class ExportManager: ObservableObject {
         } else {
             errorHandler.pushError(AppError(description: "Cannot save NULL export"))
         }
+#endif
     }
 
-    func exportJson() {
-        if let proj = projectSelection {
+    func exportJson(_ project: Project? = nil) {
+        if let proj = projectSelection ?? project {
             dialogText = "Exporting to JSON..."
             isRunning = true;
             StoreUtils(container: container).exportJson(proj, progressList: progressList, onFinish: {

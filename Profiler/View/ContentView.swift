@@ -55,7 +55,11 @@ struct ContentView: View {
                 GeometryReader { g in
                     VStack {
                         List(selection: $projectSelection) {
-                            ForEach(items) { ProjectLink(project: $0) }
+                            ForEach(items) {
+                                ProjectLink(project: $0, onDelete: {
+                                    deleteItem()
+                                })
+                            }
                             #if os(iOS)
                                 .onDelete(perform: { deleteItem(index: $0) })
                             #endif

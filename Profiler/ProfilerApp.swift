@@ -68,11 +68,13 @@ struct ProfilerApp: App {
             CommandGroup(replacing: .importExport) {
                 Divider()
                 Button("Share") {}
-                Button("Export to Json...") {
+                Divider()
+                Button("Export to JSON...") {
                     globals.exportManager.exportJson();
                 }
                 Button("Export to CSV...") {}
-                Button("Import from Json...") {
+                Divider()
+                Button("Import from JSON...") {
                     globals.exportManager.importJson();
                 }
             }

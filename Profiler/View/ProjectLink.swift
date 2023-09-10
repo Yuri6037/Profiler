@@ -24,7 +24,9 @@
 import SwiftUI
 
 struct ProjectLink: View {
+    @EnvironmentObject private var exportManager: ExportManager
     @ObservedObject var project: Project
+    let onDelete: () -> Void
 
     var body: some View {
         NavigationLink(value: project) {
@@ -36,6 +38,30 @@ struct ProjectLink: View {
                 Text("\(project.timestamp!, formatter: dateFormatter)")
             }
         }
+#if os(iOS)
+        .contextMenu {
+            Button {
+            } label: {
+                Label("Share", systemImage: "square.and.arrow.up")
+            }
+            Divider()
+            Button {
+                exportManager.exportJson(project)
+            } label: {
+                Label("Export to JSON...", systemImage: "j.square")
+            }
+            Button {
+            } label: {
+                Label("Export to CSV...", systemImage: "c.square")
+            }
+            Divider()
+            Button(role: .destructive) {
+                onDelete()
+            } label: {
+                Label("Delete", systemImage: "trash")
+            }
+        }
+#endif
     }
 }
 
@@ -48,6 +74,7 @@ private let dateFormatter: DateFormatter = {
 
 struct ProjectLink_Previews: PreviewProvider {
     static var previews: some View {
-        ProjectLink(project: Store.preview.newSample())
+        ProjectLink(project: Store.preview.newSample(), onDelete: {})
+            .environmentObject(ExportManager(container: Store.preview.container, errorHandler: ErrorHandler(), progressList: ProgressList()))
     }
 }
