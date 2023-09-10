@@ -90,18 +90,18 @@ class Store {
         container.loadPersistentStores(completionHandler: { _, error in
             if let error = error as NSError? {
                 errorHandler(error)
-            }
-            do {
-                try self.createBackup();
-                try self.reset();
-                self.container.loadPersistentStores(completionHandler: { _, error in
+                do {
+                    try self.createBackup();
+                    try self.reset();
+                    self.container.loadPersistentStores(completionHandler: { _, error in
+                        if let error = error as NSError? {
+                            errorHandler(error)
+                        }
+                    })
+                } catch {
                     if let error = error as NSError? {
                         errorHandler(error)
                     }
-                })
-            } catch {
-                if let error = error as NSError? {
-                    errorHandler(error)
                 }
             }
         })

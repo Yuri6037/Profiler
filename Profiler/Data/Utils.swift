@@ -128,7 +128,7 @@ struct StoreUtils {
         return obj
     }
 
-    func exportJson(_ proj: Project, progressList: ProgressList, onFinish: @escaping (URL?, NSError?) -> Void) {
+    func exportJson(_ proj: Project, progressList: ProgressList, onFinish: @escaping (Data?, NSError?) -> Void) {
         let projId = proj.objectID
         container.performBackgroundTask { ctx in
             let proj = ctx.object(with: projId)
@@ -136,19 +136,17 @@ struct StoreUtils {
             let dic = fillDictionary(proj, &set, progressList)
             do {
                 let data = try JSONSerialization.data(withJSONObject: dic as Any)
-                let path = try FileUtils.getDataDirectory().appendingPathComponent("export.bp3dprof")
-                try data.write(to: path)
-                onFinish(path, nil)
+                onFinish(data, nil)
             } catch {
                 onFinish(nil, error as NSError)
             }
         }
     }
 
-    func importJson(_ url: URL, progressList: ProgressList, onFinish: @escaping (NSError?) -> Void) {
+    func importJson(_ json: Data, progressList: ProgressList, onFinish: @escaping (NSError?) -> Void) {
         container.performBackgroundTask { ctx in
             do {
-                if let obj = try JSONSerialization.jsonObject(with: Data(contentsOf: url)) as? [String: Any] {
+                if let obj = try JSONSerialization.jsonObject(with: json) as? [String: Any] {
                     _ = createObject(obj, ctx, progressList)
                     try ctx.save()
                 }

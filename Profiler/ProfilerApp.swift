@@ -23,29 +23,6 @@
 
 import SwiftUI
 
-class AppGlobals: ObservableObject {
-    @Published var progress: Progress? = nil
-    @Published var projectSelection: Project?
-    @Published var errorHandler: ErrorHandler = .init()
-    @Published var progressList: ProgressList = .init()
-    lazy var store: Store = {
-        #if DEBUG
-            if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1" {
-                return Store.preview
-            }
-        #endif
-        return Store(errorHandler: { error in
-            self.errorHandler.pushError(AppError(fromNSError: error))
-        })
-    }()
-
-    lazy var adaptor: NetworkAdaptor = .init(
-        errorHandler: errorHandler,
-        container: store.container,
-        progressList: progressList
-    )
-}
-
 // TODO: Implement export and sync tool
 // TODO: Fix tables under compact size class
 
@@ -55,15 +32,36 @@ struct ProfilerApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView(projectSelection: $globals.projectSelection)
+            ContentView(projectSelection: $globals.exportManager.projectSelection)
                 .environmentObject(globals.adaptor)
                 .environmentObject(globals.errorHandler)
                 .environmentObject(globals.progressList)
+                .environmentObject(globals.exportManager)
                 .environment(\.persistentContainer, globals.store.container)
                 .environment(\.managedObjectContext, globals.store.container.viewContext)
                 .handlesExternalEvents(preferring: ["*"], allowing: ["*"])
                 .onOpenURL { url in
                     globals.adaptor.connect(url: url)
+                }
+                .sheet(isPresented: $globals.exportManager.isRunning) {
+                    VStack {
+                        Text(globals.exportManager.dialogText)
+                        ProgressView()
+                        Divider()
+                        ForEach(globals.progressList.array) { item in
+                            SingleProgressView(progress: item)
+                        }
+                    }.padding()
+                        .frame(minWidth: 256, minHeight: 150)
+                        .presentationDetents([.fraction(0.5)])
+                }
+                .document(isPresented: $globals.exportManager.showExportDialog, type: globals.exportManager.fileType, export: globals.exportManager.url) { url in
+                    // Run export system
+                    globals.exportManager.saveExport(to: url)
+                }
+                .document(isPresented: $globals.exportManager.showImportDialog, type: globals.exportManager.fileType) { url in
+                    // Run import system
+                    globals.exportManager.importJson(url: url);
                 }
         }
         .commands {
@@ -71,37 +69,12 @@ struct ProfilerApp: App {
                 Divider()
                 Button("Share") {}
                 Button("Export to Json...") {
-                    if let proj = globals.projectSelection {
-                        globals.store.utils.exportJson(proj, progressList: globals.progressList, onFinish: { path, error in
-                            if let path {
-                                print(path)
-                            }
-                            if let error {
-                                DispatchQueue.main.async {
-                                    globals.errorHandler.pushError(AppError(fromNSError: error))
-                                }
-                            }
-                        })
-                    } else {
-                        globals.errorHandler.pushError(AppError(description: "Please select a project to export"))
-                    }
+                    globals.exportManager.exportJson();
                 }
                 Button("Export to CSV...") {}
                 Button("Import from Json...") {
-                    do {
-                        let path = try FileUtils.getDataDirectory().appendingPathComponent("export.bp3dprof")
-                        globals.store.utils.importJson(path, progressList: globals.progressList, onFinish: { error in
-                            if let error {
-                                DispatchQueue.main.async {
-                                    globals.errorHandler.pushError(AppError(fromNSError: error))
-                                }
-                            }
-                        })
-                    } catch {
-                        globals.errorHandler.pushError(AppError(fromError: error))
-                    }
+                    globals.exportManager.importJson();
                 }
-                Button("Import from CSV...") {}
             }
         }
         #if os(macOS)

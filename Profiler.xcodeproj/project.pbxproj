@@ -80,6 +80,7 @@
 		DA8CC20E2AACB66F009C668B /* DocumentPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8CC20D2AACB66F009C668B /* DocumentPicker.swift */; };
 		DA8CC2122AAD1953009C668B /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8CC2112AAD1953009C668B /* Utils.swift */; };
 		DA8CC2152AAD19D6009C668B /* UIGlue.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8CC2142AAD19D6009C668B /* UIGlue.swift */; };
+		DA8CC2172AADBDF5009C668B /* AppGlobals.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8CC2162AADBDF5009C668B /* AppGlobals.swift */; };
 		DAA45DB62A84EC64009ABBCB /* MessageClientConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA45DB52A84EC64009ABBCB /* MessageClientConfig.swift */; };
 		DAA45DB82A84ECF7009ABBCB /* MessageClientRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA45DB72A84ECF7009ABBCB /* MessageClientRecord.swift */; };
 		DAA45DBA2A84EDD8009ABBCB /* ComponentU16.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA45DB92A84EDD8009ABBCB /* ComponentU16.swift */; };
@@ -248,6 +249,7 @@
 		DA8CC20F2AACB847009C668B /* format.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = format.sh; sourceTree = "<group>"; };
 		DA8CC2112AAD1953009C668B /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		DA8CC2142AAD19D6009C668B /* UIGlue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIGlue.swift; sourceTree = "<group>"; };
+		DA8CC2162AADBDF5009C668B /* AppGlobals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppGlobals.swift; sourceTree = "<group>"; };
 		DAA45DB52A84EC64009ABBCB /* MessageClientConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageClientConfig.swift; sourceTree = "<group>"; };
 		DAA45DB72A84ECF7009ABBCB /* MessageClientRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageClientRecord.swift; sourceTree = "<group>"; };
 		DAA45DB92A84EDD8009ABBCB /* ComponentU16.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentU16.swift; sourceTree = "<group>"; };
@@ -361,6 +363,7 @@
 				DA1AB3C02A862A90008DBB2D /* View */,
 				DA4359732A968A2A00D51BCF /* Network */,
 				DA8CC2102AAD1910009C668B /* Data */,
+				DA8CC2162AADBDF5009C668B /* AppGlobals.swift */,
 				DA17E7EF2A12B84300554B8A /* ProfilerApp.swift */,
 				DA17E7F82A12B84400554B8A /* Assets.xcassets */,
 				DA17E7FA2A12B84400554B8A /* Profiler.entitlements */,
@@ -870,6 +873,7 @@
 				DA1AB3D62A862A90008DBB2D /* SpanEventTable.swift in Sources */,
 				DA2A7EB92A8534AA009B454D /* Project.swift in Sources */,
 				DA4359752A968A5900D51BCF /* NetworkHandler.swift in Sources */,
+				DA8CC2172AADBDF5009C668B /* AppGlobals.swift in Sources */,
 				DAC183432A8F9C13002B496F /* SettingsView.swift in Sources */,
 				DA5A3AA82A8912A1000375A2 /* ClientConfig.swift in Sources */,
 				DA1AB3DD2A862B87008DBB2D /* ErrorHandler.swift in Sources */,

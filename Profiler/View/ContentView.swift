@@ -29,6 +29,7 @@ struct ContentView: View {
     @EnvironmentObject private var adaptor: NetworkAdaptor
     @EnvironmentObject private var errorHandler: ErrorHandler
     @EnvironmentObject private var progressList: ProgressList
+    @EnvironmentObject private var exportManager: ExportManager
     @Environment(\.managedObjectContext) private var viewContext;
     @Environment(\.persistentContainer) private var container;
 
@@ -177,5 +178,6 @@ struct ContentView_Previews: PreviewProvider {
             .environmentObject(ErrorHandler())
             .environmentObject(ProgressList())
             .environmentObject(NetworkAdaptor(errorHandler: ErrorHandler(), container: Store.preview.container, progressList: ProgressList()))
+            .environmentObject(ExportManager(container: Store.preview.container, errorHandler: ErrorHandler(), progressList: ProgressList()))
     }
 }

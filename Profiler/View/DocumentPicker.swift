@@ -94,16 +94,18 @@ struct DocumentPicker: NSViewRepresentable {
 
     func updateNSView(_ nsView: NSView, context: Context) {
         if isPresented {
-            if let export = export {
+            if export != nil {
                 let panel = NSSavePanel()
                 panel.allowedContentTypes = [type]
-                panel.beginSheetModal(for: nsView.window!) { res in
-                    if res == .OK {
-                        if let url = panel.url {
-                            callback(url)
+                DispatchQueue.main.async {
+                    panel.beginSheetModal(for: nsView.window!) { res in
+                        if res == .OK {
+                            if let url = panel.url {
+                                callback(url)
+                            }
                         }
+                        isPresented = false;
                     }
-                    isPresented = false;
                 }
             } else {
                 let panel = NSOpenPanel();
@@ -111,13 +113,15 @@ struct DocumentPicker: NSViewRepresentable {
                 panel.canChooseDirectories = false;
                 panel.allowsMultipleSelection = false;
                 panel.allowedContentTypes = [type];
-                panel.beginSheetModal(for: nsView.window!) { res in
-                    if res == .OK {
-                        if let url = panel.url {
-                            callback(url)
+                DispatchQueue.main.async {
+                    panel.beginSheetModal(for: nsView.window!) { res in
+                        if res == .OK {
+                            if let url = panel.url {
+                                callback(url)
+                            }
                         }
+                        isPresented = false;
                     }
-                    isPresented = false;
                 }
             }
         }
@@ -142,16 +146,16 @@ struct Document: ViewModifier {
     func body(content: Content) -> some View {
         #if os(iOS)
             return content.sheet(isPresented: $isPresented) {
-                DocumentPicker(callback: callback, isPresented: $isPresented, type: type)
+                DocumentPicker(callback: callback, isPresented: $isPresented, type: type, export: export)
             }
         #elseif os(macOS)
-            return content.background(DocumentPicker(callback: callback, isPresented: $isPresented, type: type))
+            return content.background(DocumentPicker(callback: callback, isPresented: $isPresented, type: type, export: export))
         #endif
     }
 }
 
 public extension View {
     func document(isPresented: Binding<Bool>, type: UTType, export: URL? = nil, callback: @escaping (URL) -> ()) -> some View {
-        modifier(Document(isPresented: isPresented, type: type, callback: callback))
+        modifier(Document(isPresented: isPresented, type: type, export: export, callback: callback))
     }
 }
