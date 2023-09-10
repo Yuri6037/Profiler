@@ -77,7 +77,7 @@
 		DA8CC1FF2A9FE893009C668B /* ConnectionStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8CC1FE2A9FE893009C668B /* ConnectionStatus.swift */; };
 		DA8CC2012AA3DDBE009C668B /* Progress.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8CC2002AA3DDBE009C668B /* Progress.swift */; };
 		DA8CC20C2AA91451009C668B /* Files.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8CC20B2AA91451009C668B /* Files.swift */; };
-		DA8CC20E2AACB66F009C668B /* DocPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8CC20D2AACB66F009C668B /* DocPicker.swift */; };
+		DA8CC20E2AACB66F009C668B /* DocumentPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8CC20D2AACB66F009C668B /* DocumentPicker.swift */; };
 		DA8CC2122AAD1953009C668B /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8CC2112AAD1953009C668B /* Utils.swift */; };
 		DA8CC2152AAD19D6009C668B /* UIGlue.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8CC2142AAD19D6009C668B /* UIGlue.swift */; };
 		DAA45DB62A84EC64009ABBCB /* MessageClientConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA45DB52A84EC64009ABBCB /* MessageClientConfig.swift */; };
@@ -244,7 +244,7 @@
 		DA8CC2002AA3DDBE009C668B /* Progress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Progress.swift; sourceTree = "<group>"; };
 		DA8CC20A2AA7C98D009C668B /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		DA8CC20B2AA91451009C668B /* Files.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Files.swift; sourceTree = "<group>"; };
-		DA8CC20D2AACB66F009C668B /* DocPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocPicker.swift; sourceTree = "<group>"; };
+		DA8CC20D2AACB66F009C668B /* DocumentPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPicker.swift; sourceTree = "<group>"; };
 		DA8CC20F2AACB847009C668B /* format.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = format.sh; sourceTree = "<group>"; };
 		DA8CC2112AAD1953009C668B /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		DA8CC2142AAD19D6009C668B /* UIGlue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIGlue.swift; sourceTree = "<group>"; };
@@ -437,7 +437,7 @@
 				DA6685332A90FE7B000913A1 /* DatasetDashboard.swift */,
 				DA2A9B5A2A9B2C330077DCC5 /* ShareView.swift */,
 				DA8CC1FE2A9FE893009C668B /* ConnectionStatus.swift */,
-				DA8CC20D2AACB66F009C668B /* DocPicker.swift */,
+				DA8CC20D2AACB66F009C668B /* DocumentPicker.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -854,7 +854,7 @@
 				DA1AB3D22A862A90008DBB2D /* ProjectDetails.swift in Sources */,
 				DA8CC2122AAD1953009C668B /* Utils.swift in Sources */,
 				DA2A9B5B2A9B2C330077DCC5 /* ShareView.swift in Sources */,
-				DA8CC20E2AACB66F009C668B /* DocPicker.swift in Sources */,
+				DA8CC20E2AACB66F009C668B /* DocumentPicker.swift in Sources */,
 				DA2A9B5D2A9B8DBE0077DCC5 /* SpanTree.swift in Sources */,
 				DA1AB3DF2A862D6B008DBB2D /* Hacks.swift in Sources */,
 				DA17E7F22A12B84300554B8A /* Persistence.swift in Sources */,
