@@ -26,7 +26,7 @@ import SwiftUI
 struct ProjectLink: View {
     @EnvironmentObject private var exportManager: ExportManager
     @ObservedObject var project: Project
-    let onDelete: () -> Void
+    let onDelete: (Project) -> Void
 
     var body: some View {
         NavigationLink(value: project) {
@@ -56,7 +56,7 @@ struct ProjectLink: View {
             }
             Divider()
             Button(role: .destructive) {
-                onDelete()
+                onDelete(project)
             } label: {
                 Label("Delete", systemImage: "trash")
             }
@@ -74,7 +74,7 @@ private let dateFormatter: DateFormatter = {
 
 struct ProjectLink_Previews: PreviewProvider {
     static var previews: some View {
-        ProjectLink(project: Store.preview.newSample(), onDelete: {})
+        ProjectLink(project: Store.preview.newSample(), onDelete: { _ in })
             .environmentObject(ExportManager(container: Store.preview.container, errorHandler: ErrorHandler(), progressList: ProgressList()))
     }
 }

@@ -54,6 +54,7 @@ struct ProfilerApp: App {
                     }.padding()
                         .frame(minWidth: 256, minHeight: 150)
                         .presentationDetents([.fraction(0.5)])
+                        .interactiveDismissDisabled()
                 }
                 .document(isPresented: $globals.exportManager.showExportDialog, type: globals.exportManager.fileType, export: globals.exportManager.url) { url in
                     // Run export system
@@ -76,6 +77,9 @@ struct ProfilerApp: App {
                 Divider()
                 Button("Import from JSON...") {
                     globals.exportManager.importJson();
+                }
+                Button("Connect to server") {
+                    
                 }
             }
         }

@@ -57,7 +57,7 @@ struct ContentView: View {
                         List(selection: $projectSelection) {
                             ForEach(items) {
                                 ProjectLink(project: $0, onDelete: {
-                                    deleteItem()
+                                    deleteItem(project: $0)
                                 })
                             }
                             #if os(iOS)
@@ -65,8 +65,19 @@ struct ContentView: View {
                             #endif
                         }
                         .toolbar {
-                            Button(action: {}) {
-                                ToolButton(icon: "plus", text: "Connect to debug server", value: 0)
+                            Menu {
+                                Button {
+                                    exportManager.importJson();
+                                } label: {
+                                    Label("Import from JSON...", systemImage: "j.square")
+                                }
+                                Button {
+                                    
+                                } label: {
+                                    Label("Connect to server", systemImage: "app.connected.to.app.below.fill")
+                                }
+                            } label: {
+                                Label("New project", systemImage: "plus")
                             }
                         }
                         if adaptor.isConnected {
@@ -155,6 +166,11 @@ struct ContentView: View {
             projectSelection = project
             deleteItem()
         }
+    }
+
+    private func deleteItem(project: Project) {
+        projectSelection = project
+        deleteItem()
     }
 
     private func deleteItem() {
