@@ -23,7 +23,7 @@
 
 import Foundation
 
-class BP3DProfExtension: NSExtensionContext {
+/*class BP3DProfExtension: NSExtensionContext {
     override class func _allowedItemPayloadClasses() -> Set<AnyHashable> {
         return [NSURL.self, UIImage.self, NSString.self]
     }
@@ -31,4 +31,4 @@ class BP3DProfExtension: NSExtensionContext {
 
 let item = NSExtensionItem()
 item.attachments = [/* attachments */]
-item.setContext(MyExtensionContext())
+item.setContext(MyExtensionContext())*/

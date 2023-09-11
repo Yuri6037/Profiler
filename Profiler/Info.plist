@@ -40,7 +40,21 @@
     <string>Connects to debug servers on other devices in the same local network.</string>
 	<key>UTExportedTypeDeclarations</key>
 	<array>
-		<dict/>
+		<dict>
+			<key>UTTypeDescription</key>
+			<string>BP3D Profiler Project</string>
+			<key>UTTypeIcons</key>
+			<dict/>
+			<key>UTTypeIdentifier</key>
+			<string>com.github.bp3d.profiler.project</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>bp3dprof</string>
+				</array>
+			</dict>
+		</dict>
 	</array>
 </dict>
 </plist>
