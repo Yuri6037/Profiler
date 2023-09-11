@@ -38,9 +38,9 @@ struct ProjectLink: View {
                 Text("\(project.timestamp!, formatter: dateFormatter)")
             }
         }
-#if os(iOS)
         .contextMenu {
             Button {
+                exportManager.shareProject(project)
             } label: {
                 Label("Share", systemImage: "square.and.arrow.up")
             }
@@ -61,7 +61,6 @@ struct ProjectLink: View {
                 Label("Delete", systemImage: "trash")
             }
         }
-#endif
     }
 }
 

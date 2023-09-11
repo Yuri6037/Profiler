@@ -37,6 +37,7 @@ class ExportManager: ObservableObject {
     @Published var dialogText = "";
     @Published var url: URL? = nil;
     @Published var fileType: UTType = .json;
+    @Published var showShareDialog = false;
 
     init(container: NSPersistentContainer, errorHandler: ErrorHandler, progressList: ProgressList) {
         self.container = container;
@@ -92,13 +93,36 @@ class ExportManager: ObservableObject {
 #endif
     }
 
+    func shareProject(_ project: Project? = nil) {
+        if let proj = projectSelection ?? project {
+            let name = proj.wName + " " + proj.wTimestamp.toISO8601() + ".bp3dprof"
+            dialogText = "Sharing project..."
+            isRunning = true;
+            StoreUtils(container: container).exportJson(proj, progressList: progressList, onFinish: {
+                self.handleOnFinish($0, error: $1) { data in
+                    let path = try FileUtils.getDataDirectory().appendingPathComponent(name)
+                    try data.write(to: path)
+                    DispatchQueue.main.async {
+                        self.url = path;
+                        DispatchQueue.main.async {
+                            self.showShareDialog = true;
+                        }
+                    }
+                }
+            })
+        } else {
+            errorHandler.pushError(AppError(description: "Please select a project to share"))
+        }
+    }
+
     func exportJson(_ project: Project? = nil) {
         if let proj = projectSelection ?? project {
+            let name = proj.wName + "_" + (proj.wVersion ?? "version") + ".json"
             dialogText = "Exporting to JSON..."
             isRunning = true;
             StoreUtils(container: container).exportJson(proj, progressList: progressList, onFinish: {
                 self.handleOnFinish($0, error: $1) { data in
-                    let path = try FileUtils.getDataDirectory().appendingPathComponent("export.json")
+                    let path = try FileUtils.getDataDirectory().appendingPathComponent(name)
                     try data.write(to: path)
                     DispatchQueue.main.async {
                         self.showDocumentDialog(type: .json, export: path)
