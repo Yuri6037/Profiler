@@ -32,12 +32,6 @@
 			</array>
 		</dict>
 	</array>
-	<key>UIFileSharingEnabled</key>
-	<true/>
-    <key>LSSupportsOpeningDocumentsInPlace</key>
-    <true/>
-    <key>NSLocalNetworkUsageDescription</key>
-    <string>Connects to debug servers on other devices in the same local network.</string>
 	<key>UTExportedTypeDeclarations</key>
 	<array>
 		<dict>
@@ -56,5 +50,11 @@
 			</dict>
 		</dict>
 	</array>
+	<key>UIFileSharingEnabled</key>
+	<true/>
+	<key>LSSupportsOpeningDocumentsInPlace</key>
+	<true/>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>Connects to debug servers on other devices in the same local network.</string>
 </dict>
 </plist>
