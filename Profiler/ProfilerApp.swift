@@ -64,21 +64,16 @@ struct ProfilerApp: App {
                     // Run import system
                     globals.exportManager.importJson(url: url);
                 }
-                .share(isPresented: $globals.exportManager.showShareDialog, url: globals.exportManager.url ?? URL(string: "file://useless")!)
         }
         .commands {
             CommandGroup(replacing: .importExport) {
                 Divider()
-                Button("Share") {
-                    globals.exportManager.shareProject();
-                }
-                Divider()
-                Button("Export to JSON...") {
+                Button("Export...") {
                     globals.exportManager.exportJson();
                 }
                 Button("Export to CSV...") {}
                 Divider()
-                Button("Import from JSON...") {
+                Button("Import...") {
                     globals.exportManager.importJson();
                 }
                 Button("Connect to server") {

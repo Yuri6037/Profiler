@@ -69,7 +69,7 @@ struct ContentView: View {
                                 Button {
                                     exportManager.importJson();
                                 } label: {
-                                    Label("Import from JSON...", systemImage: "j.square")
+                                    Label("Import...", systemImage: "j.square")
                                 }
                                 Button {
                                     

@@ -40,15 +40,9 @@ struct ProjectLink: View {
         }
         .contextMenu {
             Button {
-                exportManager.shareProject(project)
-            } label: {
-                Label("Share", systemImage: "square.and.arrow.up")
-            }
-            Divider()
-            Button {
                 exportManager.exportJson(project)
             } label: {
-                Label("Export to JSON...", systemImage: "j.square")
+                Label("Export...", systemImage: "j.square")
             }
             Button {
             } label: {

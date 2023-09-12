@@ -41,10 +41,8 @@
 		DA2A7EB92A8534AA009B454D /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2A7EB82A8534AA009B454D /* Project.swift */; };
 		DA2A7EBB2A85357A009B454D /* SpanNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2A7EBA2A85357A009B454D /* SpanNode.swift */; };
 		DA2A7EBD2A85393D009B454D /* Dataset.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2A7EBC2A85393D009B454D /* Dataset.swift */; };
-		DA2A9B5B2A9B2C330077DCC5 /* ShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2A9B5A2A9B2C330077DCC5 /* ShareView.swift */; };
 		DA2A9B5D2A9B8DBE0077DCC5 /* SpanTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2A9B5C2A9B8DBE0077DCC5 /* SpanTree.swift */; };
 		DA4359752A968A5900D51BCF /* NetworkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4359742A968A5900D51BCF /* NetworkHandler.swift */; };
-		DA4ED3722AAFB18C002EE579 /* SupportExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4ED3712AAFB18C002EE579 /* SupportExtensions.swift */; };
 		DA5A3AA32A87FF65000375A2 /* SwiftString in Frameworks */ = {isa = PBXBuildFile; productRef = DA5A3AA22A87FF65000375A2 /* SwiftString */; };
 		DA5A3AA62A88CF9B000375A2 /* NetworkAdaptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5A3AA52A88CF9B000375A2 /* NetworkAdaptor.swift */; };
 		DA5A3AA82A8912A1000375A2 /* ClientConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5A3AA72A8912A1000375A2 /* ClientConfig.swift */; };
@@ -85,6 +83,7 @@
 		DAA45DB62A84EC64009ABBCB /* MessageClientConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA45DB52A84EC64009ABBCB /* MessageClientConfig.swift */; };
 		DAA45DB82A84ECF7009ABBCB /* MessageClientRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA45DB72A84ECF7009ABBCB /* MessageClientRecord.swift */; };
 		DAA45DBA2A84EDD8009ABBCB /* ComponentU16.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA45DB92A84EDD8009ABBCB /* ComponentU16.swift */; };
+		DAA7E7672AB0C3B500AF8F97 /* ExportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA7E7662AB0C3B500AF8F97 /* ExportManager.swift */; };
 		DAADF8522A7FDE3B00E4247C /* ComponentBool.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAADF8512A7FDE3B00E4247C /* ComponentBool.swift */; };
 		DAC183412A8ECA4D002B496F /* IOSShim.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC183402A8ECA4D002B496F /* IOSShim.swift */; };
 		DAC183432A8F9C13002B496F /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC183422A8F9C13002B496F /* SettingsView.swift */; };
@@ -210,10 +209,8 @@
 		DA2A7EB82A8534AA009B454D /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
 		DA2A7EBA2A85357A009B454D /* SpanNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpanNode.swift; sourceTree = "<group>"; };
 		DA2A7EBC2A85393D009B454D /* Dataset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dataset.swift; sourceTree = "<group>"; };
-		DA2A9B5A2A9B2C330077DCC5 /* ShareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareView.swift; sourceTree = "<group>"; };
 		DA2A9B5C2A9B8DBE0077DCC5 /* SpanTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpanTree.swift; sourceTree = "<group>"; };
 		DA4359742A968A5900D51BCF /* NetworkHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkHandler.swift; sourceTree = "<group>"; };
-		DA4ED3712AAFB18C002EE579 /* SupportExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportExtensions.swift; sourceTree = "<group>"; };
 		DA5A3AA42A881AE5000375A2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		DA5A3AA52A88CF9B000375A2 /* NetworkAdaptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkAdaptor.swift; sourceTree = "<group>"; };
 		DA5A3AA72A8912A1000375A2 /* ClientConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientConfig.swift; sourceTree = "<group>"; };
@@ -255,6 +252,7 @@
 		DAA45DB52A84EC64009ABBCB /* MessageClientConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageClientConfig.swift; sourceTree = "<group>"; };
 		DAA45DB72A84ECF7009ABBCB /* MessageClientRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageClientRecord.swift; sourceTree = "<group>"; };
 		DAA45DB92A84EDD8009ABBCB /* ComponentU16.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentU16.swift; sourceTree = "<group>"; };
+		DAA7E7662AB0C3B500AF8F97 /* ExportManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportManager.swift; sourceTree = "<group>"; };
 		DAADF8512A7FDE3B00E4247C /* ComponentBool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentBool.swift; sourceTree = "<group>"; };
 		DAC183402A8ECA4D002B496F /* IOSShim.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOSShim.swift; sourceTree = "<group>"; };
 		DAC183422A8F9C13002B496F /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -361,7 +359,6 @@
 			isa = PBXGroup;
 			children = (
 				DA5A3AA42A881AE5000375A2 /* Info.plist */,
-				DA4ED3702AAFB170002EE579 /* Sharing */,
 				DA5A3A9C2A875606000375A2 /* Util */,
 				DA1AB3C02A862A90008DBB2D /* View */,
 				DA4359732A968A2A00D51BCF /* Network */,
@@ -441,7 +438,6 @@
 				DAFD445B2A8D1B4C008F99D2 /* ProjectOverview.swift */,
 				DAC183422A8F9C13002B496F /* SettingsView.swift */,
 				DA6685332A90FE7B000913A1 /* DatasetDashboard.swift */,
-				DA2A9B5A2A9B2C330077DCC5 /* ShareView.swift */,
 				DA8CC1FE2A9FE893009C668B /* ConnectionStatus.swift */,
 				DA8CC20D2AACB66F009C668B /* DocumentPicker.swift */,
 			);
@@ -467,14 +463,6 @@
 				DA2A9B5C2A9B8DBE0077DCC5 /* SpanTree.swift */,
 			);
 			path = Network;
-			sourceTree = "<group>";
-		};
-		DA4ED3702AAFB170002EE579 /* Sharing */ = {
-			isa = PBXGroup;
-			children = (
-				DA4ED3712AAFB18C002EE579 /* SupportExtensions.swift */,
-			);
-			path = Sharing;
 			sourceTree = "<group>";
 		};
 		DA5A3A9C2A875606000375A2 /* Util */ = {
@@ -546,6 +534,7 @@
 				DA17E7F12A12B84300554B8A /* Persistence.swift */,
 				DA8CC2112AAD1953009C668B /* Utils.swift */,
 				DA8CC2142AAD19D6009C668B /* UIGlue.swift */,
+				DAA7E7662AB0C3B500AF8F97 /* ExportManager.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -856,6 +845,7 @@
 				DA17E7F02A12B84300554B8A /* ProfilerApp.swift in Sources */,
 				DA1AB3DA2A862A90008DBB2D /* ProjectLink.swift in Sources */,
 				DA8CC20C2AA91451009C668B /* Files.swift in Sources */,
+				DAA7E7672AB0C3B500AF8F97 /* ExportManager.swift in Sources */,
 				DA5A3AAC2A89165F000375A2 /* IntPicker.swift in Sources */,
 				DA8CC2012AA3DDBE009C668B /* Progress.swift in Sources */,
 				DA1AB3D42A862A90008DBB2D /* SpanRunTable.swift in Sources */,
@@ -867,8 +857,6 @@
 				DA1AB3D12A862A90008DBB2D /* NodeFilters.swift in Sources */,
 				DA1AB3D22A862A90008DBB2D /* ProjectDetails.swift in Sources */,
 				DA8CC2122AAD1953009C668B /* Utils.swift in Sources */,
-				DA2A9B5B2A9B2C330077DCC5 /* ShareView.swift in Sources */,
-				DA4ED3722AAFB18C002EE579 /* SupportExtensions.swift in Sources */,
 				DA8CC20E2AACB66F009C668B /* DocumentPicker.swift in Sources */,
 				DA2A9B5D2A9B8DBE0077DCC5 /* SpanTree.swift in Sources */,
 				DA1AB3DF2A862D6B008DBB2D /* Hacks.swift in Sources */,
