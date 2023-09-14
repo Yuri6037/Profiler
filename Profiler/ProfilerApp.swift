@@ -41,7 +41,7 @@ struct ProfilerApp: App {
                 .environment(\.managedObjectContext, globals.store.container.viewContext)
                 .handlesExternalEvents(preferring: ["*"], allowing: ["*"])
                 .onOpenURL { url in
-                    globals.adaptor.connect(url: url)
+                    globals.handleUrl(url)
                 }
                 .sheet(isPresented: $globals.exportManager.isRunning) {
                     VStack {

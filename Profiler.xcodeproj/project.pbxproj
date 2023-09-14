@@ -83,6 +83,7 @@
 		DAA45DB62A84EC64009ABBCB /* MessageClientConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA45DB52A84EC64009ABBCB /* MessageClientConfig.swift */; };
 		DAA45DB82A84ECF7009ABBCB /* MessageClientRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA45DB72A84ECF7009ABBCB /* MessageClientRecord.swift */; };
 		DAA45DBA2A84EDD8009ABBCB /* ComponentU16.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA45DB92A84EDD8009ABBCB /* ComponentU16.swift */; };
+		DAA61B542AB22EA500ACC3B5 /* ProjectFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA61B532AB22EA500ACC3B5 /* ProjectFile.swift */; };
 		DAA7E7672AB0C3B500AF8F97 /* ExportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA7E7662AB0C3B500AF8F97 /* ExportManager.swift */; };
 		DAADF8522A7FDE3B00E4247C /* ComponentBool.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAADF8512A7FDE3B00E4247C /* ComponentBool.swift */; };
 		DAC183412A8ECA4D002B496F /* IOSShim.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC183402A8ECA4D002B496F /* IOSShim.swift */; };
@@ -252,6 +253,7 @@
 		DAA45DB52A84EC64009ABBCB /* MessageClientConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageClientConfig.swift; sourceTree = "<group>"; };
 		DAA45DB72A84ECF7009ABBCB /* MessageClientRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageClientRecord.swift; sourceTree = "<group>"; };
 		DAA45DB92A84EDD8009ABBCB /* ComponentU16.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentU16.swift; sourceTree = "<group>"; };
+		DAA61B532AB22EA500ACC3B5 /* ProjectFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectFile.swift; sourceTree = "<group>"; };
 		DAA7E7662AB0C3B500AF8F97 /* ExportManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportManager.swift; sourceTree = "<group>"; };
 		DAADF8512A7FDE3B00E4247C /* ComponentBool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentBool.swift; sourceTree = "<group>"; };
 		DAC183402A8ECA4D002B496F /* IOSShim.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOSShim.swift; sourceTree = "<group>"; };
@@ -535,6 +537,7 @@
 				DA8CC2112AAD1953009C668B /* Utils.swift */,
 				DA8CC2142AAD19D6009C668B /* UIGlue.swift */,
 				DAA7E7662AB0C3B500AF8F97 /* ExportManager.swift */,
+				DAA61B532AB22EA500ACC3B5 /* ProjectFile.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -853,6 +856,7 @@
 				DA1AB3D82A862A90008DBB2D /* ToolButton.swift in Sources */,
 				DA2A7EBD2A85393D009B454D /* Dataset.swift in Sources */,
 				DA1AB3D32A862A90008DBB2D /* SpanNodeDetails.swift in Sources */,
+				DAA61B542AB22EA500ACC3B5 /* ProjectFile.swift in Sources */,
 				DA1AB3D02A862A90008DBB2D /* LineChart.swift in Sources */,
 				DA1AB3D12A862A90008DBB2D /* NodeFilters.swift in Sources */,
 				DA1AB3D22A862A90008DBB2D /* ProjectDetails.swift in Sources */,

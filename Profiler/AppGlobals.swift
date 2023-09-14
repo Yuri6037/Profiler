@@ -49,7 +49,15 @@ class AppGlobals: ObservableObject {
     lazy var exportManager: ExportManager = .init(container: store.container, errorHandler: errorHandler, progressList: progressList)
 
     var anyCancellable: AnyCancellable? = nil
-    
+
+    func handleUrl(_ url: URL) {
+        if url.scheme == "bp3d-profiler" {
+            adaptor.connect(url: url)
+        } else {
+            exportManager.importJson(url: url);
+        }
+    }
+
     init() {
         anyCancellable = exportManager.objectWillChange.sink { [weak self] (_) in
             self?.objectWillChange.send()
