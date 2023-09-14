@@ -80,6 +80,15 @@ struct StoreUtils {
         return dic
     }
 
+    private func findProject(_ params: [String: Any], _ ctx: NSManagedObjectContext) throws -> Bool {
+        let date: Date? = params["timestamp"] as? String != nil ? Date(fromISO8601: params["timestamp"] as! String) : nil;
+        let req = Project.fetchRequest();
+        req.fetchLimit = 1;
+        req.predicate = NSPredicate(format: "appName=%@ AND name=%@ AND commandLine=%@ AND timestamp=%@ AND version=%@", params["appName"] as? String ?? NSNull(), params["name"] as? String ?? NSNull(), params["commandLine"] as? String ?? NSNull(), date as? NSDate ?? NSNull(), params["version"] as? String ?? NSNull());
+        let obj = try ctx.fetch(req);
+        return !obj.isEmpty;
+    }
+
     private func createObject(_ params: [String: Any], _ ctx: NSManagedObjectContext, _ progressList: ProgressList) -> NSManagedObject? {
         guard let typename = params["__typename"] as? String else { return nil }
         guard let entity = NSEntityDescription.entity(forEntityName: typename, in: ctx) else { return nil }
@@ -109,14 +118,20 @@ struct StoreUtils {
             if obj.entity.relationshipsByName[key]?.isOrdered ?? false {
                 let set = NSMutableOrderedSet()
                 for v in arr {
-                    set.add(createObject(v, ctx, progressList) as Any)
+                    let obj = createObject(v, ctx, progressList);
+                    if let obj {
+                        set.add(obj)
+                    }
                     progress?.advance(count: 1)
                 }
                 obj.setValue(set, forKey: key)
             } else {
                 let set = NSMutableSet()
                 for v in arr {
-                    set.add(createObject(v, ctx, progressList) as Any)
+                    let obj = createObject(v, ctx, progressList);
+                    if let obj {
+                        set.add(obj)
+                    }
                     progress?.advance(count: 1)
                 }
                 obj.setValue(set, forKey: key)
@@ -143,16 +158,20 @@ struct StoreUtils {
         }
     }
 
-    func importJson(_ json: Data, progressList: ProgressList, onFinish: @escaping (NSError?) -> Void) {
+    func importJson(_ json: Data, progressList: ProgressList, onFinish: @escaping (Bool, NSError?) -> Void) {
         container.performBackgroundTask { ctx in
             do {
                 if let obj = try JSONSerialization.jsonObject(with: json) as? [String: Any] {
+                    if try findProject(obj, ctx) {
+                        onFinish(false, nil);
+                        return;
+                    }
                     _ = createObject(obj, ctx, progressList)
                     try ctx.save()
                 }
-                onFinish(nil)
+                onFinish(true, nil)
             } catch {
-                onFinish(error as NSError)
+                onFinish(false, error as NSError)
             }
         }
     }

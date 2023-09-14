@@ -116,9 +116,14 @@ class ExportManager: ObservableObject {
             isRunning = true;
             do {
                 StoreUtils(container: container).importJson(try Data(contentsOf: url), progressList: progressList, onFinish: {
-                    self.handleOnFinish((), error: $0) {
+                    self.handleOnFinish($0, error: $1) { flag in
                         DispatchQueue.main.async {
                             self.url = nil;
+                        }
+                        if !flag {
+                            DispatchQueue.main.async {
+                                self.errorHandler.pushError(AppError(description: "The project already already exists!"))
+                            }
                         }
                     }
                 })
