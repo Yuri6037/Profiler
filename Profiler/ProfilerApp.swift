@@ -23,9 +23,8 @@
 
 import SwiftUI
 
-// TODO: Implement export and sync tool
+// TODO: Implement export to CSV
 // TODO: Fix tables under compact size class
-// TODO: Update filename in NSSavePanel
 
 @main
 struct ProfilerApp: App {

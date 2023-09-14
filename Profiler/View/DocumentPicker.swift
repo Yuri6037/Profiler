@@ -97,6 +97,9 @@ struct DocumentPicker: NSViewRepresentable {
             if export != nil {
                 let panel = NSSavePanel()
                 panel.allowedContentTypes = [type]
+                if let filename = export?.deletingPathExtension().lastPathComponent {
+                    panel.nameFieldStringValue = filename
+                }
                 DispatchQueue.main.async {
                     panel.beginSheetModal(for: nsView.window!) { res in
                         if res == .OK {

@@ -93,7 +93,7 @@ class ExportManager: ObservableObject {
 
     func exportJson(_ project: Project? = nil) {
         if let proj = projectSelection ?? project {
-            let name = proj.wName + "_" + proj.wTimestamp.toISO8601() + ".bp3dprof"
+            let name = proj.wName + "_" + proj.wTimestamp.toISO8601().replacingOccurrences(of: "/", with: "_").replacingOccurrences(of: ":", with: "_").replacingOccurrences(of: "-", with: "_") + ".bp3dprof"
             dialogText = "Exporting project " + proj.wAppName + " - " + proj.wName + "..."
             isRunning = true;
             StoreUtils(container: container).exportJson(proj, progressList: progressList, onFinish: {
