@@ -206,7 +206,8 @@ class NetworkHandler {
                 medianTime = timeValues[Int(medianHalfIndex)]
             }
             dataset.medianTime = Int64(bitPattern: medianTime)
-            node.averageTime = Int64(bitPattern: (UInt64(bitPattern: node.averageTime) + averageTime) / 2)
+            let averages = node.wDatasets.map { UInt64(bitPattern: $0.averageTime) }.reduce(0, +);
+            node.averageTime = Int64(bitPattern: averages / UInt64(node.wDatasets.count))
             if minTime < UInt64(bitPattern: node.minTime) {
                 node.minTime = Int64(bitPattern: minTime)
             }
