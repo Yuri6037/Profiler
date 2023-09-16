@@ -41,7 +41,7 @@ struct StoreUtils {
         for key in obj.entity.attributeKeys {
             let val = obj.value(forKey: key)
             if obj.entity.attributesByName[key]?.attributeType == .dateAttributeType {
-                dic[key] = (val as! Date).toISO8601()
+                dic[key] = (val as! Date).toTimestamp()
             } else {
                 dic[key] = val
             }
@@ -81,7 +81,7 @@ struct StoreUtils {
     }
 
     private func findProject(_ params: [String: Any], _ ctx: NSManagedObjectContext) throws -> Bool {
-        let date: Date? = params["timestamp"] as? String != nil ? Date(fromISO8601: params["timestamp"] as! String) : nil;
+        let date: Date? = params["timestamp"] as? UInt64 != nil ? Date(fromTimestamp: params["timestamp"] as! UInt64) : nil;
         let req = Project.fetchRequest();
         req.fetchLimit = 1;
         req.predicate = NSPredicate(format: "appName=%@ AND name=%@ AND commandLine=%@ AND timestamp=%@ AND version=%@", params["appName"] as? String ?? NSNull(), params["name"] as? String ?? NSNull(), params["commandLine"] as? String ?? NSNull(), date as? NSDate ?? NSNull(), params["version"] as? String ?? NSNull());
@@ -95,8 +95,8 @@ struct StoreUtils {
         let obj = NSManagedObject(entity: entity, insertInto: ctx)
         for key in obj.entity.attributeKeys {
             if obj.entity.attributesByName[key]?.attributeType == .dateAttributeType {
-                guard let str = params[key] as? String else { continue }
-                guard let date = Date(fromISO8601: str) else { continue }
+                guard let val = params[key] as? UInt64 else { continue }
+                let date = Date(fromTimestamp: val)
                 obj.setValue(date, forKey: key)
             } else {
                 obj.setValue(params[key], forKey: key)

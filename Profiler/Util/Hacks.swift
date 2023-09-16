@@ -42,6 +42,14 @@ extension Date {
         guard let date = dateFormatter.date(from: fromISO8601) else { return nil }
         self = date
     }
+
+    func toTimestamp() -> UInt64 {
+        return UInt64(self.timeIntervalSince1970 * 1000000)
+    }
+
+    init(fromTimestamp: UInt64) {
+        self = Self(timeIntervalSince1970: Double(fromTimestamp) / 1000000.0)
+    }
 }
 
 #if os(iOS)
