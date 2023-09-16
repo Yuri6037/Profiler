@@ -24,13 +24,31 @@
 import SwiftUI
 
 struct SpanRunTable: View {
+    @Environment(\.horizontalSizeClass) var sizeClass;
     var runs: [DisplaySpanRun]
 
     var body: some View {
-        Table(runs) {
-            TableColumn("Time", value: \.time)
-            TableColumn("Message", value: \.message)
-            TableColumn("Variables", value: \.variables)
+        if sizeClass == .regular {
+            Table(runs) {
+                TableColumn("Time", value: \.time)
+                TableColumn("Message", value: \.message)
+                TableColumn("Variables", value: \.variables)
+            }
+        } else {
+            List(runs) { item in
+                GroupBox {
+                    HStack {
+                        Text("Time").bold()
+                        Spacer()
+                        Text(item.time)
+                    }
+                    HStack {
+                        Text("Variables").bold()
+                        Spacer()
+                        Text(item.variables)
+                    }
+                }
+            }.listStyle(.plain)
         }
     }
 }
