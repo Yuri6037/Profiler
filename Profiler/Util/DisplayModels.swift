@@ -47,15 +47,29 @@ struct DisplaySpanEvent: Identifiable {
     let timestamp: String
     let target: String
     let module: String
+    let color: Color;
+    let systemImage: String;
 
     init(fromModel model: SpanEvent) {
         timestamp = model.wTimestamp.formatted()
         variables = model.wVariables.map { item in item.data ?? "" }.joined(separator: ", ")
         message = model.wMessage
         level = model.wLevel.name
+        color = model.wLevel.color
         id = UUID()
         target = model.wTarget
         module = model.wModule
+        switch (model.wLevel) {
+        case .warning:
+            systemImage = "exclamationmark.triangle.fill"
+            break;
+        case .error:
+            systemImage = "xmark.circle.fill"
+            break;
+        default:
+            systemImage = "info.circle.fill"
+            break;
+        }
     }
 }
 

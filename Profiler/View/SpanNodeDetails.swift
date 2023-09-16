@@ -169,11 +169,14 @@ struct SpanNodeDetails: View {
                         } else {
                             ProgressView()
                         }
-                    }.padding()
+                    }
                     Button(action: { showMoreSheet = false }) {
                         Text("OK")
                     }
-                }.padding().frame(minWidth: 500, minHeight: 200)
+                }.padding()
+                #if os(macOS)
+                    .frame(minWidth: 500, minHeight: 200)
+                #endif
             }
         }
     }

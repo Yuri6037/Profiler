@@ -24,20 +24,58 @@
 import SwiftUI
 
 struct SpanEventTable: View {
+    @Environment(\.horizontalSizeClass) var sizeClass;
     var events: [DisplaySpanEvent]
 
     var body: some View {
-        Table(events) {
-            TableColumn("Timestamp", value: \.timestamp)
-                .width(130)
-            TableColumn("Level", value: \.level)
-                .width(50)
-            TableColumn("Target", value: \.target)
-                .width(100)
-            TableColumn("Module", value: \.module)
-                .width(100)
-            TableColumn("Message", value: \.message)
-            TableColumn("Variables", value: \.variables)
+        if sizeClass == .regular {
+            Table(events) {
+                TableColumn("Timestamp", value: \.timestamp)
+                    .width(130)
+                TableColumn("Level") { v in
+                    HStack {
+                        Image(systemName: v.systemImage)
+                        Text(v.level)
+                    }.foregroundColor(v.color)
+                }
+                    .width(70)
+                TableColumn("Target", value: \.target)
+                    .width(100)
+                TableColumn("Module", value: \.module)
+                    .width(100)
+                TableColumn("Message", value: \.message)
+                TableColumn("Variables", value: \.variables)
+            }
+        } else {
+            List(events) { item in
+                GroupBox(label: Label(item.target, systemImage: item.systemImage).foregroundColor(item.color)) {
+                    HStack {
+                        Text("Level").bold()
+                        Spacer()
+                        Text(item.level).foregroundColor(item.color)
+                    }
+                    HStack {
+                        Text("Timestamp").bold()
+                        Spacer()
+                        Text(item.timestamp)
+                    }
+                    HStack {
+                        Text("Target").bold()
+                        Spacer()
+                        Text(item.target)
+                    }
+                    HStack {
+                        Text("Message").bold()
+                        Spacer()
+                        Text(item.message)
+                    }
+                    HStack {
+                        Text("Variables").bold()
+                        Spacer()
+                        Text(item.variables)
+                    }
+                }
+            }.listStyle(.plain)
         }
     }
 }
