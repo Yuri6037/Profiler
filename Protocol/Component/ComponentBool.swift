@@ -24,7 +24,12 @@
 import Foundation
 import NIO
 
-extension Bool: Writable {
+extension Bool: Component, Writable {
+    public static func read(buffer: inout ByteBuffer) -> Bool {
+        let val = UInt8.read(buffer: &buffer);
+        return val > 0 ? true : false
+    }
+
     public func write(buffer: inout ByteBuffer) {
         if self {
             buffer.writeInteger(UInt8(1), endianness: .little)

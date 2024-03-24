@@ -24,50 +24,22 @@
 import Foundation
 import NIO
 
-public struct MetadataHeader: Component {
-    public let level: Level
-    public let line: UInt32?
-    public let name: Vchar
-    public let target: Vchar
-    public let modulePath: Vchar?
-    public let file: Vchar?
-
-    public static var size: Int = Level.size + Option<UInt32>.size + Vchar.size * 2 + Option<Vchar>.size * 2
-
-    public var payloadSize: Int { Int(name.length) + Int(target.length) + Int(modulePath?.length ?? 0) + Int(file?.length ?? 0) }
-
-    public static func read(buffer: inout ByteBuffer) -> MetadataHeader {
-        MetadataHeader(
-            level: .read(buffer: &buffer),
-            line: Option<UInt32>.read(buffer: &buffer).value,
-            name: .read(buffer: &buffer),
-            target: .read(buffer: &buffer),
-            modulePath: Option<Vchar>.read(buffer: &buffer).value,
-            file: Option<Vchar>.read(buffer: &buffer).value
-        )
-    }
-}
-
-public struct Metadata {
+public struct Metadata: Component {
     public let level: Level
     public let line: UInt32?
     public let name: String
     public let target: String
     public let modulePath: String?
     public let file: String?
-}
 
-extension MetadataHeader: PayloadComponent {
-    public typealias PayloadOut = Metadata
-
-    public func readPayload(buffer: inout ByteBuffer) throws -> Metadata {
-        try Metadata(
-            level: level,
-            line: line,
-            name: name.readPayload(buffer: &buffer),
-            target: target.readPayload(buffer: &buffer),
-            modulePath: modulePath?.readPayload(buffer: &buffer),
-            file: file?.readPayload(buffer: &buffer)
+    public static func read(buffer: inout ByteBuffer) throws -> Metadata {
+        Metadata(
+            level: .read(buffer: &buffer),
+            line: try Option<UInt32>.read(buffer: &buffer).value,
+            name: try .read(buffer: &buffer),
+            target: try .read(buffer: &buffer),
+            modulePath: try Option<String>.read(buffer: &buffer).value,
+            file: try Option<String>.read(buffer: &buffer).value
         )
     }
 }

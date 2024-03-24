@@ -24,36 +24,20 @@
 import Foundation
 import NIO
 
-public struct MessageSpanParent: MessageHeader {
+public struct MessageSpanParent: Message {
     public let id: UInt32
     public let parentNode: UInt32
-
-    public var payloadSize: Int { 0 }
-
-    public static var size: Int = UInt32.size * 2
 
     public static func read(buffer: inout ByteBuffer) -> MessageSpanParent {
         MessageSpanParent(id: .read(buffer: &buffer), parentNode: .read(buffer: &buffer))
     }
-
-    public func decode(buffer _: inout ByteBuffer) throws -> Message {
-        .spanParent(self)
-    }
 }
 
-public struct MessageSpanFollows: MessageHeader {
+public struct MessageSpanFollows: Message {
     public let id: UInt32
     public let follows: UInt32
 
-    public var payloadSize: Int { 0 }
-
-    public static var size: Int = UInt32.size * 2
-
     public static func read(buffer: inout ByteBuffer) -> MessageSpanFollows {
         MessageSpanFollows(id: .read(buffer: &buffer), follows: .read(buffer: &buffer))
-    }
-
-    public func decode(buffer _: inout ByteBuffer) throws -> Message {
-        .spanFollows(self)
     }
 }

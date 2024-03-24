@@ -24,30 +24,14 @@
 import Foundation
 import NIO
 
-public struct MessageHeaderSpanAlloc: MessageHeader {
-    public let id: UInt32
-    public let metadata: MetadataHeader
-
-    public static var size: Int = UInt32.size + MetadataHeader.size
-
-    public static func read(buffer: inout ByteBuffer) -> MessageHeaderSpanAlloc {
-        MessageHeaderSpanAlloc(
-            id: .read(buffer: &buffer),
-            metadata: .read(buffer: &buffer)
-        )
-    }
-
-    public var payloadSize: Int { metadata.payloadSize }
-
-    public func decode(buffer: inout ByteBuffer) throws -> Message {
-        try .spanAlloc(MessageSpanAlloc(
-            id: id,
-            metadata: metadata.readPayload(buffer: &buffer)
-        ))
-    }
-}
-
-public struct MessageSpanAlloc {
+public struct MessageSpanAlloc: Message {
     public let id: UInt32
     public let metadata: Metadata
+
+    public static func read(buffer: inout ByteBuffer) throws -> MessageSpanAlloc {
+        MessageSpanAlloc(
+            id: .read(buffer: &buffer),
+            metadata: try .read(buffer: &buffer)
+        )
+    }
 }

@@ -44,8 +44,6 @@ public struct Duration {
 }
 
 extension Duration: Component {
-    public static var size: Int = UInt32.size * 2
-
     public static func read(buffer: inout ByteBuffer) -> Duration {
         let seconds = UInt32.read(buffer: &buffer)
         let nanos = UInt32.read(buffer: &buffer)

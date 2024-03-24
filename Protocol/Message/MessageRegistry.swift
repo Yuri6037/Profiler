@@ -24,13 +24,19 @@
 import Foundation
 import NIO
 
-public struct Cpu: Component {
-    public let name: String
-    public let coreCount: UInt32
+enum MessageRegistry {
+    private static var map: [UInt8: Message.Type] = [
+        0: MessageProject.self,
+        1: MessageSpanAlloc.self,
+        2: MessageSpanParent.self,
+        3: MessageSpanFollows.self,
+        4: MessageSpanEvent.self,
+        5: MessageSpanUpdate.self,
+        6: MessageSpanDataset.self,
+        7: MessageServerConfig.self,
+    ]
 
-    public static func read(buffer: inout ByteBuffer) throws -> Cpu {
-        let name = try String.read(buffer: &buffer)
-        let coreCount = UInt32.read(buffer: &buffer)
-        return Cpu(name: name, coreCount: coreCount)
+    public static func read(type: UInt8, buffer: inout ByteBuffer) throws -> Message? {
+        try map[type]?.read(buffer: &buffer)
     }
 }

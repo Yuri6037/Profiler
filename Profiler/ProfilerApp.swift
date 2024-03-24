@@ -24,7 +24,6 @@
 import SwiftUI
 
 // TODO: Implement export to CSV
-// TODO: Fix tables under compact size class
 
 @main
 struct ProfilerApp: App {

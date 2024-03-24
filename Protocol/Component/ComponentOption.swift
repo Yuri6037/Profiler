@@ -26,12 +26,11 @@ import NIO
 
 public struct Option<T: Component>: Component {
     public let value: T?
-    public static var size: Int { 1 + T.size }
 
-    public static func read(buffer: inout ByteBuffer) -> Option<T> {
+    public static func read(buffer: inout ByteBuffer) throws -> Option<T> {
         let flag = buffer.readInteger(endianness: .little, as: UInt8.self)
         if flag == 1 {
-            return Option(value: T.read(buffer: &buffer))
+            return Option(value: try T.read(buffer: &buffer))
         }
         return Option(value: nil)
     }

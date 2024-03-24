@@ -24,49 +24,22 @@
 import Foundation
 import NIO
 
-public struct MessageHeaderProject: MessageHeader {
-    public let appName: Vchar
-    public let name: Vchar
-    public let version: Vchar
-    public let commandLine: Vchar
-    public let target: TargetHeader
-    public let cpu: CpuHeader?
-
-    public static var size: Int = Size(bytes: Vchar.size * 4).add(TargetHeader.self).add(Option<CpuHeader>.self).bytes
-
-    public static func read(buffer: inout ByteBuffer) -> MessageHeaderProject {
-        MessageHeaderProject(
-            appName: .read(buffer: &buffer),
-            name: .read(buffer: &buffer),
-            version: .read(buffer: &buffer),
-            commandLine: .read(buffer: &buffer),
-            target: .read(buffer: &buffer),
-            cpu: Option<CpuHeader>.read(buffer: &buffer).value
-        )
-    }
-
-    public var payloadSize: Int {
-        Int(appName.length + name.length + version.length + commandLine.length)
-            + target.payloadSize + (cpu?.payloadSize ?? 0)
-    }
-
-    public func decode(buffer: inout ByteBuffer) throws -> Message {
-        try .project(MessageProject(
-            appName: appName.readPayload(buffer: &buffer),
-            name: name.readPayload(buffer: &buffer),
-            version: version.readPayload(buffer: &buffer),
-            commandLine: commandLine.readPayload(buffer: &buffer),
-            target: target.readPayload(buffer: &buffer),
-            cpu: cpu?.readPayload(buffer: &buffer)
-        ))
-    }
-}
-
-public struct MessageProject {
+public struct MessageProject : Message {
     public let appName: String
     public let name: String
     public let version: String
     public let commandLine: String
     public let target: Target
     public let cpu: Cpu?
+
+    public static func read(buffer: inout ByteBuffer) throws -> MessageProject {
+        MessageProject(
+            appName: try .read(buffer: &buffer),
+            name: try .read(buffer: &buffer),
+            version: try .read(buffer: &buffer),
+            commandLine: try .read(buffer: &buffer),
+            target: try .read(buffer: &buffer),
+            cpu: try Option<Cpu>.read(buffer: &buffer).value
+        )
+    }
 }

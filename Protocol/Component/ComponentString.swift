@@ -24,26 +24,11 @@
 import Foundation
 import NIO
 
-public struct Vchar: Component {
-    let offset: UInt16
-    let length: UInt16
-
-    public static var size: Int = 4
-
-    public static func read(buffer: inout ByteBuffer) -> Vchar {
-        let length = buffer.readInteger(endianness: .little, as: UInt16.self)!
-        let offset = buffer.readInteger(endianness: .little, as: UInt16.self)!
-        return Vchar(offset: offset, length: length)
-    }
-}
-
-extension Vchar: PayloadComponent {
-    public typealias PayloadOut = String
-
-    public func readPayload(buffer: inout ByteBuffer) throws -> String {
-        guard let str = buffer.getString(at: Int(offset), length: Int(length)) else {
+extension String : Component {
+    public static func read(buffer: inout ByteBuffer) throws -> String {
+        guard let str = buffer.readNullTerminatedString() else {
             throw ComponentReadError.string
         }
-        return str
+        return .init(str)
     }
 }

@@ -25,10 +25,6 @@ import Foundation
 import NIO
 
 extension UInt16: Component, Writable {
-    public static var size: Int {
-        2
-    }
-
     public static func read(buffer: inout ByteBuffer) -> UInt16 {
         buffer.readInteger(endianness: .little)!
     }

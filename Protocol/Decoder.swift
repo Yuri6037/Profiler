@@ -24,48 +24,20 @@
 import Foundation
 import NIO
 
-enum DecoderState {
+enum ProtocolState {
     case handshake
     case running
     case error
 }
 
-enum ReadError: Error {
+enum MsgDecodeError: Error {
     case unknownMessage(UInt8)
+    case eof
 }
 
-enum MessageReadingState {
-    case none
-    case header(UInt8)
-    case payload(MessageHeader)
-}
-
-enum MsgDecodeState {
-    case needMoreSteps
-    case needMoreData
-    case `continue`
-}
-
-struct Packet {
-    let header: MessageHeader
-    let payload: ByteBuffer?
-
-    init(header: MessageHeader, payload: ByteBuffer?) {
-        self.header = header
-        self.payload = payload
-    }
-
-    init(header: MessageHeader) {
-        self.header = header
-        payload = nil
-    }
-}
-
-final class Decoder: ByteToMessageDecoder {
-    public typealias InboundOut = (Packet?, Error?)
-
-    private final var state = DecoderState.handshake
-    private final var msgReadState = MessageReadingState.none
+final class FrameDecoder: ByteToMessageDecoder {
+    typealias InboundOut = ByteBuffer
+    private final var state = ProtocolState.handshake
 
     private func decodeHello(buffer: inout ByteBuffer) -> ByteBuffer? {
         guard let slice = buffer.readSlice(length: Constants.helloMessageSize) else {
@@ -74,8 +46,8 @@ final class Decoder: ByteToMessageDecoder {
         return slice
     }
 
-    private func decodeInternal(context: ChannelHandlerContext, buffer: inout ByteBuffer) throws -> MsgDecodeState {
-        if state == DecoderState.handshake {
+    func decode(context: ChannelHandlerContext, buffer: inout ByteBuffer) throws -> NIOCore.DecodingState {
+        if state == .handshake {
             guard var buffer = decodeHello(buffer: &buffer) else {
                 return .needMoreData
             }
@@ -84,85 +56,37 @@ final class Decoder: ByteToMessageDecoder {
             state = .running
             return .continue
         }
-        switch msgReadState {
-        case .none:
-            guard let ty = buffer.readInteger(endianness: .little, as: UInt8.self) else {
-                return .needMoreData
-            }
-            msgReadState = .header(ty)
-        case let .header(ty):
-            guard let size = MessageHeaderRegistry.sizeof(type: ty) else {
-                throw ReadError.unknownMessage(ty)
-            }
-            guard var buffer = buffer.readSlice(length: size) else {
-                return .needMoreData
-            }
-            guard let msg = MessageHeaderRegistry.read(type: ty, buffer: &buffer) else {
-                throw ReadError.unknownMessage(ty)
-            }
-            msgReadState = .payload(msg)
-        case let .payload(msg):
-            if msg.payloadSize == 0 {
-                context.fireChannelRead(wrapInboundOut((Packet(header: msg), nil)))
-                msgReadState = .none
-                return .continue
-            }
-            guard let buffer = buffer.readSlice(length: msg.payloadSize) else {
-                return .needMoreData
-            }
-            context.fireChannelRead(wrapInboundOut((Packet(header: msg, payload: buffer), nil)))
-            msgReadState = .none
-            return .continue
-        }
-        return .needMoreSteps
-    }
-
-    public func decode(context: ChannelHandlerContext, buffer: inout ByteBuffer) throws -> DecodingState {
-        if state == .error {
-            // Empty the buffer.
-            buffer.clear()
-            // Ensure connection is closed.
-            let _ = context.close()
-            // Return need for more data even if we just want to terminate the connection.
+        guard let length = buffer.readInteger(endianness: .little, as: UInt32.self) else {
             return .needMoreData
         }
-        var state: MsgDecodeState = .needMoreSteps
-        while state == .needMoreSteps {
-            do {
-                state = try decodeInternal(context: context, buffer: &buffer)
-            } catch {
-                context.fireChannelRead(wrapInboundOut((nil, error)))
-                self.state = .error
-                break
-            }
+        guard let buffer = buffer.readSlice(length: Int(length)) else {
+            return .needMoreData
         }
-        return state == .needMoreData ? .needMoreData : .continue
+        context.fireChannelRead(wrapInboundOut(buffer))
+        return .continue
     }
 }
 
-final class MessageDecoder: ChannelInboundHandler {
-    public typealias InboundIn = (Packet?, Error?)
+final class MessageDecoder: ByteToMessageDecoder {
     public typealias InboundOut = (Message?, Error?)
 
-    public func channelRead(context: ChannelHandlerContext, data: NIOAny) {
-        let (packet, error) = unwrapInboundIn(data)
-        if let error {
+    public func decodeInternal(context: ChannelHandlerContext, buffer: inout ByteBuffer) throws {
+        guard let ty = buffer.readInteger(endianness: .little, as: UInt8.self) else {
+            throw MsgDecodeError.eof
+        }
+        guard let msg = try MessageRegistry.read(type: ty, buffer: &buffer) else {
+            throw MsgDecodeError.unknownMessage(ty)
+        }
+        context.fireChannelRead(wrapInboundOut((msg, nil)))
+    }
+
+    public func decode(context: ChannelHandlerContext, buffer: inout ByteBuffer) throws -> DecodingState {
+        do {
+            try self.decodeInternal(context: context, buffer: &buffer)
+        } catch {
             context.fireChannelRead(wrapInboundOut((nil, error)))
         }
-        if let packet {
-            var buffer: ByteBuffer
-            if let buf = packet.payload {
-                buffer = buf
-            } else {
-                buffer = ByteBuffer()
-            }
-            do {
-                let msg = try packet.header.decode(buffer: &buffer)
-                context.fireChannelRead(wrapInboundOut((msg, nil)))
-            } catch {
-                context.fireChannelRead(wrapInboundOut((nil, error)))
-            }
-        }
+        return .continue
     }
 }
 

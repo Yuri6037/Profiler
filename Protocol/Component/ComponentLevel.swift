@@ -63,11 +63,8 @@ public enum Level: Component, Writable {
         }
     }
 
-    public static var size: Int = 1
-
     public static func read(buffer: inout ByteBuffer) -> Level {
-        let val = buffer.readInteger(endianness: .little, as: UInt8.self)
-        return .init(fromRaw: val!)
+        return .init(fromRaw: .read(buffer: &buffer))
     }
 
     public func write(buffer: inout ByteBuffer) {

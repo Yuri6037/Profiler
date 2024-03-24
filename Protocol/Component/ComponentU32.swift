@@ -25,8 +25,6 @@ import Foundation
 import NIO
 
 extension UInt32: Component, Writable {
-    public static var size: Int = 4
-
     public static func read(buffer: inout ByteBuffer) -> UInt32 {
         buffer.readInteger(endianness: .little, as: UInt32.self)!
     }

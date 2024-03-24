@@ -24,31 +24,15 @@
 import Foundation
 import NIO
 
-public struct Size {
-    public let bytes: Int
-
-    init(bytes: Int = 0) {
-        self.bytes = bytes
-    }
-
-    public func add(_ c: (some Component).Type) -> Size {
-        Size(bytes: bytes + c.size)
-    }
-}
-
-public protocol MessageHeader {
-    static var size: Int { get }
-    static func read(buffer: inout ByteBuffer) -> Self
-    var payloadSize: Int { get }
-
-    func decode(buffer: inout ByteBuffer) throws -> Message
+public protocol Message {
+    static func read(buffer: inout ByteBuffer) throws -> Self
 }
 
 public protocol Writable {
     func write(buffer: inout ByteBuffer)
 }
 
-public enum Message {
+/*public enum Message {
     case serverConfig(MessageServerConfig)
     case project(MessageProject)
     case spanAlloc(MessageSpanAlloc)
@@ -57,4 +41,4 @@ public enum Message {
     case spanEvent(MessageSpanEvent)
     case spanUpdate(MessageSpanUpdate)
     case spanDataset(MessageSpanDataset)
-}
+}*/

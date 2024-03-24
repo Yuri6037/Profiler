@@ -24,37 +24,19 @@
 import Foundation
 import NIO
 
-public struct MessageHeaderSpanDataset: MessageHeader {
+public struct MessageSpanDataset: Message {
     public let id: UInt32
     public let runCount: UInt32
-    public let size1: UInt32
+    public let content: [SpanLog]
 
-    public var payloadSize: Int { Int(size1) }
-
-    public static var size: Int = UInt32.size * 3
-
-    public static func read(buffer: inout ByteBuffer) -> MessageHeaderSpanDataset {
-        MessageHeaderSpanDataset(
-            id: .read(buffer: &buffer),
-            runCount: .read(buffer: &buffer),
-            size1: .read(buffer: &buffer)
-        )
-    }
-
-    public func decode(buffer: inout ByteBuffer) throws -> Message {
-        guard let str = buffer.getString(at: 0, length: Int(size1)) else {
-            throw ComponentReadError.string
-        }
-        return .spanDataset(MessageSpanDataset(
+    public static func read(buffer: inout ByteBuffer) throws -> MessageSpanDataset {
+        let id = UInt32.read(buffer: &buffer)
+        let runCount = UInt32.read(buffer: &buffer)
+        let content = try List<SpanLog>(count: Int(runCount)).read(buffer: &buffer)
+        return MessageSpanDataset(
             id: id,
             runCount: runCount,
-            content: str
-        ))
+            content: content
+        )
     }
-}
-
-public struct MessageSpanDataset {
-    public let id: UInt32
-    public let runCount: UInt32
-    public let content: String
 }

@@ -24,36 +24,15 @@
 import Foundation
 import NIO
 
-public struct TargetHeader: Component {
-    public let os: Vchar
-    public let family: Vchar
-    public let arch: Vchar
-
-    public var payloadSize: Int { Int(os.length + family.length + arch.length) }
-
-    public static var size: Int = Vchar.size * 3
-
-    public static func read(buffer: inout ByteBuffer) -> TargetHeader {
-        let os = Vchar.read(buffer: &buffer)
-        let family = Vchar.read(buffer: &buffer)
-        let arch = Vchar.read(buffer: &buffer)
-        return TargetHeader(os: os, family: family, arch: arch)
-    }
-}
-
-public struct Target {
+public struct Target: Component {
     public let os: String
     public let family: String
     public let arch: String
-}
 
-extension TargetHeader: PayloadComponent {
-    public typealias PayloadOut = Target
-
-    public func readPayload(buffer: inout ByteBuffer) throws -> Target {
-        let os = try os.readPayload(buffer: &buffer)
-        let family = try family.readPayload(buffer: &buffer)
-        let arch = try arch.readPayload(buffer: &buffer)
-        return Target(os: os, family: family, arch: arch)
+    public static func read(buffer: inout ByteBuffer) throws -> Target {
+        let os = try String.read(buffer: &buffer)
+        let family = try String.read(buffer: &buffer)
+        let arch = try String.read(buffer: &buffer)
+        return .init(os: os, family: family, arch: arch)
     }
 }

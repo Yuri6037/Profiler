@@ -24,16 +24,12 @@
 import Foundation
 import NIO
 
-public struct MessageSpanUpdate: MessageHeader {
+public struct MessageSpanUpdate: Message {
     public let id: UInt32
     public let runCount: UInt32
     public let averageTime: Duration
     public let minTime: Duration
     public let maxTime: Duration
-
-    public var payloadSize: Int { 0 }
-
-    public static var size: Int = UInt32.size * 2 + Duration.size * 3
 
     public static func read(buffer: inout ByteBuffer) -> MessageSpanUpdate {
         MessageSpanUpdate(
@@ -43,9 +39,5 @@ public struct MessageSpanUpdate: MessageHeader {
             minTime: .read(buffer: &buffer),
             maxTime: .read(buffer: &buffer)
         )
-    }
-
-    public func decode(buffer _: inout ByteBuffer) throws -> Message {
-        .spanUpdate(self)
     }
 }

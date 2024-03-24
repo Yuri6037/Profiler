@@ -29,13 +29,5 @@ public enum ComponentReadError: Error {
 }
 
 public protocol Component {
-    static var size: Int { get }
-
-    static func read(buffer: inout ByteBuffer) -> Self
-}
-
-public protocol PayloadComponent {
-    associatedtype PayloadOut
-
-    func readPayload(buffer: inout ByteBuffer) throws -> PayloadOut
+    static func read(buffer: inout ByteBuffer) throws -> Self
 }

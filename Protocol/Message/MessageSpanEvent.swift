@@ -24,38 +24,28 @@
 import Foundation
 import NIO
 
-public struct MessageHeaderSpanEvent: MessageHeader {
+public struct MessageSpanEvent: Message {
     public let id: UInt32
     public let timestamp: Int64
     public let level: Level
-    public let message: Vchar
+    public let target: String
+    public let module: String
+    public let variables: [Field]
 
-    public var payloadSize: Int { Int(message.length) }
-
-    public static var size: Int = UInt32.size + Int64.size + Level.size + Vchar.size
-
-    public static func read(buffer: inout ByteBuffer) -> MessageHeaderSpanEvent {
-        MessageHeaderSpanEvent(
-            id: .read(buffer: &buffer),
-            timestamp: .read(buffer: &buffer),
-            level: .read(buffer: &buffer),
-            message: .read(buffer: &buffer)
-        )
-    }
-
-    public func decode(buffer: inout ByteBuffer) throws -> Message {
-        try .spanEvent(MessageSpanEvent(
+    public static func read(buffer: inout ByteBuffer) throws -> MessageSpanEvent {
+        let id = UInt32.read(buffer: &buffer)
+        let timestamp = Int64.read(buffer: &buffer)
+        let level = Level.read(buffer: &buffer)
+        let varCount = UInt8.read(buffer: &buffer)
+        let target = try String.read(buffer: &buffer)
+        let module = try String.read(buffer: &buffer)
+        return MessageSpanEvent(
             id: id,
             timestamp: timestamp,
             level: level,
-            message: message.readPayload(buffer: &buffer)
-        ))
+            target: target,
+            module: module,
+            variables: try List(count: Int(varCount)).read(buffer: &buffer)
+        )
     }
-}
-
-public struct MessageSpanEvent {
-    public let id: UInt32
-    public let timestamp: Int64
-    public let level: Level
-    public let message: String
 }

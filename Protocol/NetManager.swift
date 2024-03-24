@@ -64,8 +64,8 @@ public class NetManager {
         let group = MultiThreadedEventLoopGroup(numberOfThreads: 4)
         let bootstrap = ClientBootstrap(group: group).channelInitializer { handler in
             handler.pipeline.addHandler(MessageToByteHandler(Encoder())).flatMap { _ in
-                handler.pipeline.addHandler(ByteToMessageHandler(Decoder())).flatMap { _ in
-                    handler.pipeline.addHandler(MessageDecoder()).flatMap { _ in
+                handler.pipeline.addHandler(ByteToMessageHandler(FrameDecoder())).flatMap { _ in
+                    handler.pipeline.addHandler(ByteToMessageHandler(MessageDecoder())).flatMap { _ in
                         handler.pipeline.addHandlers(MessageHandler(handler: self.handler))
                     }
                 }

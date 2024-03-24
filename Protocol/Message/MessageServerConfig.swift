@@ -24,19 +24,11 @@
 import Foundation
 import NIO
 
-public struct MessageServerConfig: MessageHeader {
+public struct MessageServerConfig: Message {
     public let maxRows: UInt32
     public let minPeriod: UInt16
 
-    public var payloadSize: Int { 0 }
-
-    public static var size: Int = Size().add(UInt32.self).add(UInt16.self).bytes
-
     public static func read(buffer: inout ByteBuffer) -> MessageServerConfig {
         MessageServerConfig(maxRows: .read(buffer: &buffer), minPeriod: .read(buffer: &buffer))
-    }
-
-    public func decode(buffer _: inout ByteBuffer) throws -> Message {
-        .serverConfig(self)
     }
 }
