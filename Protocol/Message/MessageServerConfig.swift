@@ -25,6 +25,10 @@ import Foundation
 import NIO
 
 public struct MessageServerConfig: Message {
+    public func getType() -> MessageType {
+        .serverConfig(self)
+    }
+
     public let maxRows: UInt32
     public let minPeriod: UInt16
 

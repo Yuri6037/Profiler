@@ -25,6 +25,10 @@ import Foundation
 import NIO
 
 public struct MessageSpanAlloc: Message {
+    public func getType() -> MessageType {
+        .spanAlloc(self)
+    }
+    
     public let id: UInt32
     public let metadata: Metadata
 

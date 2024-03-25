@@ -24,15 +24,7 @@
 import Foundation
 import NIO
 
-public protocol Message {
-    static func read(buffer: inout ByteBuffer) throws -> Self
-}
-
-public protocol Writable {
-    func write(buffer: inout ByteBuffer)
-}
-
-/*public enum Message {
+public enum MessageType {
     case serverConfig(MessageServerConfig)
     case project(MessageProject)
     case spanAlloc(MessageSpanAlloc)
@@ -41,4 +33,14 @@ public protocol Writable {
     case spanEvent(MessageSpanEvent)
     case spanUpdate(MessageSpanUpdate)
     case spanDataset(MessageSpanDataset)
-}*/
+}
+
+public protocol Message {
+    static func read(buffer: inout ByteBuffer) throws -> Self
+
+    func getType() -> MessageType
+}
+
+public protocol Writable {
+    func write(buffer: inout ByteBuffer)
+}

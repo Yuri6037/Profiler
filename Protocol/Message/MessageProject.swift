@@ -25,6 +25,10 @@ import Foundation
 import NIO
 
 public struct MessageProject : Message {
+    public func getType() -> MessageType {
+        .project(self)
+    }
+    
     public let appName: String
     public let name: String
     public let version: String

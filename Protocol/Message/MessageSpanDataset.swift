@@ -25,6 +25,10 @@ import Foundation
 import NIO
 
 public struct MessageSpanDataset: Message {
+    public func getType() -> MessageType {
+        .spanDataset(self)
+    }
+    
     public let id: UInt32
     public let runCount: UInt32
     public let content: [SpanLog]

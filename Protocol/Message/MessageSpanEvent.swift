@@ -25,6 +25,10 @@ import Foundation
 import NIO
 
 public struct MessageSpanEvent: Message {
+    public func getType() -> MessageType {
+        .spanEvent(self)
+    }
+    
     public let id: UInt32
     public let timestamp: Int64
     public let level: Level

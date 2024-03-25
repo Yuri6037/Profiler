@@ -25,6 +25,10 @@ import Foundation
 import NIO
 
 public struct MessageSpanParent: Message {
+    public func getType() -> MessageType {
+        .spanParent(self)
+    }
+    
     public let id: UInt32
     public let parentNode: UInt32
 
@@ -34,6 +38,10 @@ public struct MessageSpanParent: Message {
 }
 
 public struct MessageSpanFollows: Message {
+    public func getType() -> MessageType {
+        .spanFollows(self)
+    }
+    
     public let id: UInt32
     public let follows: UInt32
 

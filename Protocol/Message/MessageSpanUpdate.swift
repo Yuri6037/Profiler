@@ -25,6 +25,10 @@ import Foundation
 import NIO
 
 public struct MessageSpanUpdate: Message {
+    public func getType() -> MessageType {
+        .spanUpdate(self)
+    }
+    
     public let id: UInt32
     public let runCount: UInt32
     public let averageTime: Duration
