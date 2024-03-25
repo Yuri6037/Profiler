@@ -24,10 +24,8 @@
 import CoreData
 import Foundation
 import Protocol
-import TextTools
 
 class NetworkHandler {
-    private let parser = CSVParser(delimiter: ",")
     private var evIndex = 0
     private var tree = SpanTree()
 
@@ -115,23 +113,19 @@ class NetworkHandler {
 
     func handleSpanEvent(adaptor: NetworkAdaptor, message: MessageSpanEvent) {
         adaptor.execDb(node: message.id) { ctx, _, node in
-            let row = self.parser.parseRow(message.message)
-            if row.count < 3 {
-                return
-            }
             let e = SpanEvent(context: ctx)
             e.node = node
             e.level = Int16(message.level.raw)
             e.timestamp = Date(timeIntervalSince1970: Double(message.timestamp))
-            e.message = row[0]
-            e.target = row[row.count - 1]
-            e.module = row[row.count - 2]
+            e.message = message.message?.toString() ?? ""
+            e.target = message.target
+            e.module = message.module
             e.order = Int64(self.evIndex)
             self.evIndex += 1
-            for i in 1 ..< row.count - 2 {
+            for vv in message.variables {
                 let v = SpanVariable(context: ctx)
                 v.event = e
-                v.data = row[i]
+                v.data = vv.toString()
             }
             try ctx.save()
         }
@@ -154,7 +148,7 @@ class NetworkHandler {
         }
         let progress = adaptor.progressList.begin(text: "Importing dataset...", total: total)
         adaptor.execDb(node: message.id) { ctx, _, node in
-            let reader = BufferedLineStreamer(str: message.content)
+            //let reader = BufferedLineStreamer(str: message.content)
             let medianHalfIndex = total > 1 ? total / 2 - 1 : 0
             let medianCount = total % 2 == 0 ? 2 : 1
             let dataset = Dataset(context: ctx)
@@ -165,19 +159,13 @@ class NetworkHandler {
             var minTime = UInt64.max
             var averageTime = UInt64(0)
             var timeValues: [UInt64] = []
-            while let line = reader.readLine() {
-                let row = self.parser.parseRow(line)
-                if row.count < 3 {
-                    continue
-                }
+            for log in message.content {
                 let run = SpanRun(context: ctx)
                 run.order = Int64(runIndex)
                 runIndex += 1
                 run.dataset = dataset
-                run.message = row[0]
-                let secs = UInt32(row[row.count - 2]) ?? 0
-                let nanos = UInt32(row[row.count - 1]) ?? 0
-                let time = Duration(seconds: secs, nanoseconds: nanos).nanoseconds
+                run.message = log.message?.toString() ?? ""
+                let time = log.duration.nanoseconds
                 run.time = Int64(bitPattern: time)
                 if time > maxTime {
                     maxTime = time
@@ -186,10 +174,10 @@ class NetworkHandler {
                     minTime = time
                 }
                 averageTime += time
-                for i in 1 ..< row.count - 2 {
+                for vv in log.variables {
                     let v = SpanVariable(context: ctx)
                     v.run = run
-                    v.data = row[i]
+                    v.data = vv.toString()
                 }
                 timeValues.append(time)
                 progress.advance()

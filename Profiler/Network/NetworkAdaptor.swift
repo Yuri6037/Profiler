@@ -127,7 +127,7 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
 
     func onMessage(message: Message) {
         DispatchQueue.main.async(group: group) {
-            switch message {
+            switch message.getType() {
             case let .serverConfig(config):
                 self.serverMaxRows = config.maxRows
                 if let msg = checkAndAutoNegociate(maxRows: config.maxRows, minPeriod: config.minPeriod) {
