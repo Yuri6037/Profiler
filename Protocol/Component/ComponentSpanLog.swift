@@ -25,13 +25,27 @@ import Foundation
 import NIO
 
 public struct SpanLog: Component {
-    public let variables: [Field]
+    public let allVariables: [Field]
     public let duration: Duration
+
+    public var message: FieldValue? {
+        allVariables.count > 0 ? (allVariables[0].name == Constants.messageVariableName ? allVariables[0].value : nil) : nil
+    }
+
+    public var variables: [Field] {
+        if allVariables.count > 0 && allVariables[0].name != Constants.messageVariableName {
+            return allVariables
+        } else if allVariables.count > 1 && allVariables[0].name == Constants.messageVariableName {
+            return Array(allVariables[1...])
+        } else {
+            return []
+        }
+    }
 
     public static func read(buffer: inout ByteBuffer) throws -> SpanLog {
         let varCount = UInt8.read(buffer: &buffer)
         let variables = try List<Field>(count: Int(varCount)).read(buffer: &buffer)
         let duration = Duration.read(buffer: &buffer)
-        return .init(variables: variables, duration: duration)
+        return .init(allVariables: variables, duration: duration)
     }
 }

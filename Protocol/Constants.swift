@@ -36,4 +36,6 @@ public enum Constants {
     public static let protoName: UInt32 = 0x464F_5250
     public static let protoVersion = Version(major: 1, preRelease: "rc.2.0.0")
     public static let proto = BP3DProtocol(name: protoName, version: protoVersion)
+
+    public static let messageVariableName = "message"
 }

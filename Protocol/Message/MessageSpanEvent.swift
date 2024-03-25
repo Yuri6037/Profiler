@@ -34,7 +34,21 @@ public struct MessageSpanEvent: Message {
     public let level: Level
     public let target: String
     public let module: String
-    public let variables: [Field]
+    public let allVariables: [Field]
+
+    public var message: FieldValue? {
+        allVariables.count > 0 ? (allVariables[0].name == Constants.messageVariableName ? allVariables[0].value : nil) : nil
+    }
+
+    public var variables: [Field] {
+        if allVariables.count > 0 && allVariables[0].name != Constants.messageVariableName {
+            return allVariables
+        } else if allVariables.count > 1 && allVariables[0].name == Constants.messageVariableName {
+            return Array(allVariables[1...])
+        } else {
+            return []
+        }
+    }
 
     public static func read(buffer: inout ByteBuffer) throws -> MessageSpanEvent {
         let id = UInt32.read(buffer: &buffer)
@@ -49,7 +63,7 @@ public struct MessageSpanEvent: Message {
             level: level,
             target: target,
             module: module,
-            variables: try List(count: Int(varCount)).read(buffer: &buffer)
+            allVariables: try List(count: Int(varCount)).read(buffer: &buffer)
         )
     }
 }

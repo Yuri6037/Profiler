@@ -110,6 +110,21 @@ public struct FieldValue: Component {
         }
         return .init(type: type, value: value)
     }
+
+    public func toString() -> String {
+        switch value {
+        case .signed(let v):
+            return String(v)
+        case .unsigned(let v):
+            return String(v)
+        case .float(let v):
+            return String(v)
+        case .string(let v):
+            return v
+        case .bool(let v):
+            return v ? "true" : "false"
+        }
+    }
 }
 
 public struct Field: Component {
@@ -121,5 +136,9 @@ public struct Field: Component {
             name: try .read(buffer: &buffer),
             value: try .read(buffer: &buffer)
         )
+    }
+
+    public func toString() -> String {
+        name != Constants.messageVariableName ? (name + "=" + value.toString()) : value.toString()
     }
 }

@@ -29,7 +29,7 @@ public struct List<T: Component> {
 
     public func read(buffer: inout ByteBuffer) throws -> [T] {
         var list: [T] = []
-        for i in 0...count - 1 {
+        for _ in 0...count - 1 {
             list.append(try .read(buffer: &buffer))
         }
         return list
