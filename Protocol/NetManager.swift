@@ -65,7 +65,7 @@ public class NetManager {
         let bootstrap = ClientBootstrap(group: group).channelInitializer { handler in
             handler.pipeline.addHandler(MessageToByteHandler(Encoder())).flatMap { _ in
                 handler.pipeline.addHandler(ByteToMessageHandler(FrameDecoder())).flatMap { _ in
-                    handler.pipeline.addHandler(ByteToMessageHandler(MessageDecoder())).flatMap { _ in
+                    handler.pipeline.addHandler(MessageDecoder()).flatMap { _ in
                         handler.pipeline.addHandlers(MessageHandler(handler: self.handler))
                     }
                 }

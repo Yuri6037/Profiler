@@ -36,7 +36,7 @@ enum MsgDecodeError: Error {
 }
 
 final class FrameDecoder: ByteToMessageDecoder {
-    typealias InboundOut = ByteBuffer
+    typealias InboundOut = (ByteBuffer?, Error?)
     private final var state = ProtocolState.handshake
 
     private func decodeHello(buffer: inout ByteBuffer) -> ByteBuffer? {
@@ -46,13 +46,18 @@ final class FrameDecoder: ByteToMessageDecoder {
         return slice
     }
 
-    func decode(context: ChannelHandlerContext, buffer: inout ByteBuffer) throws -> NIOCore.DecodingState {
+    func decode(context: ChannelHandlerContext, buffer: inout ByteBuffer) throws -> DecodingState {
         if state == .handshake {
             guard var buffer = decodeHello(buffer: &buffer) else {
                 return .needMoreData
             }
-            let msg = try Constants.proto.initialHandshake(buffer: &buffer)
-            let _ = context.writeAndFlush(NIOAny(msg))
+            do {
+                let msg = try Constants.proto.initialHandshake(buffer: &buffer)
+                let _ = context.writeAndFlush(NIOAny(msg))
+            } catch {
+                context.fireChannelRead(wrapInboundOut((nil, error)))
+                let _ = context.close()
+            }
             state = .running
             return .continue
         }
@@ -62,12 +67,13 @@ final class FrameDecoder: ByteToMessageDecoder {
         guard let buffer = buffer.readSlice(length: Int(length)) else {
             return .needMoreData
         }
-        context.fireChannelRead(wrapInboundOut(buffer))
+        context.fireChannelRead(wrapInboundOut((buffer, nil)))
         return .continue
     }
 }
 
-final class MessageDecoder: ByteToMessageDecoder {
+final class MessageDecoder: ChannelInboundHandler {
+    public typealias InboundIn = (ByteBuffer?, Error?)
     public typealias InboundOut = (Message?, Error?)
 
     public func decodeInternal(context: ChannelHandlerContext, buffer: inout ByteBuffer) throws {
@@ -80,13 +86,18 @@ final class MessageDecoder: ByteToMessageDecoder {
         context.fireChannelRead(wrapInboundOut((msg, nil)))
     }
 
-    public func decode(context: ChannelHandlerContext, buffer: inout ByteBuffer) throws -> DecodingState {
+    public func channelRead(context: ChannelHandlerContext, data: NIOAny) {
+        let (buffer, error) = unwrapInboundIn(data)
+        if let error = error {
+            context.fireChannelRead(wrapInboundOut((nil, error)))
+        }
         do {
-            try self.decodeInternal(context: context, buffer: &buffer)
+            if var buffer = buffer {
+                try self.decodeInternal(context: context, buffer: &buffer)
+            }
         } catch {
             context.fireChannelRead(wrapInboundOut((nil, error)))
         }
-        return .continue
     }
 }
 
