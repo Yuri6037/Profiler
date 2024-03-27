@@ -88,13 +88,6 @@
 		DAADF8522A7FDE3B00E4247C /* ComponentBool.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAADF8512A7FDE3B00E4247C /* ComponentBool.swift */; };
 		DAC183412A8ECA4D002B496F /* IOSShim.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC183402A8ECA4D002B496F /* IOSShim.swift */; };
 		DAC183432A8F9C13002B496F /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC183422A8F9C13002B496F /* SettingsView.swift */; };
-		DACD16CF2A8E0D8700982725 /* TextTools.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DACD16C72A8E0D8600982725 /* TextTools.framework */; };
-		DACD16D62A8E0D8700982725 /* TextToolsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACD16D52A8E0D8700982725 /* TextToolsTests.swift */; };
-		DACD16D72A8E0D8700982725 /* TextTools.h in Headers */ = {isa = PBXBuildFile; fileRef = DACD16C92A8E0D8600982725 /* TextTools.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DACD16DA2A8E0D8700982725 /* TextTools.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DACD16C72A8E0D8600982725 /* TextTools.framework */; };
-		DACD16DB2A8E0D8700982725 /* TextTools.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DACD16C72A8E0D8600982725 /* TextTools.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		DACD16E32A8E0F6D00982725 /* CSVParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACD16E22A8E0F6D00982725 /* CSVParser.swift */; };
-		DACD16E52A8E153C00982725 /* BufferedLineStreamer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACD16E42A8E153C00982725 /* BufferedLineStreamer.swift */; };
 		DADE752C2BB04F3B00C67D32 /* ComponentList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADE752B2BB04F3B00C67D32 /* ComponentList.swift */; };
 		DADE752E2BB050A100C67D32 /* ComponentField.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADE752D2BB050A100C67D32 /* ComponentField.swift */; };
 		DADE75302BB0536A00C67D32 /* ComponentI8.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADE752F2BB0536A00C67D32 /* ComponentI8.swift */; };
@@ -144,27 +137,6 @@
 			remoteGlobalIDString = DA17E8262A12BACA00554B8A;
 			remoteInfo = Protocol;
 		};
-		DACD16D02A8E0D8700982725 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = DA17E7E42A12B84300554B8A /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = DACD16C62A8E0D8600982725;
-			remoteInfo = TextTools;
-		};
-		DACD16D22A8E0D8700982725 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = DA17E7E42A12B84300554B8A /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = DA17E7EB2A12B84300554B8A;
-			remoteInfo = Profiler;
-		};
-		DACD16D82A8E0D8700982725 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = DA17E7E42A12B84300554B8A /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = DACD16C62A8E0D8600982725;
-			remoteInfo = TextTools;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -175,7 +147,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				DA17E83B2A12BACA00554B8A /* Protocol.framework in Embed Frameworks */,
-				DACD16DB2A8E0D8700982725 /* TextTools.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -268,12 +239,6 @@
 		DAADF8512A7FDE3B00E4247C /* ComponentBool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentBool.swift; sourceTree = "<group>"; };
 		DAC183402A8ECA4D002B496F /* IOSShim.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOSShim.swift; sourceTree = "<group>"; };
 		DAC183422A8F9C13002B496F /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
-		DACD16C72A8E0D8600982725 /* TextTools.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TextTools.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		DACD16C92A8E0D8600982725 /* TextTools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TextTools.h; sourceTree = "<group>"; };
-		DACD16CE2A8E0D8700982725 /* TextToolsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TextToolsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		DACD16D52A8E0D8700982725 /* TextToolsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextToolsTests.swift; sourceTree = "<group>"; };
-		DACD16E22A8E0F6D00982725 /* CSVParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSVParser.swift; sourceTree = "<group>"; };
-		DACD16E42A8E153C00982725 /* BufferedLineStreamer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferedLineStreamer.swift; sourceTree = "<group>"; };
 		DADE752B2BB04F3B00C67D32 /* ComponentList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentList.swift; sourceTree = "<group>"; };
 		DADE752D2BB050A100C67D32 /* ComponentField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentField.swift; sourceTree = "<group>"; };
 		DADE752F2BB0536A00C67D32 /* ComponentI8.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentI8.swift; sourceTree = "<group>"; };
@@ -293,7 +258,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA17E83A2A12BACA00554B8A /* Protocol.framework in Frameworks */,
-				DACD16DA2A8E0D8700982725 /* TextTools.framework in Frameworks */,
 				DAF3D3B92AFC3475004311BD /* Metal.framework in Frameworks */,
 				DA5A3AA32A87FF65000375A2 /* SwiftString in Frameworks */,
 			);
@@ -329,21 +293,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		DACD16C42A8E0D8600982725 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		DACD16CB2A8E0D8700982725 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				DACD16CF2A8E0D8700982725 /* TextTools.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -358,8 +307,6 @@
 				DA17E80F2A12B84400554B8A /* ProfilerUITests */,
 				DA17E8282A12BACA00554B8A /* Protocol */,
 				DA17E8342A12BACA00554B8A /* ProtocolTests */,
-				DACD16C82A8E0D8600982725 /* TextTools */,
-				DACD16D42A8E0D8700982725 /* TextToolsTests */,
 				DA17E7ED2A12B84300554B8A /* Products */,
 				DAF3D3B72AFC3475004311BD /* Frameworks */,
 			);
@@ -373,8 +320,6 @@
 				DA17E80C2A12B84400554B8A /* ProfilerUITests.xctest */,
 				DA17E8272A12BACA00554B8A /* Protocol.framework */,
 				DA17E82E2A12BACA00554B8A /* ProtocolTests.xctest */,
-				DACD16C72A8E0D8600982725 /* TextTools.framework */,
-				DACD16CE2A8E0D8700982725 /* TextToolsTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -573,24 +518,6 @@
 			path = Data;
 			sourceTree = "<group>";
 		};
-		DACD16C82A8E0D8600982725 /* TextTools */ = {
-			isa = PBXGroup;
-			children = (
-				DACD16C92A8E0D8600982725 /* TextTools.h */,
-				DACD16E22A8E0F6D00982725 /* CSVParser.swift */,
-				DACD16E42A8E153C00982725 /* BufferedLineStreamer.swift */,
-			);
-			path = TextTools;
-			sourceTree = "<group>";
-		};
-		DACD16D42A8E0D8700982725 /* TextToolsTests */ = {
-			isa = PBXGroup;
-			children = (
-				DACD16D52A8E0D8700982725 /* TextToolsTests.swift */,
-			);
-			path = TextToolsTests;
-			sourceTree = "<group>";
-		};
 		DAF3D3B72AFC3475004311BD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -610,14 +537,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		DACD16C22A8E0D8600982725 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				DACD16D72A8E0D8700982725 /* TextTools.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -634,7 +553,6 @@
 			);
 			dependencies = (
 				DA17E8392A12BACA00554B8A /* PBXTargetDependency */,
-				DACD16D92A8E0D8700982725 /* PBXTargetDependency */,
 			);
 			name = Profiler;
 			packageProductDependencies = (
@@ -720,43 +638,6 @@
 			productReference = DA17E82E2A12BACA00554B8A /* ProtocolTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		DACD16C62A8E0D8600982725 /* TextTools */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = DACD16E02A8E0D8700982725 /* Build configuration list for PBXNativeTarget "TextTools" */;
-			buildPhases = (
-				DACD16C22A8E0D8600982725 /* Headers */,
-				DACD16C32A8E0D8600982725 /* Sources */,
-				DACD16C42A8E0D8600982725 /* Frameworks */,
-				DACD16C52A8E0D8600982725 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = TextTools;
-			productName = TextTools;
-			productReference = DACD16C72A8E0D8600982725 /* TextTools.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		DACD16CD2A8E0D8700982725 /* TextToolsTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = DACD16E12A8E0D8700982725 /* Build configuration list for PBXNativeTarget "TextToolsTests" */;
-			buildPhases = (
-				DACD16CA2A8E0D8700982725 /* Sources */,
-				DACD16CB2A8E0D8700982725 /* Frameworks */,
-				DACD16CC2A8E0D8700982725 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				DACD16D12A8E0D8700982725 /* PBXTargetDependency */,
-				DACD16D32A8E0D8700982725 /* PBXTargetDependency */,
-			);
-			name = TextToolsTests;
-			productName = TextToolsTests;
-			productReference = DACD16CE2A8E0D8700982725 /* TextToolsTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -786,14 +667,6 @@
 						CreatedOnToolsVersion = 14.3;
 						TestTargetID = DA17E7EB2A12B84300554B8A;
 					};
-					DACD16C62A8E0D8600982725 = {
-						CreatedOnToolsVersion = 14.3.1;
-						LastSwiftMigration = 1430;
-					};
-					DACD16CD2A8E0D8700982725 = {
-						CreatedOnToolsVersion = 14.3.1;
-						TestTargetID = DA17E7EB2A12B84300554B8A;
-					};
 				};
 			};
 			buildConfigurationList = DA17E7E72A12B84300554B8A /* Build configuration list for PBXProject "Profiler" */;
@@ -818,8 +691,6 @@
 				DA17E80B2A12B84400554B8A /* ProfilerUITests */,
 				DA17E8262A12BACA00554B8A /* Protocol */,
 				DA17E82D2A12BACA00554B8A /* ProtocolTests */,
-				DACD16C62A8E0D8600982725 /* TextTools */,
-				DACD16CD2A8E0D8700982725 /* TextToolsTests */,
 			);
 		};
 /* End PBXProject section */
@@ -857,20 +728,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		DA17E82C2A12BACA00554B8A /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		DACD16C52A8E0D8600982725 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		DACD16CC2A8E0D8700982725 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -997,23 +854,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		DACD16C32A8E0D8600982725 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				DACD16E32A8E0F6D00982725 /* CSVParser.swift in Sources */,
-				DACD16E52A8E153C00982725 /* BufferedLineStreamer.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		DACD16CA2A8E0D8700982725 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				DACD16D62A8E0D8700982725 /* TextToolsTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1041,21 +881,6 @@
 			isa = PBXTargetDependency;
 			target = DA17E8262A12BACA00554B8A /* Protocol */;
 			targetProxy = DA17E8382A12BACA00554B8A /* PBXContainerItemProxy */;
-		};
-		DACD16D12A8E0D8700982725 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = DACD16C62A8E0D8600982725 /* TextTools */;
-			targetProxy = DACD16D02A8E0D8700982725 /* PBXContainerItemProxy */;
-		};
-		DACD16D32A8E0D8700982725 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = DA17E7EB2A12B84300554B8A /* Profiler */;
-			targetProxy = DACD16D22A8E0D8700982725 /* PBXContainerItemProxy */;
-		};
-		DACD16D92A8E0D8700982725 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = DACD16C62A8E0D8600982725 /* TextTools */;
-			targetProxy = DACD16D82A8E0D8700982725 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1478,137 +1303,6 @@
 			};
 			name = Release;
 		};
-		DACD16DC2A8E0D8700982725 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEAD_CODE_STRIPPING = YES;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = V7M7RK5R9T;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = (
-					"@executable_path/../Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 13.3;
-				MARKETING_VERSION = 1.0;
-				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
-				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++20";
-				PRODUCT_BUNDLE_IDENTIFIER = com.github.Yuri6037.TextTools;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = auto;
-				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		DACD16DD2A8E0D8700982725 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEAD_CODE_STRIPPING = YES;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = V7M7RK5R9T;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = (
-					"@executable_path/../Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 13.3;
-				MARKETING_VERSION = 1.0;
-				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
-				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++20";
-				PRODUCT_BUNDLE_IDENTIFIER = com.github.Yuri6037.TextTools;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = auto;
-				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		DACD16DE2A8E0D8700982725 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEAD_CODE_STRIPPING = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
-				MACOSX_DEPLOYMENT_TARGET = 13.3;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.github.Yuri6037.TextToolsTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Profiler.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Profiler";
-			};
-			name = Debug;
-		};
-		DACD16DF2A8E0D8700982725 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEAD_CODE_STRIPPING = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
-				MACOSX_DEPLOYMENT_TARGET = 13.3;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.github.Yuri6037.TextToolsTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Profiler.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Profiler";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1662,24 +1356,6 @@
 			buildConfigurations = (
 				DA17E8412A12BACA00554B8A /* Debug */,
 				DA17E8422A12BACA00554B8A /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		DACD16E02A8E0D8700982725 /* Build configuration list for PBXNativeTarget "TextTools" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				DACD16DC2A8E0D8700982725 /* Debug */,
-				DACD16DD2A8E0D8700982725 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		DACD16E12A8E0D8700982725 /* Build configuration list for PBXNativeTarget "TextToolsTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				DACD16DE2A8E0D8700982725 /* Debug */,
-				DACD16DF2A8E0D8700982725 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

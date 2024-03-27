@@ -148,7 +148,6 @@ class NetworkHandler {
         }
         let progress = adaptor.progressList.begin(text: "Importing dataset...", total: total)
         adaptor.execDb(node: message.id) { ctx, _, node in
-            //let reader = BufferedLineStreamer(str: message.content)
             let medianHalfIndex = total > 1 ? total / 2 - 1 : 0
             let medianCount = total % 2 == 0 ? 2 : 1
             let dataset = Dataset(context: ctx)
