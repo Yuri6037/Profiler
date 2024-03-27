@@ -35,11 +35,11 @@ public struct Duration {
     }
 
     public init(seconds: UInt32, milliseconds: UInt32, microseconds: UInt32) {
-        nanoseconds = UInt64(seconds * 1_000_000_000) + UInt64(milliseconds * 1_000_000) + UInt64(microseconds * 1000)
+        nanoseconds = UInt64(seconds) * 1_000_000_000 + UInt64(milliseconds) * 1_000_000 + UInt64(microseconds) * 1000
     }
 
     public init(seconds: UInt32, nanoseconds: UInt32) {
-        self.nanoseconds = UInt64(seconds * 1_000_000_000) + UInt64(nanoseconds)
+        self.nanoseconds = UInt64(seconds) * 1_000_000_000 + UInt64(nanoseconds)
     }
 }
 

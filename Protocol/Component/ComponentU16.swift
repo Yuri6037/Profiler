@@ -26,7 +26,7 @@ import NIO
 
 extension UInt16: Component, Writable {
     public static func read(buffer: inout ByteBuffer) -> UInt16 {
-        buffer.readInteger(endianness: .little)!
+        buffer.readInteger(endianness: .little, as: UInt16.self)!
     }
 
     public func write(buffer: inout ByteBuffer) {

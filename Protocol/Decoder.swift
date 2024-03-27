@@ -38,6 +38,7 @@ enum MsgDecodeError: Error {
 final class FrameDecoder: ByteToMessageDecoder {
     typealias InboundOut = (ByteBuffer?, Error?)
     private final var state = ProtocolState.handshake
+    private var length: UInt32?
 
     private func decodeHello(buffer: inout ByteBuffer) -> ByteBuffer? {
         guard let slice = buffer.readSlice(length: Constants.helloMessageSize) else {
@@ -61,13 +62,18 @@ final class FrameDecoder: ByteToMessageDecoder {
             state = .running
             return .continue
         }
-        guard let length = buffer.readInteger(endianness: .little, as: UInt32.self) else {
-            return .needMoreData
+        if let length {
+            guard let buffer = buffer.readSlice(length: Int(length)) else {
+                return .needMoreData
+            }
+            context.fireChannelRead(wrapInboundOut((buffer, nil)))
+            self.length = nil
+        } else {
+            guard let length = buffer.readInteger(endianness: .little, as: UInt32.self) else {
+                return .needMoreData
+            }
+            self.length = length;
         }
-        guard let buffer = buffer.readSlice(length: Int(length)) else {
-            return .needMoreData
-        }
-        context.fireChannelRead(wrapInboundOut((buffer, nil)))
         return .continue
     }
 }

@@ -34,7 +34,7 @@ public enum Constants {
 
     // This is supposed to be b"PROF", but swift is far too much of a peace of shit to handle it!
     public static let protoName: UInt32 = 0x464F_5250
-    public static let protoVersion = Version(major: 1, preRelease: "rc.2.0.0")
+    public static let protoVersion = Version(major: 1, preRelease: "rc.2.1.0")
     public static let proto = BP3DProtocol(name: protoName, version: protoVersion)
 
     public static let messageVariableName = "message"
