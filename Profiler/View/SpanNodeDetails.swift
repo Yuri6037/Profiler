@@ -74,6 +74,14 @@ struct SpanNodeDetails: View {
     }
 
     private func loadPoints(node: SpanNode) {
+        if Defaults.bool(forKey: "general.useMeanInGraph") ?? true {
+            loadPointsMean(node: node)
+        } else {
+            loadPointsLowPass(node: node)
+        }
+    }
+
+    private func loadPointsLowPass(node: SpanNode) {
         points = nil
         dbFunc(node: node, fetch: { node, datasets, ctx in
             let filters = NodeFilters()
@@ -87,6 +95,45 @@ struct SpanNodeDetails: View {
         }, handle: { runs in
             _ = runs.map { DisplaySpanRun(fromModel: $0) }
             let points = runs.map(\.wTime.seconds)
+            DispatchQueue.main.async {
+                self.points = points
+            }
+        })
+    }
+
+    private func loadPointsMean(node: SpanNode) {
+        points = nil
+        dbFunc(node: node, fetch: { node, datasets, ctx in
+            let filters = NodeFilters()
+            let runs: NSFetchRequest<SpanRun> = SpanRun.fetchRequest()
+            runs.sortDescriptors = filters.getSortDescriptors()
+            runs.predicate = filters.getPredicate(node: node, datasets: datasets)
+            return runs
+        }, handle: { runs in
+            if runs.count <= 1500 {
+                _ = runs.map { DisplaySpanRun(fromModel: $0) }
+                let points = runs.map(\.wTime.seconds)
+                DispatchQueue.main.async {
+                    self.points = points
+                }
+                return
+            }
+            let samples = UInt(runs.count) / 1500;
+            var points: [Float64] = []
+            var average = 0.0
+            var count = 0
+            for v in runs {
+                count += 1
+                average += v.wTime.seconds
+                if count >= samples {
+                    points.append(average / Float64(count))
+                    count = 0;
+                    average = 0.0
+                }
+            }
+            if count > 0 {
+                points.append(average / Float64(count))
+            }
             DispatchQueue.main.async {
                 self.points = points
             }

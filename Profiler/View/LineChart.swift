@@ -39,22 +39,44 @@ struct LineChart: View {
     }
 
     var body: some View {
-        Path { path in
-            let offset = points.min()!
-            let p1 = CGPoint(x: 0, y: CGFloat(points[0] - offset) * stepY)
-            path.move(to: p1)
-            for i in 1 ..< points.count {
-                let p = CGPoint(x: stepX * CGFloat(i), y: stepY * CGFloat(points[i] - offset))
-                path.addLine(to: p)
+        ZStack(alignment: .leading) {
+            Path { path in
+                path.move(to: CGPoint(x: 0, y: 1))
+                path.addLine(to: CGPoint(x: 20, y: 1))
             }
+            .stroke(Color.accentColor, style: StrokeStyle(
+                lineWidth: 3,
+                lineJoin: .round
+            ))
+            Path { path in
+                path.move(to: CGPoint(x: 0, y: height - 1))
+                path.addLine(to: CGPoint(x: 20, y: height - 1))
+            }
+            .stroke(Color.accentColor, style: StrokeStyle(
+                lineWidth: 3,
+                lineJoin: .round
+            ))
+            Text(points.max()?.formatted() ?? "")
+                .position(x: 30, y: 9)
+            Text(points.min()?.formatted() ?? "")
+                .position(x: 30, y: height - 9)
+            Path { path in
+                let offset = points.min()!
+                let p1 = CGPoint(x: 0, y: CGFloat(points[0] - offset) * stepY)
+                path.move(to: p1)
+                for i in 1 ..< points.count {
+                    let p = CGPoint(x: stepX * CGFloat(i), y: stepY * CGFloat(points[i] - offset))
+                    path.addLine(to: p)
+                }
+            }
+            .stroke(Color.accentColor, style: StrokeStyle(
+                lineWidth: 3,
+                lineJoin: .round
+            ))
+            .rotationEffect(.degrees(180), anchor: .center)
+            .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
+            .drawingGroup()
         }
-        .stroke(Color.accentColor, style: StrokeStyle(
-            lineWidth: 3,
-            lineJoin: .round
-        ))
-        .rotationEffect(.degrees(180), anchor: .center)
-        .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
-        .drawingGroup()
         .frame(width: width, height: height)
     }
 }

@@ -25,7 +25,6 @@ import CoreData
 import Foundation
 import Protocol
 import SwiftString
-import TextTools
 
 class NetworkAdaptor: ObservableObject, MsgHandler {
     private let errorHandler: ErrorHandler

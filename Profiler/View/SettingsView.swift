@@ -26,10 +26,12 @@ import SwiftUI
 
 struct GeneralSettingsView: View {
     @AppStorage("general.autoNegociate") private var autoNegociate = false
+    @AppStorage("general.useMeanInGraph") private var useMeanInGraph = true
 
     var body: some View {
         Form {
             Toggle("Automatically negociate client config", isOn: $autoNegociate)
+            Toggle("Use a mean filter in the overview graph", isOn: $useMeanInGraph)
         }
         .padding(20)
     }
