@@ -24,7 +24,7 @@
 import SwiftUI
 
 struct SpanNodeInfo: View {
-    @ObservedObject var node: SpanNode
+    @ObservedObject var node: Node
 
     var body: some View {
         VStack {
@@ -58,8 +58,8 @@ struct SpanNodeInfo: View {
                     Text("No metadata for this node").bold()
                 }
                 HStack {
-                    Text("Run count").bold()
-                    Text((node.wRunsCount).formatted())
+                    Text("Record count").bold()
+                    Text((node.wRecordsCount).formatted())
                 }
                 HStack {
                     Text("Min time").bold()

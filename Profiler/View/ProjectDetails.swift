@@ -27,21 +27,21 @@ import SwiftUI
 struct ProjectDetails: View {
     @ObservedObject var project: Project
 
-    @Binding var node: SpanNode?
-    @Binding var datasets: Set<Dataset>
+    @Binding var node: Node?
+    @Binding var datasets: Set<ProfilerDataset>
 
     @State var showInfoSheet = false
 
-    @FetchRequest var datasetList: FetchedResults<Dataset>
+    @FetchRequest var datasetList: FetchedResults<ProfilerDataset>
 
     @Environment(\.horizontalSizeClass) var sizeClass;
 
-    init(project: Project, node: Binding<SpanNode?>, datasets: Binding<Set<Dataset>>) {
+    init(project: Project, node: Binding<Node?>, datasets: Binding<Set<ProfilerDataset>>) {
         self.project = project
         _node = node
         _datasets = datasets
-        let datasetReq: NSFetchRequest<Dataset> = Dataset.fetchRequest()
-        datasetReq.sortDescriptors = [NSSortDescriptor(keyPath: \Dataset.timestamp, ascending: true)]
+        let datasetReq: NSFetchRequest<ProfilerDataset> = ProfilerDataset.fetchRequest()
+        datasetReq.sortDescriptors = [NSSortDescriptor(keyPath: \ProfilerDataset.timestamp, ascending: true)]
         datasetReq.predicate = NSPredicate(format: "node.project=%@", project)
         datasetReq.fetchLimit = MAX_UI_ROWS
         _datasetList = FetchRequest(fetchRequest: datasetReq)

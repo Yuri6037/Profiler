@@ -24,6 +24,7 @@
 import SwiftUI
 
 // TODO: Implement export to CSV
+// TODO: Implement dataset duration
 
 @main
 struct ProfilerApp: App {
@@ -56,11 +57,11 @@ struct ProfilerApp: App {
                         .interactiveDismissDisabled()
                 }
                 .document(isPresented: $globals.exportManager.showExportDialog, type: globals.exportManager.fileType, export: globals.exportManager.url) { url in
-                    // Run export system
+                    // Record export system
                     globals.exportManager.saveExport(to: url)
                 }
                 .document(isPresented: $globals.exportManager.showImportDialog, type: globals.exportManager.fileType) { url in
-                    // Run import system
+                    // Record import system
                     globals.exportManager.importJson(url: url);
                 }
         }

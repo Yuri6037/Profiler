@@ -40,8 +40,8 @@ struct ContentView: View {
     private var items: FetchedResults<Project>
 
     @Binding var projectSelection: Project?
-    @State private var nodeSelection: SpanNode?
-    @State private var datasetsSelection: Set<Dataset> = []
+    @State private var nodeSelection: Node?
+    @State private var datasetsSelection: Set<ProfilerDataset> = []
     @State private var columnVisibility = NavigationSplitViewVisibility.all
     @State private var deleteMode: Bool = false
     @State private var address = ""

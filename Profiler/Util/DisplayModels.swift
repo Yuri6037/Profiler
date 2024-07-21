@@ -25,13 +25,13 @@ import Foundation
 import Protocol
 import SwiftUI
 
-struct DisplaySpanRun: Identifiable {
+struct DisplayProfilerRecord: Identifiable {
     let id: UUID
     let time: String
     let message: String
     let variables: String
 
-    init(fromModel model: SpanRun) {
+    init(fromModel model: ProfilerRecord) {
         time = model.wTime.formatted()
         message = model.wMessage ?? "No message specified"
         variables = model.wVariables.map { item in item.data ?? "" }.joined(separator: ", ")
@@ -50,7 +50,7 @@ struct DisplaySpanEvent: Identifiable {
     let color: Color;
     let systemImage: String;
 
-    init(fromModel model: SpanEvent) {
+    init(fromModel model: Event) {
         timestamp = model.wTimestamp.formatted()
         variables = model.wVariables.map { item in item.data ?? "" }.joined(separator: ", ")
         message = model.wMessage
@@ -82,7 +82,7 @@ struct DisplayDataset: Identifiable {
     let min: String
     let max: String
 
-    init(fromModel model: Dataset) {
+    init(fromModel model: ProfilerDataset) {
         id = UUID()
         timestamp = model.wTimestamp.formatted()
         average = model.wAverageTime.formatted()

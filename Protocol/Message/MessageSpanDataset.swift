@@ -30,16 +30,16 @@ public struct MessageSpanDataset: Message {
     }
     
     public let id: UInt32
-    public let runCount: UInt32
+    public let recordCount: UInt32
     public let content: [SpanLog]
 
     public static func read(buffer: inout ByteBuffer) throws -> MessageSpanDataset {
         let id = UInt32.read(buffer: &buffer)
-        let runCount = UInt32.read(buffer: &buffer)
-        let content = try List<SpanLog>(count: Int(runCount)).read(buffer: &buffer)
+        let recordCount = UInt32.read(buffer: &buffer)
+        let content = try List<SpanLog>(count: Int(recordCount)).read(buffer: &buffer)
         return MessageSpanDataset(
             id: id,
-            runCount: runCount,
+            recordCount: recordCount,
             content: content
         )
     }

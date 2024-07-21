@@ -25,18 +25,18 @@ import CoreData
 import Foundation
 import Protocol
 
-extension Dataset {
+extension ProfilerDataset {
     var wTimestamp: Date { timestamp! }
     var wAverageTime: Duration { Duration(nanoseconds: UInt64(bitPattern: averageTime)) }
     var wMinTime: Duration { Duration(nanoseconds: UInt64(bitPattern: minTime)) }
     var wMaxTime: Duration { Duration(nanoseconds: UInt64(bitPattern: maxTime)) }
     var wMedianTime: Duration { Duration(nanoseconds: UInt64(bitPattern: medianTime)) }
-    var wNode: SpanNode { node! }
+    var wNode: Node { node! }
 }
 
-extension Dataset: SampleData {
+extension ProfilerDataset: SampleData {
     static func newSample(context: NSManagedObjectContext) -> Self {
-        let dataset = Dataset(context: context)
+        let dataset = ProfilerDataset(context: context)
         dataset.timestamp = Date()
         return dataset as! Self // WTF!?
     }

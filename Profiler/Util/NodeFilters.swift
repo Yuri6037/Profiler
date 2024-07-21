@@ -56,28 +56,28 @@ class NodeFilters: ObservableObject {
         switch order {
         case .insertion:
             if distribution == .nLast {
-                return [NSSortDescriptor(keyPath: \SpanRun.order, ascending: false)]
+                return [NSSortDescriptor(keyPath: \ProfilerRecord.order, ascending: false)]
             } else {
-                return [NSSortDescriptor(keyPath: \SpanRun.order, ascending: true)]
+                return [NSSortDescriptor(keyPath: \ProfilerRecord.order, ascending: true)]
             }
         case .minimum:
             if distribution == .nLast {
                 return [
-                    NSSortDescriptor(keyPath: \SpanRun.time, ascending: false),
+                    NSSortDescriptor(keyPath: \ProfilerRecord.time, ascending: false),
                 ]
             } else {
                 return [
-                    NSSortDescriptor(keyPath: \SpanRun.time, ascending: true),
+                    NSSortDescriptor(keyPath: \ProfilerRecord.time, ascending: true),
                 ]
             }
         case .maximum:
             if distribution == .nLast {
                 return [
-                    NSSortDescriptor(keyPath: \SpanRun.time, ascending: true),
+                    NSSortDescriptor(keyPath: \ProfilerRecord.time, ascending: true),
                 ]
             } else {
                 return [
-                    NSSortDescriptor(keyPath: \SpanRun.time, ascending: false),
+                    NSSortDescriptor(keyPath: \ProfilerRecord.time, ascending: false),
                 ]
             }
         }

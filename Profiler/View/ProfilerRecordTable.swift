@@ -23,19 +23,19 @@
 
 import SwiftUI
 
-struct SpanRunTable: View {
+struct ProfilerRecordTable: View {
     @Environment(\.horizontalSizeClass) var sizeClass;
-    var runs: [DisplaySpanRun]
+    var records: [DisplayProfilerRecord]
 
     var body: some View {
         if sizeClass == .regular {
-            Table(runs) {
+            Table(records) {
                 TableColumn("Time", value: \.time)
                 TableColumn("Message", value: \.message)
                 TableColumn("Variables", value: \.variables)
             }
         } else {
-            List(runs) { item in
+            List(records) { item in
                 GroupBox {
                     HStack {
                         Text("Time").bold()
@@ -53,8 +53,8 @@ struct SpanRunTable: View {
     }
 }
 
-struct SpanRunTable_Previews: PreviewProvider {
+struct ProfilerRecordTable_Previews: PreviewProvider {
     static var previews: some View {
-        SpanRunTable(runs: [])
+        ProfilerRecordTable(records: [])
     }
 }

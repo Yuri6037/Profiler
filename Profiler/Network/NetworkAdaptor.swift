@@ -110,9 +110,9 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
         }
     }
 
-    func execDb(node: UInt32, _ fn: @escaping (NSManagedObjectContext, Project, SpanNode) throws -> Void) {
+    func execDb(node: UInt32, _ fn: @escaping (NSManagedObjectContext, Project, Node) throws -> Void) {
         execDb { ctx, p in
-            let request: NSFetchRequest<SpanNode> = NSFetchRequest(entityName: "SpanNode")
+            let request: NSFetchRequest<Node> = NSFetchRequest(entityName: "SpanNode")
             request.predicate = NSPredicate(format: "project = %@ AND order = %d", p!, node)
             if let node = try ctx.fetch(request).first {
                 try fn(ctx, p!, node)
@@ -147,7 +147,7 @@ class NetworkAdaptor: ObservableObject, MsgHandler {
             case let .spanEvent(event):
                 self.handler.handleSpanEvent(adaptor: self, message: event)
             case let .spanUpdate(span):
-                if self.isRecording && span.runCount >= self.rowsToRecord {
+                if self.isRecording && span.recordCount >= self.rowsToRecord {
                     self.isRecording = false
                     self.setMessage("Ready")
                 }

@@ -25,7 +25,7 @@ import CoreData
 import SwiftUI
 
 struct NodeDashboard: View {
-    @ObservedObject var node: SpanNode
+    @ObservedObject var node: Node
 
     var body: some View {
         GroupBox(label: Label(node.wPath, systemImage: "doc").foregroundColor(node.wMetadata?.wLevel.color ?? .accentColor)) {
@@ -86,12 +86,12 @@ struct ProjectOverview: View {
     @EnvironmentObject private var errorHandler: ErrorHandler
     @Environment(\.persistentContainer) private var container: NSPersistentContainer
     @ObservedObject private var project: Project
-    @FetchRequest private var events: FetchedResults<SpanEvent>
+    @FetchRequest private var events: FetchedResults<Event>
 
     init(project: Project) {
         self.project = project
-        let events: NSFetchRequest<SpanEvent> = SpanEvent.fetchRequest()
-        events.sortDescriptors = [NSSortDescriptor(keyPath: \SpanEvent.order, ascending: true)]
+        let events: NSFetchRequest<Event> = Event.fetchRequest()
+        events.sortDescriptors = [NSSortDescriptor(keyPath: \Event.order, ascending: true)]
         events.predicate = NSPredicate(format: "node.project=%@", project)
         events.fetchLimit = MAX_UI_ROWS
         _events = FetchRequest(fetchRequest: events)

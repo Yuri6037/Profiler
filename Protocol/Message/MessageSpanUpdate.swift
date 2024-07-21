@@ -30,7 +30,7 @@ public struct MessageSpanUpdate: Message {
     }
     
     public let id: UInt32
-    public let runCount: UInt32
+    public let recordCount: UInt32
     public let averageTime: Duration
     public let minTime: Duration
     public let maxTime: Duration
@@ -38,7 +38,7 @@ public struct MessageSpanUpdate: Message {
     public static func read(buffer: inout ByteBuffer) -> MessageSpanUpdate {
         MessageSpanUpdate(
             id: .read(buffer: &buffer),
-            runCount: .read(buffer: &buffer),
+            recordCount: .read(buffer: &buffer),
             averageTime: .read(buffer: &buffer),
             minTime: .read(buffer: &buffer),
             maxTime: .read(buffer: &buffer)

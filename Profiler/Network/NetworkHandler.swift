@@ -60,7 +60,7 @@ class NetworkHandler {
                 }
                 p.cpu = retrieved
             }
-            let zerospan = SpanNode(context: ctx)
+            let zerospan = Node(context: ctx)
             zerospan.project = p
             zerospan.path = "/"
             zerospan.order = 0
@@ -73,10 +73,10 @@ class NetworkHandler {
     func handleSpanAlloc(adaptor: NetworkAdaptor, message: MessageSpanAlloc) {
         tree.addNode(Span(name: message.metadata.name, id: message.id))
         adaptor.execDb { ctx, p in
-            let node = SpanNode(context: ctx)
+            let node = Node(context: ctx)
             node.project = p
             node.order = Int32(message.id)
-            let metadata = SpanMetadata(context: ctx)
+            let metadata = NodeMetadata(context: ctx)
             metadata.level = Int16(message.metadata.level.raw)
             metadata.file = message.metadata.file
             metadata.modulePath = message.metadata.modulePath
@@ -113,7 +113,7 @@ class NetworkHandler {
 
     func handleSpanEvent(adaptor: NetworkAdaptor, message: MessageSpanEvent) {
         adaptor.execDb(node: message.id) { ctx, _, node in
-            let e = SpanEvent(context: ctx)
+            let e = Event(context: ctx)
             e.node = node
             e.level = Int16(message.level.raw)
             e.timestamp = Date(timeIntervalSince1970: Double(message.timestamp))
@@ -123,7 +123,7 @@ class NetworkHandler {
             e.order = Int64(self.evIndex)
             self.evIndex += 1
             for vv in message.variables {
-                let v = SpanVariable(context: ctx)
+                let v = Variable(context: ctx)
                 v.event = e
                 v.data = vv.toString()
             }
@@ -141,7 +141,7 @@ class NetworkHandler {
     }
 
     func handleSpanDataset(adaptor: NetworkAdaptor, message: MessageSpanDataset) {
-        let total = UInt(message.runCount)
+        let total = UInt(message.recordCount)
         if total == 0 {
             // Do not attempt to import a 0 entry dataset.
             return
@@ -150,22 +150,22 @@ class NetworkHandler {
         adaptor.execDb(node: message.id) { ctx, _, node in
             let medianHalfIndex = total > 1 ? total / 2 - 1 : 0
             let medianCount = total % 2 == 0 ? 2 : 1
-            let dataset = Dataset(context: ctx)
+            let dataset = ProfilerDataset(context: ctx)
             dataset.timestamp = Date()
             dataset.node = node
-            var runIndex = node.wRunsCount
+            var recordIndex = node.wRecordsCount
             var maxTime = UInt64(0)
             var minTime = UInt64.max
             var averageTime = UInt64(0)
             var timeValues: [UInt64] = []
             for log in message.content {
-                let run = SpanRun(context: ctx)
-                run.order = Int64(runIndex)
-                runIndex += 1
-                run.dataset = dataset
-                run.message = log.message?.toString() ?? ""
+                let record = ProfilerRecord(context: ctx)
+                record.order = Int64(recordIndex)
+                recordIndex += 1
+                record.dataset = dataset
+                record.message = log.message?.toString() ?? ""
                 let time = log.duration.nanoseconds
-                run.time = Int64(bitPattern: time)
+                record.time = Int64(bitPattern: time)
                 if time > maxTime {
                     maxTime = time
                 }
@@ -174,8 +174,8 @@ class NetworkHandler {
                 }
                 averageTime += time
                 for vv in log.variables {
-                    let v = SpanVariable(context: ctx)
-                    v.run = run
+                    let v = Variable(context: ctx)
+                    v.record = record
                     v.data = vv.toString()
                 }
                 timeValues.append(time)

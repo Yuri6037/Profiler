@@ -46,7 +46,7 @@ extension Level {
     }
 }
 
-extension SpanMetadata {
+extension NodeMetadata {
     var wLine: Int32? { line < 0 ? nil : line }
     var wName: String { name! }
     var wTarget: String { target! }
@@ -55,16 +55,16 @@ extension SpanMetadata {
     var wModulePath: String? { modulePath }
 }
 
-extension SpanRun {
+extension ProfilerRecord {
     var wOrder: UInt { UInt(order) }
-    var wVariables: [SpanVariable] { (variables?.allObjects ?? []) as! [SpanVariable] }
+    var wVariables: [Variable] { (variables?.allObjects ?? []) as! [Variable] }
     var wMessage: String? { message }
     var wTime: Duration { Duration(nanoseconds: UInt64(time)) }
 }
 
-extension SpanEvent {
+extension Event {
     var wOrder: UInt { UInt(order) }
-    var wVariables: [SpanVariable] { (variables?.allObjects ?? []) as! [SpanVariable] }
+    var wVariables: [Variable] { (variables?.allObjects ?? []) as! [Variable] }
     var wMessage: String { message! }
     var wTimestamp: Date { timestamp! }
     var wLevel: Level { Level(code: level) }
@@ -72,15 +72,15 @@ extension SpanEvent {
     var wModule: String { module! }
 }
 
-extension SpanNode {
+extension Node {
     var wOrder: UInt32 { UInt32(order) }
     var wPath: String { path! }
-    var wMetadata: SpanMetadata? { metadata }
-    var wDatasets: [Dataset] { (datasets?.allObjects ?? []) as! [Dataset] }
-    var wRunsCount: Int {
+    var wMetadata: NodeMetadata? { metadata }
+    var wDatasets: [ProfilerDataset] { (datasets?.allObjects ?? []) as! [ProfilerDataset] }
+    var wRecordsCount: Int {
         var res = 0
         for v in wDatasets {
-            res += v.runs?.count ?? 0
+            res += v.records?.count ?? 0
         }
         return res
     }
@@ -90,9 +90,9 @@ extension SpanNode {
     var wMaxTime: Duration { Duration(nanoseconds: UInt64(bitPattern: maxTime)) }
 }
 
-extension SpanEvent: SampleData {
+extension Event: SampleData {
     static func newSample(context: NSManagedObjectContext) -> Self {
-        let event = SpanEvent(context: context)
+        let event = Event(context: context)
         event.module = "test"
         event.target = "test target"
         event.level = Int16(Level.warning.raw)
@@ -102,9 +102,9 @@ extension SpanEvent: SampleData {
     }
 }
 
-extension SpanMetadata: SampleData {
+extension NodeMetadata: SampleData {
     static func newSample(context: NSManagedObjectContext) -> Self {
-        let metadata = SpanMetadata(context: context)
+        let metadata = NodeMetadata(context: context)
         metadata.name = "test"
         metadata.target = "test target"
         metadata.level = 0
@@ -112,12 +112,12 @@ extension SpanMetadata: SampleData {
     }
 }
 
-extension SpanNode: SampleData {
+extension Node: SampleData {
     static func newSample(context: NSManagedObjectContext) -> Self {
-        let node = SpanNode(context: context)
+        let node = Node(context: context)
         node.project = Project.newSample(context: context)
         node.path = "root"
-        node.metadata = SpanMetadata.newSample(context: context)
+        node.metadata = NodeMetadata.newSample(context: context)
         return node as! Self
     }
 }

@@ -40,7 +40,7 @@ extension Project {
     var wName: String { name! }
     var wCommandLine: String? { commandLine }
     var wTimestamp: Date { timestamp! }
-    var wNodes: [SpanNode] { (nodes?.array ?? []) as! [SpanNode] }
+    var wNodes: [Node] { (nodes?.array ?? []) as! [Node] }
     var wVersion: String? { version }
     var wCpu: Cpu? { cpu }
     var wTarget: Target? { target }

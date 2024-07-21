@@ -26,7 +26,7 @@
 		DA1AB3D12A862A90008DBB2D /* NodeFilters.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1AB3C32A862A90008DBB2D /* NodeFilters.swift */; };
 		DA1AB3D22A862A90008DBB2D /* ProjectDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1AB3C42A862A90008DBB2D /* ProjectDetails.swift */; };
 		DA1AB3D32A862A90008DBB2D /* SpanNodeDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1AB3C52A862A90008DBB2D /* SpanNodeDetails.swift */; };
-		DA1AB3D42A862A90008DBB2D /* SpanRunTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1AB3C62A862A90008DBB2D /* SpanRunTable.swift */; };
+		DA1AB3D42A862A90008DBB2D /* ProfilerRecordTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1AB3C62A862A90008DBB2D /* ProfilerRecordTable.swift */; };
 		DA1AB3D52A862A90008DBB2D /* SpanNodeInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1AB3C72A862A90008DBB2D /* SpanNodeInfo.swift */; };
 		DA1AB3D62A862A90008DBB2D /* SpanEventTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1AB3C82A862A90008DBB2D /* SpanEventTable.swift */; };
 		DA1AB3D72A862A90008DBB2D /* DisplayModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1AB3CA2A862A90008DBB2D /* DisplayModels.swift */; };
@@ -176,7 +176,7 @@
 		DA1AB3C32A862A90008DBB2D /* NodeFilters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeFilters.swift; sourceTree = "<group>"; };
 		DA1AB3C42A862A90008DBB2D /* ProjectDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectDetails.swift; sourceTree = "<group>"; };
 		DA1AB3C52A862A90008DBB2D /* SpanNodeDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpanNodeDetails.swift; sourceTree = "<group>"; };
-		DA1AB3C62A862A90008DBB2D /* SpanRunTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpanRunTable.swift; sourceTree = "<group>"; };
+		DA1AB3C62A862A90008DBB2D /* ProfilerRecordTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilerRecordTable.swift; sourceTree = "<group>"; };
 		DA1AB3C72A862A90008DBB2D /* SpanNodeInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpanNodeInfo.swift; sourceTree = "<group>"; };
 		DA1AB3C82A862A90008DBB2D /* SpanEventTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpanEventTable.swift; sourceTree = "<group>"; };
 		DA1AB3CA2A862A90008DBB2D /* DisplayModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplayModels.swift; sourceTree = "<group>"; };
@@ -395,7 +395,7 @@
 				DA1AB3C22A862A90008DBB2D /* LineChart.swift */,
 				DA1AB3C42A862A90008DBB2D /* ProjectDetails.swift */,
 				DA1AB3C52A862A90008DBB2D /* SpanNodeDetails.swift */,
-				DA1AB3C62A862A90008DBB2D /* SpanRunTable.swift */,
+				DA1AB3C62A862A90008DBB2D /* ProfilerRecordTable.swift */,
 				DA1AB3C72A862A90008DBB2D /* SpanNodeInfo.swift */,
 				DA1AB3C82A862A90008DBB2D /* SpanEventTable.swift */,
 				DA1AB3CB2A862A90008DBB2D /* ToolButton.swift */,
@@ -747,7 +747,7 @@
 				DAA7E7672AB0C3B500AF8F97 /* ExportManager.swift in Sources */,
 				DA5A3AAC2A89165F000375A2 /* IntPicker.swift in Sources */,
 				DA8CC2012AA3DDBE009C668B /* Progress.swift in Sources */,
-				DA1AB3D42A862A90008DBB2D /* SpanRunTable.swift in Sources */,
+				DA1AB3D42A862A90008DBB2D /* ProfilerRecordTable.swift in Sources */,
 				DA8CC1FF2A9FE893009C668B /* ConnectionStatus.swift in Sources */,
 				DA1AB3D82A862A90008DBB2D /* ToolButton.swift in Sources */,
 				DA2A7EBD2A85393D009B454D /* Dataset.swift in Sources */,

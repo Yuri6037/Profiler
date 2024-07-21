@@ -27,42 +27,42 @@ import SwiftUI
 let MAX_UI_ROWS = 20000
 
 struct SpanNodeDetails: View {
-    @ObservedObject var node: SpanNode
-    @Binding var datasets: Set<Dataset>
+    @ObservedObject var node: Node
+    @Binding var datasets: Set<ProfilerDataset>
     @EnvironmentObject var errorHandler: ErrorHandler
     @EnvironmentObject var filters: NodeFilters
     @Environment(\.managedObjectContext) var viewContext;
     @Environment(\.persistentContainer) var container: NSPersistentContainer
     @Environment(\.horizontalSizeClass) var sizeClass;
     @State private var points: [Double]?
-    @State private var runs: [DisplaySpanRun]?
+    @State private var records: [DisplayProfilerRecord]?
     @State private var events: [DisplaySpanEvent]?
     @State private var showMoreSheet = false
 
-    private func loadRuns(node: SpanNode) {
-        runs = nil
+    private func loadRecords(node: Node) {
+        records = nil
         dbFunc(node: node, fetch: { node, datasets, ctx in
-            let runs: NSFetchRequest<SpanRun> = SpanRun.fetchRequest()
-            runs.sortDescriptors = filters.getSortDescriptors()
-            runs.predicate = filters.getPredicate(node: node, datasets: datasets)
-            let size = try ctx.count(for: runs)
-            runs.fetchLimit = MAX_UI_ROWS
-            runs.predicate = filters.getPredicate(size: size, maxSize: MAX_UI_ROWS, node: node, datasets: datasets)
-            return runs
-        }, handle: { runs in
-            let runs = runs.map { DisplaySpanRun(fromModel: $0) }
+            let records: NSFetchRequest<ProfilerRecord> = ProfilerRecord.fetchRequest()
+            records.sortDescriptors = filters.getSortDescriptors()
+            records.predicate = filters.getPredicate(node: node, datasets: datasets)
+            let size = try ctx.count(for: records)
+            records.fetchLimit = MAX_UI_ROWS
+            records.predicate = filters.getPredicate(size: size, maxSize: MAX_UI_ROWS, node: node, datasets: datasets)
+            return records
+        }, handle: { records in
+            let records = records.map { DisplayProfilerRecord(fromModel: $0) }
             DispatchQueue.main.async {
-                self.runs = runs
+                self.records = records
             }
         })
     }
 
-    private func loadEvents(node: SpanNode) {
+    private func loadEvents(node: Node) {
         events = nil
         dbFunc(node: node, fetch: { node, _, _ in
-            let events: NSFetchRequest<SpanEvent> = SpanEvent.fetchRequest()
+            let events: NSFetchRequest<Event> = Event.fetchRequest()
             events.fetchLimit = MAX_UI_ROWS
-            events.sortDescriptors = [NSSortDescriptor(keyPath: \SpanEvent.order, ascending: true)]
+            events.sortDescriptors = [NSSortDescriptor(keyPath: \Event.order, ascending: true)]
             events.predicate = NSPredicate(format: "node=%@", node)
             return events
         }, handle: { events in
@@ -73,7 +73,7 @@ struct SpanNodeDetails: View {
         })
     }
 
-    private func loadPoints(node: SpanNode) {
+    private func loadPoints(node: Node) {
         if Defaults.bool(forKey: "general.useMeanInGraph") ?? true {
             loadPointsMean(node: node)
         } else {
@@ -81,48 +81,48 @@ struct SpanNodeDetails: View {
         }
     }
 
-    private func loadPointsLowPass(node: SpanNode) {
+    private func loadPointsLowPass(node: Node) {
         points = nil
         dbFunc(node: node, fetch: { node, datasets, ctx in
             let filters = NodeFilters()
-            let runs: NSFetchRequest<SpanRun> = SpanRun.fetchRequest()
-            runs.sortDescriptors = filters.getSortDescriptors()
-            runs.predicate = filters.getPredicate(node: node, datasets: datasets)
-            let size = try ctx.count(for: runs)
-            runs.fetchLimit = 1500
-            runs.predicate = filters.getPredicate(size: size, maxSize: 1500, node: node, datasets: datasets)
-            return runs
-        }, handle: { runs in
-            _ = runs.map { DisplaySpanRun(fromModel: $0) }
-            let points = runs.map(\.wTime.seconds)
+            let records: NSFetchRequest<ProfilerRecord> = ProfilerRecord.fetchRequest()
+            records.sortDescriptors = filters.getSortDescriptors()
+            records.predicate = filters.getPredicate(node: node, datasets: datasets)
+            let size = try ctx.count(for: records)
+            records.fetchLimit = 1500
+            records.predicate = filters.getPredicate(size: size, maxSize: 1500, node: node, datasets: datasets)
+            return records
+        }, handle: { records in
+            _ = records.map { DisplayProfilerRecord(fromModel: $0) }
+            let points = records.map(\.wTime.seconds)
             DispatchQueue.main.async {
                 self.points = points
             }
         })
     }
 
-    private func loadPointsMean(node: SpanNode) {
+    private func loadPointsMean(node: Node) {
         points = nil
         dbFunc(node: node, fetch: { node, datasets, ctx in
             let filters = NodeFilters()
-            let runs: NSFetchRequest<SpanRun> = SpanRun.fetchRequest()
-            runs.sortDescriptors = filters.getSortDescriptors()
-            runs.predicate = filters.getPredicate(node: node, datasets: datasets)
-            return runs
-        }, handle: { runs in
-            if runs.count <= 1500 {
-                _ = runs.map { DisplaySpanRun(fromModel: $0) }
-                let points = runs.map(\.wTime.seconds)
+            let records: NSFetchRequest<ProfilerRecord> = ProfilerRecord.fetchRequest()
+            records.sortDescriptors = filters.getSortDescriptors()
+            records.predicate = filters.getPredicate(node: node, datasets: datasets)
+            return records
+        }, handle: { records in
+            if records.count <= 1500 {
+                _ = records.map { DisplayProfilerRecord(fromModel: $0) }
+                let points = records.map(\.wTime.seconds)
                 DispatchQueue.main.async {
                     self.points = points
                 }
                 return
             }
-            let samples = UInt(runs.count) / 1500;
+            let samples = UInt(records.count) / 1500;
             var points: [Float64] = []
             var average = 0.0
             var count = 0
-            for v in runs {
+            for v in records {
                 count += 1
                 average += v.wTime.seconds
                 if count >= samples {
@@ -140,7 +140,7 @@ struct SpanNodeDetails: View {
         })
     }
 
-    private func dbFunc<T>(node: SpanNode, fetch: @escaping (NSManagedObject, [NSManagedObject], NSManagedObjectContext) throws -> NSFetchRequest<T>, handle: @escaping ([T]) -> Void) {
+    private func dbFunc<T>(node: Node, fetch: @escaping (NSManagedObject, [NSManagedObject], NSManagedObjectContext) throws -> NSFetchRequest<T>, handle: @escaping ([T]) -> Void) {
         let nodeId = node.objectID
         let datasetIds = datasets.map { v in v.objectID }
         container.performBackgroundTask { ctx in
@@ -158,8 +158,8 @@ struct SpanNodeDetails: View {
         }
     }
 
-    private func loadData(node: SpanNode) {
-        loadRuns(node: node)
+    private func loadData(node: Node) {
+        loadRecords(node: node)
         loadEvents(node: node)
         loadPoints(node: node)
     }
@@ -167,8 +167,8 @@ struct SpanNodeDetails: View {
     var body: some View {
         GeometryReader { g in
             VStack {
-                if let runs {
-                    SpanRunTable(runs: runs)
+                if let records {
+                    ProfilerRecordTable(records: records)
                 } else {
                     ProgressView()
                 }
@@ -198,12 +198,12 @@ struct SpanNodeDetails: View {
             .onAppear { loadData(node: node) }
             .onChange(of: node) { loadData(node: $0) }
             .onChange(of: datasets) { _ in
-                loadRuns(node: node)
+                loadRecords(node: node)
                 loadPoints(node: node)
             }
-            .onChange(of: filters.distribution) { _ in loadRuns(node: node) }
-            .onChange(of: filters.order) { _ in loadRuns(node: node) }
-            .onChange(of: filters.text) { filters.updateTextFilter($0) { loadRuns(node: node) } }
+            .onChange(of: filters.distribution) { _ in loadRecords(node: node) }
+            .onChange(of: filters.order) { _ in loadRecords(node: node) }
+            .onChange(of: filters.text) { filters.updateTextFilter($0) { loadRecords(node: node) } }
             .sheet(isPresented: $showMoreSheet, onDismiss: { showMoreSheet = false }) {
                 VStack {
                     VStack {
